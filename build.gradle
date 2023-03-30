@@ -1,22 +1,68 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.0.4'
+	id 'org.springframework.boot' version '2.5.5'
 	id 'io.spring.dependency-management' version '1.1.0'
+	id 'java-library'
+	id 'eclipse'
+	id 'application'
 }
 
 group = 'com.peterfonkel'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '8'
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.5'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.google.firebase:firebase-admin:8.1.0'
+	implementation 'com.google.api-client:google-api-client:1.30.9'
+	//no se implementa de momento
+//    implementation 'org.springframework.boot:spring-boot-starter-social-facebook:1.5.22.RELEASE'
+
+	//Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ 	testImplementation 'org.springframework.security:spring-security-test'
+
+	
+	//DataBase
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
+	
+	implementation 'org.mapstruct:mapstruct:1.3.1.Final'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+  	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.peterfonkel.webMagazine.WebMagazineApplication'
+    				)
+    }
 }

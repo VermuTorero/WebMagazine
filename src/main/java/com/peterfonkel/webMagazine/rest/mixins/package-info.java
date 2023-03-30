@@ -1,0 +1,1 @@
+package com.peterfonkel.WebMagazine.rest.mixins;

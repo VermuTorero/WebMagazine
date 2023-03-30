@@ -1,4 +1,4 @@
-package com.peterfonkel.webMagazine;
+package com.peterfonkel.WebMagazine;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
