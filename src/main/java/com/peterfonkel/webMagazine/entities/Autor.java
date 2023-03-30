@@ -1,4 +1,4 @@
-package com.peterfonkel.WebMagazine.entities;
+package com.peterfonkel.webMagazine.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

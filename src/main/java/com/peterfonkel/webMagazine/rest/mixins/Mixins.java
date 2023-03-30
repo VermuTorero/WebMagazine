@@ -1,4 +1,4 @@
-package com.peterfonkel.WebMagazine.rest.mixins;
+package com.peterfonkel.webMagazine.rest.mixins;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
