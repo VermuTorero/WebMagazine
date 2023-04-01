@@ -29,6 +29,8 @@ public class Publicacion {
 	
 	private String subtitulo;
 	
+	private boolean isPremium;
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
 	private List<Bloque> bloques;
@@ -118,6 +120,22 @@ public class Publicacion {
 
 	public void setCafes(List<Cafe> cafes) {
 		this.cafes = cafes;
+	}
+
+	public boolean isPremium() {
+		return isPremium;
+	}
+
+	public void setPremium(boolean isPremium) {
+		this.isPremium = isPremium;
+	}
+
+	public List<Bloque> getBloques() {
+		return bloques;
+	}
+
+	public void setBloques(List<Bloque> bloques) {
+		this.bloques = bloques;
 	}
 
 

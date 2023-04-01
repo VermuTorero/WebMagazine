@@ -1,5 +1,7 @@
 package com.peterfonkel.webMagazine.entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,21 +10,20 @@ import javax.persistence.Id;
 @Entity
 public class Autor extends Usuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id;
 
 	public Autor() {
 		super();
 	}
-
-	public Long getId() {
-		return id;
+	public Autor(String nombre, String apellido1, String apellido2, String edad, String suscripcion,
+			List<Like> likes, List<Cafe> cafes) {
+		this();
+		this.setNombre(nombre);
+		this.setApellido1(apellido1);
+		this.setApellido2(apellido2);
+		this.setEdad(edad);
+		this.setSuscripcion(suscripcion);
+		this.setLikes(likes);
+		this.setCafes(cafes);
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	
 }
