@@ -14,7 +14,6 @@ const routes: Routes = [
       import("src/app/ecommerce/ecommerce.module").then(
         (m) => m.EcommerceModule),
   },
-  { path: 'ecommerce', component: PrincipalEcommerceComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 
 ];
