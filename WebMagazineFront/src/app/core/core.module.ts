@@ -17,6 +17,10 @@ import { ShellComponent } from './shell/shell.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class CoreModule { }

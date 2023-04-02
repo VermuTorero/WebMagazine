@@ -6,6 +6,7 @@ import { ModalReceiptComponent } from './components/modal-receipt/modal-receipt.
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { PrincipalEcommerceComponent } from './components/principal-ecommerce/principal-ecommerce.component';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -20,6 +21,7 @@ import { PrincipalEcommerceComponent } from './components/principal-ecommerce/pr
   ],
   imports: [
     CommonModule,
+    CoreModule
   ],
 })
 export class EcommerceModule { }

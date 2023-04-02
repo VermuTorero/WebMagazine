@@ -1,1 +1,6 @@
-<p>cart-item works!</p>
+<div *ngIf="cartItem.qty < 2">
+<p><strong>{{cartItem.productName}} </strong><strong>({{cartItem.qty}} unidad:) </strong><strong>Total: {{ cartItem.qty * cartItem.productPrice | number : '1.1-2'}} €</strong></p>
+</div>
+<div *ngIf="cartItem.qty > 1">
+    <p><strong>{{cartItem.productName}} </strong><strong>({{cartItem.qty}} unidades:) </strong><strong>Total: {{ cartItem.qty * cartItem.productPrice | number : '1.1-2'}} €</strong></p>
+    </div>
