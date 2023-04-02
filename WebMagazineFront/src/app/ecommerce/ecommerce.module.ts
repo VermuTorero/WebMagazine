@@ -10,6 +10,7 @@ import { CoreModule } from '../core/core.module';
 
 //libreria externas
 import { NgxPayPalModule } from 'ngx-paypal';
+import { EcommerceRoutingModule } from './ecommerce-routing.module';
 
 
 
@@ -25,7 +26,11 @@ import { NgxPayPalModule } from 'ngx-paypal';
   imports: [
     CommonModule,
     CoreModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    EcommerceRoutingModule
   ],
+  exports: [
+    PrincipalEcommerceComponent
+  ]
 })
 export class EcommerceModule { }

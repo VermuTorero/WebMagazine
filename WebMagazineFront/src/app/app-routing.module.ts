@@ -4,9 +4,19 @@ import { PrincipalEcommerceComponent } from './ecommerce/components/principal-ec
 import { ShellComponent } from './core/shell/shell.component';
 
 const routes: Routes = [
-  {path: '', component: ShellComponent},
-  {path: 'ecommerce', component: PrincipalEcommerceComponent},
-  {path: '**', redirectTo: '', pathMatch: 'full'},
+  { path: ``,
+    loadChildren: () =>
+      import("src/app/newsletter/newsletter.module").then(
+        (m) => m.NewsletterModule),
+  },
+  { path: `ecommerce`,
+    loadChildren: () =>
+      import("src/app/ecommerce/ecommerce.module").then(
+        (m) => m.EcommerceModule),
+  },
+  { path: 'ecommerce', component: PrincipalEcommerceComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
+
 ];
 
 @NgModule({

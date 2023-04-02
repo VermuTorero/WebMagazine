@@ -4,6 +4,7 @@ import { HeaderComponent } from './shell/header/header.component';
 import { MainComponent } from './shell/main/main.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { ShellComponent } from './shell/shell.component';
+import { CoreRoutingModule } from './core-routing.module';
 
 
 
@@ -16,11 +17,13 @@ import { ShellComponent } from './shell/shell.component';
     FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CoreRoutingModule
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ShellComponent
   ]
 })
 export class CoreModule { }
