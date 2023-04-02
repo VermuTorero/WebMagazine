@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import {  CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
@@ -10,6 +10,7 @@ import { CoreModule } from '../core/core.module';
 
 //libreria externas
 import { NgxPayPalModule } from 'ngx-paypal';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -25,7 +26,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
   imports: [
     CommonModule,
     CoreModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EcommerceModule { }

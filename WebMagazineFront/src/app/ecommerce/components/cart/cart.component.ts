@@ -6,6 +6,7 @@ import { CartItemModel } from '../../models/cart-item-model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class CartComponent {
   constructor(
     private messageService: MessageService,
     private storageService: StorageService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -132,6 +134,7 @@ export class CartComponent {
     },
     onApprove: (data, actions) => {
       //mostramos un spinner mientras se procesa el pago
+      this.spinner.show();
       console.log(
         'onApprove - transaction was approved, but not authorized',
         data,
@@ -157,6 +160,7 @@ export class CartComponent {
       //vaciamos el carrito despues de la compra
       this.emptyCart();
       //cerramos el spinner al terminar el pago
+      this.spinner.hide();
     },
     onCancel: (data, actions) => {
       console.log('OnCancel', data, actions);
@@ -176,6 +180,13 @@ openModal(items: any, amount: any): void{
   modalRef.componentInstance.amount = amount
 }
 
+pruebaSpinnerOn(): void{
+  this.spinner.show();
+  setTimeout(() => {
+    /** spinner ends after 5 seconds */
+    this.spinner.hide();
+  }, 5000);
+}
   
 
 }
