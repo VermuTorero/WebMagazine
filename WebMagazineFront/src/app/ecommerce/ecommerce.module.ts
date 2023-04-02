@@ -8,6 +8,9 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { PrincipalEcommerceComponent } from './components/principal-ecommerce/principal-ecommerce.component';
 import { CoreModule } from '../core/core.module';
 
+//libreria externas
+import { NgxPayPalModule } from 'ngx-paypal';
+
 
 
 @NgModule({
@@ -21,7 +24,8 @@ import { CoreModule } from '../core/core.module';
   ],
   imports: [
     CommonModule,
-    CoreModule
+    CoreModule,
+    NgxPayPalModule
   ],
 })
 export class EcommerceModule { }
