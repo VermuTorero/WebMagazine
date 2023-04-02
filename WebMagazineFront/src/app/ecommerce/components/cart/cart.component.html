@@ -1,3 +1,5 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"> <p style="color: white" > Realizando el pago... </p></ngx-spinner>
+
 <div *ngIf="cartItems.length < 1">
     <div class="alert alert-info text-center">
         <h4>Tu cesta está vacía</h4>
@@ -28,4 +30,5 @@
     <button class="btn btn-outline-danger d-block w-100 mb-3" (click)="emptyCart()">
         <i class="fas fa-ban"></i> Vaciar cesta
     </button>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 </div> 
