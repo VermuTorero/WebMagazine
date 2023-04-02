@@ -3,6 +3,9 @@ import { Product } from '../../models/product';
 import { MessageService } from '../../service/message.service';
 import { StorageService } from '../../service/storage.service';
 import { CartItemModel } from '../../models/cart-item-model';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
 
 
 @Component({
@@ -13,14 +16,19 @@ import { CartItemModel } from '../../models/cart-item-model';
 export class CartComponent {
   cartItems: CartItemModel[] = [];
   total = 0;
+   //variable paypal
+   public payPalConfig?: IPayPalConfig;
 
 
   constructor(
     private messageService: MessageService,
     private storageService: StorageService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
+     //metodo paypal
+     this.initConfig();
     if (this.storageService.existCart()) {
       this.cartItems = this.storageService.getCart();
     }
@@ -84,6 +92,88 @@ export class CartComponent {
       items.push(item);
   });
   return items;
+}
+
+ // metodo paypal
+ private initConfig(): void {
+  this.payPalConfig = {
+    currency: 'EUR',
+    //colocar id de la pagina paypal developer, en proyecto meter variable en enviroment
+    clientId:
+      'AQ4kV3ijEVIItPbgLJtApqQdCEfaNV-xFShpVgdS8lmlI-J_L7U1-UPdiuXVbsivQfZyVQ43csdQJXCT',
+    createOrderOnClient: (data) =>
+      <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            amount: {
+              //en que moneda lo queremos mirar doc de paypal
+              currency_code: 'EUR',
+              //colocamos el valor total de los items del carro en string
+              value: this.getTotal().toString(),
+              breakdown: {
+                item_total: {
+                  currency_code: 'EUR',
+                  value: this.getTotal().toString(),
+                },
+              },
+            },
+            // colocamos los items del carrito con el metodo getItemsList
+            items: this.getItemsList(),
+          },
+        ],
+      },
+    advanced: {
+      commit: 'true',
+    },
+    style: {
+      label: 'paypal',
+      layout: 'vertical',
+    },
+    onApprove: (data, actions) => {
+      //mostramos un spinner mientras se procesa el pago
+      console.log(
+        'onApprove - transaction was approved, but not authorized',
+        data,
+        actions
+      );
+      actions.order.get().then((details: any) => {
+        console.log(
+          'onApprove - you can get full order details inside onApprove: ',
+          details
+        );
+      });
+    },
+    onClientAuthorization: (data) => {
+      console.log(
+        'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+        data
+      );
+      //al autorizar la transaccion abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
+      this.openModal(
+        data.purchase_units[0].items,
+        data.purchase_units[0].amount.value
+      )
+      //vaciamos el carrito despues de la compra
+      this.emptyCart();
+      //cerramos el spinner al terminar el pago
+    },
+    onCancel: (data, actions) => {
+      console.log('OnCancel', data, actions);
+    },
+    onError: (err) => {
+      console.log('OnError', err);
+    },
+    onClick: (data, actions) => {
+      console.log('onClick', data, actions);
+    },
+  };
+}
+
+openModal(items: any, amount: any): void{
+  const modalRef = this.modalService.open(ModalReceiptComponent);
+  modalRef.componentInstance.items = items;
+  modalRef.componentInstance.amount = amount
 }
 
   

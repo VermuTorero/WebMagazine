@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-receipt',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class ModalReceiptComponent {
 
+
+@Input() amount: any;
+@Input() items: any;
+
+constructor( public activeModal: NgbActiveModal){
+}
 }
