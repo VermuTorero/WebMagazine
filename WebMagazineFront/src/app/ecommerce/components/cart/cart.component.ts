@@ -175,18 +175,9 @@ export class CartComponent {
 }
 
 openModal(items: any, amount: any): void{
-  const modalRef = this.modalService.open(ModalReceiptComponent);
+  const modalRef = this.modalService.open(ModalReceiptComponent, {size: 'lg'});
   modalRef.componentInstance.items = items;
   modalRef.componentInstance.amount = amount
 }
-
-pruebaSpinnerOn(): void{
-  this.spinner.show();
-  setTimeout(() => {
-    /** spinner ends after 5 seconds */
-    this.spinner.hide();
-  }, 5000);
-}
-  
 
 }
