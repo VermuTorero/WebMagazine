@@ -1,10 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { Publicacion } from '../models/publicacion';
+import { PublicacionesServiceService } from '../service/publicaciones-service.service';
 
 @Component({
   selector: 'app-publicaciones',
   templateUrl: './publicaciones.component.html',
   styleUrls: ['./publicaciones.component.css']
 })
-export class PublicacionesComponent {
+export class PublicacionesComponent implements OnInit {
+
+  publicaciones: Publicacion[] = [];
+  publicacionesDestacadas: Publicacion[] = [];
+
+  constructor(
+    private publicacionesService: PublicacionesServiceService) { }
+
+  ngOnInit() {
+    this.getPublicaciones();
+    this.getPublicacionesDestacadas();
+  }
+
+  getPublicaciones(): Observable<Publicacion[]> {
+    this.publicaciones = [];
+    this.publicacionesService.getPublicaciones().subscribe(publicaciones => {
+      this.publicaciones = publicaciones;
+      console.log(this.publicaciones);
+    })
+    return of();
+  }
+
+  getPublicacionesDestacadas(): Observable<Publicacion[]> {
+    this.publicacionesDestacadas = [];
+    this.publicacionesService.getPublicacionesDestacadas().subscribe(publicaciones => {
+      this.publicacionesDestacadas = publicaciones;
+      console.log(this.publicacionesDestacadas);
+    })
+    return of();
+  }
 
 }

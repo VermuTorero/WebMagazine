@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.entities;
 
+import java.time.Instant;
 import java.util.Date;
 
 
@@ -29,7 +30,9 @@ public class Publicacion {
 	
 	private String subtitulo;
 	
-	private boolean isPremium;
+	private boolean premium;
+	
+	private boolean destacado;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -38,7 +41,7 @@ public class Publicacion {
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
 	private Autor autor;
 	
-	private Date fechaPublicacion;
+	private Instant fechaPublicacion;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -48,18 +51,26 @@ public class Publicacion {
 	@JoinColumn(name = "publicacion_id")
 	private List<Cafe> cafes;
 	
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "publicacion_id")
+	private List<Tag> tags;
 	
 	
 	public Publicacion() {
 		super();
 	}
 
-	public Publicacion(String titulo, String subtitulo, Autor autor, Date fechaPublicacion) {
+	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Autor autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Cafe> cafes, List<Tag> tags ) {
 		this();
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
+		this.premium = isPremium;
+		this.destacado = isDestacado;
 		this.autor = autor;
 		this.fechaPublicacion = fechaPublicacion;
+		this.likesRecibidos = likesRecibidos;
+		this.cafes = cafes;
+		this.tags = tags;
 	}
 
 	
@@ -97,11 +108,11 @@ public class Publicacion {
 		this.autor = autor;
 	}
 
-	public Date getFechaPublicacion() {
+	public Instant getFechaPublicacion() {
 		return fechaPublicacion;
 	}
 
-	public void setFechaPublicacion(Date fechaPublicacion) {
+	public void setFechaPublicacion(Instant fechaPublicacion) {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
@@ -122,20 +133,38 @@ public class Publicacion {
 		this.cafes = cafes;
 	}
 
-	public boolean isPremium() {
-		return isPremium;
-	}
-
-	public void setPremium(boolean isPremium) {
-		this.isPremium = isPremium;
-	}
-
+	
 	public List<Bloque> getBloques() {
 		return bloques;
 	}
 
 	public void setBloques(List<Bloque> bloques) {
 		this.bloques = bloques;
+	}
+
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public boolean isPremium() {
+		return premium;
+	}
+
+	public void setPremium(boolean premium) {
+		this.premium = premium;
+	}
+
+	public boolean isDestacado() {
+		return destacado;
+	}
+
+	public void setDestacado(boolean destacado) {
+		this.destacado = destacado;
 	}
 
 

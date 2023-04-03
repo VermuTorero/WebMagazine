@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Publicacion } from '../../models/publicacion';
 
 @Component({
   selector: 'app-publicacion',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./publicacion.component.css']
 })
 export class PublicacionComponent {
-
+  @Input() publicacion: Publicacion = new Publicacion();
 }
