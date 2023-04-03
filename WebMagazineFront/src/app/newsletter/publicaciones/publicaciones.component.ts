@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Publicacion } from '../models/publicacion';
-import { PublicacionesServiceService } from '../service/publicaciones-service.service';
+import { PublicacionesServiceService } from '../service/publicaciones.service';
 
 @Component({
   selector: 'app-publicaciones',
