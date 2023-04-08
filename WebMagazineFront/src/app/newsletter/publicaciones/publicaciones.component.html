@@ -1,4 +1,4 @@
-<div class="row p-0 m-0">
+<div class="inicio row p-0 m-0">
   <div class="col-9 p-0 m-0">
     <div id="carouselExampleCaptions" class="carousel slide">
       <div class="carousel-indicators">
@@ -43,6 +43,12 @@
   </div>
 </div>
 
+
+<div class="text-center m-2">
+  <a class="btn btn-success" href="formulario">Añadir publicación</a>
+</div>
+
+
 <div class="my-4 py-2 mx-4">
   <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
   <hr>
@@ -57,6 +63,6 @@
   <h3 class="row pt-4 mx-2 my-4"><b>Destacados</b></h3>
   <hr>
   <div *ngFor="let publicacionDestacada of publicacionesDestacadas"  style="display:inline-block;" class="row col-12 col-md-4 col-xxl-3">
-    <app-publicacion  [publicacion]="publicacionDestacada"></app-publicacion>
+    <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
   </div>
 </div>

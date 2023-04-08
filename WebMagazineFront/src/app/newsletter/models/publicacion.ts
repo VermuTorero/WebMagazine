@@ -1,19 +1,21 @@
+import { Tag } from "./Tag";
 import { Autor } from "./autor";
-import { Bloque } from "./bloque";
 import { Cafe } from "./cafe";
 import { Like } from "./like";
 
 export class Publicacion {
-    id: number= 0;
+    id: string= "";
     titulo: string = "";
     subtitulo: string = "";
+    htmlPublicacion: string ="";
     premium: boolean = false;
     destacado: boolean = false;
-    bloques: Bloque[] = [];
+    bloques: any[] = [];
     autor: Autor = new Autor();
     fechaPublicacion: string = "";
     likesRecibidos: Like[] = [];
     cafes: Cafe[] = [];
+    tags: Tag[] = []
 
     constructor(){
 

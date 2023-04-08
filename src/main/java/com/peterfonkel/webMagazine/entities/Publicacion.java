@@ -6,6 +6,7 @@ import java.util.Date;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,18 +31,18 @@ public class Publicacion {
 	
 	private String subtitulo;
 	
+	@Column(length=50000)
+	private String htmlPublicacion;
+	
 	private boolean premium;
 	
 	private boolean destacado;
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "publicacion_id")
-	private List<Bloque> bloques;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
 	private Autor autor;
 	
 	private Instant fechaPublicacion;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -100,6 +101,14 @@ public class Publicacion {
 	}
 
 
+	public String getHtmlPublicacion() {
+		return htmlPublicacion;
+	}
+
+	public void setHtmlPublicacion(String htmlPublicacion) {
+		this.htmlPublicacion = htmlPublicacion;
+	}
+
 	public Autor getAutor() {
 		return autor;
 	}
@@ -133,16 +142,6 @@ public class Publicacion {
 		this.cafes = cafes;
 	}
 
-	
-	public List<Bloque> getBloques() {
-		return bloques;
-	}
-
-	public void setBloques(List<Bloque> bloques) {
-		this.bloques = bloques;
-	}
-
-	
 	public List<Tag> getTags() {
 		return tags;
 	}

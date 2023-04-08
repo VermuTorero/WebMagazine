@@ -25,7 +25,11 @@ export class PublicacionesComponent implements OnInit {
     this.publicaciones = [];
     this.publicacionesService.getPublicaciones().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
-      console.log(this.publicaciones);
+      
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+      });
+      console.log("PUBLICACIONES CON ID", this.publicaciones);
     })
     return of();
   }
@@ -34,7 +38,10 @@ export class PublicacionesComponent implements OnInit {
     this.publicacionesDestacadas = [];
     this.publicacionesService.getPublicacionesDestacadas().subscribe(publicaciones => {
       this.publicacionesDestacadas = publicaciones;
-      console.log(this.publicacionesDestacadas);
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+      });
+      console.log("PUBLICACIONES DESTACADAS CON ID", this.publicaciones);
     })
     return of();
   }

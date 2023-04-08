@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+
+
+    <!-- Formulario de datos de la publicación -->
+
+    <h4 class="text-center m-2"><b>Datos de la publicación</b></h4>
+    <form action="" class="m-2 row">
+        <div class="row m-2 ">
+            <div class="m-2 col-4">
+                <label class="row" for="titulo">Titulo: </label>
+                <textarea class="row text-titulo" type="text" name="titulo" cols="35%" rows="2"
+                    [(ngModel)]="publicacion.titulo"></textarea>
+            </div>
+            <div class="m-2 col-7">
+                <label class="row" for="subtitulo">Subtitulo: </label>
+                <textarea class="row text-subtitulo" type="text" name="subtitulo" cols="75%" rows="2"
+                    [(ngModel)]="publicacion.subtitulo"></textarea>
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="m-1 col-1">
+                <label for="premium">Premium: </label>
+                <input type="checkbox" name="premium" [(ngModel)]="publicacion.premium">
+            </div>
+            <div class="m-1 col-2">
+                <label for="destacado">Destacado: </label>
+                <input type="checkbox" name="destacado" [(ngModel)]="publicacion.destacado">
+            </div>
+            <div *ngIf="autores[0]" class="m-1 col-2">
+                <label for="" class="mx-2">Autor: </label>
+                <select name="autor" id="" [(ngModel)]="publicacion.autor">
+                    <option *ngFor="let autor of autores" value={{endpointAutores}}{{autor.id}}>{{autor.nombre}}</option>
+                </select>
+            </div>
+            <div class="col-3 btn btn-primary">Definir imagen de la preview</div>
+        </div>
+
+        <div class="row m-2">
+            <!-- Tag 1 -->
+            <div *ngIf="tags[0]" class="m-1 col-2">
+                <label for="" class="mx-2">Tag 1: </label>
+                <select name="tag" id="" [(ngModel)]="publicacion.tags[0]">Tag:
+                    <option *ngFor="let tag of tags" value={{endpointTags}}{{tag.id}}>{{tag.tagNombre}}</option>
+                </select>
+            </div>
+
+            <!-- Tag 2 -->
+            <div *ngIf="tags[0]" class="m-1 col-2">
+                <label for="" class="mx-2">Tag 2: </label>
+                <select name="tag" id="" [(ngModel)]="publicacion.tags[1]">Tag:
+                    <option *ngFor="let tag of tags" value={{endpointTags}}{{tag.id}}>{{tag.tagNombre}}</option>
+                </select>
+            </div>
+
+            <!-- Tag 3 -->
+            <div *ngIf="tags[0]" class="m-1 col-2">
+                <label for="" class="mx-2">Tag 3: </label>
+                <select name="tag" id="" [(ngModel)]="publicacion.tags[2]">Tag:
+                    <option *ngFor="let tag of tags" value={{endpointTags}}{{tag.id}}>{{tag.tagNombre}}</option>
+                </select>
+            </div>
+
+            <!-- Tag 4 -->
+            <div *ngIf="tags[0]" class="m-1 col-2">
+                <label for="" class="mx-2">Tag 4: </label>
+                <select name="tag" id="" [(ngModel)]="publicacion.tags[3]">Tag:
+                    <option *ngFor="let tag of tags" value={{endpointTags}}{{tag.id}}>{{tag.tagNombre}}</option>
+                </select>
+            </div>
+
+            <div class="m-1 col-3">
+                <div class="row">
+                    <label class="col-4" for="titulo">Nueva: </label>
+                    <input class="col-4 text-titulo" type="text" name="titulo" [(ngModel)]="tagNueva.tagNombre">
+                    <button class="col-3 btn btn-primary m-1">Crear</button>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="m-3">
+
+
+        <!-- Boton añadir Podcast a la publicación -->
+        <!-- <div class="row text-center">
+            <div class="col-5"></div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                    Añadir Podcast
+                </button>
+            </div>
+        </div> -->
+
+    </form>
+
+
+    <!-- Editor de texto -->
+
+    <h4 class="text-center m-2"><b>Contenido de la publicación</b></h4>
+    <div class="mx-3">
+        <form class="m-1 agregar-bloque-texto row form-group text-center">
+            <div class="col-1">
+                <!-- Boton agregar Imagen -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
+                    </button>
+                </div>
+                <!-- Boton agregar Video -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
+                    </button>
+                </div>
+                <!-- Boton agregar Podcast -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                        <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Editor de texto Quill-->
+            <div class="col-11">
+                <quill-editor class="quill-editor my-2" [(ngModel)]="texto" name="textoQuill"></quill-editor>
+            </div>
+            <!--- <textarea class="form-control cuadro-texto" rows=10 placeholder="Escriba aqui el párrafo que desea insertar" [(ngModel)]="texto"></textarea>-->
+        </form>
+    </div>
+
+    <!-- Boton Publicar -->
+    <div class="row text-center">
+        <div class="col-5"></div>
+        <button type="button" class="btn btn-primary col-2" (click)="postPublicacion()">
+            Publicar
+        </button>
+    </div>
+
+</body>
+
+<!-- Modal Agregar Podcast-->
+<div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlPodcast">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarPodcast()" data-bs-dismiss="modal">Añadir
+                    podcast</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Video-->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Video</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del video de Youtube" rows=1
+                    [(ngModel)]="htmlVideo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarVideo()" data-bs-dismiss="modal">Añadir
+                    video</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

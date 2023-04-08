@@ -8,6 +8,8 @@ import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { QuillModule } from 'ngx-quill';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     NgbModule,
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    QuillModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

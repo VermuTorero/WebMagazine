@@ -1,0 +1,32 @@
+<div class="fondo py-3">
+    <div class="hoja">
+        <h2 class="text-center"><b>{{publicacion.titulo}}</b></h2>
+        <div class="d-flex flex-row">
+            <div class="col-4">
+                <div class="row d-flex align-items-center">
+                    <div class="col-3 justify-content-center align-items-center">
+                        <img src="../../../../assets/icono-foto.png" alt="" class="foto-autor">
+                    </div>
+                    <div class="col-9">
+                        <p class="autor">{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 text-center">
+                <div class="row justify-content-center">
+                    <div *ngFor="let tag of publicacion.tags" class="tag m-2">
+                        <p>{{tag.tagNombre}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4"> 
+            </div>
+            
+            
+        </div>
+        
+        <hr>
+        <div class="body" id="body">
+        </div>
+    </div>
+</div>
