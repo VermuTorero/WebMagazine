@@ -20,5 +20,8 @@ export class TagsServiceService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
+  postTag(tag: Tag): Observable<Tag>{
+    return this.http.post<any>(this.endpoint + "/tags", tag);
+  }
 
 }

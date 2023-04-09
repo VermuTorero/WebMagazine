@@ -48,13 +48,17 @@ export class PublicacionCompletaComponent implements OnInit {
       })
       console.log(this.publicacion);
       
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="50%" height="152"');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       /*Formato de los videos de Youtube*/
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://www.youtube.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://www.youtube.com');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://www.youtube.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://www.youtube.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="iframe" width="560" height="315" src="https://www.youtube.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://www.youtube.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="iframe ql-align-center" width="560" height="315" src="https://www.youtube.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://www.youtube.com');
       /*Formato de los podcast de Spotify*/
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container ratio ratio-16x9 text-center text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe style="border-radius:12px" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-align-center" style="border-radius:12px" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://open.spotify.com', '<div class="row"><div class="col-1"></div><div class="col-10 iframe-container text-center w-75"><iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com');
       /* Cierre de iframe comun para Youtube y Spotify */
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('</iframe>', '</iframe></div></div>');
       /* Centrar en Bootstrap */
@@ -64,8 +68,6 @@ export class PublicacionCompletaComponent implements OnInit {
     })
   }
 
-
-  
   showPublicacion() {
     var body = document.querySelector("#body");
     var html = document.createElement("div");
@@ -73,5 +75,10 @@ export class PublicacionCompletaComponent implements OnInit {
     html.innerHTML = this.publicacion.htmlPublicacion;
     body?.appendChild(html)
   }
+
+  eliminarPublicacion(){
+    this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe();
+  }
+
 
 }

@@ -11,11 +11,11 @@ export class Publicacion {
     premium: boolean = false;
     destacado: boolean = false;
     bloques: any[] = [];
-    autor: Autor = new Autor();
+    autor: any;
     fechaPublicacion: string = "";
     likesRecibidos: Like[] = [];
     cafes: Cafe[] = [];
-    tags: Tag[] = []
+    tags: any[] = []
 
     constructor(){
 

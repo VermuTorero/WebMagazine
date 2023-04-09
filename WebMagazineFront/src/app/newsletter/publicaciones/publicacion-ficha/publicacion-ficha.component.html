@@ -1,0 +1,214 @@
+<body id="publicacion">
+
+    <!-- Publicacion -->
+
+    <form action="" class="m-2">
+
+        <!-- Titulo -->
+        <div class="row m-2 titulo">
+            <div class="col-3 m-2"></div>
+            <div class="m-2 col-8">
+                <textarea class="row text-titulo" type="text" name="titulo" [(ngModel)]="publicacion.titulo"></textarea>
+            </div>
+        </div>
+
+        <!-- Descripcion -->
+        <div class="row descripcion-container m-4 p-4">
+            <div class="col-8 m-2">
+                <label class="row" for="descripcion">
+                    <h4>Descripción de la publicación (preview)</h4>
+                </label>
+                <textarea class="row text-descripcion" type="text" name="subtitulo" rows="2"
+                    [(ngModel)]="publicacion.subtitulo"></textarea>
+            </div>
+            <div class="col-3 btn btn-primary m-3 boton-img-preview">Definir imagen de la preview</div>
+        </div>
+
+        <div class="row">
+            <!-- Autor -->
+            <div class="col-3 text-center">
+                <div class="justify-content-center row-tags">
+                    <p class="autor-nombre">{{autorSeleccionado.nombre}} {{autorSeleccionado.apellido1}}</p>
+
+                </div>
+                <div *ngIf="id" class="btn btn-success boton-agregar-tag" data-bs-toggle="modal" data-bs-target="#cambiarAutorModal">
+                    Cambiar Autor
+                </div>
+                <div *ngIf="!id" class="btn btn-success boton-agregar-tag" data-bs-toggle="modal" data-bs-target="#cambiarAutorModal">
+                    Seleccionar autor
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="col-5 text-center">
+                <div class="justify-content-center row-tags">
+                    <div *ngFor="let tag of tagsSeleccionadas" class="tag m-2 col-2">
+                        <p class="tag-nombre px-2">{{tag.tagNombre}}</p>
+                        <div class="boton-eliminar" (click)="eliminarTag(tag.id)">
+                            <img src="../../../../assets/x-eliminar.png" alt="" style="height: 1rem;width: 1rem;">
+                        </div>
+                    </div>
+                </div>
+                <div class="btn btn-success boton-agregar-tag" data-bs-toggle="modal" data-bs-target="#agregarTagModal">
+                    Agregar tag
+                </div>
+            </div>
+
+            <!-- Premium -->
+            <div class="m-1 col-1">
+                <label for="premium">Premium </label>
+                <input type="checkbox" name="premium" [(ngModel)]="publicacion.premium" class="m-1">
+            </div>
+
+            <!-- Destacado -->
+            <div class="m-1 col-2">
+                <label for="destacado">Destacado </label>
+                <input type="checkbox" name="destacado" [(ngModel)]="publicacion.destacado" class="m-1">
+            </div>
+
+        </div>
+
+    </form>
+
+    <!-- Editor de texto -->
+    <div class="mx-3">
+        <form class="m-1 agregar-bloque-texto row form-group text-center">
+            <div class="col-1">
+                <!-- Boton agregar Imagen -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
+                    </button>
+                </div>
+                <!-- Boton agregar Video -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                        <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
+                    </button>
+                </div>
+                <!-- Boton agregar Podcast -->
+                <div class="row">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                        <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Editor de texto Quill-->
+            <div class="col-11 editor-container">
+                <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="textoQuill"></quill-editor>
+            </div>
+            <!--- <textarea class="form-control cuadro-texto" rows=10 placeholder="Escriba aqui el párrafo que desea insertar" [(ngModel)]="texto"></textarea>-->
+        </form>
+    </div>
+
+    <!-- Boton Publicar -->
+    <div class="row text-center m-4">
+        <div class="col-5"></div>
+        <button *ngIf="id" type="button" class="btn btn-warning col-2" (click)="patchPublicacion()">
+            Modificar
+        </button>
+        <button *ngIf="!id" type="button" class="btn btn-warning col-2" (click)="postPublicacion()">
+            Publicar
+        </button>
+    </div>
+
+</body>
+
+<!-- Modal Agregar Podcast-->
+<div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlPodcast">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarPodcast()" data-bs-dismiss="modal">Añadir
+                    podcast</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Video-->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Video</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del video de Youtube" rows=1
+                    [(ngModel)]="htmlVideo">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarVideo()" data-bs-dismiss="modal">Añadir
+                    video</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Tag-->
+<div class="modal fade" id="agregarTagModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar tag</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row tag-existente-container">
+                    <label for="" class="mx-2 col-3">Seleccionar tag existente</label>
+                    <select class="col-6" name="tag4" id="tg4" [(ngModel)]="tagSeleccionada.id">
+                        <option *ngFor="let tag of tags" value={{tag.id}}>{{tag.tagNombre}}</option>
+                    </select>
+                    <button class="col-2 btn btn-primary m-1" (click)="agregarTag()" data-bs-dismiss="modal">Agregar</button>
+                </div>
+                <hr>
+                <div class="row nueva-tag-container">
+                    <label class="col-3 mx-2" for="titulo">Escribir nueva </label>
+                    <input class="col-6" type="text" name="tagNueva" [(ngModel)]="tagNueva.tagNombre">
+                    <button class="col-2 btn btn-primary m-1" (click)="nuevaTag()" data-bs-dismiss="modal">Crear</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cambiar Autor-->
+<div class="modal fade" id="cambiarAutorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar tag</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row tag-existente-container">
+                    <label for="" class="mx-2">Seleccionar autor</label>
+                    <select name="tag4" id="tg4" [(ngModel)]="autorSeleccionado.id">
+                        <option *ngFor="let autor of autores" value={{autor.id}}>{{autor.nombre}} {{autor.apellido1}}</option>
+                    </select>
+                </div>
+                <hr>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="cambiarAutor()" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

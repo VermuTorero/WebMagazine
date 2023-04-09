@@ -42,4 +42,10 @@ export class PublicacionesServiceService {
   getPublicacion(id: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/" + id)
   }
+  deletePublicacion(id: string): Observable<any>{
+    return this.http.delete(this.endpoint + "/publicaciones/" + id);
+  }
+  patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
+    return this.http.patch<any>(this.endpoint + "/publicaciones/" + publicacion.id, publicacion).pipe(map(response=>response.publicacion));
+  }
 }
