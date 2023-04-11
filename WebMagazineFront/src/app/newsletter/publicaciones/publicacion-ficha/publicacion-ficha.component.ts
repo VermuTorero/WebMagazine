@@ -5,11 +5,13 @@ import { PublicacionesServiceService } from '../../service/publicaciones.service
 import Quill from 'quill';
 import { Tag } from '../../models/Tag';
 import { Autor } from '../../models/autor';
-import { environment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environments/enviroment';
 import { TagsServiceService } from '../../service/tags.service';
 import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
 import {CropperComponent} from 'angular-cropperjs';
+import * as FileSaver from 'file-saver';
+import { ImagenesService } from '../../service/imagenes.service';
 var quill = new Quill('#editor', {
   theme: 'snow',
   scrollingContainer: '#scrolling-container',
@@ -41,6 +43,7 @@ export class PublicacionFichaComponent implements OnInit {
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
   imageUrl: string = "";
+  imageName: string ="";
   croppedresult = "";
  
   
@@ -50,7 +53,8 @@ export class PublicacionFichaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
-    private autoresService: AutoresServiceService
+    private autoresService: AutoresServiceService,
+    private imagenesService: ImagenesService
   ) { }
 
   ngOnInit(): void {
@@ -237,6 +241,8 @@ export class PublicacionFichaComponent implements OnInit {
       reader.onload = () =>{
         this.imageUrl = reader.result as string;
       }
+      console.log("EVENT", event.target.files[0])
+      this.imageName = event.target.files[0].name;
     }
   }
 
@@ -247,7 +253,10 @@ export class PublicacionFichaComponent implements OnInit {
         reader.readAsDataURL(blob as Blob);
         reader.onload = () => {
           this.croppedresult = reader.result as string;
-          console.log("URL imagen recortada", this.croppedresult)
+          let blobGenerado = blob as Blob;
+          let imagenRecortada = new File([blobGenerado], this.imageName ,{type: "image/jpeg"})
+          this.imagenesService.subirImagen(imagenRecortada,this.publicacion.id, "preview"); 
+        
         }
       }, 'image/jpeg', 0.70)
   }
