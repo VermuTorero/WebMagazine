@@ -8,4 +8,5 @@ import { Publicacion } from '../../models/publicacion';
 })
 export class PublicacionComponent {
   @Input() publicacion: Publicacion = new Publicacion();
+  
 }

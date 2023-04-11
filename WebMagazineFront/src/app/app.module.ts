@@ -9,7 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
-
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { QuillModule } from 'ngx-quill';
     NgbModule,
     NgxSpinnerModule,
     HttpClientModule,
-    QuillModule
+    QuillModule,
+    AngularCropperjsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
