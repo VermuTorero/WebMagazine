@@ -11,7 +11,7 @@ public class Seccion {
 
 @Id
 private String nombreSeccion;
-@OneToMany(mappedBy = "idProducto")
+@OneToMany(mappedBy = "seccion")
 private List<Producto> productosSeccion;
 
 public String getNombreSeccion() {
@@ -27,6 +27,10 @@ public void setProductosSeccion(List<Producto> productosSeccion) {
     this.productosSeccion = productosSeccion;
 }
 
+public void addProducto(Producto producto){
+    this.productosSeccion.add(producto);
+    producto.setSeccion(this);
+}
 
 
 }
