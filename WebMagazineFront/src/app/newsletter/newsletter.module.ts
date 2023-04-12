@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { PublicacionCompletaComponent } from './publicaciones/publicacion-completa/publicacion-completa.component';
 import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/publicacion-ficha.component';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/pub
     NewsletterRoutingModule,
     FormsModule,
     QuillModule,
+    AngularCropperjsModule
   ]
 })
 export class NewsletterModule { }

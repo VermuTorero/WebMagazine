@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
 import Quill from 'quill';
 import { Tag } from '../../models/Tag';
 import { Autor } from '../../models/autor';
-import { environment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environments/enviroment';
 import { TagsServiceService } from '../../service/tags.service';
 import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
-import { style } from '@angular/animations';
+import {CropperComponent} from 'angular-cropperjs';
+import * as FileSaver from 'file-saver';
+import { ImagenesService } from '../../service/imagenes.service';
 var quill = new Quill('#editor', {
   theme: 'snow',
   scrollingContainer: '#scrolling-container',
 });
+
 
 
 @Component({
@@ -21,7 +24,9 @@ var quill = new Quill('#editor', {
   templateUrl: './publicacion-ficha.component.html',
   styleUrls: ['./publicacion-ficha.component.css']
 })
+
 export class PublicacionFichaComponent implements OnInit {
+  @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   id: string = "";
   publicacion: Publicacion = new Publicacion();
   texto: string = "";
@@ -37,12 +42,19 @@ export class PublicacionFichaComponent implements OnInit {
   autorSeleccionado: Autor = new Autor();
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
-
+  imageUrl: string = "";
+  imageName: string ="";
+  croppedresult = "";
+ 
+  
+  
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
-    private autoresService: AutoresServiceService
+    private autoresService: AutoresServiceService,
+    private imagenesService: ImagenesService
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +65,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.getPublicacion();
       this.ajustarEditor();
     })
+    this.angularCropper.cropper.setAspectRatio(16/9);
   }
 
   ajustarEditor() {
@@ -68,6 +81,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.id = params['id']
     })
   }
+  
   getPublicacion() {
     this.publicacionesService.getPublicacion(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
@@ -84,6 +98,7 @@ export class PublicacionFichaComponent implements OnInit {
   agregarPodcast() {
     this.texto = this.texto + this.htmlPodcast;
   }
+
   agregarVideo() {
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
@@ -101,6 +116,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.descargarTxt();
     this.publicacionesService.postPublicacion(this.publicacion).subscribe();
   }
+
   patchPublicacion() {
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
@@ -115,7 +131,6 @@ export class PublicacionFichaComponent implements OnInit {
       this.getPublicacion();
       this.descargarTxt();
     })
-    
   }
 
   descargarTxt() {
@@ -139,6 +154,7 @@ export class PublicacionFichaComponent implements OnInit {
       console.log("TAGS CON ID:", this.tags)
     });
   }
+
   getAutores(): void {
     this.autoresService.getAutores().subscribe(autores => {
       console.log(autores)
@@ -149,6 +165,7 @@ export class PublicacionFichaComponent implements OnInit {
       console.log("AUTORES CON ID:", this.autores)
     });
   }
+
   getTagsPublicacion() {
     this.publicacionesService.getTagsFromPublicacion(this.publicacion).subscribe(tagsPublicacion => {
       tagsPublicacion.forEach(tagPublicacion => {
@@ -159,6 +176,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.tagsSeleccionadas = tagsPublicacion;
     })
   }
+
   getAutorPublicacion() {
     this.publicacionesService.getAutorFromPublicacion(this.publicacion).subscribe(autorPublicacion => {
       autorPublicacion.id = this.autoresService.getId(autorPublicacion)
@@ -168,6 +186,7 @@ export class PublicacionFichaComponent implements OnInit {
 
     })
   }
+
   cambiarAutor() {
     for (let index = 0; index < this.autores.length; index++) {
       if (this.autorSeleccionado.id == this.autores[index].id) {
@@ -195,6 +214,7 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("TAGS SELECCIONADAS", this.tagsSeleccionadas)
     this.tagSeleccionada = new Tag();
   }
+
   eliminarTag(id: string){
     for (let index = 0; index < this.tagsSeleccionadas.length; index++) {
       if (this.tagsSeleccionadas[index].id == id) {
@@ -203,6 +223,7 @@ export class PublicacionFichaComponent implements OnInit {
     }
     console.log("TAGS SEL DESP BORRAR", this.tagsSeleccionadas)
   }
+
   nuevaTag(){
     this.tagsService.postTag(this.tagNueva).subscribe(tag=>{
       tag.id = this.tagsService.getId(tag);
@@ -212,5 +233,31 @@ export class PublicacionFichaComponent implements OnInit {
       this.agregarTag();
     });
   }
-  
+
+  onSelectFile(event: any){
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () =>{
+        this.imageUrl = reader.result as string;
+      }
+      console.log("EVENT", event.target.files[0])
+      this.imageName = event.target.files[0].name;
+    }
+  }
+
+  getCroppedImage(){
+    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
+    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob as Blob);
+        reader.onload = () => {
+          this.croppedresult = reader.result as string;
+          let blobGenerado = blob as Blob;
+          let imagenRecortada = new File([blobGenerado], this.imageName ,{type: "image/jpeg"})
+          let response = this.imagenesService.subirImagen(imagenRecortada,this.publicacion.id, "preview"); 
+          console.log(response)
+        }
+      }, 'image/jpeg', 0.70)
+  }
 }
