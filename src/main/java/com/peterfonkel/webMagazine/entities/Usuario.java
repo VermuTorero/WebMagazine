@@ -38,6 +38,10 @@ public class Usuario {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Cafe> cafes = new ArrayList<Cafe>();
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usuario_id")
+	private List<Direccion> direcciones = new ArrayList<Direccion>();
 	
 	
 	public Usuario() {
@@ -118,6 +122,14 @@ public class Usuario {
 
 	public void setCafes(List<Cafe> cafes) {
 		this.cafes = cafes;
+	}
+
+	public List<Direccion> getDirecciones() {
+		return direcciones;
+	}
+
+	public void setDirecciones(List<Direccion> direcciones) {
+		this.direcciones = direcciones;
 	}
 	
 	
