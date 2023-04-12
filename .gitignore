@@ -36,5 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 src/main/resources/claves.properties
+src/main/resources/firebaseConfig.ts
 /.apt_generated_tests/
 WebMagazineFront/src/enviroments/firebaseConfig.ts
+
