@@ -10,7 +10,7 @@ import { Imagen } from '../models/imagen';
 import { Observable, of } from 'rxjs';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
 
-const app = firebase.initializeApp(firebaseConfig.firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
 @Injectable({
   providedIn: 'root'

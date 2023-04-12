@@ -255,8 +255,8 @@ export class PublicacionFichaComponent implements OnInit {
           this.croppedresult = reader.result as string;
           let blobGenerado = blob as Blob;
           let imagenRecortada = new File([blobGenerado], this.imageName ,{type: "image/jpeg"})
-          this.imagenesService.subirImagen(imagenRecortada,this.publicacion.id, "preview"); 
-        
+          let response = this.imagenesService.subirImagen(imagenRecortada,this.publicacion.id, "preview"); 
+          console.log(response)
         }
       }, 'image/jpeg', 0.70)
   }
