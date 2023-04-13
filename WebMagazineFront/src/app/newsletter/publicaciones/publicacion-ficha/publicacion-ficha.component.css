@@ -132,12 +132,11 @@
     border-width: 1px;
     border-style: ridge;
 }
-.titulo{
-    
-}
 .img-redimensionada {
     display: block;
   
     /* This rule is very important, please don't ignore this */
     max-width: 100%;
-  }
+}
+
+

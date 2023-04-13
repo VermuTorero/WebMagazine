@@ -25,7 +25,7 @@
     "bootstrap": "^5.2.3",
     "cropperjs": "^1.5.13",
     "file-saver": "^2.0.5",
-    "firebase": "^8.8.0",
+    "firebase": "^9.1.1",
     "html2canvas": "^1.4.1",
     "jquery": "^3.6.4",
     "jspdf": "^2.5.1",

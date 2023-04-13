@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
 import Quill from 'quill';
 import { Tag } from '../../models/Tag';
@@ -9,14 +9,13 @@ import { environment } from 'src/environments/enviroment';
 import { TagsServiceService } from '../../service/tags.service';
 import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
-import {CropperComponent} from 'angular-cropperjs';
-import * as FileSaver from 'file-saver';
+import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
-var quill = new Quill('#editor', {
+
+const quill = new Quill('#editor', {
   theme: 'snow',
   scrollingContainer: '#scrolling-container',
 });
-
 
 
 @Component({
@@ -43,13 +42,14 @@ export class PublicacionFichaComponent implements OnInit {
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
   imageUrl: string = "";
-  imageName: string ="";
+  imageName: string = "";
   croppedresult = "";
- 
-  
-  
-  
+
+
+
+
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
@@ -62,10 +62,12 @@ export class PublicacionFichaComponent implements OnInit {
       this.id = params['id']
       this.getTags();
       this.getAutores();
-      this.getPublicacion();
+      if (this.id) {
+        this.getPublicacion();
+      }
       this.ajustarEditor();
     })
-    this.angularCropper.cropper.setAspectRatio(16/9);
+    
   }
 
   ajustarEditor() {
@@ -81,7 +83,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.id = params['id']
     })
   }
-  
+
   getPublicacion() {
     this.publicacionesService.getPublicacion(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
@@ -114,7 +116,10 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.autor = new Autor();
     this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
     this.descargarTxt();
-    this.publicacionesService.postPublicacion(this.publicacion).subscribe();
+    this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
+    
+    });
+
   }
 
   patchPublicacion() {
@@ -130,6 +135,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion = publicacionModicada;
       this.getPublicacion();
       this.descargarTxt();
+      this.router.navigate([''])
     })
   }
 
@@ -194,17 +200,17 @@ export class PublicacionFichaComponent implements OnInit {
         this.autorSeleccionado.apellido1 = this.autores[index].apellido1;
         this.autorSeleccionado.apellido2 = this.autores[index].apellido2;
       }
-      
+
     }
     if (this.autorSeleccionado.nombre != this.publicacion.autor.nombre && this.autorSeleccionado.apellido1 != this.publicacion.autor.apellido1) {
       this.publicacion.autor = this.autorSeleccionado;
-    }else{
+    } else {
       this.publicacion.autor = this.endpointAutores + this.publicacion.autor.id;
     }
-    
+
   }
 
-  agregarTag(){
+  agregarTag() {
     this.tags.forEach(tag => {
       if (tag.id == this.tagSeleccionada.id) {
         this.tagSeleccionada.tagNombre = tag.tagNombre;
@@ -215,7 +221,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.tagSeleccionada = new Tag();
   }
 
-  eliminarTag(id: string){
+  eliminarTag(id: string) {
     for (let index = 0; index < this.tagsSeleccionadas.length; index++) {
       if (this.tagsSeleccionadas[index].id == id) {
         this.tagsSeleccionadas.splice(index, 1);
@@ -224,8 +230,8 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("TAGS SEL DESP BORRAR", this.tagsSeleccionadas)
   }
 
-  nuevaTag(){
-    this.tagsService.postTag(this.tagNueva).subscribe(tag=>{
+  nuevaTag() {
+    this.tagsService.postTag(this.tagNueva).subscribe(tag => {
       tag.id = this.tagsService.getId(tag);
       this.getTags();
       this.tagSeleccionada.id = tag.id;
@@ -234,11 +240,11 @@ export class PublicacionFichaComponent implements OnInit {
     });
   }
 
-  onSelectFile(event: any){
+  onSelectFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
-      reader.onload = () =>{
+      reader.onload = () => {
         this.imageUrl = reader.result as string;
       }
       console.log("EVENT", event.target.files[0])
@@ -246,18 +252,27 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
-  getCroppedImage(){
+  getCroppedImage() {
+    this.angularCropper.cropper.setAspectRatio(16 / 9);
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob as Blob);
-        reader.onload = () => {
-          this.croppedresult = reader.result as string;
-          let blobGenerado = blob as Blob;
-          let imagenRecortada = new File([blobGenerado], this.imageName ,{type: "image/jpeg"})
-          let response = this.imagenesService.subirImagen(imagenRecortada,this.publicacion.id, "preview"); 
-          console.log(response)
-        }
-      }, 'image/jpeg', 0.70)
+      const reader = new FileReader();
+      reader.readAsDataURL(blob as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob as Blob;
+        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
+          console.log("URL IMG", url)
+          setTimeout(() => {
+            this.insertarImagenUrl(url);
+          }, 1200)
+        });
+
+      }
+    }, 'image/jpeg', 0.70)
+  }
+  insertarImagenUrl(urlImagen: string[]) {
+    this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt">'
   }
 }

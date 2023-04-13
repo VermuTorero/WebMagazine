@@ -8,7 +8,7 @@
                         <img src="../../../../assets/icono-foto.png" alt="" class="foto-autor">
                     </div>
                     <div class="col-9">
-                        <p class="autor">{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
+                        <p *ngIf="publicacion.autor" class="autor">{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
                     </div>
                 </div>
             </div>

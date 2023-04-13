@@ -26,3 +26,28 @@
     width: 70px;
 }
 
+.imagen{
+    width: 800px !important;
+}
+.imagen-container{
+    display: inline-flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: 800px;
+}
+
+
+.iframe-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+.ql-video {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

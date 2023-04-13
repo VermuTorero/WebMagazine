@@ -1,33 +1,35 @@
 import { Injectable } from '@angular/core';
-import firebase from "firebase/app";
-import "firebase/storage";
-import "firebase/analytics";
-import "firebase/firestore";
-import "firebase/database";
-import "firebase/auth";
 
 import { Imagen } from '../models/imagen';
 import { Observable, of } from 'rxjs';
 import { firebaseConfig } from 'src/environments/firebaseConfig';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getDatabase, ref as refer, onValue, set } from "firebase/database";
 
-const app = firebase.initializeApp(firebaseConfig);
+import { initializeApp } from "firebase/app";
+
+
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const db = getDatabase(app);
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImagenesService {
+  urlImagen: string[] = [];
 
   constructor() { }
 
-  getImagenPrincipal(id: string): Observable<Imagen[]> {
+/*   getImagen(): Observable<Imagen[]> {
     let imagenes: Imagen[] = [];
     //Creo la referencia al nodo que quiero recuperar
-    var imagenPrincipalRef = firebase
+    var imagenPrincipalRef = app
       .database()
       .ref()
       .child(`imagenes/${id}/principal`);
     //Recupero la informacion y la asigno al array de imagenes
-    imagenPrincipalRef.on("value", (snapshot) => {
+    imagenPrincipalRef.on("value", (snapshot: any) => {
       let data = snapshot.val();
       for (var key in data) {
         let imagen = new Imagen();
@@ -38,51 +40,26 @@ export class ImagenesService {
       }
     });
     return of(imagenes);
-  }
+  } */
 
-  getImagenesSecundarias(id: string): Observable<Imagen[]> {
-    let secundarias: Imagen[] 
-    secundarias = [];
-    //Creo la referencia al nodo que quiero recuperar
-    var imagenesSecundariasRef = firebase
-      .database()
-      .ref()
-      .child(`imagenes/${id}/secundaria`);
-    //Recupero la informacion y la asigno al array de imagenes
-    let onDataChange = imagenesSecundariasRef.on("value", (snapshot) => {
-      let data = snapshot.val();
-      for (var key in data) {
-        let imagen = new Imagen();
-        imagen.url = data[key].url;
-        imagen.nombre = data[key].nombre;
-        imagen.tipo = data[key].tipo;
-        secundarias.push(imagen);
-      }
-      imagenesSecundariasRef.off("value", onDataChange);
-    });
-    return of(secundarias);
-  }
-
-  subirImagen(file: File, id: string, tipo: string): firebase.storage.Reference {
+  subirImagen(file: File, id: string, tipo: string): Observable<string[]> {
     let arrayNombre = file.name.split(".");
     //Creo una referencia en el storage
-    var storageRef = firebase.storage().ref().child(`imagenes/${id}/${tipo}/${arrayNombre[0]}`);
+    var storageRef = ref(storage, `imagenes/${arrayNombre[0]}`)
     //Subir el archivo al storage
-    storageRef.put(file).then(data => {
-      //Creo una referencia en la base de datos
-      var databaseRef = firebase.database().ref().child(`imagenes/${id}/${tipo}/${arrayNombre[0]}`)
-      storageRef.getDownloadURL().then((url) => {
-        //Con la url del storage introduzco datos en la referencia de la base de datos
-        databaseRef.set({
+    uploadBytes(storageRef, file).then(data => {
+      getDownloadURL(storageRef).then((url)=>{
+        this.urlImagen.push(url);
+        set(refer(db, `imagenes/${arrayNombre[0]}`), {
           nombre: file.name,
-          url: url,
-          tipo: tipo
+            url: url,
+            tipo: tipo
         });
       })
     });
-    return storageRef;
+    return of(this.urlImagen);
   }
-
+/* 
   //Eliminar una imagen de un producto determinado
   deleteImage(imagen: Imagen, id: string): void {
     console.log("en delete, Imagen: ", imagen, " , id: ", id)
@@ -97,15 +74,6 @@ export class ImagenesService {
       .child(`imagenes/${id}/${imagen.tipo}/${nombreSinPunto}`);
     imagenRef.remove();
     imagenStorageRef.delete();
-  }
-
-  deleteSecundarias(id: string): Observable<string>{
-    let nodeRef = firebase.database().ref().child(`imagenes/${id}/secundaria/`);
-    nodeRef.remove();
-    //Borrado de la carpeta correspondiente en Storage
-    this.deleteFolderContents(`imagenes/${id}/secundaria/`);
-    let response = new Object();
-    return of("response");
   }
 
   //Metodo para borrar un nodo dela base de datos de Firebase
@@ -138,5 +106,5 @@ export class ImagenesService {
     const ref = firebase.storage().ref(pathToFile);
     const childRef = ref.child(fileName);
     childRef.delete();
-  }
+  } */
 }
