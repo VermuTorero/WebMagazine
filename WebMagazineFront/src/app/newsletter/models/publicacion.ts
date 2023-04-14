@@ -15,7 +15,8 @@ export class Publicacion {
     fechaPublicacion: string = "";
     likesRecibidos: Like[] = [];
     cafes: Cafe[] = [];
-    tags: any[] = []
+    tags: any[] = [];
+    imagenPreviewUrl: string ="";
 
     constructor(){
 

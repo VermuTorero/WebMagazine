@@ -272,7 +272,32 @@ export class PublicacionFichaComponent implements OnInit {
       }
     }, 'image/jpeg', 0.70)
   }
+
+  getCroppedImagePreview() {
+    this.angularCropper.cropper.setAspectRatio(16 / 9);
+    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
+    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob as Blob;
+        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
+          console.log("URL IMG", url)
+          setTimeout(() => {
+            this.setImagePreview(url)
+          }, 1200)
+        });
+      }
+    }, 'image/jpeg', 0.70)
+  }
+
   insertarImagenUrl(urlImagen: string[]) {
     this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt">'
+  }
+
+  setImagePreview(urlImagen: string[]){
+    this.publicacion.imagenPreviewUrl = urlImagen[0];
   }
 }

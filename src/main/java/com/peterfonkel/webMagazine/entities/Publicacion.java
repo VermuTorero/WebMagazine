@@ -43,6 +43,8 @@ public class Publicacion {
 	
 	private Instant fechaPublicacion;
 	
+	private String imagenPreviewUrl;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -164,6 +166,14 @@ public class Publicacion {
 
 	public void setDestacado(boolean destacado) {
 		this.destacado = destacado;
+	}
+
+	public String getImagenPreviewUrl() {
+		return imagenPreviewUrl;
+	}
+
+	public void setImagenPreviewUrl(String imagenPreviewUrl) {
+		this.imagenPreviewUrl = imagenPreviewUrl;
 	}
 
 

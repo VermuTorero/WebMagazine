@@ -18,7 +18,7 @@
                 <textarea class="row text-descripcion" type="text" name="subtitulo" rows="2"
                     [(ngModel)]="publicacion.subtitulo" placeholder="Descripción de la publicación (para preview)"></textarea>
             </div>
-            <div class="col-3 btn btn-primary m-3 boton-img-preview">Definir imagen de la preview</div>
+            <div class="col-3 btn btn-primary m-3 boton-img-preview"  data-bs-toggle="modal" data-bs-target="#imagenPreviewModal">Definir imagen de la preview</div>
         </div>
 
         <div class="row">
@@ -154,7 +154,7 @@
     </div>
 </div>
 
-<!-- Modal Agregar Imagen-->
+<!-- Modal Agregar Imagen al contenido de la publicacion-->
 <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -182,6 +182,39 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Imagen de preview-->
+<div class="modal fade" id="imagenPreviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+                  <section>
+                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                  </section>
+                  <section *ngIf="imageUrl">
+                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                    <!-- <div class="mt-2">
+                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
+                    </div> -->
+                  </section>
+                 <!--  <section *ngIf="croppedresult">
+                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
+                  </section> -->
+                  
+                  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImagePreview()" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>
