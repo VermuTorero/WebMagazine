@@ -13,6 +13,7 @@ import { TagsServiceService } from '../../service/tags.service';
 export class PublicacionCompletaComponent implements OnInit {
 
   publicacion: Publicacion = new Publicacion();
+  titulo: string = "";
   id: string = "";
   publicacionesCerca: Publicacion[] = [];
   publicacionesRelacionadas: Publicacion[] = [];
@@ -24,24 +25,23 @@ export class PublicacionCompletaComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.getId();
+    this.getTitulo();
     this.getPublicacion();
     
     
   }
 
-  getId(): void {
+  getTitulo(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.id = params['id'];
-      console.log(this.id);
+      this.titulo = params['titulo'].replaceAll("-", " ");
     })
   }
   getPublicacion(): void {
 
-    this.publicacionesService.getPublicacion(this.id).subscribe(publicacion => {
+    this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
       console.log("PUBLICACION RECIBIDA", publicacion)
       this.publicacion = publicacion;
-      this.publicacion.id = this.id;
+      this.publicacion.id = this.publicacionesService.getId(publicacion);
       this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
         this.publicacion.autor = autor;
       })

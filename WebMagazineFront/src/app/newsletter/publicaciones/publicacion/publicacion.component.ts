@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 
 @Component({
@@ -6,7 +6,11 @@ import { Publicacion } from '../../models/publicacion';
   templateUrl: './publicacion.component.html',
   styleUrls: ['./publicacion.component.css']
 })
-export class PublicacionComponent {
+export class PublicacionComponent implements OnInit{
   @Input() publicacion: Publicacion = new Publicacion();
-  
+  tituloUrl: string = "";
+ 
+  ngOnInit(): void {
+    this.tituloUrl = this.publicacion.titulo.replaceAll(" ", "-")
+  }
 }

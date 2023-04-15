@@ -39,7 +39,10 @@ export class PublicacionesServiceService {
     ;
   }
   
-  getPublicacion(id: string): Observable<Publicacion>{
+  getPublicacion(titulo: string): Observable<Publicacion>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTitulo/" + titulo)
+  }
+  getPublicacionById(id: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/" + id)
   }
   deletePublicacion(id: string): Observable<any>{

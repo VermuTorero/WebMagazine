@@ -14,5 +14,8 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findAll();
 	List<Publicacion> findByProvincia(String provincia);
 	List<Publicacion> findByTags_TagNombre(String tagNombre);
+	List<Publicacion> findByDestacadoIsTrue();
+	List<Publicacion> findByProvinciaAndIdNot(String provincia, Long id);
+	Publicacion findByTitulo(String titulo);
 	
 }

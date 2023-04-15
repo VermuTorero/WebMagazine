@@ -88,7 +88,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   getPublicacion() {
-    this.publicacionesService.getPublicacion(this.id).subscribe(publicacion => {
+    this.publicacionesService.getPublicacionById(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
       this.provinciaSeleccionada = publicacion.provincia;

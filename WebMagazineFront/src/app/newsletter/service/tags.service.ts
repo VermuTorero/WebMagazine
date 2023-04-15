@@ -24,4 +24,10 @@ export class TagsServiceService {
     return this.http.post<any>(this.endpoint + "/tags", tag);
   }
 
+  patchTag(tag: Tag): Observable<Tag>{
+    return this.http.patch<any>(this.endpoint + "/tags/"+ tag.id, tag);
+  }
+  deleteTag(tag: any): Observable<any>{
+    return this.http.delete<any>(this.endpoint + "/tags/"+ tag.id);
+  }
 }

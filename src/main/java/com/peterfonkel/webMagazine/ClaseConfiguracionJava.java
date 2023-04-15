@@ -4,6 +4,9 @@ package com.peterfonkel.webMagazine;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +20,14 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @ComponentScan("peterfonkel")
 public class ClaseConfiguracionJava {
+	
+	@Bean
+	   public CacheManager cacheManager() {
+	      SimpleCacheManager cacheManager = new SimpleCacheManager();
+	      cacheManager.setCaches(Arrays.asList(
+	         new ConcurrentMapCache("myCache")));
+	      return cacheManager;
+	   }
 	
 	@Bean
 	CorsFilter corsFilter() {

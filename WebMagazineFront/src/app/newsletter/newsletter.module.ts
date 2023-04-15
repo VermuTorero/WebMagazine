@@ -11,6 +11,8 @@ import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/pub
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/publicaciones-tag.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
+import { TagsComponent } from './publicaciones/tags/tags.component';
+import { TagComponent } from './publicaciones/tags/tag/tag.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-p
     PublicacionCompletaComponent,
     PublicacionFichaComponent,
     PublicacionesTagComponent,
-    PublicacionesProvinciaComponent
+    PublicacionesProvinciaComponent,
+    TagsComponent,
+    TagComponent
   ],
   imports: [
     CommonModule,

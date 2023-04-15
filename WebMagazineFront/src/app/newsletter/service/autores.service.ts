@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/enviroment';
-import { Tag } from '../models/Tag';
 import { Autor } from '../models/autor';
 
 @Injectable({

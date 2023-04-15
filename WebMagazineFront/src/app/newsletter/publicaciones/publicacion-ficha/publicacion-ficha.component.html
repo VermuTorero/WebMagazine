@@ -26,21 +26,19 @@
 
         <div class="row">
             <!-- Autor -->
-            <div class="col-3 text-center">
-                <div class="justify-content-center row-tags">
-                    <p class="autor-nombre">{{autorSeleccionado.nombre}} {{autorSeleccionado.apellido1}}</p>
-
-                </div>
-                <div *ngIf="id" class="btn btn-success boton-agregar-tag" data-bs-toggle="modal"
-                    data-bs-target="#cambiarAutorModal">
-                    Cambiar Autor
-                </div>
-                <div *ngIf="!id" class="btn btn-success boton-agregar-tag" data-bs-toggle="modal"
-                    data-bs-target="#cambiarAutorModal">
-                    Seleccionar autor
+            <div class="mx-4 col-2 row-lugar">
+                <div class="row">
+                    <p class="col-3 m-1">Autor:</p>
+                    <div class="col-7 m-2">
+                        <select name="autor" id="autor" [(ngModel)]="autorSeleccionado.id">
+                            <option value="{{publicacion.autor}}" selected disabled>{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</option>
+                            <option *ngFor="let autor of autores" value="{{autor.id}}">
+                                {{autor.nombre}} {{autor.apellido1}} {{autor.apellido2}}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-
+            
             <!-- Tags -->
             <div class="col-5 text-center">
                 <div class="justify-content-center row-tags">
@@ -69,7 +67,7 @@
             </div>
 
             <!-- Lugar -->
-            <div class="m-1 col-2 row-lugar">
+            <div class="mx-4 col-2 row-lugar">
                 <div class="row">
                     <p class="col-3 m-1">Lugar:</p>
                     <div class="col-7 m-2">

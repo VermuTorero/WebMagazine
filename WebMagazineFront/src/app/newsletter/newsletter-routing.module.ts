@@ -5,6 +5,7 @@ import { PublicacionCompletaComponent } from './publicaciones/publicacion-comple
 import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/publicacion-ficha.component';
 import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/publicaciones-tag.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
+import { TagsComponent } from './publicaciones/tags/tags.component';
 
 const routes: Routes = [
   {path: '', component: PublicacionesComponent},
@@ -13,7 +14,7 @@ const routes: Routes = [
     path: ``,
     children: [
       {
-        path: `publicaciones/:id`,
+        path: `publicaciones/:titulo`,
         component: PublicacionCompletaComponent,
       }
     ],
@@ -42,6 +43,15 @@ const routes: Routes = [
       {
         path: `publicaciones-provincia/:provincia`,
         component: PublicacionesProvinciaComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `tags`,
+        component: TagsComponent,
       }
     ],
   }
