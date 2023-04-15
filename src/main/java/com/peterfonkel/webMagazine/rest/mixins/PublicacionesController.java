@@ -108,30 +108,14 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
-		
-		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
-		List<Publicacion> listadoPublicacionesTag = new ArrayList<Publicacion>();
-		for (Publicacion publicacion : listadoPublicaciones) {
-			for (Tag tag : publicacion.getTags()) {
-				if (tag.getTagNombre().equals(tagNombre)) {
-					listadoPublicacionesTag.add(publicacion);
-				}
-			}
-		}
+		List<Publicacion> listadoPublicacionesTag = publicacionDAO.findByTags_TagNombre(tagNombre);
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
 	@GetMapping(path = "publicacionesByLugar/{provincia}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("provincia") String provincia) {
-		
-		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
-		List<Publicacion> listadoPublicacionesLugar = new ArrayList<Publicacion>();
-		for (Publicacion publicacion : listadoPublicaciones) {
-			if (publicacion.getProvincia().equals(provincia)) {
-				listadoPublicacionesLugar.add(publicacion);
-			}
-		}
+	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("provincia") String provincia) {	
+		List<Publicacion> listadoPublicacionesLugar = publicacionDAO.findByProvincia(provincia);
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
