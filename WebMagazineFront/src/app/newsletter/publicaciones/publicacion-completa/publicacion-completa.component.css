@@ -1,53 +1,128 @@
 .hoja{
     background-color: white;
     margin-left: 4%;
-    margin-right: 4%;
+    margin-right: 1%;
     margin-top: 0%;
     margin-bottom: 0%;
     padding: 8%;
     box-shadow: 2px 2px 10px #666;
 }
+
+.lateral{
+    background-color: white;
+    box-shadow: 2px 2px 10px #666;
+    margin-right: 0%;
+    display: flex;
+   
+}
+
+.publicaciones-cerca{
+    align-content: start;
+    
+}
+
+.card{  
+    margin-top: 2%;
+    margin-bottom: 4%;
+    padding-top: 3%;
+    display: flex;
+    border-width: 1;
+    background-color: rgb(240, 240, 240);
+}
+
 .fondo{
     background-color: rgb(205, 205, 205);
     margin-top: 0%;
     margin-bottom: 0%;
     padding-bottom: 0%;
+    padding-right: 3%;
 }
+
 .tag{
     background-color: orange;
     border-radius: 15px;
     height: 1.6rem;
     width: auto;
 }
+
+.provincia{
+    background-color: rgb(162, 235, 222);
+    border-radius: 15px;
+    height: 1.6rem;
+    width: auto;
+}
+
 .autor{
     margin-top: 3%;
 }
+
 .foto-autor{
     width: 70px;
 }
 
-.imagen{
-    width: 800px !important;
+/* Estilos tamaño movil */
+@media (max-width: 40em) {
+    ::ng-deep  img[alt="imagenAlt100"]{
+        width:100% !important;
+    }
+    ::ng-deep  img[alt="imagenAlt75"]{
+        width:90% !important;
+    }
+    ::ng-deep  img[alt="imagenAlt50"]{
+        width:70% !important;
+    }
+    ::ng-deep img[alt="imagenAlt35"]{
+        width:60% !important;
+    }
+    ::ng-deep .iframe-container{
+        width:100% !important;
+        height: fit-content !important;
+    }
+    ::ng-deep iframe[tipo="podcast"]{
+        width: 100% !important;
+        height: 25vw !important;
+    }
+    ::ng-deep iframe[tipo="youtube"]{
+        width: 100% !important;
+        height: 48vw !important;
+    }
+    .icono-rrss{
+        width: 8vw;
+    }
+
 }
-.imagen-container{
-    display: inline-flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    height: 800px;
+
+/* Estilos tamaño grande */
+@media (min-width: 41em) {
+    ::ng-deep img[alt="imagenAlt100"]{
+        width:100% !important;
+    }
+    ::ng-deep img[alt="imagenAlt75"]{
+        width:75% !important;
+    }
+    ::ng-deep img[alt="imagenAlt50"]{
+        width:50% !important;
+    }
+    ::ng-deep img[alt="imagenAlt35"]{
+        width:35% !important;
+    }
+    ::ng-deep iframe[tipo="podcast"]{
+        width: 75% !important;
+        height: 220px !important;
+    }
+    ::ng-deep iframe[tipo="youtube"]{
+        width: 75% !important;
+        height: 28vw !important;
+    }
+
+    .icono-rrss{
+        width: 3vw;
+    }
+}
+
+a:link, a:visited, a:active {
+    text-decoration:none;
+    color: black;
 }
 
 
-.iframe-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-}
-.ql-video {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}

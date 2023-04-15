@@ -11,6 +11,7 @@ import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
+import { Lugar } from '../../models/Lugar';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -44,9 +45,10 @@ export class PublicacionFichaComponent implements OnInit {
   imageUrl: string = "";
   imageName: string = "";
   croppedresult = "";
-
-
-
+  anchoImagen : string = "100";
+  provinciasTipos: string[] = environment.provincias.provincias;
+  provincias : Lugar[] = [];
+  provinciaSeleccionada: string ="";
 
   constructor(
     private router: Router,
@@ -66,6 +68,7 @@ export class PublicacionFichaComponent implements OnInit {
         this.getPublicacion();
       }
       this.ajustarEditor();
+      this.formatLugares();
     })
     
   }
@@ -74,7 +77,7 @@ export class PublicacionFichaComponent implements OnInit {
     setTimeout(() => {
       var quilEditor = document
         .getElementsByClassName('ql-editor')[0];
-      quilEditor.setAttribute("style", "height: 1200px")
+      quilEditor.setAttribute("style", "height: 700px")
     }, 500);
   }
 
@@ -88,20 +91,25 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacionesService.getPublicacion(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
+      this.provinciaSeleccionada = publicacion.provincia;
       this.getTagsPublicacion();
       this.getAutorPublicacion();
+      
       console.log("PUBLICACION CARGADA:", this.publicacion)
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"'); 
       this.texto = this.publicacion.htmlPublicacion;
       quill.insertText(10, this.publicacion.htmlPublicacion);
     })
   }
 
   agregarPodcast() {
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>','tipo ="podcast"></iframe>');
     this.texto = this.texto + this.htmlPodcast;
+    
   }
 
   agregarVideo() {
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>','tipo ="youtube"></iframe>');
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
@@ -115,6 +123,7 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
     this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
+    this.publicacion.provincia = this.provinciaSeleccionada;
     this.descargarTxt();
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
     
@@ -131,6 +140,7 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
     this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
+    this.publicacion.provincia = this.provinciaSeleccionada;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.publicacion = publicacionModicada;
       this.getPublicacion();
@@ -241,6 +251,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   onSelectFile(event: any) {
+    
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -253,7 +264,6 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   getCroppedImage() {
-    this.angularCropper.cropper.setAspectRatio(16 / 9);
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();
@@ -287,6 +297,7 @@ export class PublicacionFichaComponent implements OnInit {
           console.log("URL IMG", url)
           setTimeout(() => {
             this.setImagePreview(url)
+            url = []
           }, 1200)
         });
       }
@@ -294,10 +305,24 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   insertarImagenUrl(urlImagen: string[]) {
-    this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt">'
+    this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt' + this.anchoImagen + '">'
+    urlImagen = [];
+    this.imageUrl="";
+    this.imageName="";
   }
 
   setImagePreview(urlImagen: string[]){
     this.publicacion.imagenPreviewUrl = urlImagen[0];
   }
+
+  formatLugares(){
+    this.provincias = [];
+    this.provinciasTipos.forEach(provinciaNombre => {
+      let lugar = new Lugar();
+      lugar.provincia = provinciaNombre;
+      this.provincias.push(lugar);
+    });
+    console.log("Provincias", this.provincias);
+  }
+
 }

@@ -48,4 +48,16 @@ export class PublicacionesServiceService {
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
     return this.http.patch<any>(this.endpoint + "/publicaciones/" + publicacion.id, publicacion).pipe(map(response=>response.publicacion));
   }
+  getPublicacionesCerca(publicacion: Publicacion): Observable<Publicacion[]>{
+    return this.http.post<any>(this.endpoint + "/publicaciones/search/publicacionesCerca", publicacion).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesRelacionadas(id: string): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRelacionadas/" + id).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesByTag(tagNombre: string): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByTag/" + tagNombre).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesByProvincia(provincia: string): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugar/" + provincia).pipe(map(response=>response._embedded.publicaciones))
+  }
 }

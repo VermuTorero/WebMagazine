@@ -81,6 +81,12 @@
 .row-tags{
     display: inline;
  }
+ .lugar{
+    display: inline;
+ }
+ .row-lugar{
+    display: inline;
+ }
 .tag-nombre{
     background-color: orange;
     border-radius: 15px;
@@ -140,3 +146,48 @@
 }
 
 
+/* Estilos tamaño movil */
+@media (max-width: 40em) {
+    ::ng-deep .imagen{
+        width:100% !important;
+    }
+    ::ng-deep img[alt="imagenAlt35"]{
+        width:60% !important;
+    }
+    ::ng-deep .iframe-container{
+        width:100% !important;
+        height: fit-content !important;
+    }
+    ::ng-deep iframe[tipo="podcast"]{
+        width: 100% !important;
+        height: 28vw !important;
+    }
+    ::ng-deep iframe[tipo="youtube"]{
+        width: 100% !important;
+        height: 45vw !important;
+    }
+}
+
+/* Estilos tamaño grande */
+@media (min-width: 41em) {
+    ::ng-deep img[alt="imagenAlt100"]{
+        width:100% !important;
+    }
+    ::ng-deep img[alt="imagenAlt75"]{
+        width:75% !important;
+    }
+    ::ng-deep img[alt="imagenAlt50"]{
+        width:50% !important;
+    }
+    ::ng-deep img[alt="imagenAlt35"]{
+        width:35% !important;
+    }
+    ::ng-deep iframe[tipo="podcast"]{
+        width: 75% !important;
+        height: 250px !important;
+    }
+    ::ng-deep iframe[tipo="youtube"]{
+        width: 75% !important;
+        height: 35vw !important;
+    }
+}

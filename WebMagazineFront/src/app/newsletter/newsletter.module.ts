@@ -9,13 +9,17 @@ import { QuillModule } from 'ngx-quill';
 import { PublicacionCompletaComponent } from './publicaciones/publicacion-completa/publicacion-completa.component';
 import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/publicacion-ficha.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
+import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/publicaciones-tag.component';
+import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 
 @NgModule({
   declarations: [
     PublicacionesComponent,
     PublicacionComponent,
     PublicacionCompletaComponent,
-    PublicacionFichaComponent
+    PublicacionFichaComponent,
+    PublicacionesTagComponent,
+    PublicacionesProvinciaComponent
   ],
   imports: [
     CommonModule,

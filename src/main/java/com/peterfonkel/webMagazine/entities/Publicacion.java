@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -45,6 +46,8 @@ public class Publicacion {
 	
 	private String imagenPreviewUrl;
 	
+	private String provincia;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -54,7 +57,7 @@ public class Publicacion {
 	@JoinColumn(name = "publicacion_id")
 	private List<Cafe> cafes;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
 	private List<Tag> tags;
 	
@@ -176,6 +179,12 @@ public class Publicacion {
 		this.imagenPreviewUrl = imagenPreviewUrl;
 	}
 
+	public String getProvincia() {
+		return provincia;
+	}
 
-	
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
 }

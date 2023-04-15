@@ -43,6 +43,7 @@ export class ImagenesService {
   } */
 
   subirImagen(file: File, id: string, tipo: string): Observable<string[]> {
+    this.urlImagen = [];
     let arrayNombre = file.name.split(".");
     //Creo una referencia en el storage
     var storageRef = ref(storage, `imagenes/${arrayNombre[0]}`)

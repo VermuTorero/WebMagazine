@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { PublicacionesComponent } from './publicaciones/publicaciones.component';
 import { PublicacionCompletaComponent } from './publicaciones/publicacion-completa/publicacion-completa.component';
 import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/publicacion-ficha.component';
+import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/publicaciones-tag.component';
+import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 
 const routes: Routes = [
   {path: '', component: PublicacionesComponent},
@@ -22,6 +24,24 @@ const routes: Routes = [
       {
         path: `formulario/:id`,
         component: PublicacionFichaComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `publicaciones-tag/:tagNombre`,
+        component: PublicacionesTagComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `publicaciones-provincia/:provincia`,
+        component: PublicacionesProvinciaComponent,
       }
     ],
   }

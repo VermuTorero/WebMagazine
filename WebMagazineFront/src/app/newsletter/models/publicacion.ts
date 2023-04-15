@@ -17,6 +17,7 @@ export class Publicacion {
     cafes: Cafe[] = [];
     tags: any[] = [];
     imagenPreviewUrl: string ="";
+    provincia: string = "";
 
     constructor(){
 
