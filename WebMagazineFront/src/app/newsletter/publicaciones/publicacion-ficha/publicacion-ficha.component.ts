@@ -45,10 +45,10 @@ export class PublicacionFichaComponent implements OnInit {
   imageUrl: string = "";
   imageName: string = "";
   croppedresult = "";
-  anchoImagen : string = "100";
+  anchoImagen: string = "100";
   provinciasTipos: string[] = environment.provincias.provincias;
-  provincias : Lugar[] = [];
-  provinciaSeleccionada: string ="";
+  provincias: Lugar[] = [];
+  provinciaSeleccionada: string = "";
 
   constructor(
     private router: Router,
@@ -60,17 +60,18 @@ export class PublicacionFichaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.publicacion.autor = new Autor();
+    this.getTags();
+    this.getAutores();
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id']
-      this.getTags();
-      this.getAutores();
       if (this.id) {
         this.getPublicacion();
       }
       this.ajustarEditor();
       this.formatLugares();
     })
-    
+
   }
 
   ajustarEditor() {
@@ -94,22 +95,22 @@ export class PublicacionFichaComponent implements OnInit {
       this.provinciaSeleccionada = publicacion.provincia;
       this.getTagsPublicacion();
       this.getAutorPublicacion();
-      
+
       console.log("PUBLICACION CARGADA:", this.publicacion)
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"'); 
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
       quill.insertText(10, this.publicacion.htmlPublicacion);
     })
   }
 
   agregarPodcast() {
-    this.htmlPodcast = this.htmlPodcast.replace('></iframe>','tipo ="podcast"></iframe>');
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="podcast"></iframe>');
     this.texto = this.texto + this.htmlPodcast;
-    
+
   }
 
   agregarVideo() {
-    this.htmlPodcast = this.htmlPodcast.replace('></iframe>','tipo ="youtube"></iframe>');
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="youtube"></iframe>');
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
@@ -126,7 +127,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.provincia = this.provinciaSeleccionada;
     this.descargarTxt();
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
-    
+
     });
 
   }
@@ -251,7 +252,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   onSelectFile(event: any) {
-    
+
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -307,15 +308,15 @@ export class PublicacionFichaComponent implements OnInit {
   insertarImagenUrl(urlImagen: string[]) {
     this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt' + this.anchoImagen + '">'
     urlImagen = [];
-    this.imageUrl="";
-    this.imageName="";
+    this.imageUrl = "";
+    this.imageName = "";
   }
 
-  setImagePreview(urlImagen: string[]){
+  setImagePreview(urlImagen: string[]) {
     this.publicacion.imagenPreviewUrl = urlImagen[0];
   }
 
-  formatLugares(){
+  formatLugares() {
     this.provincias = [];
     this.provinciasTipos.forEach(provinciaNombre => {
       let lugar = new Lugar();
