@@ -29,7 +29,7 @@
             <div class="mx-4 col-2 row-lugar">
                 <div class="row">
                     <p class="col-3 m-1">Autor:</p>
-                    <div *ngIf="publicacion.autor" class="col-7 m-2">
+                    <div class="col-7 m-2">
                         <select name="autor" id="autor" [(ngModel)]="autorSeleccionado.id">
                             <option value="{{publicacion.autor}}" selected disabled>{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</option>
                             <option *ngFor="let autor of autores" value="{{autor.id}}">
@@ -75,20 +75,6 @@
                             <option value="{{publicacion.provincia}}" selected>{{publicacion.provincia}}</option>
                             <option *ngFor="let provincia of provincias" value="{{provincia.provincia}}">
                                 {{provincia.provincia}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Categoria -->
-            <div class="mx-4 col-2 row-lugar">
-                <div class="row">
-                    <p class="col-3 m-1">Categoria:</p>
-                    <div *ngIf="publicacion.categoria" class="col-7 m-2">
-                        <select name="autor" id="categoria" [(ngModel)]="categoriaSeleccionada.id">
-                            <option value="{{publicacion.categoria}}" selected disabled>{{publicacion.categoria.categoriaNombre}}</option>
-                            <option *ngFor="let categoria of categorias" value="{{categoria.id}}">
-                                {{categoria.categoriaNombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -145,7 +131,7 @@
 
 <!-- Modal Agregar Podcast-->
 <div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
@@ -167,7 +153,7 @@
 
 <!-- Modal Agregar Video-->
 <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Video</h1>
@@ -189,7 +175,7 @@
 
 <!-- Modal Agregar Imagen al contenido de la publicacion-->
 <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
@@ -224,40 +210,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Agregar Imagen Autor al contenido de la publicacion-->
-<div class="modal fade" id="imagenAutorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <section>
-                    <input type="file" accept="images/" (change)="onSelectFile($event)">
-                </section>
-                <section *ngIf="imageUrl">
-                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-                </section>
-                <section class="my-4">
-                    <label for="" class="mx-2">Tamaño</label>
-                    <select type="text" [(ngModel)]="anchoImagen">
-                        <option value="100">Ancho 100%</option>
-                        <option value="75">Ancho 75%</option>
-                        <option value="50">Ancho 50%</option>
-                        <option value="35">Ancho 35%</option>
-                    </select>
-                </section>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" (click)="getCroppedImageAutor()" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

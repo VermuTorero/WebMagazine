@@ -12,8 +12,6 @@ import { saveAs } from 'file-saver';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
 import { Lugar } from '../../models/Lugar';
-import { CategoriasServiceService } from '../../service/categorias.service';
-import { Categoria } from '../../models/Categoria';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -41,7 +39,6 @@ export class PublicacionFichaComponent implements OnInit {
   tagNueva: Tag = new Tag();
   endpointTags: string = environment.urlAPI + "/tags/";
   endpointAutores: string = environment.urlAPI + "/autores/";
-  endpointCategorias: string = environment.urlAPI + "/categorias/";
   autorSeleccionado: Autor = new Autor();
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
@@ -52,8 +49,6 @@ export class PublicacionFichaComponent implements OnInit {
   provinciasTipos: string[] = environment.provincias.provincias;
   provincias: Lugar[] = [];
   provinciaSeleccionada: string = "";
-  categorias: Categoria[]= [];
-  categoriaSeleccionada: Categoria = new Categoria();
 
   constructor(
     private router: Router,
@@ -61,16 +56,13 @@ export class PublicacionFichaComponent implements OnInit {
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
     private autoresService: AutoresServiceService,
-    private imagenesService: ImagenesService,
-    private categoriasService: CategoriasServiceService
+    private imagenesService: ImagenesService
   ) { }
 
   ngOnInit(): void {
     this.publicacion.autor = new Autor();
-    this.publicacion.categoria = new Categoria();
     this.getTags();
     this.getAutores();
-    this.getCategorias();
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id']
       if (this.id) {
@@ -103,7 +95,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.provinciaSeleccionada = publicacion.provincia;
       this.getTagsPublicacion();
       this.getAutorPublicacion();
-      this.getCategoriaPublicacion();
+
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
@@ -132,8 +124,6 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
     this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
-    this.publicacion.categoria = new Categoria();
-    this.publicacion.categoria = this.endpointCategorias + this.categoriaSeleccionada.id;
     this.publicacion.provincia = this.provinciaSeleccionada;
     this.descargarTxt();
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
@@ -151,8 +141,6 @@ export class PublicacionFichaComponent implements OnInit {
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
     this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
-    this.publicacion.categoria = new Categoria();
-    this.publicacion.categoria = this.endpointCategorias + this.categoriaSeleccionada.id;
     this.publicacion.provincia = this.provinciaSeleccionada;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.publicacion = publicacionModicada;
@@ -182,6 +170,55 @@ export class PublicacionFichaComponent implements OnInit {
       });
       console.log("TAGS CON ID:", this.tags)
     });
+  }
+
+  getAutores(): void {
+    this.autoresService.getAutores().subscribe(autores => {
+      console.log(autores)
+      this.autores = autores;
+      this.autores.forEach(autor => {
+        autor.id = this.autoresService.getId(autor);
+      });
+      console.log("AUTORES CON ID:", this.autores)
+    });
+  }
+
+  getTagsPublicacion() {
+    this.publicacionesService.getTagsFromPublicacion(this.publicacion).subscribe(tagsPublicacion => {
+      tagsPublicacion.forEach(tagPublicacion => {
+        tagPublicacion.id = this.tagsService.getId(tagPublicacion);
+      });
+      this.publicacion.tags = tagsPublicacion;
+      console.log("TAGS PUBLICACION:", this.publicacion.tags)
+      this.tagsSeleccionadas = tagsPublicacion;
+    })
+  }
+
+  getAutorPublicacion() {
+    this.publicacionesService.getAutorFromPublicacion(this.publicacion).subscribe(autorPublicacion => {
+      autorPublicacion.id = this.autoresService.getId(autorPublicacion)
+      console.log("AUTOR PUBLICACION:", autorPublicacion)
+      this.publicacion.autor = autorPublicacion;
+      this.autorSeleccionado = autorPublicacion;
+
+    })
+  }
+
+  cambiarAutor() {
+    for (let index = 0; index < this.autores.length; index++) {
+      if (this.autorSeleccionado.id == this.autores[index].id) {
+        this.autorSeleccionado.nombre = this.autores[index].nombre;
+        this.autorSeleccionado.apellido1 = this.autores[index].apellido1;
+        this.autorSeleccionado.apellido2 = this.autores[index].apellido2;
+      }
+
+    }
+    if (this.autorSeleccionado.nombre != this.publicacion.autor.nombre && this.autorSeleccionado.apellido1 != this.publicacion.autor.apellido1) {
+      this.publicacion.autor = this.autorSeleccionado;
+    } else {
+      this.publicacion.autor = this.endpointAutores + this.publicacion.autor.id;
+    }
+
   }
 
   agregarTag() {
@@ -214,75 +251,6 @@ export class PublicacionFichaComponent implements OnInit {
     });
   }
 
-  getTagsPublicacion() {
-    this.publicacionesService.getTagsFromPublicacion(this.publicacion).subscribe(tagsPublicacion => {
-      tagsPublicacion.forEach(tagPublicacion => {
-        tagPublicacion.id = this.tagsService.getId(tagPublicacion);
-      });
-      this.publicacion.tags = tagsPublicacion;
-      console.log("TAGS PUBLICACION:", this.publicacion.tags)
-      this.tagsSeleccionadas = tagsPublicacion;
-    })
-  }
-
-
-  getAutores(): void {
-    this.autoresService.getAutores().subscribe(autores => {
-      console.log(autores)
-      this.autores = autores;
-      this.autores.forEach(autor => {
-        autor.id = this.autoresService.getId(autor);
-      });
-      console.log("AUTORES CON ID:", this.autores)
-    });
-  }
-
-  getAutorPublicacion() {
-    this.publicacionesService.getAutorFromPublicacion(this.publicacion).subscribe(autorPublicacion => {
-      autorPublicacion.id = this.autoresService.getId(autorPublicacion)
-      console.log("AUTOR PUBLICACION:", autorPublicacion)
-      this.publicacion.autor = autorPublicacion;
-      this.autorSeleccionado = autorPublicacion;
-
-    })
-  }
-
-  cambiarAutor() {
-    for (let index = 0; index < this.autores.length; index++) {
-      if (this.autorSeleccionado.id == this.autores[index].id) {
-        this.autorSeleccionado.nombre = this.autores[index].nombre;
-        this.autorSeleccionado.apellido1 = this.autores[index].apellido1;
-        this.autorSeleccionado.apellido2 = this.autores[index].apellido2;
-      }
-    }
-    if (this.autorSeleccionado.nombre != this.publicacion.autor.nombre && this.autorSeleccionado.apellido1 != this.publicacion.autor.apellido1) {
-      this.publicacion.autor = this.autorSeleccionado;
-    } else {
-      this.publicacion.autor = this.endpointAutores + this.publicacion.autor.id;
-    }
-
-  }
-
-  getCategorias(){
-    this.categoriasService.getCategorias().subscribe(categorias=>{
-      this.categorias = categorias;
-      this.categorias.forEach(categoria => {
-        categoria.id = this.categoriasService.getId(categoria);
-      });
-      console.log("CATEGORIAS RECIBIDAS: ", this.categorias)
-    })
-  }
-  getCategoriaPublicacion(){
-    this.publicacionesService.getCategoriaFromPublicacion(this.publicacion).subscribe(categoria=>{
-      categoria.id = this.categoriasService.getId(categoria);
-      console.log("CATEG: ", categoria)
-      this.publicacion.categoria = categoria;
-      this.categoriaSeleccionada = categoria;
-     
-    })
-  }
-
-  
   onSelectFile(event: any) {
 
     if (event.target.files && event.target.files[0]) {
@@ -309,25 +277,6 @@ export class PublicacionFichaComponent implements OnInit {
           console.log("URL IMG", url)
           setTimeout(() => {
             this.insertarImagenUrl(url);
-          }, 1200)
-        });
-
-      }
-    }, 'image/jpeg', 0.70)
-  }
-  getCroppedImageAutor() {
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
-    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob as Blob);
-      reader.onload = () => {
-        this.croppedresult = reader.result as string;
-        let blobGenerado = blob as Blob;
-        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
-          console.log("URL IMG", url)
-          setTimeout(() => {
-            this.insertarImagenAutorUrl(url);
           }, 1200)
         });
 
@@ -361,9 +310,6 @@ export class PublicacionFichaComponent implements OnInit {
     urlImagen = [];
     this.imageUrl = "";
     this.imageName = "";
-  }
-  insertarImagenAutorUrl(urlImagen: string[]){
-    this.autorSeleccionado.urlImagen = urlImagen[0];
   }
 
   setImagePreview(urlImagen: string[]) {

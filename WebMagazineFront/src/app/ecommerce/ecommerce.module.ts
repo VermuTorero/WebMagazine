@@ -12,9 +12,6 @@ import { CoreModule } from '../core/core.module';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
 import { EcommerceRoutingModule } from './ecommerce-routing.module';
-import { SeccionesComponent } from './components/secciones/secciones.component';
-import { SeccionComponent } from './components/secciones/seccion/seccion.component';
-import { FormsModule } from '@angular/forms';
 
 
 
@@ -25,17 +22,14 @@ import { FormsModule } from '@angular/forms';
     ModalReceiptComponent,
     ProductItemComponent,
     ProductListComponent,
-    PrincipalEcommerceComponent,
-    SeccionesComponent,
-    SeccionComponent
+    PrincipalEcommerceComponent
   ],
   imports: [
     CommonModule,
     CoreModule,
     NgxPayPalModule,
     NgxSpinnerModule,
-    EcommerceRoutingModule,
-    FormsModule,
+    EcommerceRoutingModule
   ],
   exports: [
     PrincipalEcommerceComponent
