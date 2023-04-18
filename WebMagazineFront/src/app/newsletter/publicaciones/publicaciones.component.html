@@ -1,5 +1,6 @@
-<div class="inicio row p-0 m-0">
-  <div class="col-9 p-0 m-0">
+<!-- Seccion de inicio -->
+<section class="inicio row p-0 m-0">
+  <section class="carrousel col-9 p-0 m-0">
     <div id="carouselExampleCaptions" class="carousel slide">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -37,36 +38,27 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
-  <div class="col-3 p-0 m-0">
+  </section>
+  <section class="promo col-3 p-0 m-0">
     <img src="../assets/suscribete.jpg" alt="" class="img-fluid p-0 m-0">
-  </div>
-</div>
+  </section>
+</section>
 
-
-<div class="text-center m-2">
-  <a class="btn btn-success mx-2" href="formulario">Añadir publicación</a>
-  <a class="btn btn-warning mx-2" href="tags">Editar etiquetas</a>
-  <a class="btn btn-info mx-2" href="tags">Administrar usuarios</a>
-  <a class="btn btn-dark mx-2" href="tags">Administrar landing-pages</a>
-</div>
-
-
-<div class="my-4 py-2 mx-4">
+<!-- Seccion ultimos articulos -->
+<section class="my-4 py-2 mx-4">
   <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
   <hr>
   <div *ngFor="let publicacion of publicaciones" style="display:inline-block;" class="card row col-12 col-md-4 col-xxl-3">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
-</div>
+</section>
 
-
-
-<div class="my-4 py-2 mx-4">
+<!-- Seccion articulos destacados -->
+<section class="my-4 py-2 mx-4">
   <h3 class="row pt-4 mx-2 my-4"><b>Destacados</b></h3>
   <hr>
   <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
     class="row col-12 col-md-4 col-xxl-3 card">
     <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
   </div>
-</div>
+</section>
