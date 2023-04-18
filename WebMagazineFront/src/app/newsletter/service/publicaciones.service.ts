@@ -5,7 +5,6 @@ import { Publicacion } from '../models/publicacion';
 import { environment } from 'src/environments/enviroment';
 import { Autor } from '../models/autor';
 import { Tag } from '../models/Tag';
-import { Categoria } from '../models/Categoria';
 
 @Injectable({
   providedIn: 'root'
@@ -38,9 +37,6 @@ export class PublicacionesServiceService {
   getTagsFromPublicacion(publicacion: any): Observable<Tag[]> {
     return this.http.get<any>(publicacion._links.tags.href).pipe(map(response=>response._embedded.tags))
     ;
-  }
-  getCategoriaFromPublicacion(publicacion: any): Observable<Categoria> {
-    return this.http.get<any>(publicacion._links.categoria.href);
   }
   
   getPublicacion(titulo: string): Observable<Publicacion>{

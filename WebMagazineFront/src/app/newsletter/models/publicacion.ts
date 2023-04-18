@@ -18,7 +18,6 @@ export class Publicacion {
     tags: any[] = [];
     imagenPreviewUrl: string ="";
     provincia: string = "";
-    categoria: any;
 
     constructor(){
 
