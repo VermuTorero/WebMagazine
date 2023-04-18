@@ -48,6 +48,9 @@ public class Publicacion {
 	
 	private String provincia;
 	
+	@ManyToOne
+	private Categoria categoria;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -187,4 +190,14 @@ public class Publicacion {
 		this.provincia = provincia;
 	}
 
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+
+	
 }

@@ -9,7 +9,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Autor extends Usuario {
-
+	
+	private String urlImagen;
 
 	public Autor() {
 		super();
@@ -24,6 +25,12 @@ public class Autor extends Usuario {
 		this.setSuscripcion(suscripcion);
 		this.setLikes(likes);
 		this.setCafes(cafes);
+	}
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 
 }
