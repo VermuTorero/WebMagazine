@@ -19,11 +19,12 @@ export class PublicacionesComponent implements OnInit {
   ngOnInit() {
     this.getPublicaciones();
     this.getPublicacionesDestacadas();
+    
   }
 
   getPublicaciones(): Observable<Publicacion[]> {
     this.publicaciones = [];
-    this.publicacionesService.getPublicaciones().subscribe(publicaciones => {
+    this.publicacionesService.getPublicacionesRecientes().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
       
       this.publicaciones.forEach(publicacion => {

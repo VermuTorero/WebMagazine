@@ -13,6 +13,7 @@ import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
 import { Lugar } from '../../models/Lugar';
 import { CategoriasServiceService } from '../../service/categorias.service';
+declare var $: any;
 import { Categoria } from '../../models/Categoria';
 
 const quill = new Quill('#editor', {
@@ -54,6 +55,7 @@ export class PublicacionFichaComponent implements OnInit {
   provinciaSeleccionada: string = "";
   categorias: Categoria[]= [];
   categoriaSeleccionada: Categoria = new Categoria();
+  fechaPublicacion: string = "";
 
   constructor(
     private router: Router,
@@ -66,8 +68,15 @@ export class PublicacionFichaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 4000
+      });
+    });
+
     this.publicacion.autor = new Autor();
     this.publicacion.categoria = new Categoria();
+    
     this.getTags();
     this.getAutores();
     this.getCategorias();
@@ -83,6 +92,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   ajustarEditor() {
+    
     setTimeout(() => {
       var quilEditor = document
         .getElementsByClassName('ql-editor')[0];
@@ -104,6 +114,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.getTagsPublicacion();
       this.getAutorPublicacion();
       this.getCategoriaPublicacion();
+      this.getFechaPublicacion();
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
@@ -127,17 +138,18 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.tagsSeleccionadas.forEach(tag => {
-      this.publicacion.tags.push(this.endpointTags + tag.id)
+      this.publicacion.tags.push(tag)
     });
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
-    this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
+    this.publicacion.autor = this.autorSeleccionado;
     this.publicacion.categoria = new Categoria();
-    this.publicacion.categoria = this.endpointCategorias + this.categoriaSeleccionada.id;
+    this.publicacion.categoria = this.categoriaSeleccionada;
     this.publicacion.provincia = this.provinciaSeleccionada;
     this.descargarTxt();
+    console.log("PUBLICACION A ENVIAR", this.publicacion)
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
-
+      console.log("PUBLICACION REGISTRADA", publicacion);
     });
 
   }
@@ -150,10 +162,11 @@ export class PublicacionFichaComponent implements OnInit {
     });
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
     this.publicacion.autor = new Autor();
-    this.publicacion.autor = this.endpointAutores + this.autorSeleccionado.id;
+    this.publicacion.autor = this.autorSeleccionado;
     this.publicacion.categoria = new Categoria();
-    this.publicacion.categoria = this.endpointCategorias + this.categoriaSeleccionada.id;
+    this.publicacion.categoria = this.categoriaSeleccionada;
     this.publicacion.provincia = this.provinciaSeleccionada;
+    this.publicacion.tags = this.tagsSeleccionadas;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.publicacion = publicacionModicada;
       this.getPublicacion();
@@ -280,6 +293,12 @@ export class PublicacionFichaComponent implements OnInit {
       this.categoriaSeleccionada = categoria;
      
     })
+  }
+  getFechaPublicacion(){
+    if (this.publicacion.fechaPublicacion) {
+      this.fechaPublicacion = this.publicacion.fechaPublicacion.split("T")[0];
+    }
+    
   }
 
   

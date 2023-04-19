@@ -41,6 +41,7 @@ export class PublicacionCompletaComponent implements OnInit {
     this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
       console.log("PUBLICACION RECIBIDA", publicacion)
       this.publicacion = publicacion;
+      this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
       this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
         this.publicacion.autor = autor;
@@ -108,6 +109,7 @@ export class PublicacionCompletaComponent implements OnInit {
       this.router.navigate(['#'])
     });
   }
-
-
+  getFechaPublicacion(){
+    this.publicacion.fechaPublicacion = this.publicacion.fechaPublicacion.split("T")[0];
+  }
 }

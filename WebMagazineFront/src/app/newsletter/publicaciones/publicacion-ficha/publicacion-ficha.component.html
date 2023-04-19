@@ -122,9 +122,9 @@
             </div>
 
             <!-- Editor de texto Quill-->
-            <div class="col-11 editor-container">
-                <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="textoQuill"
-                    id="textContent"></quill-editor>
+            <div class="col-11 editor-container" id="editor">
+                <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor"
+                    id="editor"></quill-editor>
             </div>
             <!--- <textarea class="form-control cuadro-texto" rows=10 placeholder="Escriba aqui el párrafo que desea insertar" [(ngModel)]="texto"></textarea>-->
         </form>
