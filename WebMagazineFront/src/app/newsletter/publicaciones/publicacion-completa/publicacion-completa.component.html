@@ -21,7 +21,8 @@
                 <!-- Tags y lugar -->
                 <section class="col-5 text-center">
                     <div class="row justify-content-center">
-                        <div *ngFor="let tag of publicacion.tags" class="tag m-2" [routerLink]="['/publicaciones-tag/'+ tag.tagNombre]" >
+                        <div *ngFor="let tag of publicacion.tags" class="tag m-2"
+                            [routerLink]="['/publicaciones-tag/'+ tag.tagNombre]">
                             <p>{{tag.tagNombre}}</p>
                         </div>
                     </div>
@@ -71,6 +72,9 @@
             <!-- Contenido de la publicacion -->
             <section class="body" id="body">
             </section>
+            <div class="text-center">
+                <p>Publicado el {{publicacion.fechaPublicacion}}</p>
+            </div>
             <div class="row justify-content-center">
                 <a class="btn btn-warning m-2" style="width: fit-content;"
                     href="formulario/{{publicacion.id}}">Modificar

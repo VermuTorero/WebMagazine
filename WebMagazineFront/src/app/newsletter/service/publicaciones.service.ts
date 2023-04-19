@@ -19,12 +19,16 @@ export class PublicacionesServiceService {
     return this.http.get<any>(this.endpoint + "/publicaciones").pipe(map(response=>response._embedded.publicaciones))
   }
 
+  getPublicacionesRecientes(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes").pipe(map(response=>response._embedded.publicaciones))
+  }
+
   getPublicacionesDestacadas(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesDestacadas").pipe(map(response=>response._embedded.publicaciones))
   }
 
   postPublicacion(publicacion: Publicacion): Observable<Publicacion>{
-    return this.http.post<any>(this.endpoint + "/publicaciones", publicacion).pipe(map(response=>response.publicacion))
+    return this.http.post<any>(this.endpoint + "/publicaciones/search/postPublicacion", publicacion).pipe(map(response=>response.publicacion))
   }
 
   getId(p: any): string {
@@ -53,7 +57,7 @@ export class PublicacionesServiceService {
     return this.http.delete(this.endpoint + "/publicaciones/" + id);
   }
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
-    return this.http.patch<any>(this.endpoint + "/publicaciones/" + publicacion.id, publicacion).pipe(map(response=>response.publicacion));
+    return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion).pipe(map(response=>response.publicacion));
   }
   getPublicacionesCerca(publicacion: Publicacion): Observable<Publicacion[]>{
     return this.http.post<any>(this.endpoint + "/publicaciones/search/publicacionesCerca", publicacion).pipe(map(response=>response._embedded.publicaciones))

@@ -27,6 +27,12 @@ public class Tag {
 	public void setTagNombre(String tagNombre) {
 		this.tagNombre = tagNombre;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	
 }

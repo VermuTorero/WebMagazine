@@ -18,4 +18,5 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByProvinciaAndIdNot(String provincia, Long id);
 	Publicacion findByTitulo(String titulo);
 	
+	
 }
