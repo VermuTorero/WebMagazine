@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,12 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String categoriaNombre;
+	@Column(length = 1000)
+	private String categoriaDescripcion;
+	private String urlImagen;
+	
 	public Categoria() {
 		super();
 	}
@@ -36,6 +42,21 @@ public class Categoria {
 	public void setCategoriaNombre(String categoriaNombre) {
 		this.categoriaNombre = categoriaNombre;
 	}
-	
+
+	public String getCategoriaDescripcion() {
+		return categoriaDescripcion;
+	}
+
+	public void setCategoriaDescripcion(String categoriaDescripcion) {
+		this.categoriaDescripcion = categoriaDescripcion;
+	}
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
+	}
 	
 }

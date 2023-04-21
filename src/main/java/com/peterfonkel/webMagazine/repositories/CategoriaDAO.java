@@ -12,4 +12,5 @@ import com.peterfonkel.webMagazine.entities.Categoria;
 public interface CategoriaDAO extends JpaRepository<Categoria, Long> {
 	@Override
 	List<Categoria> findAll();
+	Categoria findByCategoriaNombre(String categoriaNombre);
 }

@@ -1,0 +1,27 @@
+<div class="row my-4 py-2 mx-4">
+  <div class="col-12 col-lg-6">
+    <img class="img-fluid mt-4 pt-4" src="../../../../assets/inicio3.jpg" alt="">
+  </div>
+  <div *ngIf="!edicion" class="col-12 col-lg-6">
+    <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
+    <h3 class="row mx-2 my-4 text-center">
+      <p>{{categoria.categoriaDescripcion}}</p>
+    </h3>
+    <div class="text-center">
+      <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
+    </div>
+  </div>
+  <div *ngIf="edicion" class="col-12 col-lg-6">
+    <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre">
+    <textarea rows="6" maxlength="1000" class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaDescripcion"></textarea>
+    <div class="text-center">
+      <button class="btn btn-warning mb-2" (click)="cerrarEdicion()">GUARDAR</button>
+    </div>
+  </div>
+
+  <hr>
+  <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
+    class="card row col-12 col-md-4 col-xxl-3">
+    <app-publicacion [publicacion]="publicacion"></app-publicacion>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
 import { LugaresServiceService } from '../../service/lugares.service';
 import { TagsServiceService } from '../../service/tags.service';
+import { CategoriasServiceService } from '../../service/categorias.service';
 
 @Component({
   selector: 'app-publicacion-completa',
@@ -25,6 +26,7 @@ export class PublicacionCompletaComponent implements OnInit {
     private publicacionesService: PublicacionesServiceService,
     private lugarService: LugaresServiceService,
     private tagService: TagsServiceService,
+    private categoriaService: CategoriasServiceService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -58,6 +60,10 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.lugar = lugar;
         this.publicacion.lugar.id = this.lugarService.getId(lugar);
         this.getPublicacionesCerca();
+      })
+      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+        this.publicacion.categoria = categoria;
+        this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
       
       /*Formato de los videos de Youtube*/

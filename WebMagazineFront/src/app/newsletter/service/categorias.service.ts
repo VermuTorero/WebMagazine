@@ -19,6 +19,9 @@ export class CategoriasServiceService {
   getCategoria(idCategoria: string): Observable<Categoria>{
     return this.http.get<any>(this.endpoint + "/categorias/" + idCategoria);
   }
+  getCategoriaByCategoriaNombre(categoriaNombre: string): Observable<Categoria>{
+    return this.http.get<any>(this.endpoint + "/categorias/search/categoriaByCategoriaNombre/" + categoriaNombre);
+  }
   getId(p: any): string {
     let url = p._links.self.href;
     let trozos = url.split("/");

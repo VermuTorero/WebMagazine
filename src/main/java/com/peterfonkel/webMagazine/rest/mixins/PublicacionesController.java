@@ -56,7 +56,6 @@ public class PublicacionesController {
 		this.publicacionDAO = publicacionDAO;
 	}
 	
-	@Cacheable("myCache")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
@@ -82,7 +81,6 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
 	}
 	
-	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
@@ -92,7 +90,15 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
 	
-	@Cacheable("myCache")
+	@GetMapping(path = "publicacionesCategoria/{categoriaNombre}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesCategoria(PersistentEntityResourceAssembler assembler,
+			@PathVariable("categoriaNombre") String lugarNombre, @PathVariable("categoriaNombre") String categoriaNombre) {
+		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
+		listadoPublicacionesCerca = publicacionDAO.findByCategoria_categoriaNombre(categoriaNombre);
+		return assembler.toCollectionModel(listadoPublicacionesCerca);
+	}
+	
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
@@ -127,7 +133,6 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
 	}
 	
-	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
@@ -135,7 +140,6 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
-	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
@@ -143,7 +147,6 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
-	@Cacheable("myCache")
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
@@ -159,7 +162,6 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@Cacheable("myCache")
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	

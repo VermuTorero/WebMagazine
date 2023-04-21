@@ -10,10 +10,11 @@ import { PublicacionCompletaComponent } from './publicaciones/publicacion-comple
 import { PublicacionFichaComponent } from './publicaciones/publicacion-ficha/publicacion-ficha.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/publicaciones-tag.component';
-import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 import { TagsComponent } from './publicaciones/tags/tags.component';
 import { TagComponent } from './publicaciones/tags/tag/tag.component';
 import { LugarComponent } from './publicaciones/tags/lugar/lugar.component';
+import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
+import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LugarComponent } from './publicaciones/tags/lugar/lugar.component';
     PublicacionFichaComponent,
     PublicacionesTagComponent,
     PublicacionesProvinciaComponent,
+    PublicacionesCategoriaComponent,
     TagsComponent,
     TagComponent,
     LugarComponent
