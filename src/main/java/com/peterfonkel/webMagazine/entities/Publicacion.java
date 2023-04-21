@@ -27,7 +27,7 @@ public class Publicacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	
+	@Column(unique = true)
 	private String titulo;
 	
 	private String subtitulo;

@@ -4,22 +4,36 @@ package com.peterfonkel.webMagazine;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.hibernate.cfg.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
+import com.peterfonkel.webMagazine.entities.Lugar;
+import com.peterfonkel.webMagazine.repositories.LugarDAO;
 
 
 
 @Configuration
 @ComponentScan("peterfonkel")
 public class ClaseConfiguracionJava {
+	@Value("${provincias}") 
+	private String[] provincias;
+
+	@Autowired
+	LugarDAO lugarDAO;
 	
 	@Bean
 	   public CacheManager cacheManager() {
@@ -41,5 +55,17 @@ public class ClaseConfiguracionJava {
 
 		return new CorsFilter(source);
 	}
-
+	
+    @Bean
+    public void setProvincias() {
+    	if (lugarDAO.findAll().size()<1) {	
+    		for (String provincia : provincias) {
+    			Lugar lugar = new Lugar();
+    			provincia = provincia.replaceAll("'", "");
+				lugar.setLugarNombre(provincia);
+				lugarDAO.save(lugar);
+			}
+		}
+    }
+    
 }

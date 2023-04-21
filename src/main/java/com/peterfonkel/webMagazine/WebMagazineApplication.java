@@ -22,9 +22,7 @@ public class WebMagazineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WebMagazineApplication.class, args);
 		System.out.println("Iniciando aplicacion Web Magazine");
-		List<Like> likes = new ArrayList<Like>();
-		List<Cafe> cafes = new ArrayList<Cafe>();
-		Usuario usuarioPrueba = new Usuario("Paco","Perez","Lopez","38", "premium",likes , cafes);
+
 	}
 
 }
