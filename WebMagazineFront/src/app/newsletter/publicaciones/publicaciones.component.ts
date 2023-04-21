@@ -30,7 +30,6 @@ export class PublicacionesComponent implements OnInit {
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
       });
-      console.log("PUBLICACIONES CON ID", this.publicaciones);
     })
     return of();
   }
@@ -42,7 +41,6 @@ export class PublicacionesComponent implements OnInit {
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
       });
-      console.log("PUBLICACIONES DESTACADAS CON ID", this.publicaciones);
     })
     return of();
   }

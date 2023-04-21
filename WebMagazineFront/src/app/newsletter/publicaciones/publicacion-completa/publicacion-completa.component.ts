@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
-import { AutoresServiceService } from '../../service/autores.service';
+import { LugaresServiceService } from '../../service/lugares.service';
 import { TagsServiceService } from '../../service/tags.service';
 
 @Component({
@@ -17,18 +17,20 @@ export class PublicacionCompletaComponent implements OnInit {
   id: string = "";
   publicacionesCerca: Publicacion[] = [];
   publicacionesRelacionadas: Publicacion[] = [];
+  fechaFormateada: string = "";
   
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
+    private lugarService: LugaresServiceService,
+    private tagService: TagsServiceService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.getTitulo();
     this.getPublicacion();
-    
-    
+  
   }
 
   getTitulo(): void {
@@ -39,7 +41,6 @@ export class PublicacionCompletaComponent implements OnInit {
   getPublicacion(): void {
 
     this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
-      console.log("PUBLICACION RECIBIDA", publicacion)
       this.publicacion = publicacion;
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
@@ -48,10 +49,16 @@ export class PublicacionCompletaComponent implements OnInit {
       })
       this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
         this.publicacion.tags = tags;
-        console.log("TAGS: ", this.publicacion.tags)
+        this.publicacion.tags.forEach(tag=> {
+          tag.id = this.tagService.getId(tag);
+        });
+        this.getPublicacionesRelacionadas();
       })
-      console.log(this.publicacion);
-      
+      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+        this.publicacion.lugar = lugar;
+        this.publicacion.lugar.id = this.lugarService.getId(lugar);
+        this.getPublicacionesCerca();
+      })
       
       /*Formato de los videos de Youtube*/
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video"allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
@@ -72,14 +79,13 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
       this.showPublicacion();
-      this.getPublicacionesCerca();
-      this.getPublicacionesRelacionadas();
+ 
+      
     })
   }
   getPublicacionesCerca(){
-    this.publicacionesService.getPublicacionesCerca(this.publicacion).subscribe(publicacionesCerca=>{
+    this.publicacionesService.getPublicacionesCerca(this.publicacion.lugar.lugarNombre, this.publicacion.id).subscribe(publicacionesCerca=>{
       this.publicacionesCerca = publicacionesCerca;
-      console.log("PUBLICACIONES CERCA:", this.publicacionesCerca)
       this.publicacionesCerca.forEach(publicacionCerca => {
         publicacionCerca.id = this.publicacionesService.getId(publicacionCerca);
       });
@@ -89,7 +95,6 @@ export class PublicacionCompletaComponent implements OnInit {
   getPublicacionesRelacionadas(){
     this.publicacionesService.getPublicacionesRelacionadas(this.publicacion.id).subscribe(publicacionesRelacionadas=>{
       this.publicacionesRelacionadas= publicacionesRelacionadas;
-      console.log("PUBLICACIONES RELACIONADAS:", this.publicacionesRelacionadas)
       this.publicacionesRelacionadas.forEach(publicacionRelacionada => {
         publicacionRelacionada.id = this.publicacionesService.getId(publicacionRelacionada);
       });
@@ -110,6 +115,6 @@ export class PublicacionCompletaComponent implements OnInit {
     });
   }
   getFechaPublicacion(){
-    this.publicacion.fechaPublicacion = this.publicacion.fechaPublicacion.split("T")[0];
+    this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
   }
 }

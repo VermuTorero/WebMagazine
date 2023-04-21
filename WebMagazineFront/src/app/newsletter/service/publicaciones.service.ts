@@ -6,6 +6,7 @@ import { environment } from 'src/environments/enviroment';
 import { Autor } from '../models/autor';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
+import { Lugar } from '../models/Lugar';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,9 @@ export class PublicacionesServiceService {
   getCategoriaFromPublicacion(publicacion: any): Observable<Categoria> {
     return this.http.get<any>(publicacion._links.categoria.href);
   }
-  
+  getLugarFromPublicacion(publicacion: any): Observable<Lugar> {
+    return this.http.get<any>(publicacion._links.lugar.href);
+  } 
   getPublicacion(titulo: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTitulo/" + titulo)
   }
@@ -59,8 +62,8 @@ export class PublicacionesServiceService {
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
     return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion).pipe(map(response=>response.publicacion));
   }
-  getPublicacionesCerca(publicacion: Publicacion): Observable<Publicacion[]>{
-    return this.http.post<any>(this.endpoint + "/publicaciones/search/publicacionesCerca", publicacion).pipe(map(response=>response._embedded.publicaciones))
+  getPublicacionesCerca(lugarNombre: string, idPublicacion: string): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCerca/" + lugarNombre + "/" + idPublicacion).pipe(map(response=>response._embedded.publicaciones))
   }
   getPublicacionesRelacionadas(id: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRelacionadas/" + id).pipe(map(response=>response._embedded.publicaciones))
@@ -68,7 +71,7 @@ export class PublicacionesServiceService {
   getPublicacionesByTag(tagNombre: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByTag/" + tagNombre).pipe(map(response=>response._embedded.publicaciones))
   }
-  getPublicacionesByProvincia(provincia: string): Observable<Publicacion[]>{
-    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugar/" + provincia).pipe(map(response=>response._embedded.publicaciones))
+  getPublicacionesByLugar(lugarNombre: string): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugar/" + lugarNombre).pipe(map(response=>response._embedded.publicaciones))
   }
 }

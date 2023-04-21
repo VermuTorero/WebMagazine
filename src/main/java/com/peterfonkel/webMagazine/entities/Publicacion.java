@@ -46,7 +46,8 @@ public class Publicacion {
 	
 	private String imagenPreviewUrl;
 	
-	private String provincia;
+	@ManyToOne
+	private Lugar lugar;
 	
 	@ManyToOne
 	private Categoria categoria;
@@ -182,12 +183,12 @@ public class Publicacion {
 		this.imagenPreviewUrl = imagenPreviewUrl;
 	}
 
-	public String getProvincia() {
-		return provincia;
+	public Lugar getLugar() {
+		return lugar;
 	}
 
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
+	public void setLugar(Lugar lugar) {
+		this.lugar = lugar;
 	}
 
 	public Categoria getCategoria() {

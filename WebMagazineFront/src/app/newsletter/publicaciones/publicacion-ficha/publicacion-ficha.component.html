@@ -3,26 +3,57 @@
     <!-- Publicacion -->
 
     <form action="" class="m-2">
-
         <!-- Titulo -->
-        <div class="row m-2 titulo">
-            <div class="col-3 m-2"></div>
-            <div class="m-2 col-8">
-                <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                    [(ngModel)]="publicacion.titulo" placeholder="Titulo"></textarea>
-            </div>
+        <div class="row m-2 titulo justify-content-center">
+
+            <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo" maxlength="100"></textarea>
+
         </div>
 
         <!-- Descripcion -->
-        <div class="row descripcion-container m-4 p-4">
+        <!-- <div class="row descripcion-container m-4 p-4">
             <div class="col-8 m-2">
-                <textarea class="row text-descripcion" type="text" name="subtitulo" rows="2"
-                    [(ngModel)]="publicacion.subtitulo"
+                <h4><b>Descripción del articulo para la preview</b></h4>
+                <textarea class="row text-descripcion mt-4" type="text" name="subtitulo" rows="3"
+                   maxlength="250" [(ngModel)]="publicacion.subtitulo"
                     placeholder="Descripción de la publicación (para preview)"></textarea>
             </div>
-            <div class="col-3 btn btn-primary m-3 boton-img-preview" data-bs-toggle="modal"
-                data-bs-target="#imagenPreviewModal">Definir imagen de la preview</div>
+            <div class="col-3">
+                <div *ngIf="publicacion.imagenPreviewUrl" class="text-center">
+                    <div class="col-3 btn btn-primary m-3 boton-img-preview" data-bs-toggle="modal"
+                        data-bs-target="#imagenPreviewModal">Cambiar imagen de la preview
+                    </div>
+                    <img class="img-fluid" src="{{imageUrl}}" alt="">
+                </div>
+            </div>
+            <div *ngIf="!publicacion.imagenPreviewUrl" class="col-3 btn btn-primary m-3 boton-img-preview"
+                data-bs-toggle="modal" data-bs-target="#imagenPreviewModal">Definir imagen de la preview
+            </div>
+        </div> -->
+        <div class="row align-items-center justify-content-center my-4">
+            <div class="col-12 col-lg-3 publicacion-preview">
+                <div *ngIf="imageUrl" class="card-image">
+                    <img src="{{imageUrl}}" class="img-card img-fluid w-100 my-2" alt="" data-bs-toggle="modal"
+                        data-bs-target="#imagenPreviewModal">
+                </div>
+                <div *ngIf="!imageUrl" class="card-image">
+                    <img src="../../../../assets/no-imagen.png" class="img-card img-fluid w-100 my-2" alt="" data-bs-toggle="modal"
+                        data-bs-target="#imagenPreviewModal">
+                </div>
+                <div class="card-body">
+                    <div style="display:block;">
+                        <h5 class="card-title text-center m-1 " style="height:5vh;"><b>{{publicacion.titulo}}</b></h5>
+                        <div class="card-text text-center">
+                            <textarea class="row text-descripcion mt-4 mx-1" type="text" name="subtitulo" rows="3"
+                                maxlength="250" [(ngModel)]="publicacion.subtitulo"
+                                placeholder="Descripción de la publicación (para preview)"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <div class="row">
             <!-- Autor -->
@@ -31,14 +62,15 @@
                     <p class="col-3 m-1">Autor:</p>
                     <div *ngIf="publicacion.autor" class="col-7 m-2">
                         <select name="autor" id="autor" [(ngModel)]="autorSeleccionado.id">
-                            <option value="{{publicacion.autor}}" selected disabled>{{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</option>
+                            <option value="{{publicacion.autor}}" selected disabled>{{publicacion.autor.nombre}}
+                                {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</option>
                             <option *ngFor="let autor of autores" value="{{autor.id}}">
                                 {{autor.nombre}} {{autor.apellido1}} {{autor.apellido2}}</option>
                         </select>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Tags -->
             <div class="col-5 text-center">
                 <div class="justify-content-center row-tags">
@@ -70,11 +102,11 @@
             <div class="mx-4 col-2 row-lugar">
                 <div class="row">
                     <p class="col-3 m-1">Lugar:</p>
-                    <div class="col-7 m-2">
-                        <select name="provincia" id="provincia" [(ngModel)]="provinciaSeleccionada">
-                            <option value="{{publicacion.provincia}}" selected>{{publicacion.provincia}}</option>
-                            <option *ngFor="let provincia of provincias" value="{{provincia.provincia}}">
-                                {{provincia.provincia}}</option>
+                    <div *ngIf="publicacion.lugar" class="col-7 m-2">
+                        <select name="lugar" id="luagr" [(ngModel)]="lugarSeleccionado.id">
+                            <option value="{{publicacion.lugar.id}}" selected>{{publicacion.lugar.lugarNombre}}</option>
+                            <option *ngFor="let lugar of lugares" value="{{lugar.id}}">
+                                {{lugar.lugarNombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -86,7 +118,8 @@
                     <p class="col-3 m-1">Categoria:</p>
                     <div *ngIf="publicacion.categoria" class="col-7 m-2">
                         <select name="autor" id="categoria" [(ngModel)]="categoriaSeleccionada.id">
-                            <option value="{{publicacion.categoria}}" selected disabled>{{publicacion.categoria.categoriaNombre}}</option>
+                            <option value="{{publicacion.categoria}}" selected disabled>
+                                {{publicacion.categoria.categoriaNombre}}</option>
                             <option *ngFor="let categoria of categorias" value="{{categoria.id}}">
                                 {{categoria.categoriaNombre}}</option>
                         </select>
@@ -154,7 +187,7 @@
             <div class="modal-body">
                 <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
                     [(ngModel)]="htmlPodcast">
-                    <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -176,7 +209,7 @@
             <div class="modal-body">
                 <input type="text" name="" style="width: 95%" placeholder="Url del video de Youtube" rows=1
                     [(ngModel)]="htmlVideo">
-                    <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_youtube.png" alt="">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_youtube.png" alt="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -257,7 +290,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" (click)="getCroppedImageAutor()" data-bs-dismiss="modal">Aceptar</button>
+                <button class="btn btn-primary" (click)="getCroppedImageAutor()"
+                    data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

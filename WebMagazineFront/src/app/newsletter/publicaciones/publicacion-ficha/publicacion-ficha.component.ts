@@ -15,6 +15,7 @@ import { Lugar } from '../../models/Lugar';
 import { CategoriasServiceService } from '../../service/categorias.service';
 declare var $: any;
 import { Categoria } from '../../models/Categoria';
+import { LugaresServiceService } from '../../service/lugares.service';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -32,30 +33,36 @@ export class PublicacionFichaComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   id: string = "";
   publicacion: Publicacion = new Publicacion();
+  /* Variables para agregar contenido al editor Quill */
   texto: string = "";
   urlImagen: string = "";
   urlVideo: string = "";
   htmlPodcast: string = "";
   htmlVideo: string = "";
-  tags: Tag[] = [];
-  autores: Autor[] = [];
-  tagNueva: Tag = new Tag();
+  /* Fecha de la publicacion formateada */
+  fechaPublicacion: string = "";
+  /* Endpoints */
   endpointTags: string = environment.urlAPI + "/tags/";
   endpointAutores: string = environment.urlAPI + "/autores/";
   endpointCategorias: string = environment.urlAPI + "/categorias/";
-  autorSeleccionado: Autor = new Autor();
-  tagsSeleccionadas: Tag[] = [];
-  tagSeleccionada: Tag = new Tag();
+  /* Recortador de imagenes */
   imageUrl: string = "";
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
-  provinciasTipos: string[] = environment.provincias.provincias;
-  provincias: Lugar[] = [];
-  provinciaSeleccionada: string = "";
-  categorias: Categoria[]= [];
+  /* Tipos para las opciones del formulario */
+  lugares: Lugar[] = [];
+
+  categorias: Categoria[] = [];
+  tags: Tag[] = [];
+  tagNueva: Tag = new Tag();
+  autores: Autor[] = [];
+  /* Selecciones en el formulario */
+  autorSeleccionado: Autor = new Autor();
+  tagsSeleccionadas: Tag[] = [];
+  tagSeleccionada: Tag = new Tag();
+  lugarSeleccionado: Lugar = new Lugar();
   categoriaSeleccionada: Categoria = new Categoria();
-  fechaPublicacion: string = "";
 
   constructor(
     private router: Router,
@@ -64,35 +71,28 @@ export class PublicacionFichaComponent implements OnInit {
     private tagsService: TagsServiceService,
     private autoresService: AutoresServiceService,
     private imagenesService: ImagenesService,
-    private categoriasService: CategoriasServiceService
+    private categoriasService: CategoriasServiceService,
+    private lugaresService: LugaresServiceService
   ) { }
 
   ngOnInit(): void {
-    $(document).ready(function(){
-      $('.carousel').carousel({
-        interval: 4000
-      });
-    });
-
     this.publicacion.autor = new Autor();
     this.publicacion.categoria = new Categoria();
-    
     this.getTags();
     this.getAutores();
     this.getCategorias();
+    this.getLugares();
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id']
       if (this.id) {
         this.getPublicacion();
       }
       this.ajustarEditor();
-      this.formatLugares();
-    })
 
+    })
   }
 
   ajustarEditor() {
-    
     setTimeout(() => {
       var quilEditor = document
         .getElementsByClassName('ql-editor')[0];
@@ -110,11 +110,13 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacionesService.getPublicacionById(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
-      this.provinciaSeleccionada = publicacion.provincia;
+      this.lugarSeleccionado = publicacion.lugar;
+      this.imageUrl = this.publicacion.imagenPreviewUrl;
       this.getTagsPublicacion();
       this.getAutorPublicacion();
       this.getCategoriaPublicacion();
       this.getFechaPublicacion();
+      this.getLugarPublicacion();
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
@@ -145,7 +147,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.autor = this.autorSeleccionado;
     this.publicacion.categoria = new Categoria();
     this.publicacion.categoria = this.categoriaSeleccionada;
-    this.publicacion.provincia = this.provinciaSeleccionada;
+    this.publicacion.lugar = this.lugarSeleccionado;
     this.descargarTxt();
     console.log("PUBLICACION A ENVIAR", this.publicacion)
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
@@ -165,7 +167,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.autor = this.autorSeleccionado;
     this.publicacion.categoria = new Categoria();
     this.publicacion.categoria = this.categoriaSeleccionada;
-    this.publicacion.provincia = this.provinciaSeleccionada;
+    this.publicacion.lugar = this.lugarSeleccionado;
     this.publicacion.tags = this.tagsSeleccionadas;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.publicacion = publicacionModicada;
@@ -276,8 +278,8 @@ export class PublicacionFichaComponent implements OnInit {
 
   }
 
-  getCategorias(){
-    this.categoriasService.getCategorias().subscribe(categorias=>{
+  getCategorias() {
+    this.categoriasService.getCategorias().subscribe(categorias => {
       this.categorias = categorias;
       this.categorias.forEach(categoria => {
         categoria.id = this.categoriasService.getId(categoria);
@@ -285,23 +287,42 @@ export class PublicacionFichaComponent implements OnInit {
       console.log("CATEGORIAS RECIBIDAS: ", this.categorias)
     })
   }
-  getCategoriaPublicacion(){
-    this.publicacionesService.getCategoriaFromPublicacion(this.publicacion).subscribe(categoria=>{
+
+  getCategoriaPublicacion() {
+    this.publicacionesService.getCategoriaFromPublicacion(this.publicacion).subscribe(categoria => {
       categoria.id = this.categoriasService.getId(categoria);
       console.log("CATEG: ", categoria)
       this.publicacion.categoria = categoria;
       this.categoriaSeleccionada = categoria;
-     
+
     })
   }
-  getFechaPublicacion(){
+
+  getFechaPublicacion() {
     if (this.publicacion.fechaPublicacion) {
       this.fechaPublicacion = this.publicacion.fechaPublicacion.split("T")[0];
     }
-    
   }
 
-  
+  getLugares() {
+    this.lugaresService.getLugares().subscribe(lugares => {
+      this.lugares = lugares;
+      this.lugares.forEach(lugar => {
+        lugar.id = this.lugaresService.getId(lugar);
+      });
+    })
+  }
+
+  getLugarPublicacion() {
+    this.publicacionesService.getLugarFromPublicacion(this.publicacion).subscribe(lugar => {
+      lugar.id = this.lugaresService.getId(lugar);
+      console.log("LUG: ", lugar)
+      this.publicacion.lugar = lugar;
+      this.lugarSeleccionado = lugar;
+
+    })
+  }
+
   onSelectFile(event: any) {
 
     if (event.target.files && event.target.files[0]) {
@@ -312,7 +333,9 @@ export class PublicacionFichaComponent implements OnInit {
       }
       console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
+     
     }
+    console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
 
   getCroppedImage() {
@@ -327,13 +350,15 @@ export class PublicacionFichaComponent implements OnInit {
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
           console.log("URL IMG", url)
           setTimeout(() => {
+            console.log("URL IMAGEN SUBIDA: ", url)
             this.insertarImagenUrl(url);
-          }, 1200)
+          }, 2000)
         });
 
       }
     }, 'image/jpeg', 0.70)
   }
+
   getCroppedImageAutor() {
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
@@ -347,7 +372,7 @@ export class PublicacionFichaComponent implements OnInit {
           console.log("URL IMG", url)
           setTimeout(() => {
             this.insertarImagenAutorUrl(url);
-          }, 1200)
+          }, 2000)
         });
 
       }
@@ -365,11 +390,11 @@ export class PublicacionFichaComponent implements OnInit {
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
-          console.log("URL IMG", url)
           setTimeout(() => {
+            console.log("URL IMG", url)
             this.setImagePreview(url)
             url = []
-          }, 1200)
+          }, 2000)
         });
       }
     }, 'image/jpeg', 0.70)
@@ -381,22 +406,12 @@ export class PublicacionFichaComponent implements OnInit {
     this.imageUrl = "";
     this.imageName = "";
   }
-  insertarImagenAutorUrl(urlImagen: string[]){
+  
+  insertarImagenAutorUrl(urlImagen: string[]) {
     this.autorSeleccionado.urlImagen = urlImagen[0];
   }
 
   setImagePreview(urlImagen: string[]) {
     this.publicacion.imagenPreviewUrl = urlImagen[0];
   }
-
-  formatLugares() {
-    this.provincias = [];
-    this.provinciasTipos.forEach(provinciaNombre => {
-      let lugar = new Lugar();
-      lugar.provincia = provinciaNombre;
-      this.provincias.push(lugar);
-    });
-    console.log("Provincias", this.provincias);
-  }
-
 }

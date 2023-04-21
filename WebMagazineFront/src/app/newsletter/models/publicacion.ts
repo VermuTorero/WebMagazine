@@ -1,3 +1,4 @@
+import { Lugar } from "./Lugar";
 import { Tag } from "./Tag";
 import { Autor } from "./autor";
 import { Cafe } from "./cafe";
@@ -17,7 +18,7 @@ export class Publicacion {
     cafes: Cafe[] = [];
     tags: any[] = [];
     imagenPreviewUrl: string ="";
-    provincia: string = "";
+    lugar: Lugar = new Lugar();
     categoria: any;
 
     constructor(){

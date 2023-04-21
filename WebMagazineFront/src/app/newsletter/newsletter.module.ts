@@ -13,6 +13,7 @@ import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/pub
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 import { TagsComponent } from './publicaciones/tags/tags.component';
 import { TagComponent } from './publicaciones/tags/tag/tag.component';
+import { LugarComponent } from './publicaciones/tags/lugar/lugar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TagComponent } from './publicaciones/tags/tag/tag.component';
     PublicacionesTagComponent,
     PublicacionesProvinciaComponent,
     TagsComponent,
-    TagComponent
+    TagComponent,
+    LugarComponent
   ],
   imports: [
     CommonModule,

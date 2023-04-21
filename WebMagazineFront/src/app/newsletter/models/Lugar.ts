@@ -1,3 +1,4 @@
 export class Lugar {
-    provincia: string = "";
+    id: string = "";
+    lugarNombre: string = "";
 }

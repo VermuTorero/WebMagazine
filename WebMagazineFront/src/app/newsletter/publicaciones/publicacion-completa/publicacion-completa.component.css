@@ -15,8 +15,8 @@
     margin-right: 0%;
     display: flex;
     background-image: url(../../../../assets/fondo_periodico.jpg);
-   
 }
+
 
 .publicaciones-cerca{
     align-content: start;
@@ -30,6 +30,7 @@
     display: flex;
     border-width: 1;
     background-color: rgb(240, 240, 240);
+    height: fit-content !important
 }
 
 .fondo{
@@ -50,7 +51,7 @@
 }
 
 
-.provincia{
+.lugar{
     background-color: rgb(162, 235, 222);
     border-radius: 15px;
     height: 1.6rem;

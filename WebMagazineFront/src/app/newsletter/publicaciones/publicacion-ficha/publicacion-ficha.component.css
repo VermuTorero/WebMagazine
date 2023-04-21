@@ -122,6 +122,10 @@
     font-size: xx-large;
     width: 80%;
 }
+.text-titulo-card{
+    font-size: xx-large;
+    width: 80%;
+}
 
 .text-descripcion{
     font-size: large;
@@ -147,7 +151,17 @@
 .foto-autor{
     width: 70px;
 }
-
+.publicacion-preview{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+.text-descripcion{
+    height: 200px;
+}
+.card-title{
+    height: fit-content !important
+}
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {

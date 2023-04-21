@@ -26,7 +26,7 @@ export class PublicacionesProvinciaComponent implements OnInit{
   }
 
   getPublicacionesByLugar(){
-    this.publicacionesService.getPublicacionesByProvincia(this.provincia).subscribe(publicacionesProvincia=>{
+    this.publicacionesService.getPublicacionesByLugar(this.provincia).subscribe(publicacionesProvincia=>{
       this.publicaciones = publicacionesProvincia;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);

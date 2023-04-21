@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
+import com.peterfonkel.webMagazine.entities.Lugar;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
 import com.peterfonkel.webMagazine.repositories.AutorDAO;
@@ -82,10 +83,12 @@ public class PublicacionesController {
 	}
 	
 	@Cacheable("myCache")
-	@PostMapping(path = "publicacionesCerca")
+	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacionRelacionada) {
-		List<Publicacion> listadoPublicacionesCerca = publicacionDAO.findByProvinciaAndIdNot(publicacionRelacionada.getProvincia(), publicacionRelacionada.getId());
+	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
+			@PathVariable("lugarNombre") String lugarNombre, @PathVariable("idPublicacion") Long idPublicacion) {
+		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
+		listadoPublicacionesCerca = publicacionDAO.findByLugar_LugarNombreAndIdNot(lugarNombre,idPublicacion);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
 	
@@ -133,10 +136,10 @@ public class PublicacionesController {
 	}
 	
 	@Cacheable("myCache")
-	@GetMapping(path = "publicacionesByLugar/{provincia}")
+	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("provincia") String provincia) {	
-		List<Publicacion> listadoPublicacionesLugar = publicacionDAO.findByProvincia(provincia);
+	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
+		List<Publicacion> listadoPublicacionesLugar = publicacionDAO.findByLugar_LugarNombre(lugarNombre);
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	

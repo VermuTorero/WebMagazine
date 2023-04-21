@@ -26,10 +26,10 @@
                             <p>{{tag.tagNombre}}</p>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center lugar">
-                        <a class="link" href="publicaciones-provincia/{{publicacion.provincia}}">
-                            <div class="provincia">
-                                <p class="text-center">&nbsp;&nbsp;{{publicacion.provincia}}&nbsp;&nbsp;</p>
+                    <div *ngIf="publicacion.lugar" class="row d-flex justify-content-center lugar">
+                        <a class="link" href="publicaciones-provincia/{{publicacion.lugar.lugarNombre}}">
+                            <div  class="lugar">
+                                <p class="text-center">&nbsp;&nbsp;{{publicacion.lugar.lugarNombre}}&nbsp;&nbsp;</p>
                             </div>
                         </a>
                     </div>
@@ -73,7 +73,7 @@
             <section class="body" id="body">
             </section>
             <div class="text-center">
-                <p>Publicado el {{publicacion.fechaPublicacion}}</p>
+                <p>Publicado el {{fechaFormateada}}</p>
             </div>
             <div class="row justify-content-center">
                 <a class="btn btn-warning m-2" style="width: fit-content;"
@@ -91,7 +91,7 @@
             <div class="col-12 p-3 pt-4 text-center">
                 <h3><strong>Cerca de aquí...</strong></h3>
             </div>
-            <div class="col-12">
+            <div class="col-12 preview">
                 <div *ngFor="let publicacion of publicacionesCerca" style="display:inline-block;" class="card">
                     <app-publicacion [publicacion]="publicacion"></app-publicacion>
                 </div>
@@ -103,7 +103,7 @@
             <div class="col-12 p-3 text-center mt-4">
                 <h3><strong>Relacionadas</strong></h3>
             </div>
-            <div class="col-12">
+            <div class="col-12 preview">
                 <div *ngFor="let publicacion of publicacionesRelacionadas" style="display:inline-block;" class="card">
                     <app-publicacion [publicacion]="publicacion"></app-publicacion>
                 </div>

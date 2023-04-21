@@ -12,5 +12,12 @@
 }
 .publicacion-preview{
     border-radius: 0;
+    height: auto !important
 }
 /* rgb(255,109,0,255); */
+.card-title{
+    height: fit-content !important
+}
+.card-text{
+    overflow:auto;
+}
