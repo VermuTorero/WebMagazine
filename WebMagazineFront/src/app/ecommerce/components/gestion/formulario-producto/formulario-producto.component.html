@@ -1,33 +1,103 @@
 <form class="m-3">
-    <div class="form-row">
-      <div class="form-group col-md-6 m-1">
-        <label for="inputEmail4">Nombre</label>
-        <input type="text" class="form-control" id="inputEmail4" >
-      </div>
-      <div class="form-group col-md-6 m-1">
-        <label for="inputPassword4">Descripcion Corta</label>
-        <input type="text" class="form-control" id="inputPassword4">
-      </div>
+  <div class="form-row">
+    <div class="form-group col-md-6 m-1">
+      <label for="inputEmail4">Nombre</label>
+      <input type="text" class="form-control" id="inputEmail4" />
     </div>
-    <div class="form-group m-1">
-      <label for="inputAddress">Descripcion Larga</label>
-      <input type="text" class="form-control" id="inputAddress">
+    <div class="form-group col-md-6 m-1">
+      <label for="inputPassword4">Descripcion Corta</label>
+      <input type="text" class="form-control" id="inputPassword4" />
     </div>
-    <div class="form-row">
-      <div class="form-group col-md-6 m-1">
-        <label for="inputCity">Precio</label>
-        <input type="text" class="form-control" id="inputCity">
-      </div>
-      <div class="form-group col-md-4 m-1">
-        <label for="inputState">Sección</label>
-        <select id="inputState" class="form-control">
-          <option selected>Elige...</option>
-          <option>...</option>
-        </select>
-      </div>
+  </div>
+  <div class="form-group m-1">
+    <label for="inputAddress">Descripcion Larga</label>
+    <input type="text" class="form-control" id="inputAddress" />
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6 m-1">
+      <label for="inputCity">Precio</label>
+      <input type="text" class="form-control" id="inputCity" />
     </div>
-    <div class="row ms-1 mt-3 mb-3 justify-content-around">
-        <DIV class="col"><button class="btn btn-success">CREAR PRODUCTO</button></DIV>
-        <DIV class="col"><button routerLink="/gestion"  class="btn btn-primary">VOLVER</button></DIV>
+    <div class="form-group col-md-4 m-1">
+      <label for="inputState">Sección</label>
+      <select id="inputState" class="form-control">
+        <option selected>Elige...</option>
+        <option>...</option>
+      </select>
     </div>
-  </form>
+  </div>
+  <!-- Imagen -->
+  <div class="col-md-4">
+    <div *ngIf="nuevoProducto.imageUrl" class="card-image">
+      <img
+        src="{{ nuevoProducto.imageUrl }}"
+        class="img-card img-fluid"
+        alt=""
+        data-bs-toggle="modal"
+        data-bs-target="#imagenPreviewModal"
+      />
+    </div>
+    <div *ngIf="!nuevoProducto.imageUrl" class="card-image">
+      <img
+        src="../../../../assets/no-imagen.png"
+        class="img-card img-fluid w-100 my-2"
+        alt=""
+        data-bs-toggle="modal"
+        data-bs-target="#imagenPreviewModal"
+      />
+    </div>
+  </div>
+  <!-- Botones -->
+  <div class="row ms-1 mt-3 mb-3 justify-content-around">
+    <DIV class="col"
+      ><button class="btn btn-success">CREAR PRODUCTO</button></DIV
+    >
+    <DIV class="col"
+      ><button routerLink="/gestion" class="btn btn-primary">
+        VOLVER
+      </button></DIV
+    >
+  </div>
+</form>
+
+<!-- Modal Agregar Imagen al producto-->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <section>
+                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                </section>
+                <section *ngIf="imageUrl">
+                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                    <!-- <div class="mt-2">
+                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
+                    </div> -->
+                </section>
+                <section class="my-4">
+                    <label for="" class="mx-2">Tamaño</label>
+                    <select type="text" [(ngModel)]="anchoImagen">
+                        <option value="100">Ancho 100%</option>
+                        <option value="75">Ancho 75%</option>
+                        <option value="50">Ancho 50%</option>
+                        <option value="35">Ancho 35%</option>
+                    </select>
+                </section>
+                <!--  <section *ngIf="croppedresult">
+                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
+                  </section> -->
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

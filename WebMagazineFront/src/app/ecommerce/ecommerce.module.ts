@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GestionComponent } from './components/gestion/gestion.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 
 
@@ -42,7 +43,8 @@ import { FormularioProductoComponent } from './components/gestion/formulario-pro
     EcommerceRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbTypeaheadModule
+    NgbTypeaheadModule,
+    AngularCropperjsModule
   ],
   exports: [
     PrincipalEcommerceComponent
