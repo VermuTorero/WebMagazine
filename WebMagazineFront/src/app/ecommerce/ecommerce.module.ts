@@ -16,6 +16,7 @@ import { SeccionesComponent } from './components/secciones/secciones.component';
 import { SeccionComponent } from './components/secciones/seccion/seccion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GestionComponent } from './components/gestion/gestion.component';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -38,7 +39,8 @@ import { GestionComponent } from './components/gestion/gestion.component';
     NgxSpinnerModule,
     EcommerceRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbTypeaheadModule
   ],
   exports: [
     PrincipalEcommerceComponent

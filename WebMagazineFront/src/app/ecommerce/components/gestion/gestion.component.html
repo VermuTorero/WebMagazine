@@ -21,12 +21,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let producto of productos; let i as index">
-        <td>{{producto.id }}</td>
-        <td> {{ producto.name }}</td>
-        <td> {{ producto.price}}€</td>
+      <tr *ngFor="let producto of productos$ | async">
+        <td><ngb-highlight [result]="producto.id | number" [term]="filter.value"></ngb-highlight></td>
+        <td> <ngb-highlight [result]="producto.name" [term]="filter.value"></ngb-highlight></td>
+        <td> <ngb-highlight [result]="producto.price | number" [term]="filter.value"></ngb-highlight></td>
         <td> <button class="btn btn-warning">MODIFICAR</button></td>
         <td> <button class="btn btn-danger">ELIMINAR</button></td>
       </tr>
     </tbody>
   </table>
+<div class="row ms-2 mb-3 justify-content-around">
+    <DIV class="col"><button class="btn btn-success">NUEVO PRODUCTO</button></DIV>
+    <DIV class="col"><button class="btn btn-success">GESTIONAR SECCIONES</button></DIV>
+</div>
