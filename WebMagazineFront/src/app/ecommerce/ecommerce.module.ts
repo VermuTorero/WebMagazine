@@ -17,6 +17,7 @@ import { SeccionComponent } from './components/secciones/seccion/seccion.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GestionComponent } from './components/gestion/gestion.component';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 
 
 
@@ -30,7 +31,8 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     PrincipalEcommerceComponent,
     SeccionesComponent,
     SeccionComponent,
-    GestionComponent
+    GestionComponent,
+    FormularioProductoComponent
   ],
   imports: [
     CommonModule,
