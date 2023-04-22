@@ -14,7 +14,8 @@ import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
 import { EcommerceRoutingModule } from './ecommerce-routing.module';
 import { SeccionesComponent } from './components/secciones/secciones.component';
 import { SeccionComponent } from './components/secciones/seccion/seccion.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GestionComponent } from './components/gestion/gestion.component';
 
 
 
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     ProductListComponent,
     PrincipalEcommerceComponent,
     SeccionesComponent,
-    SeccionComponent
+    SeccionComponent,
+    GestionComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     NgxSpinnerModule,
     EcommerceRoutingModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     PrincipalEcommerceComponent
