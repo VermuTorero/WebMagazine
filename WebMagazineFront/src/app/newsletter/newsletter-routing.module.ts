@@ -70,7 +70,7 @@ const routes: Routes = [
     path: ``,
     children: [
       {
-        path: `editor-pagina-inicio`,
+        path: `descubriendo-vermutorero`,
         component: PaginaInicioComponent,
       }
     ],
