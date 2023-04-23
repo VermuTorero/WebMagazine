@@ -7,6 +7,7 @@ import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/pub
 import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
 import { TagsComponent } from './publicaciones/tags/tags.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
+import { PaginaInicioComponent } from './pagina-inicio/pagina-inicio.component';
 
 const routes: Routes = [
   {path: '', component: PublicacionesComponent},
@@ -64,7 +65,16 @@ const routes: Routes = [
         component: TagsComponent,
       }
     ],
-  }
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `editor-pagina-inicio`,
+        component: PaginaInicioComponent,
+      }
+    ],
+  },
 ];
 
 @NgModule({

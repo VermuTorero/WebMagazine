@@ -131,5 +131,8 @@ a:link, a:visited, a:active {
     text-decoration:none;
     color: black;
 }
+::ng-deep a{
+    color: rgb(209, 137, 3);
+}
 
 

@@ -19,5 +19,8 @@
     height: fit-content !important
 }
 .card-text{
-    overflow:auto;
+   
+}
+.card-text-container{
+    height: 400px;
 }

@@ -1,0 +1,54 @@
+body{
+    background-image: url("../../../assets/fondo-landing-page.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 5%;
+
+}
+
+
+/* Estilos tamaño movil */
+@media (max-width: 40em) {
+ 
+    .icono-rrss{
+        width: 8vw;
+    }
+    .imagen{
+        height: 80%;
+    }
+
+    h4{
+        text-align: center;
+        text-shadow: 1px 1px 1px black;
+        font-size: 4vw;
+    }
+    h2{
+        text-align: center;
+        color: white;
+        text-shadow: 4px 4px 3px black;
+        font-size: 7vw;
+    }
+}
+
+/* Estilos tamaño grande */
+@media (min-width: 41em) {
+  
+    .icono-rrss{
+        width: 3vw;
+    }
+    .imagen{
+        height: 60%;
+    }
+    h4{
+        text-align: center;
+        text-shadow: 1px 1px 1px black;
+        font-size: 2vw;
+    }
+    h2{
+        text-align: center;
+        color: white;
+        text-shadow: 4px 4px 3px black;
+        font-size: 4vw;
+    }
+}
