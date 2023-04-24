@@ -77,4 +77,7 @@ export class PublicacionesServiceService {
   getPublicacionesByCategoria(categoriaNombre: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCategoria/" + categoriaNombre).pipe(map(response=>response._embedded.publicaciones))
   }
+  getPublicacionesCarousel(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCarousel").pipe(map(response=>response._embedded.publicaciones));
+  }
 }

@@ -16,6 +16,7 @@ import { LugarComponent } from './publicaciones/tags/lugar/lugar.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
 
 
 
@@ -32,7 +33,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     TagsComponent,
     TagComponent,
     LugarComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    EditorInicioComponent
   ],
   imports: [
     CommonModule,
