@@ -46,12 +46,12 @@ export class ImagenesService {
     this.urlImagen = [];
     let arrayNombre = file.name.split(".");
     //Creo una referencia en el storage
-    var storageRef = ref(storage, `imagenes/${arrayNombre[0]}`)
+    var storageRef = ref(storage, `imagenes/${tipo}/${id}/${arrayNombre[0]}`)
     //Subir el archivo al storage
     uploadBytes(storageRef, file).then(data => {
       getDownloadURL(storageRef).then((url)=>{
         this.urlImagen.push(url);
-        set(refer(db, `imagenes/${arrayNombre[0]}`), {
+        set(refer(db, `imagenes/${tipo}/${id}/${arrayNombre[0]}`), {
           nombre: file.name,
             url: url,
             tipo: tipo

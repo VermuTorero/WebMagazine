@@ -1,7 +1,13 @@
 <div class="row my-4 py-2 mx-4">
-  <div class="col-12 col-lg-6">
-    <img class="img-fluid mt-4 pt-4" src="../../../../assets/inicio3.jpg" alt="">
+  <div *ngIf="edicion" class="col-12 col-lg-6">
+    <img *ngIf="this.imageUrl" class="img-fluid mt-4 pt-4 w-100" src="{{this.imageUrl}}" alt=""  data-bs-toggle="modal"
+    data-bs-target="#imagenModal">
+    <img *ngIf="!this.imageUrl || this.imageUrl == '' " class="img-fluid mt-4 pt-4" src="../../../../assets/no-imagen.png" alt=""  data-bs-toggle="modal"
+    data-bs-target="#imagenModal">
   </div>
+  <div *ngIf="!edicion" class="col-12 col-lg-6">
+    <img *ngIf="this.imageUrl" class="img-fluid mt-4 pt-4 w-100" src="{{this.imageUrl}}" alt="">
+      </div>
   <div *ngIf="!edicion" class="col-12 col-lg-6">
     <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
     <h3 class="row mx-2 my-4 text-center">
@@ -18,10 +24,43 @@
       <button class="btn btn-warning mb-2" (click)="cerrarEdicion()">GUARDAR</button>
     </div>
   </div>
-
   <hr>
   <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
     class="card row col-12 col-md-4 col-xxl-3">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
+  </div>
+</div>
+
+<!-- Modal Agregar Imagen de preview-->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+              <section>
+                  <input type="file" accept="images/" (change)="onSelectFile($event)">
+              </section>
+              <section *ngIf="imageUrl">
+                  <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                  <!-- <div class="mt-2">
+                      <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
+                  </div> -->
+              </section>
+              <!--  <section *ngIf="croppedresult">
+                  <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
+                </section> -->
+
+
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button class="btn btn-primary" (click)="getCroppedImage()"
+                  data-bs-dismiss="modal">Aceptar</button>
+          </div>
+      </div>
   </div>
 </div>

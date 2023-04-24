@@ -347,7 +347,7 @@ export class PublicacionFichaComponent implements OnInit {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
           console.log("URL IMG", url)
           setTimeout(() => {
             console.log("URL IMAGEN SUBIDA: ", url)
@@ -368,7 +368,7 @@ export class PublicacionFichaComponent implements OnInit {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.autor.id, "autor").subscribe(url => {
           console.log("URL IMG", url)
           setTimeout(() => {
             this.insertarImagenAutorUrl(url);
@@ -393,7 +393,7 @@ export class PublicacionFichaComponent implements OnInit {
           setTimeout(() => {
             console.log("URL IMG", url)
             this.setImagePreview(url)
-            url = []
+          
           }, 2000)
         });
       }
