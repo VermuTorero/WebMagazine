@@ -105,7 +105,7 @@ export class PublicacionesCategoriaComponent implements OnInit{
           setTimeout(() => {
             console.log("URL IMAGEN SUBIDA: ", url)
             this.imageUrl = url[0];
-            this.categoria.urlImagen;
+            this.categoria.urlImagen = url[0];
             this.subiendo = false;
           }, 3000)
         });
