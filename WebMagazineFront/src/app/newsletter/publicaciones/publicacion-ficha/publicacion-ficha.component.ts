@@ -352,7 +352,7 @@ export class PublicacionFichaComponent implements OnInit {
           setTimeout(() => {
             console.log("URL IMAGEN SUBIDA: ", url)
             this.insertarImagenUrl(url);
-          }, 2000)
+          }, 3000)
         });
 
       }
@@ -372,7 +372,7 @@ export class PublicacionFichaComponent implements OnInit {
           console.log("URL IMG", url)
           setTimeout(() => {
             this.insertarImagenAutorUrl(url);
-          }, 2000)
+          }, 2500)
         });
 
       }
@@ -394,7 +394,7 @@ export class PublicacionFichaComponent implements OnInit {
             console.log("URL IMG", url)
             this.setImagePreview(url)
           
-          }, 2000)
+          }, 2500)
         });
       }
     }, 'image/jpeg', 0.70)

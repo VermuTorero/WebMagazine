@@ -18,10 +18,12 @@
     </div>
   </div>
   <div *ngIf="edicion" class="col-12 col-lg-6">
-    <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre">
-    <textarea rows="6" maxlength="1000" class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaDescripcion"></textarea>
+    <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
+    <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
+    <textarea rows="8" maxlength="1000" class="descripcion row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaDescripcion"></textarea>
     <div class="text-center">
-      <button class="btn btn-warning mb-2" (click)="cerrarEdicion()">GUARDAR</button>
+      <button class="btn btn-warning mb-2 mx-2" (click)="cerrarEdicion()">GUARDAR</button>
+      <button class="btn btn-secondary mb-2 mx-2" (click)="cancelarEdicion()">CANCELAR</button>
     </div>
   </div>
   <hr>

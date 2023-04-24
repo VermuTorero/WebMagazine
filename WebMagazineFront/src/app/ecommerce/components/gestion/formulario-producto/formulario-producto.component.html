@@ -30,11 +30,11 @@
   <div class="col-md-4">
     <div *ngIf="nuevoProducto.imageUrl" class="card-image">
       <img
-        src="{{ nuevoProducto.imageUrl }}"
+        src="{{nuevoProducto.imageUrl}}"
         class="img-card img-fluid"
         alt=""
         data-bs-toggle="modal"
-        data-bs-target="#imagenPreviewModal"
+        data-bs-target="#imagenModal"
       />
     </div>
     <div *ngIf="!nuevoProducto.imageUrl" class="card-image">
@@ -43,7 +43,7 @@
         class="img-card img-fluid w-100 my-2"
         alt=""
         data-bs-toggle="modal"
-        data-bs-target="#imagenPreviewModal"
+        data-bs-target="#imagenModal"
       />
     </div>
   </div>

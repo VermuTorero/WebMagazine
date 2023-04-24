@@ -73,6 +73,9 @@ export class PublicacionesCategoriaComponent implements OnInit{
     this.edicion = false;
     this.subiendo = false;
   }
+  cancelarEdicion(){
+    this.edicion = false;
+  }
 
   onSelectFile(event: any) {
     this.subiendo = true;
