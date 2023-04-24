@@ -10,7 +10,7 @@ import { ImagenesService } from 'src/app/newsletter/service/imagenes.service';
 })
 export class FormularioProductoComponent {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
-  nuevoProducto: Product = new Product("", "", 0, "");
+  nuevoProducto: Product = new Product(0,"", "","", 0, "");
   viejoProducto: String = '';
   /* Recortador de imagenes */
   imageUrl: string = "";

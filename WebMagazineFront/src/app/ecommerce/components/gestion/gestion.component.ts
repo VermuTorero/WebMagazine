@@ -11,9 +11,11 @@ import { DecimalPipe } from '@angular/common';
   styleUrls: ['./gestion.component.css'],
   providers: [DecimalPipe]
 })
+
 export class GestionComponent implements OnInit{
 
 constructor(private productoService: ProductService, pipe: DecimalPipe){
+  this.productos = this.productoService.getProducts();
   this.productos$ = this.filter.valueChanges.pipe(
     startWith(''),
     map((text) => this.search(text, pipe)),
@@ -21,15 +23,17 @@ constructor(private productoService: ProductService, pipe: DecimalPipe){
 }
 
 productos: Product[] = [];
+
 productos$: Observable<Product[]>;
 filter = new FormControl('', { nonNullable: true });
 
 ngOnInit(): void {
-  this.productos = this.productoService.getProducts();
+ 
+ 
 }
 
 search(text: string, pipe: PipeTransform): Product[] {
-	return this.productos.filter((producto) => {
+	return  this.productos.filter((producto) => {
 		const term = text.toLowerCase();
 		return (
 			producto.name.toLowerCase().includes(term) ||
@@ -37,8 +41,6 @@ search(text: string, pipe: PipeTransform): Product[] {
 			pipe.transform(producto.price).includes(term)
 		);
 	});
-
 }
-
 
 }
