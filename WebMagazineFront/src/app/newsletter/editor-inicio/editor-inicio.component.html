@@ -1,0 +1,16 @@
+<div class="row m-4">
+    <h3 class="my-4">Publicaciones en el carousel</h3>
+    <div *ngFor="let publicacionCarousel of publicacionesCarousel" style="display:block;" class="card row col-12 col-md-4 col-xxl-3">
+        <app-publicacion [publicacion]="publicacionCarousel"></app-publicacion>
+        <button class="btn btn-danger" (click)="quitarDelCarousel(publicacionCarousel.id)" >QUITAR DEL CAROUSEL</button>
+    </div>
+</div>
+<hr>
+<div class="row m-4">
+    <h3 class="my-4">Todas las publicaciones</h3>
+    <div *ngFor="let publicacion of publicaciones" style="display:block;" class="card row col-12 col-md-4 col-xxl-3">
+        <app-publicacion [publicacion]="publicacion"></app-publicacion>
+        <button class="btn btn-success" (click)="agregarAlCarousel(publicacion.id)" >AGREGAR AL CAROUSEL</button>
+    </div>
+</div>
+

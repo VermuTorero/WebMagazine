@@ -11,6 +11,7 @@ export class Publicacion {
     htmlPublicacion: string ="";
     premium: boolean = false;
     destacado: boolean = false;
+    carousel: boolean = false;
     bloques: any[] = [];
     autor: any;
     fechaPublicacion: string = "";

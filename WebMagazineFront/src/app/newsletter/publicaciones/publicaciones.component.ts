@@ -19,6 +19,7 @@ export class PublicacionesComponent implements OnInit {
   ngOnInit() {
     this.getPublicaciones();
     this.getPublicacionesDestacadas();
+    this.getPublicacionesCarousel();
     
   }
 
@@ -44,6 +45,12 @@ export class PublicacionesComponent implements OnInit {
     })
     return of();
   }
-  
-
+  getPublicacionesCarousel(){
+    this.publicacionesService.getPublicacionesCarousel().subscribe(publicacionesCarousel=>{
+      this.publicacionesCarousel = publicacionesCarousel;
+      this.publicacionesCarousel.forEach(publicacionCarousel => {
+        publicacionCarousel.id = this.publicacionesService.getId(publicacionCarousel);
+      });
+    })
+  }
 }

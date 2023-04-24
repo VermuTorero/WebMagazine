@@ -76,15 +76,21 @@
                   <!-- Premiun y destacado -->
                   <div class="m-4 row">
                     <!-- Premium -->
-                    <div class="m-1 col-5">
-                        <label for="premium">Premium </label>
+                    <div class="m-1 col-3">
+                        <label for="premium">Premium</label>
                         <input type="checkbox" name="premium" [(ngModel)]="publicacion.premium" class="m-1">
                     </div>
 
                     <!-- Destacado -->
-                    <div class="m-1 col-5">
-                        <label for="destacado">Destacado </label>
+                    <div class="m-1 col-3">
+                        <label for="destacado">Destacado</label>
                         <input type="checkbox" name="destacado" [(ngModel)]="publicacion.destacado" class="m-1">
+                    </div>
+
+                    <!-- Carousel -->
+                    <div class="m-1 col-3">
+                        <label for="destacado">Carousel</label>
+                        <input type="checkbox" name="carousel" [(ngModel)]="publicacion.carousel" class="m-1">
                     </div>
                 </div>
             </div>

@@ -38,6 +38,8 @@ public class Publicacion {
 	private boolean premium;
 	
 	private boolean destacado;
+	
+	private boolean carousel;
 
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
 	private Autor autor;
@@ -199,6 +201,12 @@ public class Publicacion {
 		this.categoria = categoria;
 	}
 
+	public boolean isCarousel() {
+		return carousel;
+	}
 
+	public void setCarousel(boolean carousel) {
+		this.carousel = carousel;
+	}
 	
 }

@@ -81,6 +81,14 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
 	}
 	
+	@Cacheable("myCache")
+	@GetMapping(path = "publicacionesCarousel")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesCarousel(PersistentEntityResourceAssembler assembler) {
+		List<Publicacion> listadoPublicacionesCarousel = publicacionDAO.findByCarouselIsTrue();
+		return assembler.toCollectionModel(listadoPublicacionesCarousel);
+	}
+	
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
