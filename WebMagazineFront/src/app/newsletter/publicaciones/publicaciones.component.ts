@@ -9,9 +9,9 @@ import { PublicacionesServiceService } from '../service/publicaciones.service';
   styleUrls: ['./publicaciones.component.css']
 })
 export class PublicacionesComponent implements OnInit {
-
   publicaciones: Publicacion[] = [];
   publicacionesDestacadas: Publicacion[] = [];
+  publicacionesCarousel: Publicacion[]= [];
 
   constructor(
     private publicacionesService: PublicacionesServiceService) { }
@@ -44,5 +44,6 @@ export class PublicacionesComponent implements OnInit {
     })
     return of();
   }
+  
 
 }

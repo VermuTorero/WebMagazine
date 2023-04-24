@@ -1,0 +1,108 @@
+<body class="">
+    <div class="row pt-4 landing">
+        <section class="col-1"></section>
+        <section class="col-12 col-md-6">
+
+            <!-- Eslogan -->
+            <section class="row titulo ml-4">
+                <div *ngIf="!edicion" class="text-center">
+                    <h2><b>{{landingPage.titulo}}</b></h2>
+                </div>
+                <div *ngIf="edicion" class="text-center">
+                    <textarea rows="2" cols="40" class="text-titulo" [(ngModel)]="landingPage.titulo">{{landingPage.titulo}}</textarea>
+                </div>
+            </section>
+
+            <!-- Descripción de la web -->
+            <section class="row descripcion ml-4 m-4">
+                <div *ngIf="!edicion" class="text-center">
+                    <h4>{{landingPage.descripcion}}</h4>
+                </div>
+                <div *ngIf="edicion" class="text-descripcion text-center">
+                    <textarea rows="10" cols="60" [(ngModel)]="landingPage.descripcion">{{landingPage.descripcion}}</textarea>
+                </div>
+            </section>
+            <section class="text-center m-4">
+                <a class="btn btn-primary" href="../">VISÍTANOS</a>
+            </section>
+
+            <!-- RRSS -->
+            <section class="rrss m-4">
+                <div class="row mt-4">
+                    <div class="col-2 col-sm-2"></div>
+                    <div class="col-2 col-sm-2 my-1 text-center">
+                        <a href="https://www.facebook.com/elisabethgiborra">
+                            <img class="icono-rrss" src="../../../../assets/facebookIcon.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-2 col-sm-2 my-1 text-center">
+                        <a href="https://www.instagram.com/vermu.torero/">
+                            <img class="icono-rrss" src="../../../../assets/instagramIcon.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-2 col-sm-2 my-1 text-center">
+                        <a href="http://es.linkedin.com/in/elisabethgiborra">
+                            <img class="icono-rrss" src="../../../../assets/linkedinIcon.png" alt="">
+                        </a>
+                    </div>
+                    <div class="col-2 col-sm-2 my-1 text-center">
+                        <a href="https://twitter.com/elisabethiborra">
+                            <img class="icono-rrss" src="../../../../assets/twitterIcon.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <!-- Imagen vertical-->
+        <section *ngIf="!edicion" class="col-12 col-md-5 text-center mt-4">
+            <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="">
+            <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="" alt="">
+        </section>
+        <section *ngIf="edicion" class="col-12 col-md-5 text-center mt-4">
+            <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="" data-bs-toggle="modal"
+            data-bs-target="#imagenModal">
+            <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="../../../assets/no-imagen.png" alt="" data-bs-toggle="modal"
+            data-bs-target="#imagenModal">
+        </section>
+    </div>
+    <section class="text-center p-4">
+        <button *ngIf="!edicion" class="btn btn-warning m-2" (click)="abrirEdicion()">Editar</button>
+        <button *ngIf="edicion" class="btn btn-success m-2" (click)="guardarCambios()">Guardar edición</button>
+        <button *ngIf="edicion" class="btn btn-warning m-2" (click)="cerrarEdicion()">Cancelar</button>
+    </section>
+    
+</body>
+
+<!-- Modal Agregar Imagen-->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+  
+                <section>
+                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                </section>
+                <section *ngIf="imageUrl">
+                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                    <!-- <div class="mt-2">
+                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
+                    </div> -->
+                </section>
+                <!--  <section *ngIf="croppedresult">
+                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
+                  </section> -->
+  
+  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImage()"
+                    data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+  </div>

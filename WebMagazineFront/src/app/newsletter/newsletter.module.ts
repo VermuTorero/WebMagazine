@@ -15,7 +15,10 @@ import { TagComponent } from './publicaciones/tags/tag/tag.component';
 import { LugarComponent } from './publicaciones/tags/lugar/lugar.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
-import { PaginaInicioComponent } from './pagina-inicio/pagina-inicio.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -29,7 +32,7 @@ import { PaginaInicioComponent } from './pagina-inicio/pagina-inicio.component';
     TagsComponent,
     TagComponent,
     LugarComponent,
-    PaginaInicioComponent
+    LandingPageComponent
   ],
   imports: [
     CommonModule,

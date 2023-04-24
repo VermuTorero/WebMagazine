@@ -51,4 +51,8 @@ body{
         text-shadow: 4px 4px 3px black;
         font-size: 4vw;
     }
+    .text-titulo{
+        font-size: x-large;
+        font-weight: bold;
+    }
 }

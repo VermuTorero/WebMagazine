@@ -7,7 +7,8 @@ import { PublicacionesTagComponent } from './publicaciones/publicaciones-tag/pub
 import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
 import { TagsComponent } from './publicaciones/tags/tags.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
-import { PaginaInicioComponent } from './pagina-inicio/pagina-inicio.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
 
 const routes: Routes = [
   {path: '', component: PublicacionesComponent},
@@ -71,7 +72,7 @@ const routes: Routes = [
     children: [
       {
         path: `descubriendo-vermutorero`,
-        component: PaginaInicioComponent,
+        component: LandingPageComponent,
       }
     ],
   },
