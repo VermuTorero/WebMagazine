@@ -21,6 +21,11 @@ export class SeccionService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
+
+  extraerUrlSeccion(response: any): string{
+    return response._links.self.href
+  }
+
   postSeccion(seccion: Seccion): Observable<Seccion>{
     return this.http.post<any>(this.endpoint + "/secciones", seccion);
   }

@@ -16,6 +16,9 @@ export class ProductListComponent {
   }
 
   loadProducts(): void {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe((res) =>{
+      console.log(res);
+      this.products = res;
+    });
   }
 }

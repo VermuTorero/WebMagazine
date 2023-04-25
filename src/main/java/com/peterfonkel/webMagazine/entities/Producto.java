@@ -19,6 +19,8 @@ public class Producto {
     private String descripcionCorta;
     private String descripcionLarga;
     private Float precio;
+    private String url;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seccion")
@@ -75,4 +77,21 @@ public class Producto {
         this.seccion = seccion;
     }
 
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    
 }

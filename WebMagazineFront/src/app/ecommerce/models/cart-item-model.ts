@@ -8,8 +8,8 @@ export class CartItemModel {
 
     constructor(product: Product){
         this.productId = product.id;
-        this.productName = product.name;
-        this.productPrice = product.price;
+        this.productName = product.nombreProducto;
+        this.productPrice = product.precio;
         this.qty = 1;
     }
 }

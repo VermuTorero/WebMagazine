@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
+import { Observable, map } from 'rxjs';
+import { environment } from 'src/environments/enviroment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  endpoint: string = environment.urlAPI;
   //hardcoded para abreviar, pero estos datos de los productos deben venir del backend
   products: Product[] = [
     new Product(
@@ -13,7 +17,8 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       19,
-      'https://m.media-amazon.com/images/I/710-zIN6mML._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/710-zIN6mML._AC_SL1500_.jpg',
+      ""
     ),
     new Product(
       2,
@@ -21,7 +26,8 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       35,
-      'https://m.media-amazon.com/images/I/71WqmMpbo3L._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/71WqmMpbo3L._AC_SL1500_.jpg',
+      ""
     ),
     new Product(
       3,
@@ -29,7 +35,8 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       46,
-      'https://m.media-amazon.com/images/I/71SbYCE7O+L._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/71SbYCE7O+L._AC_SL1500_.jpg',
+      ""
     ),
     new Product(
       4,
@@ -37,7 +44,8 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       59,
-      'https://m.media-amazon.com/images/I/71qTAboBTsL._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/71qTAboBTsL._AC_SL1500_.jpg',
+      ""
     ),
     new Product(
       5,
@@ -45,7 +53,8 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       14,
-      'https://m.media-amazon.com/images/I/71Sdk9Eru6S._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/71Sdk9Eru6S._AC_SL1500_.jpg',
+      ""
     ),
     new Product(
       6,
@@ -53,12 +62,18 @@ export class ProductService {
       'descripcion',
       'descripcionLarga',
       7,
-      'https://m.media-amazon.com/images/I/71-lKa3SBkL._AC_SL1500_.jpg'
+      'https://m.media-amazon.com/images/I/71-lKa3SBkL._AC_SL1500_.jpg',
+      ""
     ),
   ];
-  constructor() {}
 
-  getProducts(): Product[] {
-    return this.products;
+  constructor(private http: HttpClient) {}
+
+  getProducts(): Observable<Product[]> {   
+    // pruebas --> return this.products;
+    return this.http.get<any>(this.endpoint + "/productos").pipe(map(response=>response._embedded.productos));
+  }
+  postProducto(producto: Product): Observable <Product>{
+    return this.http.post<Product>(this.endpoint + "/productos", producto);
   }
 }

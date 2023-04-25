@@ -1,43 +1,43 @@
-<form class="m-3">
+<form #formularioProducto="ngForm" (ngSubmit)="submitProducto(formularioProducto)" class="m-3">
   <div class="form-row">
     <div class="form-group col-md-6 m-1">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" class="form-control" id="inputEmail4" />
+      <label for="inputNombre">Nombre</label>
+      <input type="text" name="inputNombre"class="form-control" id="inputNombre" [(ngModel)] ="nuevoProducto.nombreProducto" required/>
     </div>
     <div class="form-group col-md-6 m-1">
-      <label for="inputPassword4">Descripcion Corta</label>
-      <input type="text" class="form-control" id="inputPassword4" />
+      <label for="inputDescripcionC">Descripcion Corta</label>
+      <input type="text" name="inputDescripcionC" class="form-control" id="inputDescripcionC" [(ngModel)] ="nuevoProducto.descripcionCorta" required/>
     </div>
   </div>
   <div class="form-group m-1">
-    <label for="inputAddress">Descripcion Larga</label>
-    <input type="text" class="form-control" id="inputAddress" />
+    <label for="inputDesripcionL">Descripcion Larga</label>
+    <input type="text" name="DescripcionL" class="form-control" id="DescripcionL" [(ngModel)] ="nuevoProducto.descripcionLarga" required/>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6 m-1">
-      <label for="inputCity">Precio</label>
-      <input type="text" class="form-control" id="inputCity" />
+      <label for="inputPrecio">Precio</label>
+      <input type="number" name="inputPrecio" class="form-control" id="inputPrecio" [(ngModel)] ="nuevoProducto.precio" required />
     </div>
     <div class="form-group col-md-4 m-1">
-      <label for="inputState">Sección</label>
-      <select id="inputState" class="form-control">
-        <option selected>Elige...</option>
-        <option>...</option>
+      <label for="inputSeccion">Sección</label>
+        <select name="inputSeccion" id="inputSeccion" class="form-control" [(ngModel)]="nuevoProducto.seccion" required>
+          <option value="" disabled selected>Selecciona una sección...</option>
+        <option *ngFor="let seccion of secciones" [value]="seccion.url">{{seccion.nombreSeccion}}</option>
       </select>
     </div>
   </div>
   <!-- Imagen -->
   <div class="col-md-4">
-    <div *ngIf="nuevoProducto.imageUrl" class="card-image">
+    <div *ngIf="nuevoProducto.url" class="card-image">
       <img
-        src="{{nuevoProducto.imageUrl}}"
+        src="{{nuevoProducto.url}}"
         class="img-card img-fluid"
         alt=""
         data-bs-toggle="modal"
         data-bs-target="#imagenModal"
       />
     </div>
-    <div *ngIf="!nuevoProducto.imageUrl" class="card-image">
+    <div *ngIf="!nuevoProducto.url" class="card-image">
       <img
         src="../../../../assets/no-imagen.png"
         class="img-card img-fluid w-100 my-2"
@@ -50,7 +50,7 @@
   <!-- Botones -->
   <div class="row ms-1 mt-3 mb-3 justify-content-around">
     <DIV class="col"
-      ><button class="btn btn-success">CREAR PRODUCTO</button></DIV
+      ><button type="submit" class=" btn btn-success">CREAR PRODUCTO</button></DIV
     >
     <DIV class="col"
       ><button routerLink="/gestion" class="btn btn-primary">

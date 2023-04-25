@@ -1,9 +1,9 @@
 <div class="card text-center mb-3" >
-    <img [src]="product.imageUrl" class="card-img-top" alt="">
+    <img [src]="product.url" class="card-img-top" alt="">
     <div class="card-body">
-      <h5 class="card-title"> {{product.name}}</h5>
-      <p class="card-text">{{product.description}}</p>
-      <p class="card-text">{{product.price}} €</p>
+      <h5 class="card-title"> {{product.nombreProducto}}</h5>
+      <p class="card-text">{{product.descripcionCorta}}</p>
+      <p class="card-text">{{product.precio}} €</p>
       <button href="#" class="btn btn-outline-success" (click)="addToCart()">
        <i class="fas fa-cart-plus"></i> Añadir a la cesta</button>
     </div>

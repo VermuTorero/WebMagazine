@@ -23,8 +23,8 @@
     <tbody>
       <tr *ngFor="let producto of productos$ | async">
         <td><ngb-highlight [result]="producto.id | number" [term]="filter.value"></ngb-highlight></td>
-        <td> <ngb-highlight [result]="producto.name" [term]="filter.value"></ngb-highlight></td>
-        <td> <ngb-highlight [result]="producto.price | number" [term]="filter.value"></ngb-highlight></td>
+        <td> <ngb-highlight [result]="producto.nombreProducto" [term]="filter.value"></ngb-highlight></td>
+        <td> <ngb-highlight [result]="producto.precio | number" [term]="filter.value"></ngb-highlight></td>
         <td> <button class="btn btn-warning">MODIFICAR</button></td>
         <td> <button class="btn btn-danger">ELIMINAR</button></td>
       </tr>
