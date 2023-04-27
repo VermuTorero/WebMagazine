@@ -44,7 +44,8 @@ import { AngularCropperjsModule } from 'angular-cropperjs';
     FormsModule,
     ReactiveFormsModule,
     NgbTypeaheadModule,
-    AngularCropperjsModule
+    AngularCropperjsModule, 
+    ReactiveFormsModule
   ],
   exports: [
     PrincipalEcommerceComponent

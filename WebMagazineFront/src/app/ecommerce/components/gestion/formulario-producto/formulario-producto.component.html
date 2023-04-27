@@ -1,29 +1,76 @@
-<form #formularioProducto="ngForm" (ngSubmit)="submitProducto(formularioProducto)" class="m-3">
+<form [formGroup]="formularioProducto" (ngSubmit)="submitProducto()" class="m-3">
   <div class="form-row">
     <div class="form-group col-md-6 m-1">
-      <label for="inputNombre">Nombre</label>
-      <input type="text" name="inputNombre"class="form-control" id="inputNombre" [(ngModel)] ="nuevoProducto.nombreProducto" required/>
+      <label for="nombreProducto">Nombre</label>
+      <input type="text"  class="form-control"  id="nombreProducto" formControlName="nombreProducto">
+      <div *ngIf="formularioProducto.invalid && submit">
+        <small *ngIf="formularioProducto.controls['nombreProducto'].errors?.['required']" class="text-danger">
+          El campo Nombre es requerido
+        </small>
+      </div>
+      <div *ngIf="formularioProducto.invalid && (formularioProducto.dirty || formularioProducto.touched)">
+        <small *ngIf="formularioProducto.controls['nombreProducto'].hasError('maxlength')" class="text-danger">
+          El campo Nombre no puede tener más de 50 caracteres
+        </small>
+      </div>
     </div>
     <div class="form-group col-md-6 m-1">
-      <label for="inputDescripcionC">Descripcion Corta</label>
-      <input type="text" name="inputDescripcionC" class="form-control" id="inputDescripcionC" [(ngModel)] ="nuevoProducto.descripcionCorta" required/>
+      <label for="descripcionCorta">Descripcion Corta</label>
+      <input type="text" class="form-control" id="descripcionCorta" formControlName="descripcionCorta">
+      <div *ngIf="formularioProducto.invalid && submit">
+
+        <small *ngIf="formularioProducto.controls['descripcionCorta'].errors?.['required']" class="text-danger">
+          El campo descripción es requerido
+        </small>
+      </div>
+        <div *ngIf="formularioProducto.invalid && (formularioProducto.dirty || formularioProducto.touched)">
+        <small *ngIf="formularioProducto.controls['descripcionCorta'].hasError('maxlength')" class="text-danger">
+          El campo descripción no puede tener más de 50 caracteres
+        </small>
+      </div>
     </div>
   </div>
   <div class="form-group m-1">
-    <label for="inputDesripcionL">Descripcion Larga</label>
-    <input type="text" name="DescripcionL" class="form-control" id="DescripcionL" [(ngModel)] ="nuevoProducto.descripcionLarga" required/>
+    <label for="descripcionLarga">Descripcion Larga</label>
+    <input type="text" class="form-control" id="descripcionLarga" formControlName="descripcionLarga">
+    
+    <div *ngIf="formularioProducto.invalid && submit">
+      <small *ngIf="formularioProducto.controls['descripcionLarga'].errors?.['required']" class="text-danger">
+        El campo descripción larga es requerido
+      </small>
+    </div>
+      <div *ngIf="formularioProducto.invalid && (formularioProducto.dirty || formularioProducto.touched)">
+      <small *ngIf="formularioProducto.controls['descripcionLarga'].hasError('maxlength')" class="text-danger">
+        El campo descripción larga no puede tener más de 100 caracteres
+      </small>
+    </div>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6 m-1">
-      <label for="inputPrecio">Precio</label>
-      <input type="number" name="inputPrecio" class="form-control" id="inputPrecio" [(ngModel)] ="nuevoProducto.precio" required />
+      <label for="precio">Precio</label>
+      <input type="number"  class="form-control" id="precio" formControlName="precio">
+      <div *ngIf="formularioProducto.invalid && submit">
+        <small *ngIf="formularioProducto.controls['precio'].errors?.['required']" class="text-danger">
+          El campo precio es requerido
+        </small>
+        <div *ngIf="formularioProducto.invalid && (formularioProducto.dirty || formularioProducto.touched)">
+          <small *ngIf="formularioProducto.controls['precio'].hasError('min')" class="text-danger">
+            El precio no puede ser negativo
+          </small>
+        </div>
+      </div>
     </div>
     <div class="form-group col-md-4 m-1">
-      <label for="inputSeccion">Sección</label>
-        <select name="inputSeccion" id="inputSeccion" class="form-control" [(ngModel)]="nuevoProducto.seccion" required>
+      <label for="seccion">Sección</label>
+        <select name="inputSeccion" id="inputSeccion" class="form-control" formControlName="seccion">
           <option value="" disabled selected>Selecciona una sección...</option>
         <option *ngFor="let seccion of secciones" [value]="seccion.url">{{seccion.nombreSeccion}}</option>
       </select>
+      <div *ngIf="formularioProducto.invalid && submit">
+        <small *ngIf="formularioProducto.controls['seccion'].errors?.['required']" class="text-danger">
+          Debe seleccionar una sección
+        </small>
+      </div>
     </div>
   </div>
   <!-- Imagen -->
