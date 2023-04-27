@@ -1,9 +1,10 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, PipeTransform } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../service/product.service';
 import { FormControl } from '@angular/forms';
 import { Observable, map, of, startWith, switchMap } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion',
@@ -14,7 +15,7 @@ import { DecimalPipe } from '@angular/common';
 
 export class GestionComponent implements OnInit{
 
-constructor(private productoService: ProductService, pipe: DecimalPipe){
+constructor(private productoService: ProductService, pipe: DecimalPipe, private router: Router){
   this.filter = new FormControl('', { nonNullable: true });
   this.productos$ = this.filter.valueChanges.pipe(
     startWith(''),
@@ -24,9 +25,9 @@ constructor(private productoService: ProductService, pipe: DecimalPipe){
 }
 
 productos: Product[] = [];
-
 productos$: Observable<Product[]>;
 filter: FormControl;
+@Output() modificarProductoEvent = new EventEmitter<Product>();
 
 ngOnInit(): void {
 this.productoService.getProducts().subscribe((res) =>{
@@ -46,4 +47,19 @@ search(text: string, pipe: PipeTransform, productos: Product[]): Product[] {
     );
   });
 }
+
+eliminarProducto(id: number){
+  this.productoService.eliminarProducto(id).subscribe(() =>{
+    console.log("eliminado");
+    window.location.reload();
+  } );
 }
+
+modificarProducto(){
+  this.modificarProductoEvent.emit(this.productos[1]);
+}
+
+}
+
+
+

@@ -76,4 +76,8 @@ export class ProductService {
   postProducto(producto: Product): Observable <Product>{
     return this.http.post<Product>(this.endpoint + "/productos", producto);
   }
+
+  eliminarProducto(id: number): Observable <any>{
+    return this.http.delete(this.endpoint + "/productos/" + id);
+  }
 }
