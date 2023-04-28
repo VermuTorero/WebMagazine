@@ -99,11 +99,11 @@
                 <h3 class="text-center">Preview</h3>
                 <div class="row align-items-center justify-content-center my-4">
                     <div class="col-12 col-lg-6 publicacion-preview">
-                        <div *ngIf="imageUrl" class="card-image">
-                            <img src="{{imageUrl}}" class="img-card img-fluid w-100 my-2" alt="" data-bs-toggle="modal"
+                        <div *ngIf="imagePreviewUrl" class="card-image">
+                            <img src="{{imagePreviewUrl}}" class="img-card img-fluid w-100 my-2" alt="" data-bs-toggle="modal"
                                 data-bs-target="#imagenPreviewModal">
                         </div>
-                        <div *ngIf="!imageUrl" class="card-image">
+                        <div *ngIf="!imagePreviewUrl" class="card-image">
                             <img src="../../../../assets/no-imagen.png" class="img-card img-fluid w-100 my-2" alt=""
                                 data-bs-toggle="modal" data-bs-target="#imagenPreviewModal">
                         </div>
@@ -230,10 +230,7 @@
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
-                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-                    <!-- <div class="mt-2">
-                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
-                    </div> -->
+                   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
                 </section>
                 <section class="my-4">
                     <label for="" class="mx-2">Tamaño</label>
@@ -244,11 +241,6 @@
                         <option value="35">Ancho 35%</option>
                     </select>
                 </section>
-                <!--  <section *ngIf="croppedresult">
-                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
-                  </section> -->
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -272,7 +264,7 @@
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
-                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                  <!--   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper> -->
                 </section>
                 <section class="my-4">
                     <label for="" class="mx-2">Tamaño</label>
@@ -302,21 +294,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <section>
-                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                    <input type="file" accept="images/" (change)="onSelectFilePreview($event)">
                 </section>
-                <section *ngIf="imageUrl">
-                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-                    <!-- <div class="mt-2">
-                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
-                    </div> -->
+                <section *ngIf="imagePreviewUrl">
+                    <angular-cropper [cropperOptions]='{aspectRatio: 3 / 2}' [imageUrl]="imagePreviewUrl" #angularCropper2></angular-cropper>
                 </section>
-                <!--  <section *ngIf="croppedresult">
-                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
-                  </section> -->
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -3,7 +3,7 @@
         <div class="nueva-tag-container mb-4">
             <h3>Tags</h3>
             <input type="text" [(ngModel)]="tagNueva.tagNombre">
-            <button class="btn btn-success mx-3" (click)="nuevaTag()">Crear nueva Tag</button>
+            <button class="btn btn-success btn-sm mx-3 my-2" (click)="nuevaTag()">Crear nueva Tag</button>
         </div>
         
         <div *ngFor="let tag of tags" style="display:block;" class="gestionar-tags-container">
@@ -15,7 +15,7 @@
         <div class="nuevo-lugar-container mb-4">
             <h3>Lugares</h3>
             <input type="text" [(ngModel)]="lugarNuevo.lugarNombre">
-            <button class="btn btn-success mx-3" (click)="nuevoLugar()">Crear nuevo Lugar</button>
+            <button class="btn btn-success btn-sm mx-3 my-2" (click)="nuevoLugar()">Crear nuevo Lugar</button>
         </div>
         
         <div *ngFor="let lugar of lugares" style="display:block;" class="gestionar-lugares-container">

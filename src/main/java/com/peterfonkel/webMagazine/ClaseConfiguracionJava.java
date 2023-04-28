@@ -21,7 +21,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
+import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lugar;
+import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
 
 
@@ -34,6 +36,9 @@ public class ClaseConfiguracionJava {
 
 	@Autowired
 	LugarDAO lugarDAO;
+	
+	@Autowired
+	ImagenInicioDAO imagenInicioDAO;
 	
 	@Bean
 	   public CacheManager cacheManager() {
@@ -68,4 +73,14 @@ public class ClaseConfiguracionJava {
 		}
     }
     
+    @Bean
+    public void setImagenesInicio() {
+    	if (imagenInicioDAO.findAll().size()<2) {	
+    		ImagenInicio imagenInicio = new ImagenInicio(1L, "", true);
+    		imagenInicioDAO.save(imagenInicio);
+    		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", false);
+    		imagenInicioDAO.save(imagenInicio2);
+    		
+		}
+    }
 }

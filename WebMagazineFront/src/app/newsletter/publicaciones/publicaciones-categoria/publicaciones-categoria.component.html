@@ -5,10 +5,10 @@
     <img *ngIf="!this.imageUrl || this.imageUrl == '' " class="img-fluid mt-4 pt-4" src="../../../../assets/no-imagen.png" alt=""  data-bs-toggle="modal"
     data-bs-target="#imagenModal">
   </div>
-  <div *ngIf="!edicion" class="col-12 col-lg-6">
+  <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
     <img *ngIf="this.imageUrl" class="img-fluid mt-4 pt-4 w-100" src="{{this.imageUrl}}" alt="">
       </div>
-  <div *ngIf="!edicion" class="col-12 col-lg-6">
+  <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
     <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
     <h3 class="row mx-2 my-4 text-center">
       <p>{{categoria.categoriaDescripcion}}</p>
@@ -47,16 +47,8 @@
                   <input type="file" accept="images/" (change)="onSelectFile($event)">
               </section>
               <section *ngIf="imageUrl">
-                  <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-                  <!-- <div class="mt-2">
-                      <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
-                  </div> -->
+                  <angular-cropper [cropperOptions]='{aspectRatio: 15 / 10}' [imageUrl]="imageUrl" #angularCropper></angular-cropper>
               </section>
-              <!--  <section *ngIf="croppedresult">
-                  <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
-                </section> -->
-
-
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

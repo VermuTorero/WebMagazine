@@ -1,16 +1,122 @@
-<div class="row m-4">
+<section class="titulo row p-0 m-0 text-center">
+    <h3>EDICIÓN DE LA PÁGINA DE INICIO</h3>
+</section>
+<!-- Seccion de inicio -->
+<section class="inicio row p-0 m-0">
+    <section class="promo col-3 p-0 m-0">
+    <button class="eliminar-del-carousel btn btn-warning btn-sm m-3" data-bs-toggle="modal" data-bs-target="#imagenLateralIzquierdaModal">CAMBIAR</button>
+    <img src="{{imagenInicioIzquierda.url}}" alt="" class="img-fluid p-0 m-0" data-bs-toggle="modal" data-bs-target="#imagenLateralIzquierdaModal">
+    </section>
+    <section class="carrousel col-6 p-0 m-0">
+      <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="4000">
+            <button class="eliminar-del-carousel btn btn-warning btn-sm m-3">CAMBIAR IMAGEN DE INICIO</button>
+            <img src="../../../assets/imagen_inicio.jpg" class="d-block w-100" alt="..." style="margin: 0;padding: 0;">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Vermú torero</h5>
+              <p>Revista digital y podcast del aperitivo a la cena</p>
+            </div>
+          </div>
+          <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="4000">
+            <button class="eliminar-del-carousel btn btn-danger btn-sm m-3" (click)="quitarDelCarousel(publicacionCarousel.id)" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0">QUITAR DEL CARRUSEL</button>
+            <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{publicacionCarousel.titulo}}</h5>
+              <p>{{publicacionCarousel.subtitulo}}</p>
+                  </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+    <section class="promo col-3 p-0 m-0">
+        <button class="eliminar-del-carousel btn btn-warning btn-sm m-3" data-bs-toggle="modal" data-bs-target="#imagenLateralDerechaModal">CAMBIAR</button>
+      <img src="{{imagenInicioDerecha.url}}" alt="" class="img-fluid p-0 m-0"  data-bs-toggle="modal" data-bs-target="#imagenLateralDerechaModal">
+    </section>
+  </section>
+
+<!-- <div class="row m-4">
     <h3 class="my-4">Publicaciones en el carousel</h3>
     <div *ngFor="let publicacionCarousel of publicacionesCarousel" style="display:block;" class="card row col-12 col-md-4 col-xxl-3">
         <app-publicacion [publicacion]="publicacionCarousel"></app-publicacion>
         <button class="btn btn-danger" (click)="quitarDelCarousel(publicacionCarousel.id)" >QUITAR DEL CAROUSEL</button>
     </div>
 </div>
-<hr>
+<hr> -->
 <div class="row m-4">
     <h3 class="my-4">Todas las publicaciones</h3>
     <div *ngFor="let publicacion of publicaciones" style="display:block;" class="card row col-12 col-md-4 col-xxl-3">
-        <app-publicacion [publicacion]="publicacion"></app-publicacion>
-        <button class="btn btn-success" (click)="agregarAlCarousel(publicacion.id)" >AGREGAR AL CAROUSEL</button>
+        <app-publicacion *ngIf="!publicacion.carousel" [publicacion]="publicacion"></app-publicacion>
+        <button *ngIf="!publicacion.carousel" class="btn btn-success btn-sm" (click)="agregarAlCarousel(publicacion.id)" >AGREGAR AL CAROUSEL</button>
     </div>
 </div>
 
+
+<!-- Modal Agregar Imagen lateral derecha-->
+<div class="modal fade" id="imagenLateralDerechaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section>
+                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                </section>
+                <section *ngIf="imagePreviewUrl">
+                    <angular-cropper [cropperOptions]='{aspectRatio: 3 / 4}' [imageUrl]="imagenInicioDerecha.url" #angularCropper></angular-cropper>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImageDerecha()"
+                    data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Agregar Imagen lateral izquierda-->
+<div class="modal fade" id="imagenLateralIzquierdaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section>
+                    <input type="file" accept="images/" (change)="onSelectFileIzquierda($event)">
+                </section>
+                <section *ngIf="imagePreviewUrl">
+                    <angular-cropper [cropperOptions]='{aspectRatio: 3 / 4}' [imageUrl]="imagenInicioIzquierda.url" #angularCropper2></angular-cropper>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImageIzquierda()"
+                    data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

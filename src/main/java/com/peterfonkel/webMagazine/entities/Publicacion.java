@@ -30,6 +30,7 @@ public class Publicacion {
 	@Column(unique = true)
 	private String titulo;
 	
+	@Column(length = 300)
 	private String subtitulo;
 	
 	@Column(length=50000)
@@ -46,6 +47,7 @@ public class Publicacion {
 	
 	private Instant fechaPublicacion;
 	
+	@Column(length = 600)
 	private String imagenPreviewUrl;
 	
 	@ManyToOne

@@ -31,6 +31,7 @@ const quill = new Quill('#editor', {
 
 export class PublicacionFichaComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
+  @ViewChild('angularCropper2') angularCropper2: CropperComponent = new CropperComponent;
   id: string = "";
   publicacion: Publicacion = new Publicacion();
   /* Variables para agregar contenido al editor Quill */
@@ -47,6 +48,7 @@ export class PublicacionFichaComponent implements OnInit {
   endpointCategorias: string = environment.urlAPI + "/categorias/";
   /* Recortador de imagenes */
   imageUrl: string = "";
+  imagePreviewUrl="";
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
@@ -111,7 +113,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
       this.lugarSeleccionado = publicacion.lugar;
-      this.imageUrl = this.publicacion.imagenPreviewUrl;
+      this.imagePreviewUrl = this.publicacion.imagenPreviewUrl;
       this.getTagsPublicacion();
       this.getAutorPublicacion();
       this.getCategoriaPublicacion();
@@ -337,6 +339,20 @@ export class PublicacionFichaComponent implements OnInit {
     }
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
+  onSelectFilePreview(event: any) {
+
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result as string;
+      }
+      console.log("EVENT", event.target.files[0])
+      this.imageName = event.target.files[0].name;
+     
+    }
+    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
+  }
 
   getCroppedImage() {
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
@@ -348,13 +364,24 @@ export class PublicacionFichaComponent implements OnInit {
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
-          console.log("URL IMG", url)
-          setTimeout(() => {
-            console.log("URL IMAGEN SUBIDA: ", url)
+          console.log("URL IMAGEN SUBIDA: ", url)
             this.insertarImagenUrl(url);
-          }, 3000)
-        });
+        })
+      }
+    }, 'image/jpeg', 0.70)
+  }
 
+  getCroppedImagePreview() {
+    this.angularCropper2.cropper.getCroppedCanvas().toBlob((blob2) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob2 as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob2 as Blob;
+        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
+          this.setImagePreview(url)
+        });
       }
     }, 'image/jpeg', 0.70)
   }
@@ -379,39 +406,21 @@ export class PublicacionFichaComponent implements OnInit {
     }, 'image/jpeg', 0.70)
   }
 
-  getCroppedImagePreview() {
-    this.angularCropper.cropper.setAspectRatio(16 / 9);
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
-    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob as Blob);
-      reader.onload = () => {
-        this.croppedresult = reader.result as string;
-        let blobGenerado = blob as Blob;
-        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "preview").subscribe(url => {
-          setTimeout(() => {
-            console.log("URL IMG", url)
-            this.setImagePreview(url)
-          
-          }, 2500)
-        });
-      }
-    }, 'image/jpeg', 0.70)
-  }
+ 
 
-  insertarImagenUrl(urlImagen: string[]) {
-    this.texto = this.texto + '<img src="' + urlImagen[0] + '" alt="imagenAlt' + this.anchoImagen + '">'
-    urlImagen = [];
+  insertarImagenUrl(urlImagen: string) {
+    this.texto = this.texto + '<img src="' + urlImagen + '" alt="imagenAlt' + this.anchoImagen + '">'
+    urlImagen = "";
     this.imageUrl = "";
     this.imageName = "";
   }
   
-  insertarImagenAutorUrl(urlImagen: string[]) {
-    this.autorSeleccionado.urlImagen = urlImagen[0];
+  insertarImagenAutorUrl(urlImagen: string) {
+    this.autorSeleccionado.urlImagen = urlImagen;
   }
 
-  setImagePreview(urlImagen: string[]) {
-    this.publicacion.imagenPreviewUrl = urlImagen[0];
+  setImagePreview(urlImagen: string) {
+    this.publicacion.imagenPreviewUrl = urlImagen;
+    this.imagePreviewUrl = urlImagen;
   }
 }
