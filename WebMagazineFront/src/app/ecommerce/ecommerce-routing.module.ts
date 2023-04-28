@@ -6,23 +6,30 @@ import { GestionComponent } from './components/gestion/gestion.component';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 
 const routes: Routes = [
-  { path: 'ecommerce', component: PrincipalEcommerceComponent },
-
   {
-    path: 'secciones',
-    component: SeccionesComponent,
-  },
-  {
-    path: 'gestion',
+    path: 'ecommerce',
     children: [
       {
-        path: `crear-producto`,
-        component: FormularioProductoComponent,
+        path: ``,
+        component: PrincipalEcommerceComponent,
       },
       {
-        path: ``,
-        component: GestionComponent,
-      }
+        path: 'gestion',
+        children: [
+          {
+            path: `crear-producto`,
+            component: FormularioProductoComponent,
+          },
+          {
+            path: ``,
+            component: GestionComponent,
+          },
+          {
+            path: 'secciones',
+            component: SeccionesComponent,
+          },
+        ],
+      },
     ],
   },
 ];

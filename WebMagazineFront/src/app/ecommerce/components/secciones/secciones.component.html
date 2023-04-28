@@ -4,6 +4,9 @@
         <h3>secciones</h3>
         <input type="text" [(ngModel)]="seccionNueva.nombreSeccion">
         <button class="btn btn-success mx-3" (click)="nuevaSeccion()">Crear nueva seccion</button>
+        <button routerLink=".." class="btn btn-primary">
+            VOLVER
+          </button>
     </div>
 
     <div *ngFor="let seccion of secciones" style="display:block;" class="gestionar-tags-container">
