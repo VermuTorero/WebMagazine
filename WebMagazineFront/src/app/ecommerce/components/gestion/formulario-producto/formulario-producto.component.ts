@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CropperComponent } from 'angular-cropperjs';
 import { Product } from 'src/app/ecommerce/models/product';
 import { Seccion } from 'src/app/ecommerce/models/seccion';
@@ -29,13 +30,16 @@ export class FormularioProductoComponent implements OnInit {
   /* controladores del formulario */
   formularioProducto: FormGroup;
   submit: boolean = false;
+  esNuevoProducto = true;
   /*-----------------------*/
 
   constructor(
     private imagenesService: ImagenesService,
     private seccionesService: SeccionService,
     private productoService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     /* control de errores del formulario */
     this.formularioProducto = this.fb.group({
@@ -50,6 +54,19 @@ export class FormularioProductoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const id = +params['id']
+      if(id){
+        this.productoService.getProductoPorId(id).subscribe((res) =>{
+          this.esNuevoProducto = false;
+          this.nuevoProducto = res;
+          this.formularioProducto.patchValue(this.nuevoProducto);
+        }
+        );
+      }
+    });
+
+   
     this.seccionesService.getSecciones().subscribe((response) => {
       this.secciones = response;
       this.secciones.forEach((seccion) => {
@@ -63,11 +80,19 @@ export class FormularioProductoComponent implements OnInit {
     if (this.formularioProducto.invalid) {
       return;
     }
-    this.nuevoProducto = this.formularioProducto.value
-    console.log(this.nuevoProducto);
+    if(this.esNuevoProducto){
+    this.nuevoProducto = this.formularioProducto.value;
     this.productoService.postProducto(this.nuevoProducto).subscribe((res) => {
-      console.log(res);
+      this.router.navigate(["ecommerce/gestion"]);
     });
+  }else{
+    let id = this.nuevoProducto.id
+    this.nuevoProducto = this.formularioProducto.value;
+    this.nuevoProducto.id = id;
+    this.productoService.patchProducto(this.nuevoProducto).subscribe((res) => {
+      this.router.navigate(["ecommerce/gestion"]);
+    });
+  }
   }
 
   /* metodos para el croper */

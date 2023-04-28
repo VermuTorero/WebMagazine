@@ -97,12 +97,18 @@
   <!-- Botones -->
   <div class="row ms-1 mt-3 mb-3 justify-content-around">
     <DIV class="col"
-      ><button type="submit" class=" btn btn-success">CREAR PRODUCTO</button></DIV
+      ><button *ngIf="esNuevoProducto" type="submit" class=" btn btn-success">CREAR PRODUCTO</button>
+      <button *ngIf="!esNuevoProducto" type="submit" class=" btn btn-warning">MODIFICAR PRODUCTO</button>
+      </DIV
     >
     <DIV class="col"
-      ><button routerLink=".." class="btn btn-primary">
+      ><button *ngIf="esNuevoProducto" routerLink=".." class="btn btn-primary">
         VOLVER
-      </button></DIV
+      </button>
+      <button *ngIf="!esNuevoProducto" routerLink="/ecommerce/gestion" class="btn btn-primary">
+        VOLVER
+      </button>
+      </DIV
     >
   </div>
 </form>

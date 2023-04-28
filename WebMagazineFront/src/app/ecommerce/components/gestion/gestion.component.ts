@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, PipeTransform } from '@angular/core';
+import { Component,OnInit, PipeTransform } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../service/product.service';
 import { FormControl } from '@angular/forms';
@@ -27,7 +27,6 @@ constructor(private productoService: ProductService, pipe: DecimalPipe, private 
 productos: Product[] = [];
 productos$: Observable<Product[]>;
 filter: FormControl;
-@Output() modificarProductoEvent = new EventEmitter<Product>();
 
 ngOnInit(): void {
 this.productoService.getProducts().subscribe((res) =>{
@@ -53,10 +52,6 @@ eliminarProducto(id: number){
     console.log("eliminado");
     window.location.reload();
   } );
-}
-
-modificarProducto(){
-  this.modificarProductoEvent.emit(this.productos[1]);
 }
 
 }

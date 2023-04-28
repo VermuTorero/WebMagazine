@@ -21,6 +21,10 @@ const routes: Routes = [
             component: FormularioProductoComponent,
           },
           {
+            path: `crear-producto/:id`,
+            component: FormularioProductoComponent,
+          },
+          {
             path: ``,
             component: GestionComponent,
           },

@@ -25,7 +25,7 @@
         <td><ngb-highlight [result]="producto.id | number" [term]="filter.value"></ngb-highlight></td>
         <td> <ngb-highlight [result]="producto.nombreProducto" [term]="filter.value"></ngb-highlight></td>
         <td> <ngb-highlight [result]="producto.precio | number" [term]="filter.value"></ngb-highlight></td>
-        <td> <button class="btn btn-warning">MODIFICAR</button></td>
+        <td> <button routerLink="./crear-producto/{{producto.id}}" class="btn btn-warning">MODIFICAR</button></td>
         <td> <button class="btn btn-danger" (click)="eliminarProducto(producto.id)">ELIMINAR</button></td>
       </tr>
     </tbody>

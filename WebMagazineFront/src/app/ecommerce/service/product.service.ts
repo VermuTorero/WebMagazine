@@ -80,4 +80,12 @@ export class ProductService {
   eliminarProducto(id: number): Observable <any>{
     return this.http.delete(this.endpoint + "/productos/" + id);
   }
+
+  getProductoPorId(id: number): Observable<Product>{
+    return this.http.get<Product>(this.endpoint + "/productos/" + id);
+  }
+  patchProducto(producto: Product): Observable<Product>{
+    return this.http.patch<any>(this.endpoint + "/productos/"+ producto.id, producto);
+  }
+
 }
