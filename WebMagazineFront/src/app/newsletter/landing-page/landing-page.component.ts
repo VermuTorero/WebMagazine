@@ -81,6 +81,7 @@ export class LandingPageComponent implements OnInit{
   }
 
   getCroppedImage() {
+    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob as Blob);
@@ -88,18 +89,14 @@ export class LandingPageComponent implements OnInit{
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.landingPage.id, "categoria").subscribe(url => {
-          console.log("URL IMG", url)
-          setTimeout(() => {
-            console.log("URL IMAGEN SUBIDA: ", url)
-            this.imageUrl = url[0];
-            this.landingPage.urlImagen = url[0];
-            this.subiendo = false;
-          }, 3000)
-        });
+        this.imagenesService.subirImagen(imagenRecortada, this.landingPage.id, "publicacion").subscribe(url => {
+          console.log("URL IMAGEN SUBIDA: ", url)
+          this.imageUrl = url;
+          this.landingPage.urlImagen = url;
+          this.subiendo = false;
+        })
       }
-    }, 'image/jpeg', 0.70);
-   
+    }, 'image/jpeg', 0.70)
   }
  
 }

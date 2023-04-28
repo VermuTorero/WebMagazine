@@ -1,7 +1,7 @@
 <body class="">
-    <div class="row pt-4 landing">
+    <div class="row pt-3 landing">
         <section class="col-1"></section>
-        <section class="col-12 col-md-6">
+        <section class="col-12 col-md-5">
 
             <!-- Eslogan -->
             <section class="row titulo ml-4">
@@ -9,7 +9,7 @@
                     <h2><b>{{landingPage.titulo}}</b></h2>
                 </div>
                 <div *ngIf="edicion" class="text-center">
-                    <textarea rows="2" cols="40" class="text-titulo" [(ngModel)]="landingPage.titulo">{{landingPage.titulo}}</textarea>
+                    <textarea rows="3" cols="32" class="text-titulo" [(ngModel)]="landingPage.titulo">{{landingPage.titulo}}</textarea>
                 </div>
             </section>
 
@@ -19,7 +19,7 @@
                     <h4>{{landingPage.descripcion}}</h4>
                 </div>
                 <div *ngIf="edicion" class="text-descripcion text-center">
-                    <textarea rows="10" cols="60" [(ngModel)]="landingPage.descripcion">{{landingPage.descripcion}}</textarea>
+                    <textarea rows="10" cols="45" [(ngModel)]="landingPage.descripcion">{{landingPage.descripcion}}</textarea>
                 </div>
             </section>
             <section class="text-center m-4">
@@ -56,7 +56,7 @@
         <!-- Imagen vertical-->
         <section *ngIf="!edicion" class="col-12 col-md-5 text-center mt-4">
             <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="">
-            <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="" alt="">
+            <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="" alt="Sin Imagen">
         </section>
         <section *ngIf="edicion" class="col-12 col-md-5 text-center mt-4">
             <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="" data-bs-toggle="modal"
@@ -65,10 +65,24 @@
             data-bs-target="#imagenModal">
         </section>
     </div>
+    <section class="row">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <a href="publicaciones-categoria/Gastrosofía"><img class="img-fluid" src="../../../assets/icono-gastrosofia.png" alt=""></a>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-2">
+            <a href="publicaciones-categoria/Entrevidas"><img class="img-fluid" src="../../../assets/icono-entrevidas.png" alt=""></a>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-2">
+            <a href="publicaciones-categoria/Viajar-a-solas"><img class="img-fluid" src="../../../assets/icono-viajar-a-solas.png" alt=""></a>
+        </div>
+    </section>
     <section class="text-center p-4">
         <button *ngIf="!edicion" class="btn btn-warning m-2" (click)="abrirEdicion()">Editar</button>
         <button *ngIf="edicion" class="btn btn-success m-2" (click)="guardarCambios()">Guardar edición</button>
-        <button *ngIf="edicion" class="btn btn-warning m-2" (click)="cerrarEdicion()">Cancelar</button>
+        <button *ngIf="edicion" class="btn btn-secondary m-2" (click)="cerrarEdicion()">Cancelar</button>
     </section>
     
 </body>

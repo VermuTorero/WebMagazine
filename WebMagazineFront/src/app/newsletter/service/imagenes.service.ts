@@ -6,7 +6,15 @@ import { firebaseConfig } from 'src/environments/firebaseConfig';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getDatabase, ref as refer, onValue, set } from "firebase/database";
 
+
+import { from } from "rxjs";
+import { switchMap, tap, map } from "rxjs/operators";
+
+
 import { initializeApp } from "firebase/app";
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/enviroment';
+import { ImagenInicio } from '../models/imagenInicio';
 
 
 const app = initializeApp(firebaseConfig);
@@ -17,9 +25,10 @@ const db = getDatabase(app);
   providedIn: 'root'
 })
 export class ImagenesService {
-  urlImagen: string[] = [];
+  urlImagen: string = "";
+  endpoint: string = environment.urlAPI;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
 /*   getImagen(): Observable<Imagen[]> {
     let imagenes: Imagen[] = [];
@@ -42,24 +51,44 @@ export class ImagenesService {
     return of(imagenes);
   } */
 
-  subirImagen(file: File, id: string, tipo: string): Observable<string[]> {
-    this.urlImagen = [];
+  subirImagen(file: File, id: string, tipo: string): Observable<string> {
     let arrayNombre = file.name.split(".");
+    let num = Math.floor(Math.random()*1000);
+    arrayNombre[0] = arrayNombre[0] + num;
+
     //Creo una referencia en el storage
-    var storageRef = ref(storage, `imagenes/${tipo}/${id}/${arrayNombre[0]}`)
+    const storageRef = ref(storage, `imagenes/${tipo}/${id}/${arrayNombre[0]}`);
     //Subir el archivo al storage
-    uploadBytes(storageRef, file).then(data => {
-      getDownloadURL(storageRef).then((url)=>{
-        this.urlImagen.push(url);
-        set(refer(db, `imagenes/${tipo}/${id}/${arrayNombre[0]}`), {
-          nombre: file.name,
-            url: url,
-            tipo: tipo
-        });
+    return from(uploadBytes(storageRef, file)).pipe(
+      switchMap((data) => {
+        // Obtener la URL de descarga
+        return from(getDownloadURL(storageRef)).pipe(
+          tap((url) => {
+            // Actualizar la información en la base de datos
+            set(refer(db, `imagenes/${tipo}/${id}/${arrayNombre[0]}`), {
+              nombre: file.name,
+              url: url,
+              tipo: tipo
+            });
+          }),
+          map((url) => {
+            // Devolver la URL de descarga
+            return url;
+          })
+        );
       })
-    });
-    return of(this.urlImagen);
+    );
   }
+  getImagenesInicio():  Observable<ImagenInicio[]>{
+    return this.http.get<any>(this.endpoint + "/imagenInicios").pipe(map(response=>response._embedded.imagenInicios))
+  }
+  setImagenInicioDerecha(imagenInicio: ImagenInicio): Observable<ImagenInicio>{
+    return this.http.patch<any>(this.endpoint + "/imagenInicios/1", imagenInicio);
+  }
+  setImagenInicioIzquierda(imagenInicio: ImagenInicio): Observable<ImagenInicio>{
+    return this.http.patch<any>(this.endpoint + "/imagenInicios/2", imagenInicio);
+  }
+
 /* 
   //Eliminar una imagen de un producto determinado
   deleteImage(imagen: Imagen, id: string): void {

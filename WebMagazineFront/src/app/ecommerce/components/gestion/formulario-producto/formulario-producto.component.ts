@@ -106,8 +106,8 @@ export class FormularioProductoComponent implements OnInit {
               console.log('URL IMG', url);
               setTimeout(() => {
                 console.log('URL IMAGEN SUBIDA: ', url);
-                this.nuevoProducto.url = url[0];
-                this.formularioProducto.controls['url'].setValue(url[0]);
+                this.nuevoProducto.url = url;
+                this.formularioProducto.controls['url'].setValue(url);
               }, 2000);
             });
         };
