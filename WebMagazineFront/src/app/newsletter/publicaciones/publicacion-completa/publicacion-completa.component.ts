@@ -84,6 +84,7 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt75">', 'alt="imagenAlt75"></p>');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt20">', 'alt="imagenAlt20"></p>');
       this.showPublicacion();
  
       

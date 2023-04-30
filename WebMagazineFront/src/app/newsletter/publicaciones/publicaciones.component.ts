@@ -4,6 +4,7 @@ import { Publicacion } from '../models/publicacion';
 import { PublicacionesServiceService } from '../service/publicaciones.service';
 import { ImagenInicio } from '../models/imagenInicio';
 import { ImagenesService } from '../service/imagenes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publicaciones',
@@ -17,10 +18,13 @@ export class PublicacionesComponent implements OnInit {
   urlImagenLateralDerecha: string = ""; 
   imagenInicioDerecha : ImagenInicio = new ImagenInicio();
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
+  imagenInicioCentral: ImagenInicio = new ImagenInicio();
+  tituloUrl: string ="";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
-    private imagenesService: ImagenesService) { }
+    private imagenesService: ImagenesService,
+    private router: Router) { }
 
   ngOnInit() {
     this.getPublicaciones();
@@ -64,13 +68,21 @@ export class PublicacionesComponent implements OnInit {
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
-        if (imagenInicio.derecha) {
+        if (imagenInicio.posicion == "derecha") {
           this.imagenInicioDerecha = imagenInicio;
         }
-        if(!imagenInicio.derecha){
+        if(imagenInicio.posicion == "izquierda"){
           this.imagenInicioIzquierda = imagenInicio;
+        }
+        if(imagenInicio.posicion == "centro"){
+          this.imagenInicioCentral = imagenInicio;
         }
       });
     })
+  }
+
+  getPublicacionUrl(titulo: string){
+    let url = "/publicaciones/" + titulo.replaceAll(" ", "-")
+    this.router.navigate([url]);
   }
 }

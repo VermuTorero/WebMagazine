@@ -1,7 +1,14 @@
-<body class="">
-    <div class="row pt-3 landing">
+<body>
+    <div class="row landing">
+
+        <!-- Botones de administración -->
+        <section class="col-12 botones text-center">
+            <button *ngIf="!edicion" class="btn btn-warning m-2" (click)="abrirEdicion()">Editar</button>
+            <button *ngIf="edicion" class="btn btn-success m-2" (click)="guardarCambios()">Guardar edición</button>
+            <button *ngIf="edicion" class="btn btn-secondary m-2" (click)="cerrarEdicion()">Cancelar</button>
+        </section>
         <section class="col-1"></section>
-        <section class="col-12 col-md-5">
+        <section class="col-12 col-md-5 cuerpo">
 
             <!-- Eslogan -->
             <section class="row titulo ml-4">
@@ -9,7 +16,8 @@
                     <h2><b>{{landingPage.titulo}}</b></h2>
                 </div>
                 <div *ngIf="edicion" class="text-center">
-                    <textarea rows="3" cols="32" class="text-titulo" [(ngModel)]="landingPage.titulo">{{landingPage.titulo}}</textarea>
+                    <textarea rows="3" cols="32" class="text-titulo"
+                        [(ngModel)]="landingPage.titulo">{{landingPage.titulo}}</textarea>
                 </div>
             </section>
 
@@ -19,15 +27,18 @@
                     <h4>{{landingPage.descripcion}}</h4>
                 </div>
                 <div *ngIf="edicion" class="text-descripcion text-center">
-                    <textarea rows="10" cols="45" [(ngModel)]="landingPage.descripcion">{{landingPage.descripcion}}</textarea>
+                    <textarea rows="10" cols="45"
+                        [(ngModel)]="landingPage.descripcion">{{landingPage.descripcion}}</textarea>
                 </div>
             </section>
+
+            <!-- Enlace a la página principal -->
             <section class="text-center m-4">
                 <a class="btn btn-primary" href="../">VISÍTANOS</a>
             </section>
 
             <!-- RRSS -->
-            <section class="rrss m-4">
+            <section class="rrss">
                 <div class="row mt-4">
                     <div class="col-2 col-sm-2"></div>
                     <div class="col-2 col-sm-2 my-1 text-center">
@@ -53,38 +64,19 @@
                 </div>
             </section>
         </section>
+
         <!-- Imagen vertical-->
-        <section *ngIf="!edicion" class="col-12 col-md-5 text-center mt-4">
+        <section *ngIf="!edicion" class="col-12 col-md-6 text-center mt-4">
             <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="">
             <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="" alt="Sin Imagen">
         </section>
-        <section *ngIf="edicion" class="col-12 col-md-5 text-center mt-4">
-            <img *ngIf="landingPage.urlImagen" class="img-fluid imagen" src="{{landingPage.urlImagen}}" alt="" data-bs-toggle="modal"
-            data-bs-target="#imagenModal">
-            <img *ngIf="!landingPage.urlImagen" class="img-fluid imagen" src="../../../assets/no-imagen.png" alt="" data-bs-toggle="modal"
-            data-bs-target="#imagenModal">
+        <section *ngIf="edicion" class="col-12 col-md-6 text-center mt-4">
+            <img *ngIf="landingPage.urlImagen" class="imagen-edicion img-fluid imagen" src="{{landingPage.urlImagen}}"
+                alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
+            <img *ngIf="!landingPage.urlImagen" class="imagen-edicion img-fluid imagen"
+                src="../../../assets/no-imagen.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
         </section>
     </div>
-    <section class="row">
-        <div class="col-2"></div>
-        <div class="col-2">
-            <a href="publicaciones-categoria/Gastrosofía"><img class="img-fluid" src="../../../assets/icono-gastrosofia.png" alt=""></a>
-        </div>
-        <div class="col-1"></div>
-        <div class="col-2">
-            <a href="publicaciones-categoria/Entrevidas"><img class="img-fluid" src="../../../assets/icono-entrevidas.png" alt=""></a>
-        </div>
-        <div class="col-1"></div>
-        <div class="col-2">
-            <a href="publicaciones-categoria/Viajar-a-solas"><img class="img-fluid" src="../../../assets/icono-viajar-a-solas.png" alt=""></a>
-        </div>
-    </section>
-    <section class="text-center p-4">
-        <button *ngIf="!edicion" class="btn btn-warning m-2" (click)="abrirEdicion()">Editar</button>
-        <button *ngIf="edicion" class="btn btn-success m-2" (click)="guardarCambios()">Guardar edición</button>
-        <button *ngIf="edicion" class="btn btn-secondary m-2" (click)="cerrarEdicion()">Cancelar</button>
-    </section>
-    
 </body>
 
 <!-- Modal Agregar Imagen-->
@@ -96,27 +88,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-  
                 <section>
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
                     <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-                    <!-- <div class="mt-2">
-                        <button class="btn btn-primary" (click)="getCroppedImage()">Recortar</button>
-                    </div> -->
                 </section>
-                <!--  <section *ngIf="croppedresult">
-                    <img id="imagen-recortada" class="img-redimensionada" [src]="croppedresult" alt="...">
-                  </section> -->
-  
-  
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" (click)="getCroppedImage()"
-                    data-bs-dismiss="modal">Aceptar</button>
+                <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>
-  </div>
+</div>

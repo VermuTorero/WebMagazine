@@ -3,15 +3,17 @@
         <section class="hoja">
             <!-- Titulo de la publicacion -->
             <h2 class="text-center"><b>{{publicacion.titulo}}</b></h2>
-            <section class="d-flex flex-row">
+
+            <!-- Datos de la publicacion -->
+            <section class="datos">
 
                 <!-- Autor -->
-                <section class="col-4 columna-autor">
+                <section class="col-12 col-sm-4 columna-autor">
                     <div class="row d-flex align-items-center autor">
-                        <div class="col-12 col-sm-3 justify-content-center align-items-center">
+                        <div class="d-none d-sm-block col-sm-3 justify-content-center align-items-center">
                             <img src="../../../../assets/icono-foto.png" alt="" class="foto-autor">
                         </div>
-                        <div class="d-none d-sm-block col-sm-9">
+                        <div class="col-12 col-sm-9 text-center">
                             <p *ngIf="publicacion.autor" class="autor">{{publicacion.autor.nombre}}
                                 {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
                         </div>
@@ -19,41 +21,41 @@
                 </section>
 
                 <!-- Tags y lugar -->
-                <section class="col-5 text-center">
+                <section class="col-12 col-sm-5 text-center">
                     <div class="row justify-content-center">
                         <div *ngFor="let tag of publicacion.tags" class="tag m-2"
                             [routerLink]="['/publicaciones-tag/'+ tag.tagNombre]">
-                            <p>{{tag.tagNombre}}</p>
+                            <p class="tagNombre">{{tag.tagNombre}}</p>
                         </div>
                     </div>
                     <div *ngIf="publicacion.lugar" class="row d-flex justify-content-center lugar">
                         <a class="link" href="publicaciones-provincia/{{publicacion.lugar.lugarNombre}}">
                             <div  class="lugar">
-                                <p class="text-center">&nbsp;&nbsp;{{publicacion.lugar.lugarNombre}}&nbsp;&nbsp;</p>
+                                <p class="lugarNombre text-center">&nbsp;&nbsp;{{publicacion.lugar.lugarNombre}}&nbsp;&nbsp;</p>
                             </div>
                         </a>
                     </div>
                 </section>
 
                 <!-- RRSS -->
-                <section class="col-3 rrss">
+                <section class="col-12 col-sm-3 rrss">
                     <div class="row align-items-center mt-1">
-                        <div class="col-6 col-sm-3 my-1">
+                        <div class="col-3 col-sm-3 my-1">
                             <a href="https://www.facebook.com/elisabethgiborra">
                                 <img class="icono-rrss" src="../../../../assets/facebookIcon.png" alt="">
                             </a>
                         </div>
-                        <div class="col-6 col-sm-3 my-1">
+                        <div class="col-3 col-sm-3 my-1">
                             <a href="https://www.instagram.com/vermu.torero/">
                                 <img class="icono-rrss" src="../../../../assets/instagramIcon.png" alt="">
                             </a>
                         </div>
-                        <div class="col-6 col-sm-3 my-1">
+                        <div class="col-3 col-sm-3 my-1">
                             <a href="http://es.linkedin.com/in/elisabethgiborra">
                                 <img class="icono-rrss" src="../../../../assets/linkedinIcon.png" alt="">
                             </a>
                         </div>
-                        <div class="col-6 col-sm-3 my-1">
+                        <div class="col-3 col-sm-3 my-1">
                             <a href="https://twitter.com/elisabethiborra">
                                 <img class="icono-rrss" src="../../../../assets/twitterIcon.png" alt="">
                             </a>
@@ -62,11 +64,6 @@
                 </section>
             </section>
 
-            <!-- Autor en pantallas pequenas -->
-            <section class="row d-sm-none">
-                <p *ngIf="publicacion.autor" class="autor text-center">{{publicacion.autor.nombre}}
-                    {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
-            </section>
             <hr>
 
             <!-- Contenido de la publicacion -->

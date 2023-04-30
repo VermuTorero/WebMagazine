@@ -6,3 +6,43 @@
     border-radius: 0px;
     border-style: none;
 }
+.letra-blanca{
+    color: white;
+}
+.letra-blanca:hover{
+    opacity: 1;
+    color: rgb(247, 193, 93);
+}
+.letra-negra{
+    color: black;
+}
+.letra-negra:hover{
+    opacity: 1;
+    color: rgb(122, 80, 3);
+}
+.rrss{
+    position: absolute;
+    top: 70%;
+    left: 5%;
+}
+.icono-rrss{
+    width: 150%;
+}
+
+/* Estilos tamaño movil */
+@media (max-width: 40em) {
+    .letra-blanca{
+        font-size: 1em;
+    }
+    .letra-negra{
+        font-size: 1em;
+    }
+    .rrss{
+        position: absolute;
+        top: 70%;
+        left: 5%;
+    }
+    .icono-rrss{
+        width: 80%;
+    }
+}

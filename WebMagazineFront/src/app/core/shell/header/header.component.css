@@ -1,5 +1,6 @@
 .navbar{
     background-color: rgb(255,109,0,255);
+    font-size: 1em;
 }
 .navbar-brand {
     font-size: 2vw;
@@ -8,6 +9,31 @@
     width: 8vw; 
     font-size: 5vw;
 }
+.navbar-collapse{
+    justify-content: center !important;
+}
 .barra-admin{
     background-color: rgb(255,109,0,255);
+}
+
+@media (min-width: 100em) {
+    .nav-link{
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 80em) {
+    .nav-link{
+        font-size:small;
+    }
+}
+@media (max-width: 40em) {
+
+    .navbar-brand{
+        width: 50% !important;
+        font-size: large;
+    }
+    .navbar-icon{
+        width: 50%;
+    }
 }

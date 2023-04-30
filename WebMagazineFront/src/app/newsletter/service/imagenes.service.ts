@@ -88,6 +88,9 @@ export class ImagenesService {
   setImagenInicioIzquierda(imagenInicio: ImagenInicio): Observable<ImagenInicio>{
     return this.http.patch<any>(this.endpoint + "/imagenInicios/2", imagenInicio);
   }
+  setImagenInicioCentral(imagenInicio: ImagenInicio){
+    return this.http.patch<any>(this.endpoint + "/imagenInicios/3", imagenInicio);
+  }
 
 /* 
   //Eliminar una imagen de un producto determinado

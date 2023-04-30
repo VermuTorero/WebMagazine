@@ -3,37 +3,37 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    padding-top: 5%;
+    padding-top: 2%;
 
 }
-
+.imagen-edicion:hover{
+    opacity: 0.5;
+}
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
- 
     .icono-rrss{
         width: 8vw;
     }
     .imagen{
         height: 80%;
     }
-
     h4{
         text-align: center;
-        text-shadow: 1px 1px 1px black;
         font-size: 4vw;
     }
     h2{
         text-align: center;
         color: white;
-        text-shadow: 4px 4px 3px black;
+        text-shadow: 2px 2px 1px black;
         font-size: 7vw;
+        padding-left: 2%;
+        padding-right: 2%;
     }
 }
 
 /* Estilos tamaño grande */
 @media (min-width: 41em) {
-  
     .icono-rrss{
         width: 3vw;
     }

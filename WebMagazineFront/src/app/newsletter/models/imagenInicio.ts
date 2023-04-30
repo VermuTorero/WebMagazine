@@ -1,5 +1,5 @@
 export class ImagenInicio {
     id: string = "";
-    derecha: boolean = false;
+    posicion: string = "";
     url: string ="";
 }

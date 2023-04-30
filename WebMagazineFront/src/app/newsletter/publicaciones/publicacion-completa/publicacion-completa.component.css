@@ -44,24 +44,28 @@
 .tag{
     background-color: orange;
     border-radius: 15px;
-    height: 1.6rem;
+    height: 1.3rem;
     width: auto;
     cursor:pointer; 
     cursor: hand
+}
+.tagNombre{
+    font-size:small
 }
 
 
 .lugar{
     background-color: rgb(162, 235, 222);
     border-radius: 15px;
-    height: 1.6rem;
+    height: 1.3rem;
     width: fit-content;
     margin: 0px auto;
 }
-
-.autor{
-    margin-top: 3%;
+.lugarNombre{
+    font-size:small
 }
+
+
 
 .foto-autor{
     width: 70px;
@@ -81,6 +85,9 @@
     ::ng-deep img[alt="imagenAlt35"]{
         width:60% !important;
     }
+    ::ng-deep img[alt="imagenAlt20"]{
+        width:50% !important;
+    }
     ::ng-deep .iframe-container{
         width:100% !important;
         height: fit-content !important;
@@ -95,6 +102,10 @@
     }
     .icono-rrss{
         width: 8vw;
+    }
+    .autor{
+        margin-top: 3%;
+        font-size: small;
     }
 
 }
@@ -113,6 +124,9 @@
     ::ng-deep img[alt="imagenAlt35"]{
         width:35% !important;
     }
+    ::ng-deep img[alt="imagenAlt20"]{
+        width:20% !important;
+    }
     ::ng-deep iframe[tipo="podcast"]{
         width: 75% !important;
         height: 220px !important;
@@ -124,6 +138,13 @@
 
     .icono-rrss{
         width: 3vw;
+    }
+    .autor{
+        margin-top: 3%;
+        font-size: medium;
+    }
+    .datos{
+        display:flex
     }
 }
 

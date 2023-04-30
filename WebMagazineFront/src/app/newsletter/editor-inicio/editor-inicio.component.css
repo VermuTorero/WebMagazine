@@ -3,6 +3,16 @@
     border-radius: 0px;
     border-style: none;
 }
-.eliminar-del-carousel{
+.boton{
     position: absolute;
+    margin-left: 3% !important;
+
+}
+
+.boton-central{
+    position: absolute;
+    margin-left: 13% !important;
+}
+.carousel-indicators{
+
 }
