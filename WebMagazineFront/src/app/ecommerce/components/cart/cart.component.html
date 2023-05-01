@@ -31,6 +31,7 @@
     <button class="btn btn-outline-danger d-block w-100 mb-3" (click)="emptyCart()">
         <i class="fas fa-ban"></i> Vaciar cesta
     </button>
+    <button *ngIf="existeCarrito()" routerLink="./pedido" class="btn btn-outline-success d-block w-100 mb-3">Realizar Pedido</button>
     
     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 </div> 

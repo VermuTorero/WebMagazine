@@ -1,87 +1,72 @@
-import { Component } from '@angular/core';
-import { Product } from '../../models/product';
-import { MessageService } from '../../service/message.service';
+import { UsuariosService } from './../../../core/service/usuarios.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
+import { Usuario } from 'src/app/newsletter/models/usuario';
+import { Direccion } from '../../models/direccion';
 import { CartItemModel } from '../../models/cart-item-model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Pedido } from '../../models/pedido';
+import { PedidosService } from '../../service/pedidos.service';
+import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
+import { environment } from 'src/environments/enviroment';
 
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: 'app-pedido',
+  templateUrl: './pedido.component.html',
+  styleUrls: ['./pedido.component.css']
 })
-export class CartComponent {
-  cartItems: CartItemModel[] = [];
-  total = 0;
+export class PedidoComponent implements OnInit {
+
+  endpoint: string = environment.urlAPI + "/productos/";
+
+  usuario = new Usuario();
+  direccionEnvio!: Direccion | undefined;
+  productosCarrito: CartItemModel[] = [];
+  precioTotal: number = 0;
    //variable paypal
    public payPalConfig?: IPayPalConfig;
-
+  
 
   constructor(
-    private messageService: MessageService,
     private storageService: StorageService,
-    private modalService: NgbModal,
-    private spinner: NgxSpinnerService
+    private UsuariosService: UsuariosService,
+    private modalService:  NgbModal,
+    private spinner: NgxSpinnerService,
+    private pedidoService: PedidosService
   ) {}
 
-  ngOnInit() {
-     //metodo paypal
-     this.initConfig();
-    if (this.storageService.existCart()) {
-      this.cartItems = this.storageService.getCart();
-    }
-    this.getItem();
-    this.total = this.getTotal();
-  }
 
-  getItem(): void {
-    this.messageService.getMessage().subscribe((product: Product) => {
-      let exists = false;
-      this.cartItems.forEach((item) => {
-        if (item.productId === product.id) {
-          exists = true;
-          item.qty++;
-        }
+  ngOnInit(): void {
+    //1º traemos el usuario con sus datos de la API, posteriormente lo leera de la sesión
+    this.UsuariosService.getUsuarios().subscribe((res) =>{
+      this.usuario = res[0]; // usamos el primer usuario del array hasta que esté implementada la función de usuarios
+      //2º sacamos la direccion de envio del usuario
+      const url = this.UsuariosService.extraerUrlDireccionUsuario(this.usuario);
+      this.UsuariosService.getDireccionPorUrl(url).subscribe((res2) =>{
+        this.direccionEnvio = res2;
       });
-      if (!exists) {
-        const cartItem = new CartItemModel(product);
-        this.cartItems.push(cartItem);
-      }
-      this.total = this.getTotal();
-      this.storageService.setCar(this.cartItems);
     });
+    //3º leemos los productos del carrito
+    this.productosCarrito = this.storageService.getCart();
+    this.precioTotal = this.getTotal();
+
   }
 
   getTotal(): number {
     let total = 0;
-    this.cartItems.forEach((item) => {
+    this.productosCarrito.forEach((item) => {
       total += item.qty * item.productPrice;
     });
     return +total.toFixed(2);
   }
 
   emptyCart(): void {
-    this.cartItems = [];
-    this.total = 0;
+    this.productosCarrito = [];
+    this.precioTotal = 0;
     this.storageService.clear();
-  }
-
-  deleteItem(i: number): void {
-    if (this.cartItems[i].qty > 1) {
-      this.cartItems[i].qty--;
-    } else {
-      this.cartItems.splice(i, 1);
-    }
-    this.total = this.getTotal();
-    this.storageService.setCar(this.cartItems);
-  }
-
-  existeCarrito(): boolean{
-    return this.storageService.existCart();
   }
 
   getItemsList(): any[]{
@@ -89,7 +74,7 @@ export class CartComponent {
     let item = {};
     // productos del carrito lo metemos en un array con el formato de paypal
     //name, quantity, unit_amount
-    this.cartItems.forEach((it: CartItemModel) => {
+    this.productosCarrito.forEach((it: CartItemModel) => {
       item = {
         name: it.productName,
         quantity: it.qty,
@@ -100,7 +85,15 @@ export class CartComponent {
   return items;
 }
 
- // metodo paypal
+pagar(modal: any): void{
+this.modalService.open(modal,{
+  size: 'm',
+  windowClass: 'modalPaypal'
+});
+this.initConfig();
+}
+
+  // metodo paypal
  private initConfig(): void {
   this.payPalConfig = {
     currency: 'EUR',
@@ -156,15 +149,26 @@ export class CartComponent {
         'onClientAuthorization - you should probably inform your server about completed transaction at this point',
         data
       );
-      //al autorizar la transaccion abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
-      this.openModal(
+
+      //creamos el pedido
+      let nuevoPedido = new Pedido(this.UsuariosService.extraerUrlDireccion(this.direccionEnvio), this.getTotal());
+      //agregamos el usuario al pedido
+      nuevoPedido.usuario = this.UsuariosService.extraerUrlUsuario(this.usuario);
+      //agregamos las URL de los productos
+      this.productosCarrito.forEach((producto) =>{
+        nuevoPedido.productos.push(this.endpoint + producto.productId);
+      });
+      //Llamamos al endPoint
+      this.pedidoService.postPedido(nuevoPedido).subscribe((res) =>{
+        console.log(res);
+        this.emptyCart();
+        this.spinner.hide();
+        //al autorizar la transaccion abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
+       this.openModal(
         data.purchase_units[0].items,
         data.purchase_units[0].amount.value
       )
-      //vaciamos el carrito despues de la compra
-      this.emptyCart();
-      //cerramos el spinner al terminar el pago
-      this.spinner.hide();
+      });
     },
     onCancel: (data, actions) => {
       console.log('OnCancel', data, actions);
@@ -183,5 +187,4 @@ openModal(items: any, amount: any): void{
   modalRef.componentInstance.items = items;
   modalRef.componentInstance.amount = amount
 }
-
 }

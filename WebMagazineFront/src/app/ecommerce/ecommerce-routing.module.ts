@@ -4,6 +4,7 @@ import { PrincipalEcommerceComponent } from './components/principal-ecommerce/pr
 import { SeccionesComponent } from './components/secciones/secciones.component';
 import { GestionComponent } from './components/gestion/gestion.component';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
+import { PedidoComponent } from './components/pedido/pedido.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: ``,
         component: PrincipalEcommerceComponent,
+      },
+      {
+        path: 'pedido',
+        component: PedidoComponent,
       },
       {
         path: 'gestion',
