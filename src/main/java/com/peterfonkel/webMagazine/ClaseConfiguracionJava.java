@@ -76,10 +76,12 @@ public class ClaseConfiguracionJava {
     @Bean
     public void setImagenesInicio() {
     	if (imagenInicioDAO.findAll().size()<2) {	
-    		ImagenInicio imagenInicio = new ImagenInicio(1L, "", true);
+    		ImagenInicio imagenInicio = new ImagenInicio(1L, "", "derecha");
     		imagenInicioDAO.save(imagenInicio);
-    		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", false);
+    		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", "izquierda");
     		imagenInicioDAO.save(imagenInicio2);
+    		ImagenInicio imagenInicio3 = new ImagenInicio(3L, "", "centro");
+    		imagenInicioDAO.save(imagenInicio3);
     		
 		}
     }

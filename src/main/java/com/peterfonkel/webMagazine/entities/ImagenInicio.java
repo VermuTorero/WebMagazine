@@ -4,11 +4,8 @@ import java.sql.Date;
 
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 
 
 @Entity
@@ -17,23 +14,19 @@ public class ImagenInicio {
 	@Id
 	Long id;
 	private String url;
-	private boolean derecha;
+	private String posicion;
 	
 
 	public ImagenInicio() {
 		super();
 	}
 
-	
-	
-	public ImagenInicio(Long id, String url, boolean derecha) {
+	public ImagenInicio(Long id, String url, String posicion) {
 		super();
 		this.url = url;
-		this.derecha = derecha;
+		this.posicion = posicion;
 		this.id = id;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -43,28 +36,19 @@ public class ImagenInicio {
 		this.id = id;
 	}
 
-
-
 	public String getUrl() {
 		return url;
 	}
-
-
 
 	public void setUrl(String url) {
 		this.url = url;
 	}
 
-
-
-	public boolean isDerecha() {
-		return derecha;
+	public String getPosicion() {
+		return posicion;
 	}
 
-
-
-	public void setDerecha(boolean derecha) {
-		this.derecha = derecha;
+	public void setPosicion(String posicion) {
+		this.posicion = posicion;
 	}
-
 }

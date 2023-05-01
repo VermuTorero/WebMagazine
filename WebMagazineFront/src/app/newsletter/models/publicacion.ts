@@ -21,6 +21,7 @@ export class Publicacion {
     imagenPreviewUrl: string ="";
     lugar: Lugar = new Lugar();
     categoria: any;
+    letraOscura: boolean = false;
 
     constructor(){
 

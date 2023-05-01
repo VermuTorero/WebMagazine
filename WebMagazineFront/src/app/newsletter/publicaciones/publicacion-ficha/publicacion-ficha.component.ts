@@ -114,11 +114,12 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion.id = this.id;
       this.lugarSeleccionado = publicacion.lugar;
       this.imagePreviewUrl = this.publicacion.imagenPreviewUrl;
-      this.getTagsPublicacion();
       this.getAutorPublicacion();
-      this.getCategoriaPublicacion();
-      this.getFechaPublicacion();
       this.getLugarPublicacion();
+      this.getCategoriaPublicacion();
+      this.getTagsPublicacion();
+      this.getFechaPublicacion();
+     
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
@@ -145,9 +146,9 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion.tags.push(tag)
     });
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
-    this.publicacion.autor = new Autor();
+    /* this.publicacion.autor = new Autor(); */
     this.publicacion.autor = this.autorSeleccionado;
-    this.publicacion.categoria = new Categoria();
+    /* this.publicacion.categoria = new Categoria(); */
     this.publicacion.categoria = this.categoriaSeleccionada;
     this.publicacion.lugar = this.lugarSeleccionado;
     this.descargarTxt();
@@ -159,23 +160,27 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   patchPublicacion() {
+    console.log("EN PATCH")
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.tagsSeleccionadas.forEach(tag => {
       this.publicacion.tags.push(this.endpointTags + tag.id)
     });
     console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
-    this.publicacion.autor = new Autor();
+    /* this.publicacion.autor = new Autor(); */
     this.publicacion.autor = this.autorSeleccionado;
-    this.publicacion.categoria = new Categoria();
+   /*  this.publicacion.categoria = new Categoria(); */
     this.publicacion.categoria = this.categoriaSeleccionada;
     this.publicacion.lugar = this.lugarSeleccionado;
     this.publicacion.tags = this.tagsSeleccionadas;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
-      this.publicacion = publicacionModicada;
-      this.getPublicacion();
+     /*  this.publicacion = publicacionModicada; */
+     console.log("PUBLICACION MOD: ", publicacionModicada) 
+     this.getPublicacion();
       this.descargarTxt();
-      this.router.navigate([''])
+      let url = "/../../publicaciones/" + publicacionModicada.titulo.replaceAll(" ", "-");
+      console.log("navegando a: " + url)
+      this.router.navigate([url])
     })
   }
 
@@ -386,37 +391,11 @@ export class PublicacionFichaComponent implements OnInit {
     }, 'image/jpeg', 0.70)
   }
 
-  getCroppedImageAutor() {
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
-    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob as Blob);
-      reader.onload = () => {
-        this.croppedresult = reader.result as string;
-        let blobGenerado = blob as Blob;
-        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.autor.id, "autor").subscribe(url => {
-          console.log("URL IMG", url)
-          setTimeout(() => {
-            this.insertarImagenAutorUrl(url);
-          }, 2500)
-        });
-
-      }
-    }, 'image/jpeg', 0.70)
-  }
-
- 
-
   insertarImagenUrl(urlImagen: string) {
     this.texto = this.texto + '<img src="' + urlImagen + '" alt="imagenAlt' + this.anchoImagen + '">'
     urlImagen = "";
     this.imageUrl = "";
     this.imageName = "";
-  }
-  
-  insertarImagenAutorUrl(urlImagen: string) {
-    this.autorSeleccionado.urlImagen = urlImagen;
   }
 
   setImagePreview(urlImagen: string) {

@@ -13,8 +13,10 @@ import { ImagenInicio } from '../models/imagenInicio';
 export class EditorInicioComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   @ViewChild('angularCropper2') angularCropper2: CropperComponent = new CropperComponent;
+  @ViewChild('angularCropper3') angularCropper3: CropperComponent = new CropperComponent;
   publicaciones: Publicacion[] = [];
   publicacionesCarousel: Publicacion[] = [];
+  publicacionesNoCarousel: Publicacion[] = [];
   /* Recortador de imagenes */
   imageUrl: string = "";
   imagePreviewUrl = "";
@@ -24,6 +26,7 @@ export class EditorInicioComponent implements OnInit {
 
   imagenInicioDerecha : ImagenInicio = new ImagenInicio();
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
+  imagenInicioCentral: ImagenInicio = new ImagenInicio();
 
   constructor(private publicacionesService: PublicacionesServiceService,
     private imagenesService: ImagenesService) {
@@ -33,19 +36,27 @@ export class EditorInicioComponent implements OnInit {
     this.getPublicaciones();
     this.getImagenesInicio();
     this.imagenInicioDerecha.id = "1";
-    this.imagenInicioDerecha.derecha = true;
+    this.imagenInicioDerecha.posicion = "derecha";
     this.imagenInicioIzquierda.id = "2";
+    this.imagenInicioIzquierda.posicion = "izquierda";
+    this.imagenInicioCentral.id = "3";
+    this.imagenInicioCentral.posicion = "centro";
   }
   getPublicaciones() {
     this.publicacionesCarousel = [];
-    this.publicacionesService.getPublicaciones().subscribe(publicaciones => {
-      this.publicaciones = publicaciones;
-      this.publicaciones.forEach(publicacion => {
+    this.publicacionesNoCarousel = [];
+    this.publicacionesService.getPublicacionesCarousel().subscribe(publicaciones => {
+      this.publicacionesCarousel = publicaciones;
+      this.publicacionesCarousel.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
         publicacion.subtitulo = publicacion.subtitulo.substring(0,70) + "..."
-        if (publicacion.carousel) {
-          this.publicacionesCarousel.push(publicacion);
-        }
+        this.publicacionesService.getPublicacionesNoCarousel().subscribe(publicaciones=>{
+          this.publicacionesNoCarousel = publicaciones;
+          this.publicacionesNoCarousel.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            publicacion.subtitulo = publicacion.subtitulo.substring(0,70) + "..."
+          });
+        })
       });
     })
   }
@@ -131,6 +142,22 @@ export class EditorInicioComponent implements OnInit {
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
 
+  onSelectFileCentral(event: any) {
+
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result as string;
+        this.imagenInicioCentral.url = this.imagePreviewUrl;
+      }
+      console.log("EVENT", event.target.files[0])
+      this.imageName = event.target.files[0].name;
+
+    }
+    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
+  }
+
   getCroppedImageDerecha() {
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
@@ -157,10 +184,27 @@ export class EditorInicioComponent implements OnInit {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, "imagenLateralIzquierda", "lateral").subscribe(url => {
+        this.imagenesService.subirImagen(imagenRecortada, "imagenLateralIzquierda", "inicio").subscribe(url => {
           console.log("URL IMAGEN SUBIDA: ", url)
           this.imagenInicioIzquierda.url = url;
           this.setImagenInicioIzquierda();
+        })
+      }
+    }, 'image/jpeg', 0.70)
+  }
+  getCroppedImageCentral() {
+    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
+    this.angularCropper3.cropper.getCroppedCanvas().toBlob((blob) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob as Blob;
+        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, "imagenCentral", "inicio").subscribe(url => {
+          console.log("URL IMAGEN SUBIDA: ", url)
+          this.imagenInicioCentral.url = url;
+          this.setImagenInicioCentral();
         })
       }
     }, 'image/jpeg', 0.70)
@@ -169,11 +213,14 @@ export class EditorInicioComponent implements OnInit {
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
-        if (imagenInicio.derecha) {
+        if (imagenInicio.posicion == "derecha") {
           this.imagenInicioDerecha = imagenInicio;
         }
-        if(!imagenInicio.derecha){
+        if(imagenInicio.posicion == "izquierda"){
           this.imagenInicioIzquierda = imagenInicio;
+        }
+        if(imagenInicio.posicion == "centro"){
+          this.imagenInicioCentral = imagenInicio;
         }
       });
     })
@@ -186,6 +233,11 @@ export class EditorInicioComponent implements OnInit {
   setImagenInicioIzquierda(){
     this.imagenesService.setImagenInicioIzquierda(this.imagenInicioIzquierda).subscribe(imagenInicioIzquierda=>{
       this.imagenInicioIzquierda = imagenInicioIzquierda;
+    })
+  }
+  setImagenInicioCentral(){
+    this.imagenesService.setImagenInicioCentral(this.imagenInicioCentral).subscribe(imagenInicioCentral=>{
+      this.imagenInicioCentral = imagenInicioCentral;
     })
   }
 }

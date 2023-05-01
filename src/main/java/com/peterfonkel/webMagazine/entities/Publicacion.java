@@ -69,6 +69,7 @@ public class Publicacion {
 	@JoinColumn(name = "publicacion_id")
 	private List<Tag> tags;
 	
+	private boolean letraOscura;
 	
 	public Publicacion() {
 		super();
@@ -209,6 +210,14 @@ public class Publicacion {
 
 	public void setCarousel(boolean carousel) {
 		this.carousel = carousel;
+	}
+
+	public boolean isLetraOscura() {
+		return letraOscura;
+	}
+
+	public void setLetraOscura(boolean letraOscura) {
+		this.letraOscura = letraOscura;
 	}
 	
 }

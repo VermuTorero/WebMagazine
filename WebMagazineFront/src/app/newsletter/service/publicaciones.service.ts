@@ -60,7 +60,7 @@ export class PublicacionesServiceService {
     return this.http.delete(this.endpoint + "/publicaciones/" + id);
   }
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
-    return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion).pipe(map(response=>response.publicacion));
+    return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion);
   }
   getPublicacionesCerca(lugarNombre: string, idPublicacion: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCerca/" + lugarNombre + "/" + idPublicacion).pipe(map(response=>response._embedded.publicaciones))
@@ -79,5 +79,8 @@ export class PublicacionesServiceService {
   }
   getPublicacionesCarousel(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCarousel").pipe(map(response=>response._embedded.publicaciones));
+  }
+  getPublicacionesNoCarousel(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesNoCarousel").pipe(map(response=>response._embedded.publicaciones));
   }
 }

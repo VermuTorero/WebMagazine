@@ -6,3 +6,6 @@
 .descripcion{
     font-size:x-large;
 }
+.imagen-edicion:hover{
+    opacity: 0.5;
+}
