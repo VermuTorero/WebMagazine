@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.entities;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,9 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
-    private Date fechaPedido;
-    private Date fechaEnvio;
-    private Date fechaEntrega;
+    private Instant fechaPedido;
+    private Instant fechaEnvio;
+    private Instant fechaEntrega;
 
     @OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
     private Direccion direccionEntrega;
@@ -42,28 +43,28 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Date getFechaPedido() {
+    public Instant getFechaPedido() {
         return fechaPedido;
     }
 
-    public void setFechaPedido(Date fechaPedido) {
+    public void setFechaPedido(Instant fechaPedido) {
         this.fechaPedido = fechaPedido;
     }
 
-    public Date getFechaEnvio() {
+    public Instant getFechaEnvio() {
         return fechaEnvio;
     }
 
-    public void setFechaEnvio(Date fechaEnvio) {
-        this.fechaEnvio = fechaEnvio;
+    public Instant setFechaEnvio(Instant fechaEnvio) {
+        return this.fechaEnvio = fechaEnvio;
     }
 
-    public Date getFechaEntrega() {
+    public Instant getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
+    public Instant setFechaEntrega(Instant fechaEntrega) {
+        return this.fechaEntrega = fechaEntrega;
     }
 
     public Direccion getDireccionEntrega() {
