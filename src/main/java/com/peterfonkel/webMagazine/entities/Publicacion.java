@@ -139,7 +139,6 @@ public class Publicacion {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
-
 	public List<Like> getLikesRecibidos() {
 		return likesRecibidos;
 	}

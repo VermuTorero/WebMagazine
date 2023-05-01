@@ -17,7 +17,7 @@
                 <div class="m-4 row row-autor">
                     <p class="col-3 m-1">Autor:</p>
                     <div *ngIf="publicacion.autor" class="col-7 m-2">
-                        <select name="autorSeleccionado" id="autorSeleccionado" [(ngModel)]="autorSeleccionado.id">
+                        <select name="autorSeleccionado" id="autorSeleccionado" [(ngModel)]="publicacion.autor.id">
                             <option *ngFor="let autor of autores" value="{{autor.id}}">
                                 {{autor.nombre}} {{autor.apellido1}} {{autor.apellido2}}</option>
                         </select>
@@ -28,7 +28,7 @@
                 <div class="m-4 row">
                     <p class="col-3 m-1">Lugar:</p>
                     <div *ngIf="publicacion.lugar" class="col-7 m-2">
-                        <select name="lugar" id="lugar" [(ngModel)]="lugarSeleccionado.id">
+                        <select name="lugar" id="lugar" [(ngModel)]="publicacion.lugar.id">
                             <option *ngFor="let lugar of lugares" value="{{lugar.id}}">
                                 {{lugar.lugarNombre}}</option>
                         </select>
@@ -39,7 +39,7 @@
                 <div class="m-4 row">
                     <p class="col-3 m-1">Categoria:</p>
                     <div *ngIf="publicacion.categoria" class="col-7 m-2">
-                        <select name="autor" id="categoria" [(ngModel)]="categoriaSeleccionada.id">
+                        <select name="autor" id="categoria" [(ngModel)]="publicacion.categoria.id">
                            <!--  <option value="{{publicacion.categoria.id}}" selected disabled>
                                 {{publicacion.categoria.categoriaNombre}}</option> -->
                             <option *ngFor="let categoria of categorias" value="{{categoria.id}}">
@@ -340,33 +340,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Cambiar Autor-->
-<div class="modal fade" id="cambiarAutorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar tag</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row tag-existente-container">
-                    <label for="" class="mx-2">Seleccionar autor</label>
-                    <select name="tag4" id="tg4" [(ngModel)]="autorSeleccionado.id">
-                        <option *ngFor="let autor of autores" value={{autor.id}}>{{autor.nombre}} {{autor.apellido1}}
-                        </option>
-                    </select>
-                </div>
-                <hr>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" (click)="cambiarAutor()" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>

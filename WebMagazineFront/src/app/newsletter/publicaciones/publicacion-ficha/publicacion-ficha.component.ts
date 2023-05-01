@@ -48,7 +48,7 @@ export class PublicacionFichaComponent implements OnInit {
   endpointCategorias: string = environment.urlAPI + "/categorias/";
   /* Recortador de imagenes */
   imageUrl: string = "";
-  imagePreviewUrl="";
+  imagePreviewUrl = "";
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
@@ -60,7 +60,6 @@ export class PublicacionFichaComponent implements OnInit {
   tagNueva: Tag = new Tag();
   autores: Autor[] = [];
   /* Selecciones en el formulario */
-  autorSeleccionado: Autor = new Autor();
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
   lugarSeleccionado: Lugar = new Lugar();
@@ -90,7 +89,6 @@ export class PublicacionFichaComponent implements OnInit {
         this.getPublicacion();
       }
       this.ajustarEditor();
-
     })
   }
 
@@ -112,14 +110,13 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacionesService.getPublicacionById(this.id).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
-      this.lugarSeleccionado = publicacion.lugar;
       this.imagePreviewUrl = this.publicacion.imagenPreviewUrl;
       this.getAutorPublicacion();
       this.getLugarPublicacion();
       this.getCategoriaPublicacion();
       this.getTagsPublicacion();
       this.getFechaPublicacion();
-     
+
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
@@ -145,38 +142,22 @@ export class PublicacionFichaComponent implements OnInit {
     this.tagsSeleccionadas.forEach(tag => {
       this.publicacion.tags.push(tag)
     });
-    console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
-    /* this.publicacion.autor = new Autor(); */
-    this.publicacion.autor = this.autorSeleccionado;
-    /* this.publicacion.categoria = new Categoria(); */
-    this.publicacion.categoria = this.categoriaSeleccionada;
-    this.publicacion.lugar = this.lugarSeleccionado;
     this.descargarTxt();
-    console.log("PUBLICACION A ENVIAR", this.publicacion)
     this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
-      console.log("PUBLICACION REGISTRADA", publicacion);
+      this.getPublicacion();
+      this.descargarTxt();
+      let url = "/../publicaciones/" + publicacion.titulo.replaceAll(" ", "-");
+      console.log("navegando a: " + url)
+      this.router.navigate([url])
     });
-
   }
 
   patchPublicacion() {
-    console.log("EN PATCH")
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
-    this.tagsSeleccionadas.forEach(tag => {
-      this.publicacion.tags.push(this.endpointTags + tag.id)
-    });
-    console.log("URLS TAGS SELECCIONADAS", this.publicacion.tags);
-    /* this.publicacion.autor = new Autor(); */
-    this.publicacion.autor = this.autorSeleccionado;
-   /*  this.publicacion.categoria = new Categoria(); */
-    this.publicacion.categoria = this.categoriaSeleccionada;
-    this.publicacion.lugar = this.lugarSeleccionado;
     this.publicacion.tags = this.tagsSeleccionadas;
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
-     /*  this.publicacion = publicacionModicada; */
-     console.log("PUBLICACION MOD: ", publicacionModicada) 
-     this.getPublicacion();
+      this.getPublicacion();
       this.descargarTxt();
       let url = "/../../publicaciones/" + publicacionModicada.titulo.replaceAll(" ", "-");
       console.log("navegando a: " + url)
@@ -264,26 +245,11 @@ export class PublicacionFichaComponent implements OnInit {
       autorPublicacion.id = this.autoresService.getId(autorPublicacion)
       console.log("AUTOR PUBLICACION:", autorPublicacion)
       this.publicacion.autor = autorPublicacion;
-      this.autorSeleccionado = autorPublicacion;
 
     })
   }
 
-  cambiarAutor() {
-    for (let index = 0; index < this.autores.length; index++) {
-      if (this.autorSeleccionado.id == this.autores[index].id) {
-        this.autorSeleccionado.nombre = this.autores[index].nombre;
-        this.autorSeleccionado.apellido1 = this.autores[index].apellido1;
-        this.autorSeleccionado.apellido2 = this.autores[index].apellido2;
-      }
-    }
-    if (this.autorSeleccionado.nombre != this.publicacion.autor.nombre && this.autorSeleccionado.apellido1 != this.publicacion.autor.apellido1) {
-      this.publicacion.autor = this.autorSeleccionado;
-    } else {
-      this.publicacion.autor = this.endpointAutores + this.publicacion.autor.id;
-    }
-
-  }
+  
 
   getCategorias() {
     this.categoriasService.getCategorias().subscribe(categorias => {
@@ -323,7 +289,6 @@ export class PublicacionFichaComponent implements OnInit {
   getLugarPublicacion() {
     this.publicacionesService.getLugarFromPublicacion(this.publicacion).subscribe(lugar => {
       lugar.id = this.lugaresService.getId(lugar);
-      console.log("LUG: ", lugar)
       this.publicacion.lugar = lugar;
       this.lugarSeleccionado = lugar;
 
@@ -331,7 +296,6 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   onSelectFile(event: any) {
-
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -340,7 +304,7 @@ export class PublicacionFichaComponent implements OnInit {
       }
       console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-     
+
     }
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
@@ -354,7 +318,7 @@ export class PublicacionFichaComponent implements OnInit {
       }
       console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-     
+
     }
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
@@ -370,7 +334,7 @@ export class PublicacionFichaComponent implements OnInit {
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
           console.log("URL IMAGEN SUBIDA: ", url)
-            this.insertarImagenUrl(url);
+          this.insertarImagenUrl(url);
         })
       }
     }, 'image/jpeg', 0.70)

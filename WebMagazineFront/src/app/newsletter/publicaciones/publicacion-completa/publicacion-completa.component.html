@@ -1,6 +1,7 @@
 <main class="fondo row py-3">
     <section class="col-12 col-sm-9">
         <section class="hoja">
+            
             <!-- Titulo de la publicacion -->
             <h2 class="text-center"><b>{{publicacion.titulo}}</b></h2>
 
@@ -11,11 +12,23 @@
                 <section class="col-12 col-sm-4 columna-autor">
                     <div class="row d-flex align-items-center autor">
                         <div class="d-none d-sm-block col-sm-3 justify-content-center align-items-center">
-                            <img src="../../../../assets/icono-foto.png" alt="" class="foto-autor">
+                            <img src="../../../../assets/eli.jpeg" alt="" class="foto-autor">
                         </div>
-                        <div class="col-12 col-sm-9 text-center">
+                        <div class="col-12 col-sm-9">
                             <p *ngIf="publicacion.autor" class="autor">{{publicacion.autor.nombre}}
                                 {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
+                        </div>
+                    </div>
+                    <div class="likes-vinos row d-flex">
+                        <div class="col-3"></div>
+                        <div class="likes col-3 d-flex" data-bs-toggle="modal"
+                        data-bs-target="#likeModal">
+                            <img class="icono-like" src="../../../../assets/like.png" alt="like">
+                            <p class="numero"><b>121</b></p>
+                        </div>
+                        <div class="vinos col-3 d-flex">
+                            <img class="icono-vino" src="../../../../assets/wine.png" alt="vino">
+                            <p class="numero"><b>23</b></p>
                         </div>
                     </div>
                 </section>
@@ -30,8 +43,9 @@
                     </div>
                     <div *ngIf="publicacion.lugar" class="row d-flex justify-content-center lugar">
                         <a class="link" href="publicaciones-provincia/{{publicacion.lugar.lugarNombre}}">
-                            <div  class="lugar">
-                                <p class="lugarNombre text-center">&nbsp;&nbsp;{{publicacion.lugar.lugarNombre}}&nbsp;&nbsp;</p>
+                            <div class="lugar">
+                                <p class="lugarNombre text-center">
+                                    &nbsp;&nbsp;{{publicacion.lugar.lugarNombre}}&nbsp;&nbsp;</p>
                             </div>
                         </a>
                     </div>
@@ -61,6 +75,7 @@
                             </a>
                         </div>
                     </div>
+                    
                 </section>
             </section>
 
@@ -69,6 +84,7 @@
             <!-- Contenido de la publicacion -->
             <section class="body" id="body">
             </section>
+
             <div class="text-center">
                 <p>Publicado el {{fechaFormateada}}</p>
             </div>
@@ -80,9 +96,11 @@
                     publicación</a>
             </div>
         </section>
-    </section>
-    <section class="d-none d-sm-block col-sm-3">
 
+    </section>
+
+    <!-- Seccion lateral -->
+    <section class="d-none d-sm-block col-sm-3">
         <!-- Publicaciones en la misma provincia -->
         <section *ngIf="publicacionesCerca[0]" class="row lateral mb-4">
             <div class="col-12 p-3 pt-4 text-center">
@@ -108,3 +126,28 @@
         </section>
     </section>
 </main>
+
+
+<!-- Modal Vino-->
+<div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">¡Gracias por darle a Like!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center m-3">
+                    <a href="invitar-vino">
+                        <img class="invitar-vino img-fluid" src="../../../../assets/invitar-vino.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary"
+                    data-bs-dismiss="modal">Invitar</button>
+            </div>
+        </div>
+    </div>
+</div>

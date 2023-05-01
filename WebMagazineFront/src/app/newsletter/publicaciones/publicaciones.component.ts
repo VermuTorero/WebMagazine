@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Publicacion } from '../models/publicacion';
 import { PublicacionesServiceService } from '../service/publicaciones.service';
 import { ImagenInicio } from '../models/imagenInicio';
@@ -27,26 +26,23 @@ export class PublicacionesComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.getPublicaciones();
+    this.getPublicacionesRecientes();
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
-    this.getImagenesInicio();
-    
+    this.getImagenesInicio(); 
   }
-
-  getPublicaciones(): Observable<Publicacion[]> {
+/* Publicaciones recientes - 12 ultimas */
+  getPublicacionesRecientes(){
     this.publicaciones = [];
     this.publicacionesService.getPublicacionesRecientes().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
-      
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
       });
     })
-    return of();
   }
-
-  getPublicacionesDestacadas(): Observable<Publicacion[]> {
+/* Publicaciones marcadas como destacadas */
+  getPublicacionesDestacadas(){
     this.publicacionesDestacadas = [];
     this.publicacionesService.getPublicacionesDestacadas().subscribe(publicaciones => {
       this.publicacionesDestacadas = publicaciones;
@@ -54,17 +50,18 @@ export class PublicacionesComponent implements OnInit {
         publicacion.id = this.publicacionesService.getId(publicacion);
       });
     })
-    return of();
   }
+/* Publicaciones agregadas al Carrusel */
   getPublicacionesCarousel(){
     this.publicacionesService.getPublicacionesCarousel().subscribe(publicacionesCarousel=>{
       this.publicacionesCarousel = publicacionesCarousel;
       this.publicacionesCarousel.forEach(publicacionCarousel => {
         publicacionCarousel.id = this.publicacionesService.getId(publicacionCarousel);
-        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0,60) + "..."
+        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0,160) + "..."
       });
     })
   }
+/* Imagenes de inicio promo izda, central y dcha */
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
@@ -80,9 +77,10 @@ export class PublicacionesComponent implements OnInit {
       });
     })
   }
-
+/* routing a una publicacion a partir de su titulo */
   getPublicacionUrl(titulo: string){
     let url = "/publicaciones/" + titulo.replaceAll(" ", "-")
     this.router.navigate([url]);
   }
+
 }

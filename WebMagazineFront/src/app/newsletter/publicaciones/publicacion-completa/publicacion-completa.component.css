@@ -49,6 +49,10 @@
     cursor:pointer; 
     cursor: hand
 }
+.tag:hover{
+    opacity: 0.5;
+}
+
 .tagNombre{
     font-size:small
 }
@@ -61,14 +65,50 @@
     width: fit-content;
     margin: 0px auto;
 }
+.lugar:hover{
+    opacity: 0.5;
+}
 .lugarNombre{
     font-size:small
 }
 
-
-
 .foto-autor{
-    width: 70px;
+    width: 45px;
+    border-radius: 50%;
+}
+.icono-rrss:hover{
+opacity: 0.5;
+}
+.invitar-vino{
+    width: 15em;
+}
+.icono-like{
+    width: 2em;
+    cursor:pointer; 
+    cursor: hand
+}
+.icono-like:hover{
+    opacity: 0.5;
+}
+.icono-vino{
+    width: 2em;
+    cursor:pointer; 
+    cursor: hand
+}
+.icono-vino:hover{
+    opacity: 0.5;
+}
+.likes{
+    display: flex;
+    align-items: center;
+}
+.numero{
+    vertical-align: middle;
+    font-size: x-small;
+}
+.modal-header{
+    background-color: rgb(255,109,0,255);
+    color: white;
 }
 
 /* Estilos tamaño movil */

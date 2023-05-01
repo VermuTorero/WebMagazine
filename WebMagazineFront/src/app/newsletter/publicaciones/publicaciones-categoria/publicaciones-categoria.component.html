@@ -1,13 +1,13 @@
-<div class="row my-1 py-1 mx-4">
+<div class="row my-1 py-1 mx-2">
   <div *ngIf="edicion" class="col-12 col-lg-6">
-    <img *ngIf="this.categoria.urlImagen" class="imagen-edicion img-fluid mt-4 pt-4 w-100" src="{{this.categoria.urlImagen}}" alt=""  data-bs-toggle="modal"
-    data-bs-target="#imagenModal">
-    <img *ngIf="!this.categoria.urlImagen || this.categoria.urlImagen == '' " class="img-fluid mt-4 pt-4" src="../../../../assets/no-imagen.png" alt=""  data-bs-toggle="modal"
-    data-bs-target="#imagenModal">
+    <img *ngIf="this.categoria.urlImagen" class="imagen-edicion img-fluid mt-4 pt-4 w-100"
+      src="{{this.categoria.urlImagen}}" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
+    <img *ngIf="!this.categoria.urlImagen || this.categoria.urlImagen == '' " class="img-fluid mt-4 pt-4"
+      src="../../../../assets/no-imagen.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
   </div>
   <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
     <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
-      </div>
+  </div>
   <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
     <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
     <h3 class="row mx-2 my-4 text-center">
@@ -17,10 +17,11 @@
       <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
     </div>
   </div>
-  <div *ngIf="edicion" class="col-12 col-lg-6">
+  <div *ngIf="edicion" class="col-12 col-lg-6 p-3">
     <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
     <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
-    <textarea rows="8" maxlength="1000" class="descripcion row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaDescripcion"></textarea>
+    <textarea rows="8" maxlength="1000" class="descripcion row mx-2 my-4 text-center w-100"
+      [(ngModel)]="categoria.categoriaDescripcion"></textarea>
     <div class="text-center">
       <button class="btn btn-warning mb-2 mx-2" (click)="cerrarEdicion()">GUARDAR</button>
       <button class="btn btn-secondary mb-2 mx-2" (click)="cancelarEdicion()">CANCELAR</button>
@@ -36,24 +37,24 @@
 <!-- Modal Agregar Imagen de preview-->
 <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <section>
-                  <input type="file" accept="images/" (change)="onSelectFile($event)">
-              </section>
-              <section *ngIf="imageUrl">
-                  <angular-cropper [cropperOptions]='{aspectRatio: 15 / 10}' [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-              </section>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button class="btn btn-primary" (click)="getCroppedImage()"
-                  data-bs-dismiss="modal">Aceptar</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <section>
+          <input type="file" accept="images/" (change)="onSelectFile($event)">
+        </section>
+        <section *ngIf="imageUrl">
+          <angular-cropper [cropperOptions]='{aspectRatio: 15 / 10}' [imageUrl]="imageUrl"
+            #angularCropper></angular-cropper>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
   </div>
 </div>
