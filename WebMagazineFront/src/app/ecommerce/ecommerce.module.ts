@@ -16,9 +16,10 @@ import { SeccionesComponent } from './components/secciones/secciones.component';
 import { SeccionComponent } from './components/secciones/seccion/seccion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GestionComponent } from './components/gestion/gestion.component';
-import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
+import { PedidoComponent } from './components/pedido/pedido.component';
 
 
 
@@ -33,7 +34,8 @@ import { AngularCropperjsModule } from 'angular-cropperjs';
     SeccionesComponent,
     SeccionComponent,
     GestionComponent,
-    FormularioProductoComponent
+    FormularioProductoComponent,
+    PedidoComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { AngularCropperjsModule } from 'angular-cropperjs';
     ReactiveFormsModule,
     NgbTypeaheadModule,
     AngularCropperjsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   exports: [
     PrincipalEcommerceComponent

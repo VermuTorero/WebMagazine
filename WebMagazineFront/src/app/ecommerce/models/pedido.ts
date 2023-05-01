@@ -7,13 +7,13 @@ export class Pedido {
     fechaPedido: Date;
     fechaEnvio!: Date;
     fechaEntrega!: Date;
-    direccionEntrega:  Direccion;
-    usuario!: Usuario; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
-    productos: Product[];
+    direccionEntrega:  string;
+    usuario!: string; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
+    productos: string[];
     precioTotal: number;
     isCerrado: boolean;
 
-    constructor(direccionEntrega: Direccion, precioTotal: number){
+    constructor(direccionEntrega: string, precioTotal: number){
        this.idPedido = "";
        this.fechaPedido = new Date();
        this.direccionEntrega = direccionEntrega;
