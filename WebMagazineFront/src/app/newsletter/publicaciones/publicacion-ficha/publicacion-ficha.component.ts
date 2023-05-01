@@ -120,7 +120,7 @@ export class PublicacionFichaComponent implements OnInit {
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
-      quill.insertText(10, this.publicacion.htmlPublicacion);
+      /* quill.insertText(10, this.publicacion.htmlPublicacion); */
     })
   }
 

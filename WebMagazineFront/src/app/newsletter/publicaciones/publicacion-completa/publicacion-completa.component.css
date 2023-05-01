@@ -52,7 +52,6 @@
 .tag:hover{
     opacity: 0.5;
 }
-
 .tagNombre{
     font-size:small
 }
@@ -75,6 +74,9 @@
 .foto-autor{
     width: 45px;
     border-radius: 50%;
+}
+.foto-autor:hover{
+    opacity: 0.5;
 }
 .icono-rrss:hover{
 opacity: 0.5;
@@ -193,7 +195,7 @@ a:link, a:visited, a:active {
     color: black;
 }
 ::ng-deep a{
-    color: rgb(209, 137, 3);
+    color: rgb(209, 113, 3);
 }
 
 

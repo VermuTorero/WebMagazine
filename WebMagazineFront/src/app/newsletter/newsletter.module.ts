@@ -17,6 +17,8 @@ import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-p
 import { PublicacionesCategoriaComponent } from './publicaciones/publicaciones-categoria/publicaciones-categoria.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
+import { PaginaEditableComponent } from './pagina-editable/pagina-editable.component';
+import { EditorComponent } from './pagina-editable/editor/editor.component';
 
 
 
@@ -34,7 +36,9 @@ import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
     TagComponent,
     LugarComponent,
     LandingPageComponent,
-    EditorInicioComponent
+    EditorInicioComponent,
+    PaginaEditableComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,

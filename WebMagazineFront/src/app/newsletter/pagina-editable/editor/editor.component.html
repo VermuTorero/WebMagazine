@@ -1,0 +1,117 @@
+<!-- Editor de texto -->
+<h3 class="text-center">Contenido de la pagina Sobre Nosotros</h3>
+<div class="mx-3">
+    <form class="m-1 agregar-bloque-texto row form-group text-center">
+        <div class="col-1">
+            <!-- Boton agregar Imagen -->
+            <div class="row">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                    <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
+                </button>
+            </div>
+            <!-- Boton agregar Video -->
+            <div class="row">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                    <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
+                </button>
+            </div>
+            <!-- Boton agregar Podcast -->
+            <div class="row">
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                    <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
+                </button>
+            </div>
+        </div>
+
+        <!-- Editor de texto Quill-->
+        <div class="col-11 editor-container" id="editor">
+            <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor"
+                id="editor"></quill-editor>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-success btn-sm m-3" (click)="patchPaginaEditable()">ACEPTAR</button>
+        </div>
+        
+    </form>
+</div>
+
+
+
+<!-- Modal Agregar Podcast-->
+<div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlPodcast">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarPodcast()" data-bs-dismiss="modal">Añadir
+                    podcast</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Video-->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Video</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del video de Youtube" rows=1
+                    [(ngModel)]="htmlVideo">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_youtube.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarVideo()" data-bs-dismiss="modal">Añadir
+                    video</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Imagen al contenido de la publicacion-->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <section>
+                    <input type="file" accept="images/" (change)="onSelectFile($event)">
+                </section>
+                <section *ngIf="imageUrl">
+                   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                </section>
+                <section class="my-4">
+                    <label for="" class="mx-2">Tamaño</label>
+                    <select type="text" [(ngModel)]="anchoImagen">
+                        <option value="100">Ancho 100%</option>
+                        <option value="75">Ancho 75%</option>
+                        <option value="50">Ancho 50%</option>
+                        <option value="35">Ancho 35%</option>
+                        <option value="20">Ancho 20%</option>
+                    </select>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

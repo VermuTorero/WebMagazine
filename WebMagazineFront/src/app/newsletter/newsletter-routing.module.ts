@@ -9,6 +9,8 @@ import { TagsComponent } from './publicaciones/tags/tags.component';
 import { PublicacionesProvinciaComponent } from './publicaciones/publicaciones-provincia/publicaciones-provincia.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
+import { PaginaEditableComponent } from './pagina-editable/pagina-editable.component';
+import { EditorComponent } from './pagina-editable/editor/editor.component';
 
 
 const routes: Routes = [
@@ -83,6 +85,24 @@ const routes: Routes = [
       {
         path: `editor-inicio`,
         component: EditorInicioComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `sobre-nosotros`,
+        component: PaginaEditableComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `sobre-nosotros/editor`,
+        component: EditorComponent,
       }
     ],
   }
