@@ -9,3 +9,7 @@
 .imagen-edicion:hover{
     opacity: 0.5;
 }
+.modal-header{
+    background-color: rgb(255,109,0,255);
+    color: white;
+}

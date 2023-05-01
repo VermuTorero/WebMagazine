@@ -69,7 +69,7 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
 		List<Publicacion> publicaciones= publicacionDAO.findAll();
 		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
-		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 6));
+		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
@@ -93,8 +93,9 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesNoCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesNoCarousel(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesCarousel = publicacionDAO.findByCarouselIsFalse();
-		return assembler.toCollectionModel(listadoPublicacionesCarousel);
+		List<Publicacion> listadoPublicacionesNoCarousel = publicacionDAO.findByCarouselIsFalse();
+		Collections.sort(listadoPublicacionesNoCarousel, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
 	
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
@@ -190,7 +191,6 @@ public class PublicacionesController {
 		publicacion.setCategoria(categoria);
 		publicacion.setTags(tagsRecibidas);
 		publicacion.setAutor(autor);
-		publicacion.setFechaPublicacion(Instant.now());
 		publicacionDAO.save(publicacion);
 		return assembler.toModel(publicacion);
 	}

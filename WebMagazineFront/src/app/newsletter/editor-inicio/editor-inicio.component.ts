@@ -32,6 +32,7 @@ export class EditorInicioComponent implements OnInit {
     private imagenesService: ImagenesService) {
 
   }
+  
   ngOnInit(): void {
     this.getPublicaciones();
     this.getImagenesInicio();
@@ -42,6 +43,7 @@ export class EditorInicioComponent implements OnInit {
     this.imagenInicioCentral.id = "3";
     this.imagenInicioCentral.posicion = "centro";
   }
+/* Obtener las publicaciones del Carrusel y las que no están agregadas al Carrusel */
   getPublicaciones() {
     this.publicacionesCarousel = [];
     this.publicacionesNoCarousel = [];
@@ -49,17 +51,19 @@ export class EditorInicioComponent implements OnInit {
       this.publicacionesCarousel = publicaciones;
       this.publicacionesCarousel.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
-        publicacion.subtitulo = publicacion.subtitulo.substring(0,70) + "..."
+        publicacion.subtitulo = publicacion.subtitulo.substring(0,160) + "..."
         this.publicacionesService.getPublicacionesNoCarousel().subscribe(publicaciones=>{
           this.publicacionesNoCarousel = publicaciones;
           this.publicacionesNoCarousel.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
-            publicacion.subtitulo = publicacion.subtitulo.substring(0,70) + "..."
+            publicacion.subtitulo = publicacion.subtitulo.substring(0,160) + "..."
           });
         })
       });
     })
   }
+
+  /* Quitar una publicacion del Carrusel */
   quitarDelCarousel(id: string) {
     this.publicacionesService.getPublicacionById(id).subscribe(publicacion => {
       publicacion.id = id;
@@ -67,7 +71,6 @@ export class EditorInicioComponent implements OnInit {
       this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
         autor.id = this.publicacionesService.getId(autor);
         publicacion.autor = autor;
-        console.log("Autor: ", autor);
         this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
           categoria.id = this.publicacionesService.getId(categoria);
           publicacion.categoria = categoria;
@@ -76,15 +79,20 @@ export class EditorInicioComponent implements OnInit {
               tag.id = this.publicacionesService.getId(tag);
             });
             publicacion.tags = tags;
-            this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
-              this.getPublicaciones();
-              this.getImagenesInicio();
+            this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+              lugar.id = this.publicacionesService.getId(lugar);
+              publicacion.lugar = lugar;
+              this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                this.getPublicaciones();
+                this.getImagenesInicio();
+              })
             })
           })
         })
       })
     })
   }
+/* Agregar una publicacion al Carrusel */
   agregarAlCarousel(id: string) {
     this.publicacionesService.getPublicacionById(id).subscribe(publicacion => {
       publicacion.id = id;
@@ -92,7 +100,6 @@ export class EditorInicioComponent implements OnInit {
       this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
         autor.id = this.publicacionesService.getId(autor);
         publicacion.autor = autor;
-        console.log("Autor: ", autor);
         this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
           categoria.id = this.publicacionesService.getId(categoria);
           publicacion.categoria = categoria;
@@ -101,9 +108,13 @@ export class EditorInicioComponent implements OnInit {
               tag.id = this.publicacionesService.getId(tag);
             });
             publicacion.tags = tags;
-            this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
-              this.getPublicaciones();
-              this.getImagenesInicio();
+            this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+              lugar.id = this.publicacionesService.getId(lugar);
+              publicacion.lugar = lugar;
+              this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                this.getPublicaciones();
+                this.getImagenesInicio();
+              })
             })
           })
         })
@@ -111,8 +122,8 @@ export class EditorInicioComponent implements OnInit {
     })
   }
   
-  onSelectFile(event: any) {
-
+  /* Metodos para seleccionar un archivo de imagen en el ordenador */
+  onSelectFileDerecha(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -120,14 +131,11 @@ export class EditorInicioComponent implements OnInit {
         this.imagePreviewUrl = reader.result as string;
         this.imagenInicioDerecha.url = this.imagePreviewUrl;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
-  onSelectFileIzquierda(event: any) {
 
+  onSelectFileIzquierda(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -135,15 +143,11 @@ export class EditorInicioComponent implements OnInit {
         this.imagePreviewUrl = reader.result as string;
         this.imagenInicioIzquierda.url = this.imagePreviewUrl;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
 
   onSelectFileCentral(event: any) {
-
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -151,15 +155,11 @@ export class EditorInicioComponent implements OnInit {
         this.imagePreviewUrl = reader.result as string;
         this.imagenInicioCentral.url = this.imagePreviewUrl;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
-
+/* Métodos para obtener la imagen recortada y reducida */
   getCroppedImageDerecha() {
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob as Blob);
@@ -168,7 +168,6 @@ export class EditorInicioComponent implements OnInit {
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, "imagenLateralDerecha", "lateral").subscribe(url => {
-          console.log("URL IMAGEN SUBIDA: ", url)
           this.imagenInicioDerecha.url = url;
           this.setImagenInicioDerecha();
         })
@@ -176,8 +175,7 @@ export class EditorInicioComponent implements OnInit {
     }, 'image/jpeg', 0.70)
   }
   getCroppedImageIzquierda() {
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
-    this.angularCropper2.cropper.getCroppedCanvas().toBlob((blob) => {
+     this.angularCropper2.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob as Blob);
       reader.onload = () => {
@@ -193,7 +191,6 @@ export class EditorInicioComponent implements OnInit {
     }, 'image/jpeg', 0.70)
   }
   getCroppedImageCentral() {
-    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper3.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob as Blob);
@@ -209,7 +206,7 @@ export class EditorInicioComponent implements OnInit {
       }
     }, 'image/jpeg', 0.70)
   }
-
+/* Metodo para obtener las imagenes de inicio */
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
@@ -225,16 +222,20 @@ export class EditorInicioComponent implements OnInit {
       });
     })
   }
+
+  /* Metodos para cambiar las imagenes de inicio */
   setImagenInicioDerecha(){
     this.imagenesService.setImagenInicioDerecha(this.imagenInicioDerecha).subscribe(imagenInicioDerecha=>{
       this.imagenInicioDerecha = imagenInicioDerecha;
     })
   }
+
   setImagenInicioIzquierda(){
     this.imagenesService.setImagenInicioIzquierda(this.imagenInicioIzquierda).subscribe(imagenInicioIzquierda=>{
       this.imagenInicioIzquierda = imagenInicioIzquierda;
     })
   }
+
   setImagenInicioCentral(){
     this.imagenesService.setImagenInicioCentral(this.imagenInicioCentral).subscribe(imagenInicioCentral=>{
       this.imagenInicioCentral = imagenInicioCentral;
