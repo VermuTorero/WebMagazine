@@ -11,6 +11,7 @@ import { Pedido } from '../../models/pedido';
 import { PedidosService } from '../../service/pedidos.service';
 import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
 import { environment } from 'src/environments/enviroment';
+import { PedidoProducto } from '../../models/pedido-producto';
 
 
 @Component({
@@ -154,9 +155,16 @@ this.initConfig();
       let nuevoPedido = new Pedido(this.UsuariosService.extraerUrlDireccion(this.direccionEnvio), this.getTotal());
       //agregamos el usuario al pedido
       nuevoPedido.usuario = this.UsuariosService.extraerUrlUsuario(this.usuario);
-      //agregamos las URL de los productos
+      //creamos los pedidos de cada producto.
       this.productosCarrito.forEach((producto) =>{
-        nuevoPedido.productos.push(this.endpoint + producto.productId);
+        //cada pedido será la url del producto y su cantidad
+       let  pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
+       //guardamos cada pedido en la api
+       this.pedidoService.postPedidoProducto(pedidoProducto).subscribe((res =>{
+        //del pedido por producto guardamos la url en el array del pedido
+        console.log(res);
+        nuevoPedido.productos.push(this.pedidoService.extraerUrlPedidoProducto(res));
+       }));
       });
       //Llamamos al endPoint
       this.pedidoService.postPedido(nuevoPedido).subscribe((res) =>{
