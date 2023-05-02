@@ -1,7 +1,6 @@
 package com.peterfonkel.webMagazine.entities;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,8 +29,8 @@ public class Pedido {
     private Usuario usuario;
 
     @OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pedido_id")
-    private List<Producto> Productos;
+	@JoinColumn(name = "pedidoProducto_id")
+    private List<PedidoProducto> Productos;
     private Float precioTotal;
     private boolean isCerrado;
 
@@ -83,11 +82,11 @@ public class Pedido {
         this.usuario = usuario;
     }
 
-    public List<Producto> getProductos() {
+    public List<PedidoProducto> getProductos() {
         return Productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(List<PedidoProducto> productos) {
         Productos = productos;
     }
 
@@ -110,7 +109,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public void addProducto(Producto producto){
+    public void addProducto(PedidoProducto producto){
         this.Productos.add(producto);
     }
 
