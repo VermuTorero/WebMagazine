@@ -4,10 +4,16 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.metrics.StartupStep;
 import org.springframework.core.metrics.StartupStep.Tags;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -115,41 +121,85 @@ public class PublicacionesController {
 		listadoPublicacionesCerca = publicacionDAO.findByCategoria_categoriaNombre(categoriaNombre);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
+//	
+//	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
+//	@ResponseBody
+//	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
+//		Publicacion publicacionRelacionada = publicacionDAO.getById(idPublicacion);
+//		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
+//		List<Publicacion> listadoPublicacionesRelacionadas = new ArrayList<Publicacion>();
+//		int agregados = 0;
+//		
+//		for (Publicacion publicacion : listadoPublicaciones) {
+//			if (publicacion.getTitulo().equals(publicacionRelacionada.getTitulo())) {
+//				continue;
+//			}
+//			int gradoRelacion = 0;
+//			for (Tag tag : publicacion.getTags()) {
+//				for (Tag tagRecibida : publicacionRelacionada.getTags()) {
+//					if (tag.getTagNombre().equals(tagRecibida.getTagNombre())) {
+//						gradoRelacion++;
+//						System.out.println("GRADO DE RELACI�N: " + gradoRelacion);
+//					}
+//				}
+//			}
+//			
+//			for (int i = 5; i > 0  ; i--) {
+//				if (gradoRelacion == i && agregados<2) {
+//					listadoPublicacionesRelacionadas.add(publicacion);
+//					agregados++;
+//				}
+//			}
+//			gradoRelacion = 0;
+//		}
+//		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
+//	}
 	
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
 		Publicacion publicacionRelacionada = publicacionDAO.getById(idPublicacion);
-		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
-		List<Publicacion> listadoPublicacionesRelacionadas = new ArrayList<Publicacion>();
-		int agregados = 0;
-		
-		for (Publicacion publicacion : listadoPublicaciones) {
-			if (publicacion.getTitulo().equals(publicacionRelacionada.getTitulo())) {
-				continue;
-			}
-			int gradoRelacion = 0;
-			for (Tag tag : publicacion.getTags()) {
-				System.out.println("TAG: " + tag.getTagNombre());
-				for (Tag tagRecibida : publicacionRelacionada.getTags()) {
-					if (tag.getTagNombre().equals(tagRecibida.getTagNombre())) {
-						gradoRelacion++;
-						System.out.println("GRADO DE RELACI�N: " + gradoRelacion);
-					}
-				}
-			}
-			
-			for (int i = 5; i > 0  ; i--) {
-				if (gradoRelacion == i && agregados<2) {
-					listadoPublicacionesRelacionadas.add(publicacion);
-					agregados++;
-				}
-			}
-			gradoRelacion = 0;
+		Set<Publicacion> publicacionesCoincidentesTag = new HashSet();
+		for (Tag tag : publicacionRelacionada.getTags()) {
+			List<Publicacion> publicacionesTag = publicacionDAO.findByTags_TagNombreAndIdNot(tag.getTagNombre(), idPublicacion);
+			publicacionesCoincidentesTag.addAll(publicacionesTag);
 		}
-		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
+		this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada);
+		
+		return assembler.toCollectionModel(this.eliminarElementosExceptoPrimeros3(this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada)));
+		
 	}
 	
+	public Set<Publicacion> ordenarPublicacionesPorCoincidencia(Set<Publicacion> conjunto, Publicacion publicacionEntrada) {
+	    List<Tag> tagsEntrada = publicacionEntrada.getTags();
+	    Comparator<Object> comparador = Comparator.comparingInt(publicacion -> {
+	        int coincidencias = 0;
+	        for (Tag tag : ((Publicacion) publicacion).getTags()) {
+	            if (tagsEntrada.contains(tag)) {
+	                coincidencias++;
+	            }
+	        }
+	        return coincidencias;
+	    }).reversed();
+	    return conjunto.stream().sorted(comparador).collect(Collectors.toCollection(LinkedHashSet<Publicacion>::new));
+	}
+
+	public Set<Publicacion> eliminarElementosExceptoPrimeros3(Set<Publicacion> conjunto) {
+	    Iterator<Publicacion> iterador = conjunto.iterator();
+	    int contador = 0;
+	    while (iterador.hasNext() && contador < 3) {
+	        iterador.next();
+	        contador++;
+	    }
+	    while (iterador.hasNext()) {
+	        iterador.next();
+	        iterador.remove();
+	    }
+	    return conjunto;
+	}
+
+		
+		
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {

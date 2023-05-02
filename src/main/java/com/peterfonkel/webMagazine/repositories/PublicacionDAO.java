@@ -13,6 +13,7 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findAll();
 	List<Publicacion> findByLugar_LugarNombre(String lugarNombre);
 	List<Publicacion> findByTags_TagNombre(String tagNombre);
+	List<Publicacion> findByTags_TagNombreAndIdNot(String tagNombre, Long id);
 	List<Publicacion> findByDestacadoIsTrue();
 	List<Publicacion> findByCarouselIsTrue();
 	List<Publicacion> findByCarouselIsFalse();
