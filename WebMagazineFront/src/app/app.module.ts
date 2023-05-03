@@ -10,6 +10,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { AngularCropperjsModule } from 'angular-cropperjs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { AngularCropperjsModule } from 'angular-cropperjs';
     NgxSpinnerModule,
     HttpClientModule,
     QuillModule,
-    AngularCropperjsModule
+    AngularCropperjsModule,
+    BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

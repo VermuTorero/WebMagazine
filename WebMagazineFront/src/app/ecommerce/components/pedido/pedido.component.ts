@@ -12,6 +12,8 @@ import { PedidosService } from '../../service/pedidos.service';
 import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
 import { environment } from 'src/environments/enviroment';
 import { PedidoProducto } from '../../models/pedido-producto';
+import { Observable, forkJoin, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,7 +38,8 @@ export class PedidoComponent implements OnInit {
     private UsuariosService: UsuariosService,
     private modalService:  NgbModal,
     private spinner: NgxSpinnerService,
-    private pedidoService: PedidosService
+    private pedidoService: PedidosService,
+    private router: Router
   ) {}
 
 
@@ -153,9 +156,15 @@ this.initConfig();
 
       //creamos el pedido
       let nuevoPedido = new Pedido(this.UsuariosService.extraerUrlDireccion(this.direccionEnvio), this.getTotal());
+
       //agregamos el usuario al pedido
       nuevoPedido.usuario = this.UsuariosService.extraerUrlUsuario(this.usuario);
+
       //creamos los pedidos de cada producto.
+      // Para cada producto en el carrito, creamos un pedido utilizando la clase PedidoProducto y lo guardamos en un array de pedidosProductos.
+      let pedidosProductos: Observable<any>[] = [];
+
+      /* codigo antiguo
       this.productosCarrito.forEach((producto) =>{
         //cada pedido será la url del producto y su cantidad
        let  pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
@@ -177,6 +186,40 @@ this.initConfig();
         data.purchase_units[0].amount.value
       )
       });
+      */
+
+      this.productosCarrito.forEach((producto) =>{
+        let pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
+        pedidosProductos.push(this.pedidoService.postPedidoProducto(pedidoProducto).pipe(map((res) =>{
+          console.log(res, "res API PEDIDO-PRODUCTO")
+         nuevoPedido.productos.push(this.pedidoService.extraerUrlPedidoProducto(res));
+         console.log(nuevoPedido.productos, "nuevoProducto URL")
+        }))); // Guardamos cada pedido en la API
+
+      });
+      
+      // Utilizamos forkJoin para esperar a que se completen todas las llamadas a postPedidoProducto antes de continuar.
+      forkJoin(pedidosProductos).subscribe(() => {
+        // Llamamos al endPoint para enviar el pedido completo a la API
+        this.pedidoService.postPedido(nuevoPedido).subscribe((res) =>{
+          console.log(nuevoPedido, "envio API PEDIDO");
+          console.log(res, "res API PEDIDO");
+          this.emptyCart();
+          this.spinner.hide();
+          //cerramos el modal de paypal
+          this.modalService.dismissAll();
+
+          // Redireccionamos al usuario a la página /ecommerce
+          this.router.navigate(['/ecommerce']);
+      
+          // Al autorizar la transacción abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
+          this.openModal(
+            data.purchase_units[0].items,
+            data.purchase_units[0].amount.value
+          );
+        });
+      });
+
     },
     onCancel: (data, actions) => {
       console.log('OnCancel', data, actions);
