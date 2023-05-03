@@ -32,6 +32,7 @@ export class EditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPaginaEditable();
+    this.ajustarEditor();
   }
 
   getPaginaEditable() {
@@ -100,5 +101,13 @@ export class EditorComponent implements OnInit {
     urlImagen = "";
     this.imageUrl = "";
     this.imageName = "";
+  }
+
+  ajustarEditor() {
+    setTimeout(() => {
+      var quilEditor = document
+        .getElementsByClassName('ql-editor')[0];
+      quilEditor.setAttribute("style", "height: 700px")
+    }, 500);
   }
 }

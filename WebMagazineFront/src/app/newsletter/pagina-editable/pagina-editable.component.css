@@ -33,14 +33,6 @@
         width: 100% !important;
         height: 48vw !important;
     }
-    .icono-rrss{
-        width: 8vw;
-    }
-    .autor{
-        margin-top: 3%;
-        font-size: small;
-    }
-
 }
 
 /* Estilos tamaño grande */
@@ -69,14 +61,4 @@
         height: 28vw !important;
     }
 
-    .icono-rrss{
-        width: 3vw;
-    }
-    .autor{
-        margin-top: 3%;
-        font-size: medium;
-    }
-    .datos{
-        display:flex
-    }
 }

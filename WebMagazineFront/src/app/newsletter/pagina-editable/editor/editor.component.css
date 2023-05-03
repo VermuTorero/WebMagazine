@@ -68,6 +68,13 @@
 .iframe-container {
     width: 100px;
 }
+
+.modal-header{
+    background-color: rgb(255,109,0,255);
+    color: white;
+}
+
+
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
     ::ng-deep .imagen{
