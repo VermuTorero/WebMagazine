@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Publicacion } from '../models/publicacion';
-import { environment } from 'src/environments/enviroment';
+import { environment } from 'src/environments/environment';
 import { Autor } from '../models/autor';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';

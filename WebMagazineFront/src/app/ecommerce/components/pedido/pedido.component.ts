@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Pedido } from '../../models/pedido';
 import { PedidosService } from '../../service/pedidos.service';
 import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
-import { environment } from 'src/environments/enviroment';
+import { environment } from 'src/environments/environment';
 import { PedidoProducto } from '../../models/pedido-producto';
 
 

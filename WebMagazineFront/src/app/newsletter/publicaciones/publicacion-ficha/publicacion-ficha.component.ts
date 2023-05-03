@@ -5,7 +5,7 @@ import { PublicacionesServiceService } from '../../service/publicaciones.service
 import Quill from 'quill';
 import { Tag } from '../../models/Tag';
 import { Autor } from '../../models/autor';
-import { environment } from 'src/environments/enviroment';
+import { environment } from 'src/environments/environment';
 import { TagsServiceService } from '../../service/tags.service';
 import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
