@@ -3,6 +3,7 @@ import { environment } from 'src/environments/enviroment';
 import { Pedido } from '../models/pedido';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { PedidoProducto } from '../models/pedido-producto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,13 @@ export class PedidosService {
 
   postPedido(pedido: Pedido): Observable <Pedido>{
     return this.http.post<any>(this.endpoint + "/pedidos", pedido);
+  }
+
+  postPedidoProducto(pedidoProducto: PedidoProducto): Observable <PedidoProducto>{
+    return this.http.post<any>(this.endpoint + "/pedidoProductos", pedidoProducto);
+  }
+
+  extraerUrlPedidoProducto(pedidoProducto: any): string {
+    return pedidoProducto._links.self.href
   }
 }
