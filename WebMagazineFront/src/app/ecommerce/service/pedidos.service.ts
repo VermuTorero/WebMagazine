@@ -28,5 +28,11 @@ export class PedidosService {
   getPedidos(): Observable<Pedido[]> {   
     return this.http.get<any>(this.endpoint + "/pedidos").pipe(map(response=>response._embedded.pedidos));
   }
-  
+
+  getIdPedido(p: any): string {
+    let url = p._links.self.href;
+    let trozos = url.split("/");
+    return trozos[trozos.length - 1];
+  }
+
 }
