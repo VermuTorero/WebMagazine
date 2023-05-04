@@ -95,7 +95,10 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacionesCerca = publicacionesCerca;
       this.publicacionesCerca.forEach(publicacionCerca => {
         publicacionCerca.id = this.publicacionesService.getId(publicacionCerca);
-        publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0,120) + "..."
+        publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0,120) + "...";
+        this.publicacionesService.getCategoriaFromPublicacion(publicacionCerca).subscribe(categoria=>{
+          publicacionCerca.categoria = categoria;
+        })
       });
     })
   }
@@ -105,7 +108,10 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacionesRelacionadas= publicacionesRelacionadas;
       this.publicacionesRelacionadas.forEach(publicacionRelacionada => {
         publicacionRelacionada.id = this.publicacionesService.getId(publicacionRelacionada);
-        publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0,120) + "..."
+        publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0,120) + "...";
+        this.publicacionesService.getCategoriaFromPublicacion(publicacionRelacionada).subscribe(categoria=>{
+          publicacionRelacionada.categoria = categoria;
+        })
       });
     })
   }

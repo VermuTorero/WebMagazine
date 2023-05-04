@@ -1,26 +1,49 @@
-.card-image{
+.card-image {
     box-shadow: 2px 2px 10px #666;
-    background-color: rgb(255,109,0,255);
+    background-color: rgb(255, 109, 0, 255);
     border-radius: 0;
 }
-.img-card{
+
+.img-card {
     transform: rotate(-3deg);
 }
-.card-body{
-    background-color: unset;
-    height: 30vh;
-}
-.publicacion-preview{
+
+.publicacion-preview {
     border-radius: 0;
-    height: auto !important
+    height: fit-content;
 }
+
 /* rgb(255,109,0,255); */
-.card-title{
+.card-title {
     height: fit-content !important
 }
 .card-text{
-   
+    text-align: justify;
 }
-.card-text-container{
-    height: 400px;
+
+.card-title:hover {
+    opacity: 0.5;
+    color: rgb(247, 162, 3);
+}
+
+
+hr {
+    color: rgb(255, 109, 0, 255);
+    border-width: 2px;
+}
+
+.categoria-container {
+    background-color: orange;
+    border-radius: 15px;
+    height: 1.3rem;
+    width: fit-content;
+    cursor: pointer;
+    cursor: hand;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: auto;
+}
+
+.categoria {
+    font-size: small;
 }

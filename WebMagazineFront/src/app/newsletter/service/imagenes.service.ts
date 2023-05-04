@@ -13,7 +13,7 @@ import { switchMap, tap, map } from "rxjs/operators";
 
 import { initializeApp } from "firebase/app";
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/enviroment';
+import { environment } from 'src/environments/environment';
 import { ImagenInicio } from '../models/imagenInicio';
 
 

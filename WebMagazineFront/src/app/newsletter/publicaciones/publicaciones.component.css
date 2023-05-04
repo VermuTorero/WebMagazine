@@ -6,6 +6,7 @@
     border-radius: 0px;
     border-style: none;
 }
+
 .letra-blanca{
     color: white;
 }
@@ -35,8 +36,21 @@
 .promo{
     box-shadow: 2px 2px 10px #666;
 }
+hr{
+  color: rgb(255,109,0,255);
+  border-width: 2px;
+}
 .carrusel{
     box-shadow: 2px 2px 10px #666;
+}
+.recientes{
+  height: auto;
+}
+.destacados{
+  height: auto;
+}
+.publicacion{
+  height: auto;
 }
 /* Oculta el texto al cargar la página */
 .carousel-caption {
@@ -51,7 +65,7 @@
   
   /* Hace desaparecer el texto y lo hace entrar desde abajo */
   .carousel-item .carousel-caption {
-    animation: slide-down 0.8s forwards;
+    animation: slide-down 0s forwards;
   }
   
   /* Animación para hacer aparecer el texto */

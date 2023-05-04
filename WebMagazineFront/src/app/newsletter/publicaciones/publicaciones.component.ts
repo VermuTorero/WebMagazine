@@ -38,6 +38,9 @@ export class PublicacionesComponent implements OnInit {
       this.publicaciones = publicaciones;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+        })
       });
     })
   }
@@ -46,8 +49,11 @@ export class PublicacionesComponent implements OnInit {
     this.publicacionesDestacadas = [];
     this.publicacionesService.getPublicacionesDestacadas().subscribe(publicaciones => {
       this.publicacionesDestacadas = publicaciones;
-      this.publicaciones.forEach(publicacion => {
+      this.publicacionesDestacadas.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+        })
       });
     })
   }
@@ -57,7 +63,8 @@ export class PublicacionesComponent implements OnInit {
       this.publicacionesCarousel = publicacionesCarousel;
       this.publicacionesCarousel.forEach(publicacionCarousel => {
         publicacionCarousel.id = this.publicacionesService.getId(publicacionCarousel);
-        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0,160) + "..."
+        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0,160) + "...";
+       
       });
     })
   }
