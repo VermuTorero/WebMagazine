@@ -1,123 +1,167 @@
-.inicio{
-    background-color: black;
-}
-.card{
-    margin: 0px;
-    border-radius: 0px;
-    border-style: none;
+.inicio {
+  background-color: black;
 }
 
-.letra-blanca{
-    color: white;
+.inicio-container { 
+  background-color: rgb(255, 109, 0, 255);
 }
-.letra-blanca:hover{
-    opacity: 1;
-    color: rgb(247, 193, 93);
+
+.card {
+  margin: 0px;
+  border-radius: 0px;
+  border-style: none;
 }
-.letra-negra{
-    color: black;
+
+.letra-blanca {
+  color: white;
 }
-.letra-negra:hover{
-    opacity: 1;
-    color: rgb(122, 80, 3);
+
+.letra-blanca:hover {
+  opacity: 1;
+  color: rgb(247, 193, 93);
 }
-.rrss{
-    position: absolute;
-    top: 70%;
-    left: 5%;
+
+.letra-negra {
+  color: black;
 }
-.icono-rrss{
-    width: 150%;
+
+.letra-negra:hover {
+  opacity: 1;
+  color: rgb(122, 80, 3);
 }
-.naranja{
-    background-color: rgb(255,109,0,255);
-    height: 20px;
+
+.rrss {
+  position: absolute;
+  top: 70%;
+  left: 5%;
 }
-.promo{
-    box-shadow: 2px 2px 10px #666;
+
+.icono-rrss {
+  width: 150%;
 }
-hr{
-  color: rgb(255,109,0,255);
+
+.naranja {
+  background-color: rgb(255, 109, 0, 255);
+  height: 20px;
+}
+
+.promo {
+  box-shadow: 2px 2px 10px #666;
+}
+
+hr {
+  color: rgb(255, 109, 0, 255);
   border-width: 2px;
 }
-.carrusel{
-    box-shadow: 2px 2px 10px #666;
+
+.carrusel {
+  box-shadow: 2px 2px 10px #666;
 }
-.recientes{
+
+.recientes {
+  height: auto;
+  display: inline-block;
+}
+
+.destacados {
   height: auto;
 }
-.destacados{
+
+.publicacion {
   height: auto;
 }
-.publicacion{
-  height: auto;
+app-publicacion{
+  display: inline-flex;
 }
 /* Oculta el texto al cargar la página */
 .carousel-caption {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* Hace aparecer el texto después de 1 segundo */
+.carousel-item.active .carousel-caption {
+  animation: slide-up 0.8s 1s forwards;
+}
+
+/* Hace desaparecer el texto y lo hace entrar desde abajo */
+.carousel-item .carousel-caption {
+  animation: slide-down 0s forwards;
+}
+
+/* Animación para hacer aparecer el texto */
+@keyframes slide-up {
+  from {
     opacity: 0;
     transform: translateY(100%);
   }
-  
-  /* Hace aparecer el texto después de 1 segundo */
-  .carousel-item.active .carousel-caption {
-    animation: slide-up 0.8s 1s forwards;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Hace desaparecer el texto y lo hace entrar desde abajo */
-  .carousel-item .carousel-caption {
-    animation: slide-down 0s forwards;
+}
+
+/* Animación para hacer desaparecer el texto y hacerlo entrar desde abajo */
+@keyframes slide-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Animación para hacer aparecer el texto */
-  @keyframes slide-up {
-    from {
-      opacity: 0;
-      transform: translateY(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+
+  50% {
+    opacity: 0;
+    transform: translateY(-50%);
   }
-  
-  /* Animación para hacer desaparecer el texto y hacerlo entrar desde abajo */
-  @keyframes slide-down {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    50% {
-      opacity: 0;
-      transform: translateY(-50%);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(100%);
-    }
+
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
   }
-  
-  @keyframes slidein {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
+}
+
+@keyframes slidein {
+  from {
+    transform: translateY(100%);
   }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
-    .letra-blanca{
-        font-size: 1em;
-    }
-    .letra-negra{
-        font-size: 1em;
-    }
-    .rrss{
-        position: absolute;
-        top: 70%;
-        left: 5%;
-    }
-    .icono-rrss{
-        width: 80%;
-    }
+  .letra-blanca {
+    font-size: 1em;
+  }
+
+  .letra-negra {
+    font-size: 1em;
+  }
+
+  .rrss {
+    position: absolute;
+    top: 70%;
+    left: 5%;
+  }
+
+  .icono-rrss {
+    width: 80%;
+  }
+}
+
+
+/* Estilos tamaño muy grande */
+@media (min-width: 80em) {
+
+.inicio{
+  width: 80%;
+  margin: auto;
+
+}
+.inicio-container{
+ display: flex;
+ justify-content: center;
+}
 }

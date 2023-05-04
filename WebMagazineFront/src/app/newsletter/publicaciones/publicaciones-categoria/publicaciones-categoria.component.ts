@@ -53,6 +53,9 @@ export class PublicacionesCategoriaComponent implements OnInit{
       this.publicaciones = publicacionesCategoria;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+        })
       });
     })
   }

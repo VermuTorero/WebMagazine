@@ -15,10 +15,11 @@
 
 /* rgb(255,109,0,255); */
 .card-title {
-    height: fit-content !important
+    height: fit-content !important;
+    text-align:left;
 }
 .card-text{
-    text-align: justify;
+    text-align:left;
 }
 
 .card-title:hover {
@@ -35,7 +36,7 @@ hr {
 .categoria-container {
     background-color: orange;
     border-radius: 15px;
-    height: 1.3rem;
+    height: 1rem;
     width: fit-content;
     cursor: pointer;
     cursor: hand;
@@ -45,5 +46,17 @@ hr {
 }
 
 .categoria {
-    font-size: small;
+    font-size: x-small;
+    font-weight: bold;
+}
+
+@media (min-width: 100em) {
+    .card-text{
+        font-size:small;
+    }
+}
+@media (max-width: 60em) {
+   .card-title{
+    font-size: medium;
+   }
 }

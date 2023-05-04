@@ -23,13 +23,13 @@
     opacity: 0.5;
 }
 
-@media (min-width: 100em) {
+@media (min-width: 101em) {
     .nav-link{
-        font-size: 1.2em;
+        font-size: 1.1em;
     }
 }
 
-@media (max-width: 80em) {
+@media (max-width: 100em) {
     .nav-link{
         font-size:small;
     }
