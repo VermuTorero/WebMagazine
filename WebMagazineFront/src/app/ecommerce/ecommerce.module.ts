@@ -20,6 +20,7 @@ import { NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { PedidoComponent } from './components/pedido/pedido.component';
+import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
 
 
 
@@ -35,7 +36,8 @@ import { PedidoComponent } from './components/pedido/pedido.component';
     SeccionComponent,
     GestionComponent,
     FormularioProductoComponent,
-    PedidoComponent
+    PedidoComponent,
+    GestionPedidosComponent
   ],
   imports: [
     CommonModule,
