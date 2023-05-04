@@ -1,0 +1,48 @@
+<h2 class="m-2">GESTION DE PEDIDOS</h2>
+
+<hr>
+<div>
+  <h4 class="m-2">PEDIDOS ABIERTOS</h4>
+  <hr>
+</div>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Precio</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pedido of pedidos">
+        <td><ngb-highlight >{{pedido.pedido.idPedido | number}}</ngb-highlight></td>
+        <td> <ngb-highlight > {{pedido.usuario.nombre}}</ngb-highlight></td>
+        <td> <ngb-highlight > {{pedido.pedido.precioTotal | number}}</ngb-highlight></td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <h4 class="m-2">PEDIDOS CERRADOS</h4>
+    <hr>
+  </div>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+            <td><ngb-highlight >{{pedido.pedido.idPedido | number}}</ngb-highlight></td>
+            <td> <ngb-highlight > {{pedido.usuario.nombre}}</ngb-highlight></td>
+            <td> <ngb-highlight > {{pedido.pedido.precioTotal | number}}</ngb-highlight></td>
+          </tr>
+      </tbody>
+    </table>
+

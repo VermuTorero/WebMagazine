@@ -35,4 +35,8 @@ export class UsuariosService {
     return direccion._links.self.href
   }
 
+  getUsuario(url: string): Observable<Usuario>{
+    return this.http.get<Usuario>(url);
+  }
+
 }

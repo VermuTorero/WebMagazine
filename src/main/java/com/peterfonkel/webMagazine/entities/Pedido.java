@@ -30,7 +30,7 @@ public class Pedido {
 
     @OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pedidoProducto_id")
-    private List<PedidoProducto> Productos;
+    private List<PedidoProducto> productos;
     private Float precioTotal;
     private boolean isCerrado;
 
@@ -83,11 +83,11 @@ public class Pedido {
     }
 
     public List<PedidoProducto> getProductos() {
-        return Productos;
+        return productos;
     }
 
     public void setProductos(List<PedidoProducto> productos) {
-        Productos = productos;
+        this.productos = productos;
     }
 
     public Float getPrecioTotal() {
@@ -110,7 +110,8 @@ public class Pedido {
     }
 
     public void addProducto(PedidoProducto producto){
-        this.Productos.add(producto);
+        this.productos.add(producto);
+        producto.setPedido(this);
     }
 
 }
