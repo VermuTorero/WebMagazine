@@ -101,22 +101,22 @@
   <p> </p>
 </section>
 <!-- Seccion articulos recientes-->
-<section class="my-1 py-2 mx-4">
+<section class="my-1 py-2 mx-4 recientes">
   <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
   <hr>
   <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
-    class="card row col-12 col-md-3 col-xxl-3">
+    class="card row col-12 col-md-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
   <div id="editor" hidden></div>
 </section>
 
 <!-- Seccion articulos destacados -->
-<section class="my-1 py-1 mx-4">
+<section class="my-1 py-4 mx-4 destacados">
   <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
   <hr>
   <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
-    class="row col-12 col-md-3 col-xxl-3 card">
+    class="card row col-12 col-md-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
   </div>
 </section>

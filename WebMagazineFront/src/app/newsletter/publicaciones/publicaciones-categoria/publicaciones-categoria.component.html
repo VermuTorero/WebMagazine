@@ -29,7 +29,7 @@
   </div>
   <hr class="mt-2">
   <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
-    class="card row col-12 col-md-4 col-xxl-3">
+    class="card row col-12 col-md-3  col-xxl-2 card">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
 </div>
@@ -43,7 +43,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <section>
+        <section class="my-2">
           <input type="file" accept="images/" (change)="onSelectFile($event)">
         </section>
         <section *ngIf="imageUrl">

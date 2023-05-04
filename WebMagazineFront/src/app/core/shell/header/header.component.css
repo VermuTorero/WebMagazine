@@ -15,6 +15,13 @@
 .barra-admin{
     background-color: rgb(255,109,0,255);
 }
+.nav-link{
+    font-size: large;
+    font-family:sans-serif
+}
+.nav-link:hover{
+    opacity: 0.5;
+}
 
 @media (min-width: 100em) {
     .nav-link{

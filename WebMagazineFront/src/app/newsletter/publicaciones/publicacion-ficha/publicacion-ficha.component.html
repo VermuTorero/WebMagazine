@@ -228,7 +228,7 @@
             </div>
             <div class="modal-body">
 
-                <section>
+                <section class="my-2">
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
@@ -297,7 +297,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <section>
+                <section class="my-2">
                     <input type="file" accept="images/" (change)="onSelectFilePreview($event)">
                 </section>
                 <section *ngIf="imagePreviewUrl">
