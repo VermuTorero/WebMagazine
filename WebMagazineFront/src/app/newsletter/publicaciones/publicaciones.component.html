@@ -1,102 +1,107 @@
-<!-- Seccion de inicio -->
-<section class="inicio row p-0 m-0">
-  <!-- Promo Izquierda -->
-  <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
-    <a href="/ecommerce">
-      <img *ngIf="imagenInicioIzquierda.url" src="{{imagenInicioIzquierda.url}}" alt="" class="w-100 p-0 m-0">
-    </a>
-  </section>
-  <!-- Carrusel -->
-  <section class="carrusel col-12 col-sm-6 p-0 m-0">
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-        <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
-          aria-label="Slide 4"></button>
-          <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
-          aria-label="Slide 5"></button>
-          <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5"
-          aria-label="Slide 6"></button>
-          <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6"
-          aria-label="Slide 7"></button>
-          <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7"
-          aria-label="Slide 8"></button>
-          <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8"
-          aria-label="Slide 9"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="3500">
-          <img src="{{imagenInicioCentral.url}}" class="d-block w-100 p-0 m-0" alt="...">
-          <!--     <div class="carousel-caption d-none d-md-block">
+<section class="inicio-container">
+  <!-- Seccion de inicio -->
+  <section class="inicio row p-0 m-0">
+    <!-- Promo Izquierda -->
+    <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
+      <a href="/ecommerce">
+        <img *ngIf="imagenInicioIzquierda.url" src="{{imagenInicioIzquierda.url}}" alt="" class="w-100 p-0 m-0">
+      </a>
+    </section>
+    <!-- Carrusel -->
+    <section class="carrusel col-12 col-sm-6 p-0 m-0">
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+          <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="4" aria-label="Slide 5"></button>
+          <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="5" aria-label="Slide 6"></button>
+          <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="6" aria-label="Slide 7"></button>
+          <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="7" aria-label="Slide 8"></button>
+          <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="8" aria-label="Slide 9"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3500">
+            <img src="{{imagenInicioCentral.url}}" class="d-block w-100 p-0 m-0" alt="...">
+            <!--     <div class="carousel-caption d-none d-md-block">
             <h5>Vermú torero</h5>
             <p>Revista digital y podcast del aperitivo a la cena</p>
           </div> -->
-          <section class="carousel-caption rrss">
-            <div class="row align-items-center mt-1">
-              <div class="col-1"></div>
-              <div class="col-2 col-sm-1 my-1 mx-2">
-                <a href="https://www.facebook.com/elisabethgiborra">
-                  <img class="icono-rrss" src="../../../../assets/facebookIcon.png" alt="">
-                </a>
+            <section class="carousel-caption rrss">
+              <div class="row align-items-center mt-1">
+                <div class="col-1"></div>
+                <div class="col-2 col-sm-1 my-1 mx-2">
+                  <a href="https://www.facebook.com/elisabethgiborra">
+                    <img class="icono-rrss" src="../../../../assets/facebookIcon.png" alt="">
+                  </a>
+                </div>
+                <div class="col-2 col-sm-1 my-1 mx-2">
+                  <a href="https://www.instagram.com/vermu.torero/">
+                    <img class="icono-rrss" src="../../../../assets/instagramIcon.png" alt="">
+                  </a>
+                </div>
+                <div class="col-2 col-sm-1 my-1 mx-2">
+                  <a href="http://es.linkedin.com/in/elisabethgiborra">
+                    <img class="icono-rrss" src="../../../../assets/linkedinIcon.png" alt="">
+                  </a>
+                </div>
+                <div class="col-2 col-sm-1 my-1 mx-2">
+                  <a href="https://twitter.com/elisabethiborra">
+                    <img class="icono-rrss" src="../../../../assets/twitterIcon.png" alt="">
+                  </a>
+                </div>
               </div>
-              <div class="col-2 col-sm-1 my-1 mx-2">
-                <a href="https://www.instagram.com/vermu.torero/">
-                  <img class="icono-rrss" src="../../../../assets/instagramIcon.png" alt="">
-                </a>
-              </div>
-              <div class="col-2 col-sm-1 my-1 mx-2">
-                <a href="http://es.linkedin.com/in/elisabethgiborra">
-                  <img class="icono-rrss" src="../../../../assets/linkedinIcon.png" alt="">
-                </a>
-              </div>
-              <div class="col-2 col-sm-1 my-1 mx-2">
-                <a href="https://twitter.com/elisabethiborra">
-                  <img class="icono-rrss" src="../../../../assets/twitterIcon.png" alt="">
-                </a>
-              </div>
-            </div>
-          </section>
-        </div>
-        <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
-          <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
-            (click)="getPublicacionUrl(publicacionCarousel.titulo)">
-          <div class="carousel-caption" (click)="getPublicacionUrl(publicacionCarousel.titulo)">
-            <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b></h5>
-            <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
-              <b>{{publicacionCarousel.subtitulo}}</b>
-            </p>
-            <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra"><b>{{publicacionCarousel.titulo}}</b></h5>
-            <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra d-none d-md-block">
-              <b>{{publicacionCarousel.subtitulo}}</b></p>
+            </section>
           </div>
+          <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
+            <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
+              (click)="getPublicacionUrl(publicacionCarousel.titulo)">
+            <div class="carousel-caption" (click)="getPublicacionUrl(publicacionCarousel.titulo)">
+              <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b>
+              </h5>
+              <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
+                <b>{{publicacionCarousel.subtitulo}}</b>
+              </p>
+              <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra"><b>{{publicacionCarousel.titulo}}</b></h5>
+              <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra d-none d-md-block">
+                <b>{{publicacionCarousel.subtitulo}}</b>
+              </p>
+            </div>
+          </div>
+
         </div>
-
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </section>
-  <!-- Promo Derecha -->
-  <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
-    <a href="/ecommerce">
-      <img *ngIf="imagenInicioDerecha.url" src="{{imagenInicioDerecha.url}}" alt="" class="img-fluid p-0 m-0">
-    </a>
+    </section>
+    <!-- Promo Derecha -->
+    <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
+      <a href="/ecommerce">
+        <img *ngIf="imagenInicioDerecha.url" src="{{imagenInicioDerecha.url}}" alt="" class="img-fluid p-0 m-0">
+      </a>
 
+    </section>
   </section>
 </section>
+
 <section class="row naranja">
   <p> </p>
 </section>
@@ -104,9 +109,14 @@
 <section class="my-1 py-2 mx-4">
   <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
   <hr>
+<<<<<<< HEAD
   <div class="recientes">
     <div *ngFor="let publicacion of publicaciones"
     class="card row col-12 col-md-3 col-xxl-2">
+=======
+  <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
+    class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+>>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
   <div id="editor" hidden></div>
@@ -117,9 +127,14 @@
 <section class="my-1 py-4 mx-4">
   <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
   <hr>
+<<<<<<< HEAD
   <div class="destacados">
     <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
     class="card row col-12 col-md-3 col-xxl-2">
+=======
+  <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
+    class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+>>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
     <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
   </div>
   </div>

@@ -1,9 +1,26 @@
+<<<<<<< HEAD
 <div class="publicacion-preview">
     <a class="btn"  href="publicaciones/{{tituloUrl}}">
         <div class="card-image">
             <img src="{{publicacion.imagenPreviewUrl}}" class="img-card img-fluid w-100" alt="">  
             <div class="categoria-container">
                 <p class="categoria"><b>{{publicacion.categoria.categoriaNombre}}</b></p>   
+=======
+
+<a class="btn publicacion-preview"  href="publicaciones/{{tituloUrl}}">
+    <div class="card-image">
+        <img src="{{publicacion.imagenPreviewUrl}}" class="img-card img-fluid w-100" alt="Imagen-Preview">  
+    </div>
+    <div class="card-body">
+        <div style="display:block;">
+            <h5 class="card-title my-1">{{publicacion.titulo}}</h5>
+            <hr class="divisor">
+            <div class="categoria-container">
+                <p class="categoria">{{publicacion.categoria.categoriaNombre}}</p>   
+            </div>
+            <div class="card-text-container text-center">
+                <p class="card-text my-3">{{publicacion.subtitulo}}</p>
+>>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
             </div>
         </div>
         <div class="card-body p-0">

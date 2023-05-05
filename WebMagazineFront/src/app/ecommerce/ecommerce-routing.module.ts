@@ -5,6 +5,7 @@ import { SeccionesComponent } from './components/secciones/secciones.component';
 import { GestionComponent } from './components/gestion/gestion.component';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
+import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
           {
             path: 'secciones',
             component: SeccionesComponent,
+          },
+          {
+            path: 'pedidos',
+            component: GestionPedidosComponent,
           },
         ],
       },

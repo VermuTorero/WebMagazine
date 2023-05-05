@@ -1,4 +1,6 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-scale-multiple" [fullScreen] = "true"> <p style="color: white" > Realizando el pago... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-scale-multiple" [fullScreen]="true">
+    <p style="color: white"> Realizando el pago... </p>
+</ngx-spinner>
 
 <div *ngIf="cartItems.length < 1">
     <div class="alert alert-info text-center">
@@ -7,7 +9,7 @@
 </div>
 
 <div *ngIf="cartItems.length > 0">
-    <div class="alert alert-info text-center" >
+    <div class="alert alert-info text-center">
         <h4>Cesta</h4>
     </div>
     <div class="text center">
@@ -22,8 +24,8 @@
                     </div>
                 </div>
             </li>
-          </ul>
-         
+        </ul>
+
     </div>
     <div class="alert alert-warning text-center">
         <strong>Total: </strong> {{total}} €
@@ -31,7 +33,6 @@
     <button class="btn btn-outline-danger d-block w-100 mb-3" (click)="emptyCart()">
         <i class="fas fa-ban"></i> Vaciar cesta
     </button>
-    <button *ngIf="existeCarrito()" routerLink="./pedido" class="btn btn-outline-success d-block w-100 mb-3">Realizar Pedido</button>
-    
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-</div> 
+    <button *ngIf="existeCarrito()" routerLink="./pedido" class="btn btn-outline-success d-block w-100 mb-3">Realizar
+        Pedido</button>
+</div>

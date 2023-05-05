@@ -9,10 +9,10 @@
     <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
   </div>
   <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
-    <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
-    <h3 class="row mx-2 my-4 text-center">
+    <h3 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h3>
+    <h4 class="row mx-2 my-4 text-center">
       <p>{{categoria.categoriaDescripcion}}</p>
-    </h3>
+    </h4>
     <div class="text-center">
       <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
     </div>
