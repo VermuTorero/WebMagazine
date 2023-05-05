@@ -55,6 +55,9 @@ export class PublicacionesCategoriaComponent implements OnInit{
         publicacion.id = this.publicacionesService.getId(publicacion);
         this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
           publicacion.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            publicacion.autor = autor;
+          })
         })
       });
     })

@@ -1,19 +1,15 @@
-<<<<<<< HEAD
-.inicio{
-    background-color: black;
-}
-.card{
-    margin: 0px;
-    border-radius: 0px;
-    border-style: none;
-    display: inline-block;
-=======
 .inicio {
   background-color: black;
->>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
 }
 
-.inicio-container { 
+.card {
+  margin: 0px;
+  border-radius: 0px;
+  border-style: none;
+  display: inline-flex;
+}
+
+.inicio-container {
   background-color: rgb(255, 109, 0, 255);
 }
 
@@ -83,9 +79,11 @@ hr {
   height: auto;
   display: flex;
 }
-app-publicacion{
+
+app-publicacion {
   display: inline-flex;
 }
+
 /* Oculta el texto al cargar la página */
 .carousel-caption {
   opacity: 0;
@@ -166,15 +164,27 @@ app-publicacion{
 
 
 /* Estilos tamaño muy grande */
+@media (min-width: 41em) {
+  .texto-carousel {
+    font-size: small;
+  }
+  .texto-titulo{
+    font-size: medium;
+  }
+}
+
+
+/* Estilos tamaño muy grande */
 @media (min-width: 80em) {
 
-.inicio{
-  width: 80%;
-  margin: auto;
+  .inicio {
+    width: 80%;
+    margin: auto;
 
-}
-.inicio-container{
- display: flex;
- justify-content: center;
-}
+  }
+
+  .inicio-container {
+    display: flex;
+    justify-content: center;
+  }
 }

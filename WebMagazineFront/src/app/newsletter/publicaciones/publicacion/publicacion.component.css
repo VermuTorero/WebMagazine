@@ -20,10 +20,7 @@
 }
 .card-text{
     text-align:left;
-<<<<<<< HEAD
     font-size: small;
-=======
->>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
 }
 
 .card-title:hover {
@@ -44,7 +41,7 @@ hr {
 .categoria {
     transform: rotate(-3deg);
     position: absolute;
-    top: 9%;
+    top: 4%;
     font-size: x-small;
     background-color: orange;
     border-radius: 15px;
@@ -56,22 +53,7 @@ hr {
     padding-right: 8px;
     margin: auto;
 }
-<<<<<<< HEAD
-=======
-
-.categoria {
-    font-size: x-small;
-    font-weight: bold;
-}
-
-@media (min-width: 100em) {
-    .card-text{
-        font-size:small;
-    }
-}
-@media (max-width: 60em) {
-   .card-title{
-    font-size: medium;
-   }
-}
->>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
+.autor{
+    font-size: small;
+    font-style: italic;
+  }

@@ -74,7 +74,9 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe style="border-radius:12px" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-      
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+
       /* Cierre de iframe comun para Youtube y Spotify */
        this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('</iframe>', '</iframe></div>');
       
@@ -98,6 +100,9 @@ export class PublicacionCompletaComponent implements OnInit {
         publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0,120) + "...";
         this.publicacionesService.getCategoriaFromPublicacion(publicacionCerca).subscribe(categoria=>{
           publicacionCerca.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacionCerca).subscribe(autor=>{
+            publicacionCerca.autor = autor;
+          })
         })
       });
     })
@@ -111,6 +116,9 @@ export class PublicacionCompletaComponent implements OnInit {
         publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0,120) + "...";
         this.publicacionesService.getCategoriaFromPublicacion(publicacionRelacionada).subscribe(categoria=>{
           publicacionRelacionada.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacionRelacionada).subscribe(autor=>{
+            publicacionRelacionada.autor = autor;
+          })
         })
       });
     })

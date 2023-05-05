@@ -67,13 +67,13 @@
             <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
               (click)="getPublicacionUrl(publicacionCarousel.titulo)">
             <div class="carousel-caption" (click)="getPublicacionUrl(publicacionCarousel.titulo)">
-              <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b>
+              <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-titulo"><b>{{publicacionCarousel.titulo}}</b>
               </h5>
-              <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
+              <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-carousel d-none d-md-block">
                 <b>{{publicacionCarousel.subtitulo}}</b>
               </p>
-              <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra"><b>{{publicacionCarousel.titulo}}</b></h5>
-              <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra d-none d-md-block">
+              <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra texto-titulo"><b>{{publicacionCarousel.titulo}}</b></h5>
+              <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra texto-carousel d-none d-md-block">
                 <b>{{publicacionCarousel.subtitulo}}</b>
               </p>
             </div>
@@ -109,14 +109,9 @@
 <section class="my-1 py-2 mx-4">
   <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
   <hr>
-<<<<<<< HEAD
   <div class="recientes">
     <div *ngFor="let publicacion of publicaciones"
-    class="card row col-12 col-md-3 col-xxl-2">
-=======
-  <div *ngFor="let publicacion of publicaciones" style="display:inline-block;"
-    class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
->>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
+    class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
   <div id="editor" hidden></div>
@@ -127,14 +122,9 @@
 <section class="my-1 py-4 mx-4">
   <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
   <hr>
-<<<<<<< HEAD
   <div class="destacados">
     <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
-    class="card row col-12 col-md-3 col-xxl-2">
-=======
-  <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
-    class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
->>>>>>> 4d0280d8fa4a56c31994f37688134b5c79e919d4
+    class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
   </div>
   </div>
