@@ -23,8 +23,8 @@
                         </select>
                     </div>
                 </div>
-              
-                 <!-- Lugar -->
+
+                <!-- Lugar -->
                 <div class="m-4 row">
                     <p class="col-3 m-1">Lugar:</p>
                     <div *ngIf="publicacion.lugar" class="col-7 m-2">
@@ -40,7 +40,7 @@
                     <p class="col-3 m-1">Categoria:</p>
                     <div *ngIf="publicacion.categoria" class="col-7 m-2">
                         <select name="autor" id="categoria" [(ngModel)]="publicacion.categoria.id">
-                           <!--  <option value="{{publicacion.categoria.id}}" selected disabled>
+                            <!--  <option value="{{publicacion.categoria.id}}" selected disabled>
                                 {{publicacion.categoria.categoriaNombre}}</option> -->
                             <option *ngFor="let categoria of categorias" value="{{categoria.id}}">
                                 {{categoria.categoriaNombre}}</option>
@@ -48,7 +48,7 @@
                     </div>
 
                 </div>
-                 <!-- Tags -->
+                <!-- Tags -->
                 <div class="m-4 row">
                     <div class="tags-container">
                         <!-- Boton agregar Tag -->
@@ -63,15 +63,17 @@
                             <div *ngFor="let tag of tagsSeleccionadas" class="tag m-2 col-2">
                                 <p class="tag-nombre px-2">{{tag.tagNombre}}</p>
                                 <div class="boton-eliminar" (click)="eliminarTag(tag.id)">
-                                    <img src="../../../../assets/x-eliminar.png" alt="" style="height: 1rem;width: 1rem;">
+                                    <img src="../../../../assets/x-eliminar.png" alt=""
+                                        style="height: 1rem;width: 1rem;">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                  <!-- Premiun y destacado -->
-                  <div class="m-4 row">
+                <!-- Premiun y destacado -->
+                <div class="m-4 row">
+                    
                     <!-- Premium -->
                     <div class="col-4">
                         <label for="premium">Premium</label>
@@ -99,8 +101,8 @@
                     <!-- Card publicacion -->
                     <div class="col-12 col-lg-6 publicacion-preview">
                         <div *ngIf="imagePreviewUrl" class="card-image">
-                            <img src="{{imagePreviewUrl}}" class="img-card img-fluid w-100 my-2" alt="" data-bs-toggle="modal"
-                                data-bs-target="#imagenPreviewModal">
+                            <img src="{{imagePreviewUrl}}" class="img-card img-fluid w-100 my-2" alt=""
+                                data-bs-toggle="modal" data-bs-target="#imagenPreviewModal">
                         </div>
                         <div *ngIf="!imagePreviewUrl" class="card-image">
                             <img src="../../../../assets/no-imagen.png" class="img-card img-fluid w-100 my-2" alt=""
@@ -232,7 +234,7 @@
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
-                   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+                    <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
                 </section>
                 <section class="my-4">
                     <label for="" class="mx-2">Tamaño</label>
@@ -267,7 +269,7 @@
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
                 </section>
                 <section *ngIf="imageUrl">
-                  <!--   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper> -->
+                    <!--   <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper> -->
                 </section>
                 <section class="my-4">
                     <label for="" class="mx-2">Tamaño</label>
@@ -281,8 +283,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" 
-                    data-bs-dismiss="modal">Aceptar</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
             </div>
         </div>
     </div>
@@ -301,7 +302,8 @@
                     <input type="file" accept="images/" (change)="onSelectFilePreview($event)">
                 </section>
                 <section *ngIf="imagePreviewUrl">
-                    <angular-cropper [cropperOptions]='{aspectRatio: 3 / 2}' [imageUrl]="imagePreviewUrl" #angularCropper2></angular-cropper>
+                    <angular-cropper [cropperOptions]='{aspectRatio: 3 / 2}' [imageUrl]="imagePreviewUrl"
+                        #angularCropper2></angular-cropper>
                 </section>
             </div>
             <div class="modal-footer">

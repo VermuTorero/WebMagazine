@@ -1,19 +1,20 @@
-
-<a class="btn publicacion-preview"  href="publicaciones/{{tituloUrl}}">
-    <div class="card-image">
-        <img src="{{publicacion.imagenPreviewUrl}}" class="img-card img-fluid w-100" alt="">  
-    </div>
-    <div class="card-body">
-        <div style="display:block;">
-            <h5 class="card-title text-center my-1"><b>{{publicacion.titulo}}</b></h5>
+<div class="publicacion-preview">
+    <a class="btn"  href="publicaciones/{{tituloUrl}}">
+        <div class="card-image">
+            <img src="{{publicacion.imagenPreviewUrl}}" class="img-card img-fluid w-100" alt="">  
             <div class="categoria-container">
-                <p class="categoria"><b>{{publicacion.categoria.categoriaNombre}}</b></p>
-                
-            </div>
-            <hr class="divisor">
-            <div class="card-text-container text-center">
-                <p class="card-text my-3">{{publicacion.subtitulo}}</p>
+                <p class="categoria"><b>{{publicacion.categoria.categoriaNombre}}</b></p>   
             </div>
         </div>
-    </div>
-</a>
+        <div class="card-body p-0">
+            <div style="display:block;">
+                <h5 class="card-title my-2">{{publicacion.titulo}}</h5>
+                <hr class="divisor">
+                <div class="card-text-container text-center">
+                    <p class="card-text my-3">{{publicacion.subtitulo}}</p>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+

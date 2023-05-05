@@ -5,6 +5,7 @@
     margin: 0px;
     border-radius: 0px;
     border-style: none;
+    display: inline-block;
 }
 
 .letra-blanca{
@@ -45,9 +46,11 @@ hr{
 }
 .recientes{
   height: auto;
+  display: flex;
 }
 .destacados{
   height: auto;
+  display: flex;
 }
 .publicacion{
   height: auto;

@@ -15,10 +15,12 @@
 
 /* rgb(255,109,0,255); */
 .card-title {
-    height: fit-content !important
+    height: fit-content !important;
+    text-align:left;
 }
 .card-text{
-    text-align: justify;
+    text-align:left;
+    font-size: small;
 }
 
 .card-title:hover {
@@ -29,21 +31,25 @@
 
 hr {
     color: rgb(255, 109, 0, 255);
-    border-width: 2px;
+    border-width: 1.5px;
 }
 
 .categoria-container {
+   
+}
+
+.categoria {
+    transform: rotate(-3deg);
+    position: absolute;
+    top: 9%;
+    font-size: x-small;
     background-color: orange;
     border-radius: 15px;
-    height: 1.3rem;
+    height: 1rem;
     width: fit-content;
     cursor: pointer;
     cursor: hand;
     padding-left: 8px;
     padding-right: 8px;
     margin: auto;
-}
-
-.categoria {
-    font-size: small;
 }

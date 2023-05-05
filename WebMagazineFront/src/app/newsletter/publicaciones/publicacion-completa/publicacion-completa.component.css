@@ -189,6 +189,14 @@ opacity: 0.5;
         display:flex
     }
 }
+/* Estilos tamaño muy grande */
+@media (min-width: 81em) {
+    .lateral{
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-bottom: 10%;
+    };
+}
 
 a:link, a:visited, a:active {
     text-decoration:none;
