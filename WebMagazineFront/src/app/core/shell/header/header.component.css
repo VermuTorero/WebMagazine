@@ -1,19 +1,24 @@
 .navbar{
-    background-color: rgb(255,109,0,255);
+    /* background-color: rgb(255,109,0,255); */
+    background-color: black;
     font-size: 1em;
 }
 .navbar-brand {
     font-size: 2vw;
+    width: 100%;
+    justify-content: center;
 }
 .navbar-icon {
-    width: 8vw; 
+    margin-top: 1%;
+    width: 90%; 
     font-size: 5vw;
 }
 .navbar-collapse{
     justify-content: center !important;
 }
 .barra-admin{
-    background-color: rgb(255,109,0,255);
+    /* background-color: rgb(255,109,0,255); */
+    background-color: black;
 }
 .nav-link{
     font-size: large;
@@ -37,10 +42,10 @@
 @media (max-width: 40em) {
 
     .navbar-brand{
-        width: 50% !important;
+        width: 100% !important;
         font-size: large;
     }
     .navbar-icon{
-        width: 50%;
+        width: 95%;
     }
 }

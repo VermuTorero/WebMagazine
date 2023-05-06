@@ -10,7 +10,8 @@
 }
 
 .inicio-container {
-  background-color: rgb(255, 109, 0, 255);
+  /* background-color: rgb(255, 109, 0, 255); */
+  background-color: black;;
 }
 
 .card {
@@ -44,11 +45,12 @@
 }
 
 .icono-rrss {
-  width: 150%;
+  width: 200%;
 }
 
 .naranja {
-  background-color: rgb(255, 109, 0, 255);
+  /* background-color: rgb(255, 109, 0, 255); */
+  background-color: black;
   height: 20px;
 }
 

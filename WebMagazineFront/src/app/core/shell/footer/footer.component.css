@@ -2,5 +2,6 @@
     position:static; 
 }
 .footer{
-    background-color: rgb(255,109,0,255);
+    /* background-color: rgb(255,109,0,255); */
+    background-color: black;
 }
