@@ -67,12 +67,15 @@
             <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
               (click)="getPublicacionUrl(publicacionCarousel.titulo)">
             <div class="carousel-caption" (click)="getPublicacionUrl(publicacionCarousel.titulo)">
-              <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-titulo"><b>{{publicacionCarousel.titulo}}</b>
+              <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-titulo">
+                <b>{{publicacionCarousel.titulo}}</b>
               </h5>
               <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-carousel d-none d-md-block">
                 <b>{{publicacionCarousel.subtitulo}}</b>
               </p>
-              <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra texto-titulo"><b>{{publicacionCarousel.titulo}}</b></h5>
+              <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra texto-titulo">
+                <b>{{publicacionCarousel.titulo}}</b>
+              </h5>
               <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra texto-carousel d-none d-md-block">
                 <b>{{publicacionCarousel.subtitulo}}</b>
               </p>
@@ -105,27 +108,49 @@
 <section class="row naranja">
   <p> </p>
 </section>
-<!-- Seccion articulos recientes-->
-<section class="my-1 py-2 mx-4">
-  <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
-  <hr>
-  <div class="recientes">
-    <div *ngFor="let publicacion of publicaciones"
-    class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
-    <app-publicacion [publicacion]="publicacion"></app-publicacion>
-  </div>
-  <div id="editor" hidden></div>
-  </div>
-</section>
 
-<!-- Seccion articulos destacados -->
-<section class="my-1 py-4 mx-4">
-  <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
-  <hr>
-  <div class="destacados">
-    <div *ngFor="let publicacionDestacada of publicacionesDestacadas" style="display:inline-block;"
-    class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
-    <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
+<section class="zona-articulos row">
+  <div class="col-9">
+    <!-- Seccion articulos recientes-->
+    <section class="my-1 py-2 mx-4">
+      <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
+      <hr>
+      <div class="recientes">
+        <div *ngFor="let publicacion of publicaciones" class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+          <app-publicacion [publicacion]="publicacion"></app-publicacion>
+        </div>
+        <div id="editor" hidden></div>
+      </div>
+    </section>
+
+    <!-- Seccion articulos destacados -->
+    <section class="my-1 py-4 mx-4">
+      <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
+      <hr>
+      <div class="destacados">
+        <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
+          class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+          <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <div class="col-3 zona-otros">
+    <div class="row podcast">
+      <p>Podcast</p>
+    </div>
+    <div class="row buscador">
+      <h4 class="titulo-buscador">Buscador de artículos</h4>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2 input-buscador" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-outline-success boton-buscador" type="submit">Buscar</button>
+      </form>
+    </div>
+    <div class="row twitter">
+      <p>twitter</p>
+    </div>
+    
   </div>
+  
 </section>

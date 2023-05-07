@@ -26,10 +26,11 @@ export class PublicacionesComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.getImagenesInicio(); 
     this.getPublicacionesRecientes();
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
-    this.getImagenesInicio(); 
+    
   }
 /* Publicaciones recientes - 12 ultimas */
   getPublicacionesRecientes(){

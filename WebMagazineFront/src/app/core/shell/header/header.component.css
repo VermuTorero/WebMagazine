@@ -8,9 +8,14 @@
     width: 100%;
     justify-content: center;
 }
+.navbar-nav{
+    margin-left: 0%;
+    margin-right: 0%;
+    font-size: small;
+}
 .navbar-icon {
     margin-top: 1%;
-    width: 90%; 
+    width: 60%; 
     font-size: 5vw;
 }
 .navbar-collapse{

@@ -86,6 +86,52 @@ app-publicacion {
   display: inline-flex;
 }
 
+.podcast{
+  margin-top: 25%;
+  margin-right: 10%;
+  background-color: rgb(255, 109, 0, 255);
+  padding: 5%;
+  border-style: ridge;
+  border-color: black;
+  border-width: 1px;
+  box-shadow: 2px 2px 10px #666;
+  height: 15%;
+}
+
+.buscador{
+  margin-top: 5%;
+  margin-right: 10%;
+  background-color: rgb(255, 109, 0, 255);
+  padding: 5%;
+  border-style: ridge;
+  border-color: black;
+  border-width: 1px;
+  box-shadow: 2px 2px 10px #666;
+}
+
+.twitter{
+  margin-top: 5%;
+  margin-right: 10%;
+  padding: 5%;
+  border-style: ridge;
+  border-color: black;
+  border-width: 1px;
+  box-shadow: 2px 2px 10px #666;
+  height: 40%;
+}
+.recomendaciones{
+  margin-top: 5%;
+  margin-right: 10%;
+  padding: 5%;
+  border-style: ridge;
+  border-color: black;
+  border-width: 1px;
+  box-shadow: 2px 2px 10px #666;
+  height: 40%;
+}
+.boton-login{
+  justify-self: right;
+}
 /* Oculta el texto al cargar la página */
 .carousel-caption {
   opacity: 0;
@@ -162,16 +208,37 @@ app-publicacion {
   .icono-rrss {
     width: 80%;
   }
+  .titulo-buscador{
+    font-size: 2vw;
+  }
+  .boton-buscador{
+    width: 20%;
+  }
 }
 
 
-/* Estilos tamaño muy grande */
+/* Estilos tamaño grande */
 @media (min-width: 41em) {
   .texto-carousel {
     font-size: small;
   }
   .texto-titulo{
     font-size: medium;
+  }
+  .titulo-buscador{
+    font-size: 2vw;
+  }
+  .boton-buscador{
+    width: 20%;
+  }
+  .inicio-container {
+    display: flex;
+    justify-content: center;
+  }
+  .inicio {
+    width: 80%;
+    margin: auto;
+
   }
 }
 
@@ -180,7 +247,7 @@ app-publicacion {
 @media (min-width: 80em) {
 
   .inicio {
-    width: 80%;
+    width: 56%;
     margin: auto;
 
   }
@@ -188,5 +255,8 @@ app-publicacion {
   .inicio-container {
     display: flex;
     justify-content: center;
+  }
+  .titulo-buscador{
+    font-size: 1.5vw;
   }
 }
