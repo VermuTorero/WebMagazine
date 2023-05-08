@@ -137,19 +137,26 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   postPublicacion() {
-    this.publicacion.htmlPublicacion = this.texto;
-    this.publicacion.tags = [];
-    this.tagsSeleccionadas.forEach(tag => {
-      this.publicacion.tags.push(tag)
-    });
-    this.descargarTxt();
-    this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
-      this.getPublicacion();
+    if (this.publicacion.titulo == "" || this.publicacion.autor.id == "" 
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "") {
+        $('#errorModal').modal('show');
+    }
+    else{
+      this.publicacion.htmlPublicacion = this.texto;
+      this.publicacion.tags = [];
+      this.tagsSeleccionadas.forEach(tag => {
+        this.publicacion.tags.push(tag)
+      });
       this.descargarTxt();
-      let url = "/../publicaciones/" + publicacion.titulo.replaceAll(" ", "-");
-      console.log("navegando a: " + url)
-      this.router.navigate([url])
-    });
+      this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
+        this.getPublicacion();
+        this.descargarTxt();
+        $('#enviadoModal').modal('show');
+        let url = "/../publicaciones/" + publicacion.titulo.replaceAll(" ", "-");
+        console.log("navegando a: " + url)
+        this.router.navigate([url])
+      });
+    }
   }
 
   patchPublicacion() {

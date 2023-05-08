@@ -3,6 +3,7 @@ import { CropperComponent } from 'angular-cropperjs';
 import { PaginaEditable } from '../../models/PaginaEditable';
 import { PaginaEditableService } from '../../service/paginaEditable.service';
 import { ImagenesService } from '../../service/imagenes.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-editor',
@@ -25,18 +26,28 @@ export class EditorComponent implements OnInit {
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
+  nombrePagina: string = "";
 
   constructor(private paginaEditableService: PaginaEditableService,
-    private imagenesService: ImagenesService) {
+    private imagenesService: ImagenesService,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    this.getNombrePagina();
     this.getPaginaEditable();
     this.ajustarEditor();
+  
+  }
+
+  getNombrePagina(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.nombrePagina = params['titulo'].replaceAll("-", " ");
+    })
   }
 
   getPaginaEditable() {
-    this.paginaEditableService.getPaginaEditable().subscribe(paginaEditable => {
+    this.paginaEditableService.getPaginaEditable(this.nombrePagina).subscribe(paginaEditable => {
       paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
       this.paginaEditable = paginaEditable;
       this.paginaEditable.html= this.paginaEditable.html.replaceAll('width="100%" height="352"', 'width="80%" height="200"');

@@ -5,7 +5,7 @@
         <!-- Titulo -->
         <div class="row m-3 titulo justify-content-center">
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                [(ngModel)]="publicacion.titulo" placeholder="Titulo" maxlength="100"></textarea>
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="100"></textarea>
         </div>
 
         <!-- Datos -->
@@ -16,29 +16,31 @@
                 <!-- Autor -->
                 <div class="m-4 row row-autor">
                     <p class="col-3 m-1">Autor:</p>
-                    <div *ngIf="publicacion.autor" class="col-7 m-2">
+                    <div *ngIf="publicacion.autor" class="col-6 m-2">
                         <select name="autorSeleccionado" id="autorSeleccionado" [(ngModel)]="publicacion.autor.id">
                             <option *ngFor="let autor of autores" value="{{autor.id}}">
                                 {{autor.nombre}} {{autor.apellido1}} {{autor.apellido2}}</option>
                         </select>
                     </div>
+                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
                 </div>
 
                 <!-- Lugar -->
                 <div class="m-4 row">
                     <p class="col-3 m-1">Lugar:</p>
-                    <div *ngIf="publicacion.lugar" class="col-7 m-2">
+                    <div *ngIf="publicacion.lugar" class="col-6 m-2">
                         <select name="lugar" id="lugar" [(ngModel)]="publicacion.lugar.id">
                             <option *ngFor="let lugar of lugares" value="{{lugar.id}}">
                                 {{lugar.lugarNombre}}</option>
                         </select>
                     </div>
+                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
                 </div>
 
                 <!-- Categoria -->
                 <div class="m-4 row">
                     <p class="col-3 m-1">Categoria:</p>
-                    <div *ngIf="publicacion.categoria" class="col-7 m-2">
+                    <div *ngIf="publicacion.categoria" class="col-6 m-2">
                         <select name="autor" id="categoria" [(ngModel)]="publicacion.categoria.id">
                             <!--  <option value="{{publicacion.categoria.id}}" selected disabled>
                                 {{publicacion.categoria.categoriaNombre}}</option> -->
@@ -46,7 +48,7 @@
                                 {{categoria.categoriaNombre}}</option>
                         </select>
                     </div>
-
+                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
                 </div>
                 <!-- Tags -->
                 <div class="m-4 row">
@@ -346,3 +348,39 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Error-->
+<div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Error al enviar</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Error. Hay campos obligatorios sin rellenar</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Enviado-->
+<div class="modal fade" id="enviadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Publicación enviada.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>

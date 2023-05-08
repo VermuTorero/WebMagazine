@@ -3,21 +3,15 @@
 }
 
 .card {
-  margin: 0px;
+  margin: 0 auto;
   border-radius: 0px;
   border-style: none;
   display: inline-flex;
 }
 
 .inicio-container {
+  margin-top: 2%;
   /* background-color: rgb(255, 109, 0, 255); */
-  background-color: black;;
-}
-
-.card {
-  margin: 0px;
-  border-radius: 0px;
-  border-style: none;
 }
 
 .letra-blanca {
@@ -74,7 +68,7 @@ hr {
 
 .destacados {
   height: auto;
-  display: flex;
+  display: inline-block;
 }
 
 .publicacion {
@@ -247,7 +241,7 @@ app-publicacion {
 @media (min-width: 80em) {
 
   .inicio {
-    width: 56%;
+    width: 80%;
     margin: auto;
 
   }

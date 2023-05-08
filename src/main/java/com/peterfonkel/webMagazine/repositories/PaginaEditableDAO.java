@@ -12,5 +12,6 @@ import com.peterfonkel.webMagazine.entities.PaginaEditable;
 public interface PaginaEditableDAO extends JpaRepository<PaginaEditable, Long>{
 	@Override
 	List<PaginaEditable> findAll();
+	PaginaEditable findByNombrePagina(String nombrePagina);
 
 }

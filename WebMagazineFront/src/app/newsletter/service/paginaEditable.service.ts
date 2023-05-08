@@ -13,8 +13,8 @@ export class PaginaEditableService {
 
   constructor(private http: HttpClient) { }
 
-  getPaginaEditable(): Observable<PaginaEditable>{
-    return this.http.get<any>(this.endpoint + "/paginaEditables/1");
+  getPaginaEditable(nombrePagina : string): Observable<PaginaEditable>{
+    return this.http.get<any>(this.endpoint + "/paginaEditables/search/paginaEditableByNombrePagina/" + nombrePagina );
   }
   getId(p: any): string {
     let url = p._links.self.href;

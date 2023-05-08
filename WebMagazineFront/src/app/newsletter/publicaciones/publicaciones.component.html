@@ -100,23 +100,19 @@
       <a href="/ecommerce">
         <img *ngIf="imagenInicioDerecha.url" src="{{imagenInicioDerecha.url}}" alt="" class="img-fluid p-0 m-0">
       </a>
-
     </section>
   </section>
 </section>
 
-<section class="row naranja">
-  <p> </p>
-</section>
 
 <section class="zona-articulos row">
   <div class="col-9">
     <!-- Seccion articulos recientes-->
-    <section class="my-1 py-2 mx-4">
-      <h3 class="row mx-2 my-4"><b>Ultimos artículos</b></h3>
+    <section class="py-1 mx-4">
+      <h3 class="row mx-2 my-2"><b>Ultimos artículos</b></h3>
       <hr>
-      <div class="recientes">
-        <div *ngFor="let publicacion of publicaciones" class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+      <div class="recientes row align-items-start">
+        <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
           <app-publicacion [publicacion]="publicacion"></app-publicacion>
         </div>
         <div id="editor" hidden></div>
@@ -125,18 +121,18 @@
 
     <!-- Seccion articulos destacados -->
     <section class="my-1 py-4 mx-4">
-      <h3 class="row pt-1 mx-2 my-1"><b>Destacados</b></h3>
+      <h3 class="row mx-2 my-1"><b>Destacados</b></h3>
       <hr>
-      <div class="destacados">
+      <div class="destacados row align-items-start">
         <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
-          class="card row col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+          class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
           <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
         </div>
       </div>
     </section>
   </div>
 
-  <div class="col-3 zona-otros">
+  <div class="col-3 py-1 zona-otros">
     <div class="row podcast">
       <p>Podcast</p>
     </div>
@@ -150,7 +146,7 @@
     <div class="row twitter">
       <p>twitter</p>
     </div>
-    
+
   </div>
-  
+
 </section>

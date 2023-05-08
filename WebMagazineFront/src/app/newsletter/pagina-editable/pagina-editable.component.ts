@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginaEditableService } from '../service/paginaEditable.service';
 import { PaginaEditable } from '../models/PaginaEditable';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-editable',
@@ -8,17 +9,28 @@ import { PaginaEditable } from '../models/PaginaEditable';
   styleUrls: ['./pagina-editable.component.css']
 })
 export class PaginaEditableComponent implements OnInit {
+nombrePagina: string = "";
+
 
 paginaEditable: PaginaEditable = new PaginaEditable();
 
-constructor(private paginaEditableService: PaginaEditableService){
+constructor(private paginaEditableService: PaginaEditableService,
+  private activatedRoute: ActivatedRoute){
 }
 
   ngOnInit(): void {
+    this.getNombrePagina();
     this.getPaginaEditable();
   }
+
+  getNombrePagina(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.nombrePagina = params['titulo'].replaceAll("-", " ");
+    })
+  }
+
   getPaginaEditable(){
-    this.paginaEditableService.getPaginaEditable().subscribe(paginaEditable=>{
+    this.paginaEditableService.getPaginaEditable(this.nombrePagina).subscribe(paginaEditable=>{
       paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
       this.paginaEditable = paginaEditable;
 

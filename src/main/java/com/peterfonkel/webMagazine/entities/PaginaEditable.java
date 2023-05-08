@@ -29,6 +29,8 @@ public class PaginaEditable {
 	@Column(length=50000)
 	private String html;
 	
+	private String nombrePagina;
+	
 	public PaginaEditable() {
 		super();
 	}
@@ -49,5 +51,14 @@ public class PaginaEditable {
 	public void setHtml(String html) {
 		this.html = html;
 	}
+
+	public String getNombrePagina() {
+		return nombrePagina;
+	}
+
+	public void setNombrePagina(String nombrePagina) {
+		this.nombrePagina = nombrePagina;
+	}
+	
 
 }
