@@ -92,7 +92,7 @@ const routes: Routes = [
     path: ``,
     children: [
       {
-        path: `sobre-nosotros`,
+        path: `acerca-de/:paginaNombre`,
         component: PaginaEditableComponent,
       }
     ],

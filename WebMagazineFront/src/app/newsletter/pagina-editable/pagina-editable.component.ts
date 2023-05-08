@@ -25,7 +25,10 @@ constructor(private paginaEditableService: PaginaEditableService,
 
   getNombrePagina(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.nombrePagina = params['titulo'].replaceAll("-", " ");
+      console.log(params)
+      this.nombrePagina = params['paginaNombre'].replaceAll("-", " ");
+      console.log("NOMBRE PAGINA: " + this.nombrePagina)
+      
     })
   }
 
