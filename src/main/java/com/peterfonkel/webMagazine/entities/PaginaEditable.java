@@ -25,6 +25,7 @@ import javax.persistence.OneToOne;
 public class PaginaEditable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Column(length=50000)
 	private String html;

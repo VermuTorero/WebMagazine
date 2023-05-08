@@ -22,11 +22,11 @@ export class PaginaEditableService {
     return trozos[trozos.length - 1];
   }
   postPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
-    return this.http.post<any>(this.endpoint + "/paginaEditables/1", paginaEditable);
+    return this.http.post<any>(this.endpoint + "/paginaEditables", paginaEditable);
   }
 
   patchPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
-    return this.http.patch<any>(this.endpoint + "/paginaEditables/1", paginaEditable);
+    return this.http.patch<any>(this.endpoint + "/paginaEditables/" + paginaEditable.id, paginaEditable);
   }
 
   deletePaginaEditable(paginaEditable: any): Observable<any>{

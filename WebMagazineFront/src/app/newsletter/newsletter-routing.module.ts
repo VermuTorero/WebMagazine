@@ -101,7 +101,7 @@ const routes: Routes = [
     path: ``,
     children: [
       {
-        path: `sobre-nosotros/editor`,
+        path: `acerca-de/editor/:paginaNombre`,
         component: EditorComponent,
       }
     ],

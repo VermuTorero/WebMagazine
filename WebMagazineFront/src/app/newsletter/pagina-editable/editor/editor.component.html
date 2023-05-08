@@ -1,5 +1,5 @@
 <!-- Editor de texto -->
-<h3 class="text-center">Contenido de la pagina Sobre Nosotros</h3>
+<h3 class="text-center">Contenido de la pagina "{{this.nombrePagina}}"</h3>
 <div class="mx-3">
     <form class="m-1 agregar-bloque-texto row form-group text-center">
         <div class="col-1">
@@ -29,7 +29,7 @@
                 id="editor"></quill-editor>
         </div>
         <div class="text-center">
-            <button class="btn btn-success btn-sm m-3" (click)="patchPaginaEditable()">ACEPTAR</button>
+            <button class="btn btn-success btn-sm m-3" (click)="enviar()">ACEPTAR</button>
         </div>
         
     </form>

@@ -42,7 +42,8 @@ export class EditorComponent implements OnInit {
 
   getNombrePagina(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.nombrePagina = params['titulo'].replaceAll("-", " ");
+      console.log(params)
+      this.nombrePagina = params['paginaNombre'].replaceAll("-", " ");
     })
   }
 
@@ -55,8 +56,26 @@ export class EditorComponent implements OnInit {
       
     })
   }
+
+  enviar(){
+    if (this.paginaEditable.id) {
+      this.patchPaginaEditable();
+    }else{
+      this.postPaginaEditable();
+    }
+  }
+  postPaginaEditable(){
+    this.paginaEditable.html = this.texto;
+    this.paginaEditable.nombrePagina = this.nombrePagina.replaceAll("-", " ");
+    this.paginaEditableService.postPaginaEditable(this.paginaEditable).subscribe(paginaEditable=>{
+      paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
+      this.paginaEditable = paginaEditable;
+    })
+  }
+
   patchPaginaEditable(){
     this.paginaEditable.html = this.texto;
+    this.paginaEditable.nombrePagina = this.nombrePagina.replaceAll("-", " ");
     this.paginaEditableService.patchPaginaEditable(this.paginaEditable).subscribe(paginaEditable=>{
       paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
       this.paginaEditable = paginaEditable;
