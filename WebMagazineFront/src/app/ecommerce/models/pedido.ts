@@ -8,7 +8,7 @@ export class Pedido {
     fechaEnvio!: Date;
     fechaEntrega!: Date;
     direccionEntrega:  string;
-    usuario!: string; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
+    usuario!: Usuario; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
     productos: string[];
     precioTotal: number;
     isCerrado: boolean;

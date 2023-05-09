@@ -22,7 +22,11 @@ export class PedidosService {
   }
 
   extraerUrlPedidoProducto(pedidoProducto: any): string {
-    return pedidoProducto._links.self.href
+    return pedidoProducto._links.self.href;
+  }
+
+  extraerUsuarioPedido(pedido: any): string {
+    return pedido._links.usuario.href;
   }
 
   getPedidos(): Observable<Pedido[]> {   

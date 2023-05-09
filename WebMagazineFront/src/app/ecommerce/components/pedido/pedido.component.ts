@@ -158,35 +158,12 @@ this.initConfig();
       let nuevoPedido = new Pedido(this.UsuariosService.extraerUrlDireccion(this.direccionEnvio), this.getTotal());
 
       //agregamos el usuario al pedido
-      nuevoPedido.usuario = this.UsuariosService.extraerUrlUsuario(this.usuario);
+      nuevoPedido.usuario = this.usuario;
 
       //creamos los pedidos de cada producto.
       // Para cada producto en el carrito, creamos un pedido utilizando la clase PedidoProducto y lo guardamos en un array de pedidosProductos.
       let pedidosProductos: Observable<any>[] = [];
 
-      /* codigo antiguo
-      this.productosCarrito.forEach((producto) =>{
-        //cada pedido será la url del producto y su cantidad
-       let  pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
-       //guardamos cada pedido en la api
-       this.pedidoService.postPedidoProducto(pedidoProducto).subscribe((res =>{
-        //del pedido por producto guardamos la url en el array del pedido
-        console.log(res);
-        nuevoPedido.productos.push(this.pedidoService.extraerUrlPedidoProducto(res));
-       }));
-      });
-      //Llamamos al endPoint
-      this.pedidoService.postPedido(nuevoPedido).subscribe((res) =>{
-        console.log(res);
-        this.emptyCart();
-        this.spinner.hide();
-        //al autorizar la transaccion abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
-       this.openModal(
-        data.purchase_units[0].items,
-        data.purchase_units[0].amount.value
-      )
-      });
-      */
 
       this.productosCarrito.forEach((producto) =>{
         let pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
