@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +13,13 @@ public class Lateral {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
+	@Column(length = 600)
 	private String htmlPodcast;
+	@Column(length = 600)
 	private String htmlTwitter;
+	@Column(length = 600)
     private String htmlInstagram;
+	@Column(length = 600)
     private String htmlFacebook;
     
 	public Lateral() {
