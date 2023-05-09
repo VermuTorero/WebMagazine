@@ -11,6 +11,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
 import { PaginaEditableComponent } from './pagina-editable/pagina-editable.component';
 import { EditorComponent } from './pagina-editable/editor/editor.component';
+import { EditorLateralComponent } from './editor-lateral/editor-lateral.component';
 
 
 const routes: Routes = [
@@ -85,6 +86,15 @@ const routes: Routes = [
       {
         path: `editor-inicio`,
         component: EditorInicioComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `editor-lateral`,
+        component: EditorLateralComponent,
       }
     ],
   },
