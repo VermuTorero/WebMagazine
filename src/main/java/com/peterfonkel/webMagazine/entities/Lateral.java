@@ -1,14 +1,11 @@
 package com.peterfonkel.webMagazine.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 public class Lateral {
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	private String htmlPodcast;
 	private String htmlTwitter;
