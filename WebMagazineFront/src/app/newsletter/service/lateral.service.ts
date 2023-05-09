@@ -23,7 +23,7 @@ export class LateralServiceService {
     return trozos[trozos.length - 1];
   }
   postLateral(lateral: Lateral): Observable<Lateral>{
-    return this.http.post<any>(this.endpoint + "/laterales/1", lateral);
+    return this.http.post<any>(this.endpoint + "/laterales", lateral);
   }
   patchLateral(lateral: Lateral): Observable<Lateral>{
     return this.http.patch<any>(this.endpoint + "/laterales/1", lateral);

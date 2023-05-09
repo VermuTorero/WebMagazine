@@ -80,7 +80,9 @@ export class EditorLateralComponent implements OnInit{
     }else{
       this.lateralService.postLateral(this.lateral).subscribe(lateral=>{
         this.lateral = lateral;
+        this.lateral.id = this.lateralService.getId(lateral);
       })
+
     }
     
   }
