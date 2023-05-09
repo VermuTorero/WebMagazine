@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "AreaLateral")
 public class Lateral {
 	
 
@@ -21,9 +21,6 @@ public class Lateral {
 		super();
 	}
 
-	public Long getId() {
-		return id;
-	}
 	
 
 	public Lateral(String htmlPodcast, String htmlTwitter, String htmlInstagram, String htmlFacebook) {
@@ -32,6 +29,10 @@ public class Lateral {
 		this.htmlTwitter = htmlTwitter;
 		this.htmlInstagram = htmlInstagram;
 		this.htmlFacebook = htmlFacebook;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public void setId(Long id) {
