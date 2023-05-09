@@ -1,7 +1,9 @@
 package com.peterfonkel.webMagazine.entities;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
+@Entity
 public class Lateral {
 	
 
