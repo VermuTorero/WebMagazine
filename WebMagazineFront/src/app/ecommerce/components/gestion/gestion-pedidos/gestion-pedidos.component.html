@@ -23,7 +23,7 @@
     <tr *ngFor="let pedido of pedidos ">
       <td> {{ pedido.idPedido }}</td>
       <td> {{ pedido.fechaPedido }} </td>
-      <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio }} </td>
+      <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio | date }} </td>
       <td *ngIf="!pedido.fechaEnvio"> Sin enviar </td>
       <td *ngIf="pedido.usuario"> {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }}  {{ pedido.usuario.apellido2 }} </td>
       <td> {{ pedido.precioTotal }} </td>
