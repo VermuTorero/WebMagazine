@@ -14,7 +14,7 @@ export class PedidosService {
   constructor(private http: HttpClient) { }
 
   postPedido(pedido: Pedido): Observable <Pedido>{
-    return this.http.post<any>(this.endpoint + "/pedidos", pedido);
+    return this.http.post<any>(this.endpoint + "/pedidos/search/crearPedido", pedido);
   }
 
   postPedidoProducto(pedidoProducto: PedidoProducto): Observable <PedidoProducto>{

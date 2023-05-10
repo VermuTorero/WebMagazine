@@ -30,7 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

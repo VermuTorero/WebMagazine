@@ -44,4 +44,10 @@ export class UsuariosService {
     return this.http.get<Usuario>(url);
   }
 
+  getId(p: any): string {
+    let url = p._links.self.href;
+    let trozos = url.split("/");
+    return trozos[trozos.length - 1];
+  }
+
 }

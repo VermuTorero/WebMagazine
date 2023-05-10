@@ -1,19 +1,20 @@
 import { Usuario } from "src/app/newsletter/models/usuario";
 import { Product } from "./product";
 import { Direccion } from "./direccion";
+import { PedidoProducto } from "./pedido-producto";
 
 export class Pedido {
     idPedido: string;
     fechaPedido: Date;
     fechaEnvio!: Date;
     fechaEntrega!: Date;
-    direccionEntrega:  string;
+    direccionEntrega:  Direccion;
     usuario!: Usuario; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
-    productos: string[];
+    productos: PedidoProducto[];
     precioTotal: number;
     isCerrado: boolean;
 
-    constructor(direccionEntrega: string, precioTotal: number){
+    constructor(direccionEntrega: Direccion, precioTotal: number){
        this.idPedido = "";
        this.fechaPedido = new Date();
        this.direccionEntrega = direccionEntrega;
