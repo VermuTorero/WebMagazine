@@ -1,5 +1,5 @@
-import {  CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { ModalReceiptComponent } from './components/modal-receipt/modal-receipt.component';
@@ -10,7 +10,7 @@ import { CoreModule } from '../core/core.module';
 
 //libreria externas
 import { NgxPayPalModule } from 'ngx-paypal';
-import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { EcommerceRoutingModule } from './ecommerce-routing.module';
 import { SeccionesComponent } from './components/secciones/secciones.component';
 import { SeccionComponent } from './components/secciones/seccion/seccion.component';
@@ -21,8 +21,10 @@ import { FormularioProductoComponent } from './components/gestion/formulario-pro
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
+import localeEs from '@angular/common/locales/es'
 
-
+//Para formatear fechas a hora local de España
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/ge
   ],
   exports: [
     PrincipalEcommerceComponent
-  ]
+  ],
+  providers:[{provide: LOCALE_ID, useValue: 'es'}] //para formatear fechas a hora local de españa
 })
 export class EcommerceModule { }

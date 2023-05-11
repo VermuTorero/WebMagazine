@@ -22,14 +22,11 @@ export class GestionPedidosComponent {
 
   ngOnInit(): void {
     this.pedidoService.getPedidos().subscribe((res) => {
-      console.log(res, "RES API");
       this.pedidos = res;
-      console.log(this.pedidos);
       this.pedidos.forEach((pedido) => {
         pedido.idPedido = this.pedidoService.getIdPedido(pedido);
         this.usuarioService.getUsuario(this.pedidoService.extraerUsuarioPedido(pedido)).subscribe((resApi) => {
           pedido.usuario = resApi;
-          console.log(pedido.usuario);
         });
       });
     });
