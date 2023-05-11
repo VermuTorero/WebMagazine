@@ -1,0 +1,100 @@
+<h2 class="ms-2">DETALLE DEL PEDIDO</h2>
+
+<ng-container *ngIf="pedido && pedido.usuario">
+  <div *ngIf="pedido.usuario" class="row ms-2 me-1">
+    <div class="col-md-4">
+      <div><strong>Nombre</strong></div>
+      <div>
+        {{ pedido.usuario.nombre }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div><strong>Primer apellido</strong></div>
+      <div>
+        {{ pedido.usuario.apellido1 }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div><strong>Segundo Apellido</strong></div>
+      <div>
+        {{ pedido.usuario.apellido2 }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="pedido && pedido.direccionEntrega">
+<h4 class="ms-2">DIRECCION DE ENVIO</h4>
+
+<Div *ngIf="pedido.direccionEntrega">
+  <div class="row ms-2 me-1">
+    <div class="col-md-4">
+      <div><strong>Ciudad</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.ciudad }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div><strong>Calle</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.calle }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div><strong>Número</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.numero }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div><strong>Piso</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.piso }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div><strong>Puerta</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.puerta }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div><strong>Código Postal</strong></div>
+      <div>
+        {{ pedido.direccionEntrega.codigoPostal }}
+        <hr class="mt-0" />
+      </div>
+    </div>
+  </div>
+</Div>
+</ng-container>
+
+<h4 class="ms-2">PRODUCTOS DEL PEDIDO</h4>
+<ul class="list-group m-2">
+    <div *ngFor="let producto of productos; index as i">
+    <li class="list-group-item d-flex justify-content-between align-items-center" >
+        <div class="col-md-6">
+            {{producto.nombreProducto }} x {{pedido.productos[i].cantidad}} 
+        </div>
+        <div class="col-md-6">
+        <strong>Total:</strong> {{producto.precio * pedido.productos[i].cantidad}} € 
+        </div>
+    </li>
+    </div>
+    <li class="list-group-item d-flex justify-content-between align-items-center" >
+        <div class="col-md-6">
+            <strong>total abonado:</strong> 
+        </div>
+        <div *ngIf="pedido && pedido.precioTotal" class="col-md-6">
+         <strong>{{pedido.precioTotal}} € </strong>
+        </div>
+    </li>
+  </ul>

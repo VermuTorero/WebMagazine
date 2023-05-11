@@ -21,7 +21,8 @@ import { FormularioProductoComponent } from './components/gestion/formulario-pro
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
-import localeEs from '@angular/common/locales/es'
+import localeEs from '@angular/common/locales/es';
+import { PedidoDetalleComponent } from './components/gestion/gestion-pedidos/pedido-detalle/pedido-detalle.component'
 
 //Para formatear fechas a hora local de España
 registerLocaleData(localeEs, 'es');
@@ -39,7 +40,8 @@ registerLocaleData(localeEs, 'es');
     GestionComponent,
     FormularioProductoComponent,
     PedidoComponent,
-    GestionPedidosComponent
+    GestionPedidosComponent,
+    PedidoDetalleComponent
   ],
   imports: [
     CommonModule,

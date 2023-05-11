@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UsuariosService } from 'src/app/core/service/usuarios.service';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
@@ -17,7 +18,8 @@ export class GestionPedidosComponent {
 
   constructor(
     private pedidoService: PedidosService,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,4 +33,5 @@ export class GestionPedidosComponent {
       });
     });
   }
+
 }

@@ -24,11 +24,21 @@ export class ProductService {
     return this.http.delete(this.endpoint + "/productos/" + id);
   }
 
-  getProductoPorId(id: number): Observable<Product>{
+  getProductoPorId(id: any): Observable<Product>{
     return this.http.get<Product>(this.endpoint + "/productos/" + id);
   }
   patchProducto(producto: Product): Observable<Product>{
     return this.http.patch<any>(this.endpoint + "/productos/"+ producto.id, producto);
+  }
+
+  getProductoPorUrl(url: string){
+    return this.http.get<any>(url);
+  }
+
+  getIdProducto(p: any): string {
+    let url = p._links.self.href;
+    let trozos = url.split("/");
+    return trozos[trozos.length - 1];
   }
 
 }
