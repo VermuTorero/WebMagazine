@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Lateral } from '../models/lateral';
 import { LateralServiceService } from '../service/lateral.service';
 import { TwitterService } from '../service/twitter.service';
+declare const twttr: any;
 
 
 @Component({
@@ -96,6 +97,7 @@ export class EditorLateralComponent implements OnInit{
     var tweet = document.createElement('tweet');
     tweet.innerHTML = this.htmlTwitterSeleccionado;
     twitterContainer?.appendChild(tweet);
+    twttr.widgets.load()
   }
 
   guardarCambios(){
