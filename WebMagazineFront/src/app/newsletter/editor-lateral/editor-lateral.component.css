@@ -1,5 +1,11 @@
 .podcast-container{
     background-color: black;
-    height: 100px;;
+    height: 200px;
+    padding: 5%;
 
+}
+.twitter-container{
+    margin-top: 5%;
+    background-color: black;
+    height: fit-content
 }

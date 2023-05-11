@@ -4,6 +4,8 @@ import { PublicacionesServiceService } from '../service/publicaciones.service';
 import { ImagenInicio } from '../models/imagenInicio';
 import { ImagenesService } from '../service/imagenes.service';
 import { Router } from '@angular/router';
+import { LateralServiceService } from '../service/lateral.service';
+import { Lateral } from '../models/lateral';
 
 @Component({
   selector: 'app-publicaciones',
@@ -19,17 +21,20 @@ export class PublicacionesComponent implements OnInit {
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
   imagenInicioCentral: ImagenInicio = new ImagenInicio();
   tituloUrl: string ="";
+  lateral: Lateral = new Lateral();
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
     private imagenesService: ImagenesService,
-    private router: Router) { }
+    private router: Router,
+    private lateralService: LateralServiceService) { }
 
   ngOnInit() {
     this.getImagenesInicio(); 
     this.getPublicacionesRecientes();
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
+    this.getLateral();
     
   }
 /* Publicaciones recientes - 12 ultimas */
@@ -95,6 +100,28 @@ export class PublicacionesComponent implements OnInit {
   getPublicacionUrl(titulo: string){
     let url = "/publicaciones/" + titulo.replaceAll(" ", "-")
     this.router.navigate([url]);
+  }
+  getLateral(){
+    this.lateralService.getLateral().subscribe(lateral=>{
+      this.lateral = lateral;
+      this.showHtmlTwitter();
+      this.showHtmlPodcast();
+    })
+  }
+
+  showHtmlTwitter() {
+    var twitterContainer = document.querySelector("#twitter");
+    var tweet = document.createElement('tweet');
+    tweet.innerHTML = this.lateral.htmlTwitter;
+    twitterContainer?.appendChild(tweet);
+  }
+
+  showHtmlPodcast() {
+    var podcastContainer = document.querySelector("#podcast");
+    var html = document.createElement("div");
+    html.innerHTML = this.lateral.htmlPodcast;
+    podcastContainer?.appendChild(html);
+    console.log(html.innerHTML)
   }
 
 }

@@ -1,49 +1,77 @@
 <section class="row editor-lateral my-4">
     <section class="col-4"></section>
     <section class="lateral col-4">
-        <section class="row podcast-container" data-bs-toggle="modal" data-bs-target="#podcastModal">
+        <section class="row podcast-container">
             <div class="podcast mt-2" id="podcast"></div>
+            <div class="text-center">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#podcastModal">Cambiar</button>
+            </div>
         </section>
-        
         <section class="row buscador-container">
-            
+
         </section>
-        
-        <section class="row twitter-container">
-        
+
+        <section class="row twitter-container" id="twitter-container">
+            <div class="twitter mt-2" id="twitter"></div>
+            <div class="text-center my-2">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#twitterModal">Cambiar</button>
+            </div>
         </section>
+       
         <section class="row instagram-container">
-        
+
         </section>
         <section class="row linkedin-container">
-        
+
         </section>
         <section class="row facebook-container">
-        
         </section>
-        <div class="btn btn-success" (click)="guardarCambios()">GUARDAR</div>
+
+        
     </section>
     <div class="col-4"></div>
-    
-    <!-- Modal Agregar Podcast-->
-    <div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
-                        [(ngModel)]="htmlPodcastSeleccionado">
-                    <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button class="btn btn-primary" (click)="agregarPodcast()" data-bs-dismiss="modal">Añadir
-                        podcast</button>
-                </div>
+</section>
+
+
+<!-- Modal Agregar Podcast-->
+<div class="modal fade" id="podcastModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Podcast</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlPodcastSeleccionado">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarPodcast()" data-bs-dismiss="modal">Añadir
+                    podcast</button>
             </div>
         </div>
     </div>
-</section>
+</div>
+<!-- Modal Agregar Twitter-->
+<div class="modal fade" id="twitterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Twitter</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlTwitterSeleccionado">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarTwitter()" data-bs-dismiss="modal">Añadir
+                    podcast</button>
+            </div>
+        </div>
+    </div>
+</div>
