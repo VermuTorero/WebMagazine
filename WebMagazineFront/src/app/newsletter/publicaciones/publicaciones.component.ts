@@ -6,6 +6,7 @@ import { ImagenesService } from '../service/imagenes.service';
 import { Router } from '@angular/router';
 import { LateralServiceService } from '../service/lateral.service';
 import { Lateral } from '../models/lateral';
+declare const twttr: any;
 
 @Component({
   selector: 'app-publicaciones',
@@ -30,12 +31,11 @@ export class PublicacionesComponent implements OnInit {
     private lateralService: LateralServiceService) { }
 
   ngOnInit() {
+    this.getLateral();
     this.getImagenesInicio(); 
     this.getPublicacionesRecientes();
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
-    this.getLateral();
-    
   }
 /* Publicaciones recientes - 12 ultimas */
   getPublicacionesRecientes(){
@@ -101,6 +101,7 @@ export class PublicacionesComponent implements OnInit {
     let url = "/publicaciones/" + titulo.replaceAll(" ", "-")
     this.router.navigate([url]);
   }
+
   getLateral(){
     this.lateralService.getLateral().subscribe(lateral=>{
       this.lateral = lateral;
@@ -108,13 +109,16 @@ export class PublicacionesComponent implements OnInit {
       this.showHtmlPodcast();
     })
   }
-
+  
   showHtmlTwitter() {
     var twitterContainer = document.querySelector("#twitter");
-    var tweet = document.createElement('tweet');
-    tweet.innerHTML = this.lateral.htmlTwitter;
-    twitterContainer?.appendChild(tweet);
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
   }
+  
 
   showHtmlPodcast() {
     var podcastContainer = document.querySelector("#podcast");

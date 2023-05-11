@@ -83,7 +83,7 @@ export class EditorLateralComponent implements OnInit{
 
   agregarTwitter(){
     var twitter = document.querySelector('#twitter');
-    var tweet = document.querySelector('tweet');
+    var tweet = document.querySelector('div');
     if (tweet) {
       twitter?.removeChild(tweet);
     }

@@ -106,12 +106,13 @@ app-publicacion {
 .twitter{
   margin-top: 5%;
   margin-right: 10%;
-  padding: 5%;
+  padding: 2%;
   border-style: ridge;
   border-color: black;
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
   height: fit-content;
+  
 }
 
 .recomendaciones{
