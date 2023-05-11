@@ -26,7 +26,7 @@ export class PedidoComponent implements OnInit {
   endpoint: string = environment.urlAPI + "/productos/";
 
   usuario = new Usuario();
-  direccionEnvio!: Direccion | undefined;
+  direccionEnvio!: Direccion;
   productosCarrito: CartItemModel[] = [];
   precioTotal: number = 0;
    //variable paypal
@@ -47,10 +47,12 @@ export class PedidoComponent implements OnInit {
     //1º traemos el usuario con sus datos de la API, posteriormente lo leera de la sesión
     this.UsuariosService.getUsuarios().subscribe((res) =>{
       this.usuario = res[0]; // usamos el primer usuario del array hasta que esté implementada la función de usuarios
+      this.usuario.id = this.UsuariosService.getId(this.usuario);
       //2º sacamos la direccion de envio del usuario
       const url = this.UsuariosService.extraerUrlDireccionUsuario(this.usuario);
       this.UsuariosService.getDireccionPorUrl(url).subscribe((res2) =>{
         this.direccionEnvio = res2;
+        this.direccionEnvio.idDireccion = this.UsuariosService.getId(this.direccionEnvio);
       });
     });
     //3º leemos los productos del carrito
@@ -155,44 +157,23 @@ this.initConfig();
       );
 
       //creamos el pedido
-      let nuevoPedido = new Pedido(this.UsuariosService.extraerUrlDireccion(this.direccionEnvio), this.getTotal());
+      let nuevoPedido = new Pedido(this.direccionEnvio, this.getTotal());
 
       //agregamos el usuario al pedido
-      nuevoPedido.usuario = this.UsuariosService.extraerUrlUsuario(this.usuario);
+      nuevoPedido.usuario = this.usuario;
 
       //creamos los pedidos de cada producto.
       // Para cada producto en el carrito, creamos un pedido utilizando la clase PedidoProducto y lo guardamos en un array de pedidosProductos.
       let pedidosProductos: Observable<any>[] = [];
 
-      /* codigo antiguo
-      this.productosCarrito.forEach((producto) =>{
-        //cada pedido será la url del producto y su cantidad
-       let  pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
-       //guardamos cada pedido en la api
-       this.pedidoService.postPedidoProducto(pedidoProducto).subscribe((res =>{
-        //del pedido por producto guardamos la url en el array del pedido
-        console.log(res);
-        nuevoPedido.productos.push(this.pedidoService.extraerUrlPedidoProducto(res));
-       }));
-      });
-      //Llamamos al endPoint
-      this.pedidoService.postPedido(nuevoPedido).subscribe((res) =>{
-        console.log(res);
-        this.emptyCart();
-        this.spinner.hide();
-        //al autorizar la transaccion abrimos el modal y le pasamos los datos(data) al modal para que lo muestre
-       this.openModal(
-        data.purchase_units[0].items,
-        data.purchase_units[0].amount.value
-      )
-      });
-      */
 
       this.productosCarrito.forEach((producto) =>{
         let pedidoProducto = new PedidoProducto(this.endpoint + producto.productId, producto.qty);
         pedidosProductos.push(this.pedidoService.postPedidoProducto(pedidoProducto).pipe(map((res) =>{
           console.log(res, "res API PEDIDO-PRODUCTO")
-         nuevoPedido.productos.push(this.pedidoService.extraerUrlPedidoProducto(res));
+          let producto = res;
+          producto.id = this.UsuariosService.getId(producto);
+         nuevoPedido.productos.push(producto);
          console.log(nuevoPedido.productos, "nuevoProducto URL")
         }))); // Guardamos cada pedido en la API
 

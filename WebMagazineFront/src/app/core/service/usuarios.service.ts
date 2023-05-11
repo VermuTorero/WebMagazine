@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, forkJoin, map } from 'rxjs';
 import { Direccion } from 'src/app/ecommerce/models/direccion';
 import { Usuario } from 'src/app/newsletter/models/usuario';
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,11 @@ export class UsuariosService {
 
   getUsuarios(): Observable<Usuario[]> {   
     return this.http.get<any>(this.endpoint + "/usuarios").pipe(map(response=>response._embedded.usuarios));
+  }
+
+  getUsuariosFromUrls(urls: string[]): Observable<Usuario[]> {   
+    const requests = urls.map(url => this.http.get<Usuario>(url));
+    return forkJoin(requests);
   }
 
   getDireccionPorUrl(url: string): Observable<Direccion>{
@@ -37,6 +42,12 @@ export class UsuariosService {
 
   getUsuario(url: string): Observable<Usuario>{
     return this.http.get<Usuario>(url);
+  }
+
+  getId(p: any): string {
+    let url = p._links.self.href;
+    let trozos = url.split("/");
+    return trozos[trozos.length - 1];
   }
 
 }

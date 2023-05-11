@@ -14,7 +14,7 @@ export class PedidosService {
   constructor(private http: HttpClient) { }
 
   postPedido(pedido: Pedido): Observable <Pedido>{
-    return this.http.post<any>(this.endpoint + "/pedidos", pedido);
+    return this.http.post<any>(this.endpoint + "/pedidos/search/crearPedido", pedido);
   }
 
   postPedidoProducto(pedidoProducto: PedidoProducto): Observable <PedidoProducto>{
@@ -22,7 +22,11 @@ export class PedidosService {
   }
 
   extraerUrlPedidoProducto(pedidoProducto: any): string {
-    return pedidoProducto._links.self.href
+    return pedidoProducto._links.self.href;
+  }
+
+  extraerUsuarioPedido(pedido: any): string {
+    return pedido._links.usuario.href;
   }
 
   getPedidos(): Observable<Pedido[]> {   

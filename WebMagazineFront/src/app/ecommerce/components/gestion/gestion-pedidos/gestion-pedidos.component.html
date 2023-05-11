@@ -5,44 +5,39 @@
   <h4 class="m-2">PEDIDOS ABIERTOS</h4>
   <hr>
 </div>
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">id</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Precio</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pedido of pedidos">
-        <td><ngb-highlight >{{pedido.pedido.idPedido | number}}</ngb-highlight></td>
-        <td> <ngb-highlight > {{pedido.usuario.nombre}}</ngb-highlight></td>
-        <td> <ngb-highlight > {{pedido.pedido.precioTotal | number}}</ngb-highlight></td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-    <h4 class="m-2">PEDIDOS CERRADOS</h4>
-    <hr>
-  </div>
-  <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Precio</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pedido of pedidos">
-            <td><ngb-highlight >{{pedido.pedido.idPedido | number}}</ngb-highlight></td>
-            <td> <ngb-highlight > {{pedido.usuario.nombre}}</ngb-highlight></td>
-            <td> <ngb-highlight > {{pedido.pedido.precioTotal | number}}</ngb-highlight></td>
-          </tr>
-      </tbody>
-    </table>
 
+ 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col-sm-2">Nº pedido</th>
+      <th scope="col">Fecha del Pedido</th>
+      <th scope="col">Fecha de envío</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio Total</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngIf="pedidos && pedidos.length > 0">
+    <tr *ngFor="let pedido of pedidos ">
+      <td> {{ pedido.idPedido }}</td>
+      <td> {{ pedido.fechaPedido }} </td>
+      <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio | date }} </td>
+      <td *ngIf="!pedido.fechaEnvio"> Sin enviar </td>
+      <td *ngIf="pedido.usuario"> {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }}  {{ pedido.usuario.apellido2 }} </td>
+      <td> {{ pedido.precioTotal }} </td>
+    </tr>
+  </ng-container>
+  <ng-container *ngIf="pedidos && pedidos.length === 0">
+    <tr>
+      <td colspan="5"><ngb-highlight>No hay pedidos disponibles</ngb-highlight></td>
+    </tr>
+  </ng-container>
+  <ng-container *ngIf="!pedidos">
+    <tr>
+      <td colspan="5"><ngb-highlight>Cargando...</ngb-highlight></td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

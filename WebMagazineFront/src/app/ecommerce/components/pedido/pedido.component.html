@@ -28,47 +28,47 @@
 
 <h4 class="ms-2">DIRECCION DE ENVIO</h4>
 
-<Div>
+<Div *ngIf="direccionEnvio">
   <div class="row ms-2 me-1">
     <div class="col-md-4">
       <div><strong>Ciudad</strong></div>
       <div>
-        {{ direccionEnvio?.ciudad }}
+        {{ direccionEnvio.ciudad }}
         <hr class="mt-0" />
       </div>
     </div>
     <div class="col-md-4">
       <div><strong>Calle</strong></div>
       <div>
-        {{ direccionEnvio?.calle }}
+        {{ direccionEnvio.calle }}
         <hr class="mt-0" />
       </div>
     </div>
     <div class="col-md-1">
       <div><strong>Número</strong></div>
       <div>
-        {{ direccionEnvio?.numero }}
+        {{ direccionEnvio.numero }}
         <hr class="mt-0" />
       </div>
     </div>
     <div class="col-md-1">
       <div><strong>Piso</strong></div>
       <div>
-        {{ direccionEnvio?.piso }}
+        {{ direccionEnvio.piso }}
         <hr class="mt-0" />
       </div>
     </div>
     <div class="col-md-1">
       <div><strong>Puerta</strong></div>
       <div>
-        {{ direccionEnvio?.puerta }}
+        {{ direccionEnvio.puerta }}
         <hr class="mt-0" />
       </div>
     </div>
     <div class="col-md-2">
       <div><strong>Código Postal</strong></div>
       <div>
-        {{ direccionEnvio?.codigoPostal }}
+        {{ direccionEnvio.codigoPostal }}
         <hr class="mt-0" />
       </div>
     </div>
