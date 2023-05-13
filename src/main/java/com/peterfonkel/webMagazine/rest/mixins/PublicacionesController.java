@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.rest.mixins;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -249,7 +250,7 @@ public class PublicacionesController {
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler,@RequestParam("palabrasClave") String[] palabrasClave) {
-		List<Publicacion> publicacionesEncontradas =  this.publicacionDAO.findByTituloContaining(palabrasClave);
+		List<Publicacion> publicacionesEncontradas =  this.publicacionDAO.findByTituloContaining(Arrays.asList(palabrasClave));
 		return assembler.toCollectionModel(publicacionesEncontradas);
 		
 	}
