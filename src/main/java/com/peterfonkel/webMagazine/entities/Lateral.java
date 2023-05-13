@@ -18,9 +18,9 @@ public class Lateral {
 	@Column(length = 600)
 	private String htmlTwitter;
 	@Column(length = 600)
-    private String htmlInstagram;
+    private String htmlTwitter2;
 	@Column(length = 600)
-    private String htmlFacebook;
+    private String htmlTwitter3;
     
 	public Lateral() {
 		super();
@@ -32,8 +32,8 @@ public class Lateral {
 		super();
 		this.htmlPodcast = htmlPodcast;
 		this.htmlTwitter = htmlTwitter;
-		this.htmlInstagram = htmlInstagram;
-		this.htmlFacebook = htmlFacebook;
+		this.htmlTwitter2 = htmlInstagram;
+		this.htmlTwitter3 = htmlFacebook;
 	}
 
 	public Long getId() {
@@ -60,21 +60,31 @@ public class Lateral {
 		this.htmlTwitter = htmlTwitter;
 	}
 
-	public String getHtmlInstagram() {
-		return htmlInstagram;
+
+
+	public String getHtmlTwitter2() {
+		return htmlTwitter2;
 	}
 
-	public void setHtmlInstagram(String htmlInstagram) {
-		this.htmlInstagram = htmlInstagram;
+
+
+	public void setHtmlTwitter2(String htmlTwitter2) {
+		this.htmlTwitter2 = htmlTwitter2;
 	}
 
-	public String getHtmlFacebook() {
-		return htmlFacebook;
+
+
+	public String getHtmlTwitter3() {
+		return htmlTwitter3;
 	}
 
-	public void setHtmlFacebook(String htmlFacebook) {
-		this.htmlFacebook = htmlFacebook;
+
+
+	public void setHtmlTwitter3(String htmlTwitter3) {
+		this.htmlTwitter3 = htmlTwitter3;
 	}
+
+
 	
 	
 }
