@@ -86,7 +86,7 @@ export class EditorLateralComponent implements OnInit{
 
   agregarTwitter(){
     var twitter = document.querySelector('#twitter');
-    var tweet = document.querySelector('div');
+    var tweet = document.querySelector('tweet');
     if (tweet) {
       twitter?.removeChild(tweet);
     }
@@ -95,7 +95,7 @@ export class EditorLateralComponent implements OnInit{
   }
   agregarTwitter2(){
     var twitter = document.querySelector('#twitter2');
-    var tweet = document.querySelector('div');
+    var tweet = document.querySelector('tweet2');
     if (tweet) {
       twitter?.removeChild(tweet);
     }
@@ -104,7 +104,7 @@ export class EditorLateralComponent implements OnInit{
   }
   agregarTwitter3(){
     var twitter = document.querySelector('#twitter3');
-    var tweet = document.querySelector('div');
+    var tweet = document.querySelector('tweet3');
     if (tweet) {
       twitter?.removeChild(tweet);
     }

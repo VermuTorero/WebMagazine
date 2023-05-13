@@ -28,12 +28,12 @@ public class Lateral {
 
 	
 
-	public Lateral(String htmlPodcast, String htmlTwitter, String htmlInstagram, String htmlFacebook) {
+	public Lateral(String htmlPodcast, String htmlTwitter, String htmlTwitter2, String htmlTwitter3) {
 		super();
 		this.htmlPodcast = htmlPodcast;
 		this.htmlTwitter = htmlTwitter;
-		this.htmlTwitter2 = htmlInstagram;
-		this.htmlTwitter3 = htmlFacebook;
+		this.htmlTwitter2 = htmlTwitter2;
+		this.htmlTwitter3 = htmlTwitter3;
 	}
 
 	public Long getId() {
