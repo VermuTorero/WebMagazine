@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Autor;
@@ -243,5 +244,13 @@ public class PublicacionesController {
 		publicacion.setAutor(autor);
 		publicacionDAO.save(publicacion);
 		return assembler.toModel(publicacion);
+	}
+	
+	@GetMapping(path = "buscar-publicaciones")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler,@RequestParam("palabrasClave") String[] palabrasClave) {
+		List<Publicacion> publicacionesEncontradas =  this.publicacionDAO.findByTituloContainingOrSubtituloContaining(palabrasClave, palabrasClave);
+		return assembler.toCollectionModel(publicacionesEncontradas);
+		
 	}
 }
