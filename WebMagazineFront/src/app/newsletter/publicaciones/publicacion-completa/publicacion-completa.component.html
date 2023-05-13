@@ -1,7 +1,7 @@
 <main class="fondo row py-3">
     <section class="col-12 col-sm-9">
         <section class="hoja">
-            
+
             <!-- Titulo de la publicacion -->
             <h2 class="text-center"><b>{{publicacion.titulo}}</b></h2>
 
@@ -21,8 +21,7 @@
                     </div>
                     <div class="likes-vinos row d-flex">
                         <div class="col-3"></div>
-                        <div class="likes col-3 d-flex" data-bs-toggle="modal"
-                        data-bs-target="#likeModal">
+                        <div class="likes col-3 d-flex" data-bs-toggle="modal" data-bs-target="#likeModal">
                             <img class="icono-like" src="../../../../assets/like.png" alt="like">
                             <p class="numero"><b>121</b></p>
                         </div>
@@ -75,7 +74,7 @@
                             </a>
                         </div>
                     </div>
-                    
+
                 </section>
             </section>
 
@@ -100,7 +99,29 @@
     </section>
 
     <!-- Seccion lateral -->
+
+
+
     <section class="d-none d-sm-block col-sm-3">
+        <section class="row podcast lateral mb-4" id="podcast">
+            <h5 class="row titulo-podcast">Podcast</h5>
+        </section>
+        <section class="row buscador lateral mb-4 ">
+            <h5 class="row titulo-buscador">Buscador de artículos</h5>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2 input-buscador" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
+            </form>
+        </section>
+        <section class="row twitter lateral mb-4">
+            <h5 class="row titulo-twitter">Twitter</h5>
+            <div class="row" id="twitter">
+            </div>
+            <div class="row" id="twitter2">
+            </div>
+            <div class="row" id="twitter3">
+            </div>
+        </section>
         <!-- Publicaciones en la misma provincia -->
         <section *ngIf="publicacionesCerca[0]" class="row lateral mb-4">
             <div class="col-12 p-3 pt-4 text-center">
@@ -145,8 +166,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary"
-                    data-bs-dismiss="modal">Invitar</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal">Invitar</button>
             </div>
         </div>
     </div>

@@ -34,6 +34,8 @@ export class EditorLateralComponent implements OnInit{
       this.lateral.id = this.lateralService.getId(lateral);
       this.htmlPodcastSeleccionado = this.lateral.htmlPodcast;
       this.htmlTwitterSeleccionado = this.lateral.htmlTwitter;
+      this.htmlTwitter2Seleccionado = this.lateral.htmlTwitter2;
+      this.htmlTwitter3Seleccionado = this.lateral.htmlTwitter3;
       this.showHtmlPodcast();
       this.showHtmlTwitter();
       this.showHtmlTwitter2();
@@ -84,6 +86,14 @@ export class EditorLateralComponent implements OnInit{
     console.log(html.innerHTML)
   }
 
+  showHtmlPodcastSM() {
+    var podcastContainer = document.querySelector("#podcastSM");
+    var html = document.createElement("div");
+    html.innerHTML = this.lateral.htmlPodcast;
+    podcastContainer?.appendChild(html);
+    console.log(html.innerHTML)
+  }
+
   agregarTwitter(){
     var twitter = document.querySelector('#twitter');
     var tweet = document.querySelector('tweet');
@@ -94,21 +104,21 @@ export class EditorLateralComponent implements OnInit{
     this.guardarCambios();
   }
   agregarTwitter2(){
-    var twitter = document.querySelector('#twitter2');
-    var tweet = document.querySelector('tweet2');
+    var twitter2 = document.querySelector('#twitter2');
+ /*    var tweet = document.querySelector('tweet');
     if (tweet) {
       twitter?.removeChild(tweet);
-    }
+    } */
     this.lateral.htmlTwitter2 = this.htmlTwitter2Seleccionado;
     this.guardarCambios();
   }
   agregarTwitter3(){
-    var twitter = document.querySelector('#twitter3');
-    var tweet = document.querySelector('tweet3');
+    var twitter3 = document.querySelector('#twitter3');
+    /* var tweet = document.querySelector('tweet');
     if (tweet) {
       twitter?.removeChild(tweet);
-    }
-    this.lateral.htmlTwitter3 = this.htmlTwitter2Seleccionado;
+    } */
+    this.lateral.htmlTwitter3 = this.htmlTwitter3Seleccionado;
     this.guardarCambios();
   }
   showHtmlTwitter() {

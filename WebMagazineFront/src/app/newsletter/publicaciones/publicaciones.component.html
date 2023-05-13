@@ -104,15 +104,18 @@
   </section>
 </section>
 
+<div class="col-12 d-md-none row podcastSM m-1 mt-3" id="podcastSM">
+  <h5 class="row titulo-podcast">Podcast</h5>
+</div>
 
 <section class="zona-articulos row">
-  <div class="col-9">
+  <div class="col-12 col-md-8 col-lg-9">
     <!-- Seccion articulos recientes-->
     <section class="py-1 mx-4">
       <h3 class="row mx-2 my-2"><b>Ultimos artículos</b></h3>
       <hr>
       <div class="recientes row align-items-start">
-        <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+        <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-lg-3 col-xxl-3">
           <app-publicacion [publicacion]="publicacion"></app-publicacion>
         </div>
         <div id="editor" hidden></div>
@@ -125,31 +128,34 @@
       <hr>
       <div class="destacados row align-items-start">
         <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
-          class="card col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-3">
+          class="card col-12 col-sm-6 col-lg-3 col-xxl-3">
           <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
         </div>
       </div>
     </section>
   </div>
 
-  <div class="col-3 py-1 zona-otros">
+  <div class="d-none d-md-block col-md-4 col-lg-3">
     <div class="row podcast" id="podcast">
       <h5 class="row titulo-podcast">Podcast</h5>
     </div>
     <div class="row buscador">
-      <h4 class="row titulo-buscador">Buscador de artículos</h4>
+      <h5 class="row titulo-buscador">Buscador de artículos</h5>
       <form class="d-flex" role="search">
         <input class="form-control me-2 input-buscador" type="search" placeholder="Buscar" aria-label="Buscar">
         <button class="btn btn-outline-success btn-sm" type="submit">Buscar</button>
       </form>
     </div>
-    <div class="row twitter" id="twitter">
-      <h5 class="row titulo-podcast">Twitter</h5>
+    <div class="row twitter">
+      <h5 class="row titulo-twitter">Twitter</h5>
+      <div class="row" id="twitter">
+      </div>
+      <div class="row" id="twitter2">
+      </div>
+      <div class="row" id="twitter3">
+      </div>
     </div>
-    <div class="row twitter" id="twitter2">
-    </div>
-    <div class="row twitter" id="twitter3">
-    </div>
+   
 
   </div>
 

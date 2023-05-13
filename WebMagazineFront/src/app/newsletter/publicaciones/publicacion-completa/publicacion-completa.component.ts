@@ -5,6 +5,9 @@ import { PublicacionesServiceService } from '../../service/publicaciones.service
 import { LugaresServiceService } from '../../service/lugares.service';
 import { TagsServiceService } from '../../service/tags.service';
 import { CategoriasServiceService } from '../../service/categorias.service';
+import { Lateral } from '../../models/lateral';
+import { LateralServiceService } from '../../service/lateral.service';
+declare const twttr: any;
 
 @Component({
   selector: 'app-publicacion-completa',
@@ -19,6 +22,7 @@ export class PublicacionCompletaComponent implements OnInit {
   publicacionesCerca: Publicacion[] = [];
   publicacionesRelacionadas: Publicacion[] = [];
   fechaFormateada: string = "";
+  lateral: Lateral = new Lateral();
   
 
   constructor(
@@ -27,11 +31,13 @@ export class PublicacionCompletaComponent implements OnInit {
     private lugarService: LugaresServiceService,
     private tagService: TagsServiceService,
     private categoriaService: CategoriasServiceService,
-    private router: Router) { }
+    private router: Router,
+    private lateralService: LateralServiceService) { }
 
   ngOnInit(): void {
     this.getTitulo();
     this.getPublicacion();
+    this.getLateral();
   
   }
 
@@ -139,5 +145,58 @@ export class PublicacionCompletaComponent implements OnInit {
   }
   getFechaPublicacion(){
     this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
+  }
+
+  getLateral(){
+    this.lateralService.getLateral().subscribe(lateral=>{
+      this.lateral = lateral;
+      this.showHtmlTwitter();
+      this.showHtmlTwitter2();
+      this.showHtmlTwitter3();
+      this.showHtmlPodcast();
+      this.showHtmlPodcastSM();
+    })
+  }
+  
+  showHtmlTwitter() {
+    var twitterContainer = document.querySelector("#twitter");
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
+  }
+
+  showHtmlTwitter2() {
+    var twitterContainer = document.querySelector("#twitter2");
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter2;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
+  }
+
+  showHtmlTwitter3() {
+    var twitterContainer = document.querySelector("#twitter3");
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter3;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
+  }
+
+  showHtmlPodcast() {
+    var podcastContainer = document.querySelector("#podcast");
+    var html = document.createElement("div");
+    html.innerHTML = this.lateral.htmlPodcast;
+    podcastContainer?.appendChild(html);
+    console.log(html.innerHTML)
+  }
+  showHtmlPodcastSM() {
+    var podcastContainer = document.querySelector("#podcastSM");
+    var html = document.createElement("div");
+    html.innerHTML = this.lateral.htmlPodcast;
+    podcastContainer?.appendChild(html);
+    console.log(html.innerHTML)
   }
 }
