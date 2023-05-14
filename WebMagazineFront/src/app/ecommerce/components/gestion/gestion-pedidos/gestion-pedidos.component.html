@@ -19,8 +19,8 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngIf="pedidos && pedidos.length > 0">
-    <tr *ngFor="let pedido of pedidos " [routerLink]="['pedido', pedido.idPedido]">
+    <ng-container *ngIf="pedidos && pedidos.length > 0" >
+    <tr *ngFor="let pedido of pedidos " [routerLink]="['pedido', pedido.idPedido]" id="pedido">
       <td> {{ pedido.idPedido }}</td>
       <td> {{ pedido.fechaPedido | date:'short'}} </td>
       <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio | date:'shorts' }} </td>
