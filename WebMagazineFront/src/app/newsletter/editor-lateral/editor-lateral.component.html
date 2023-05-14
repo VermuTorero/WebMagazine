@@ -1,10 +1,10 @@
 <section class="row editor-lateral my-4">
-    <section class="col-4"></section>
-    <section class="lateral col-4">
+    <section class="col-1 col-md-4"></section>
+    <section class="lateral col-10 col-md-4 text-center">
         <section class="row podcast-container">
             <div class="podcast mt-2" id="podcast"></div>
             <div class="text-center">
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#podcastModal">Cambiar</button>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#podcastModal">Cambiar podcast</button>
             </div>
         </section>
         <section class="row buscador-container">
@@ -12,9 +12,27 @@
         </section>
 
         <section class="row twitter-container" id="twitter-container">
-            <div class="twitter mt-2" id="twitter"></div>
+            <div class="twitter mt-2" id="twitter">
+                <h5 class="numero-tweet">Tweet 1</h5>
+            </div>
             <div class="text-center my-2">
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#twitterModal">Cambiar</button>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#twitterModal">Cambiar tweet</button>
+            </div>
+        </section>
+        <section class="row twitter-container" id="twitter-container2">
+            <div class="twitter2 mt-2" id="twitter2">
+                <h5 class="numero-tweet">Tweet 2</h5>
+            </div>
+            <div class="text-center my-2">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#twitterModal2">Cambiar tweet</button>
+            </div>
+        </section>
+        <section class="row twitter-container" id="twitter-container3">
+            <div class="twitter3 mt-2" id="twitter3">
+                <h5 class="numero-tweet">Tweet 3</h5>
+            </div>
+            <div class="text-center my-2">
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#twitterModal3">Cambiar tweet</button>
             </div>
         </section>
        
@@ -29,7 +47,7 @@
 
         
     </section>
-    <div class="col-4"></div>
+    <div class="col-1 col-md-4"></div>
 </section>
 
 
@@ -70,7 +88,51 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button class="btn btn-primary" (click)="agregarTwitter()" data-bs-dismiss="modal">Añadir
-                    podcast</button>
+                    tweet seleccionado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Twitter 2-->
+<div class="modal fade" id="twitterModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Twitter 2</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlTwitter2Seleccionado">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarTwitter2()" data-bs-dismiss="modal">Añadir
+                    tweet seleccionado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Agregar Twitter3-->
+<div class="modal fade" id="twitterModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Twitter 3</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="" style="width: 95%" placeholder="Url del podcast Spotify" rows=1
+                    [(ngModel)]="htmlTwitter3Seleccionado">
+                <img class="img-fluid my-4" src="../../../../assets/copiar_codigo_spotify.png" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" (click)="agregarTwitter3()" data-bs-dismiss="modal">Añadir
+                    tweet seleccionado</button>
             </div>
         </div>
     </div>

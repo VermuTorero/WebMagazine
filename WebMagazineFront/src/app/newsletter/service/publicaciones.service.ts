@@ -83,4 +83,7 @@ export class PublicacionesServiceService {
   getPublicacionesNoCarousel(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesNoCarousel").pipe(map(response=>response._embedded.publicaciones));
   }
+  getPublicacionesBuscador(palbrasClave: string[]): Observable<Publicacion>{
+    return this.http.get<any>(this.endpoint +  "/publicaciones/search/buscar-publicaciones?palabrasClave=" + palbrasClave[0] + "," + palbrasClave[1] + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5])
+  }
 }

@@ -13,14 +13,14 @@ public class Lateral {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	@Column(length = 600)
+	@Column(length = 1000)
 	private String htmlPodcast;
-	@Column(length = 600)
+	@Column(length = 1000)
 	private String htmlTwitter;
-	@Column(length = 600)
-    private String htmlInstagram;
-	@Column(length = 600)
-    private String htmlFacebook;
+	@Column(length = 1000)
+    private String htmlTwitter2;
+	@Column(length = 1000)
+    private String htmlTwitter3;
     
 	public Lateral() {
 		super();
@@ -28,12 +28,12 @@ public class Lateral {
 
 	
 
-	public Lateral(String htmlPodcast, String htmlTwitter, String htmlInstagram, String htmlFacebook) {
+	public Lateral(String htmlPodcast, String htmlTwitter, String htmlTwitter2, String htmlTwitter3) {
 		super();
 		this.htmlPodcast = htmlPodcast;
 		this.htmlTwitter = htmlTwitter;
-		this.htmlInstagram = htmlInstagram;
-		this.htmlFacebook = htmlFacebook;
+		this.htmlTwitter2 = htmlTwitter2;
+		this.htmlTwitter3 = htmlTwitter3;
 	}
 
 	public Long getId() {
@@ -60,21 +60,31 @@ public class Lateral {
 		this.htmlTwitter = htmlTwitter;
 	}
 
-	public String getHtmlInstagram() {
-		return htmlInstagram;
+
+
+	public String getHtmlTwitter2() {
+		return htmlTwitter2;
 	}
 
-	public void setHtmlInstagram(String htmlInstagram) {
-		this.htmlInstagram = htmlInstagram;
+
+
+	public void setHtmlTwitter2(String htmlTwitter2) {
+		this.htmlTwitter2 = htmlTwitter2;
 	}
 
-	public String getHtmlFacebook() {
-		return htmlFacebook;
+
+
+	public String getHtmlTwitter3() {
+		return htmlTwitter3;
 	}
 
-	public void setHtmlFacebook(String htmlFacebook) {
-		this.htmlFacebook = htmlFacebook;
+
+
+	public void setHtmlTwitter3(String htmlTwitter3) {
+		this.htmlTwitter3 = htmlTwitter3;
 	}
+
+
 	
 	
 }

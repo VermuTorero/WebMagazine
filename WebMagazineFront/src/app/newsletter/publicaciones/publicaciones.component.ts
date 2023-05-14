@@ -106,7 +106,10 @@ export class PublicacionesComponent implements OnInit {
     this.lateralService.getLateral().subscribe(lateral=>{
       this.lateral = lateral;
       this.showHtmlTwitter();
+      this.showHtmlTwitter2();
+      this.showHtmlTwitter3();
       this.showHtmlPodcast();
+      this.showHtmlPodcastSM();
     })
   }
   
@@ -118,10 +121,34 @@ export class PublicacionesComponent implements OnInit {
     twitterContainer?.appendChild(tweetContainer);
     twttr.widgets.load();
   }
-  
+
+  showHtmlTwitter2() {
+    var twitterContainer = document.querySelector("#twitter2");
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter2;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
+  }
+
+  showHtmlTwitter3() {
+    var twitterContainer = document.querySelector("#twitter3");
+    var tweetContainer = document.createElement('div');
+    tweetContainer.classList.add('twitter-tweet');
+    tweetContainer.innerHTML = this.lateral.htmlTwitter3;
+    twitterContainer?.appendChild(tweetContainer);
+    twttr.widgets.load();
+  }
 
   showHtmlPodcast() {
     var podcastContainer = document.querySelector("#podcast");
+    var html = document.createElement("div");
+    html.innerHTML = this.lateral.htmlPodcast;
+    podcastContainer?.appendChild(html);
+    console.log(html.innerHTML)
+  }
+  showHtmlPodcastSM() {
+    var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
