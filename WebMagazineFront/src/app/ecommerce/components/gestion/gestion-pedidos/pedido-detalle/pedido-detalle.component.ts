@@ -33,10 +33,7 @@ export class PedidoDetalleComponent implements OnInit {
     this.pedidoService.getPedido(pedidoId).pipe(
       switchMap((pedidoRes) => {
         this.pedido = pedidoRes;
-        console.log(this.pedido);
-        console.log(this.pedido.isCerrado);
 
-  
         const usuarioInfo = this.usuariosService.getUsuario(this.pedidoService.extraerUsuarioPedido(this.pedido));
         const direccionEntrega = this.pedidoService.getDireccionEntrega(this.pedidoService.extraerDireccionPedido(this.pedido));
         const productosPedido = this.pedidoService.getProductosPedido(this.pedidoService.extraerProductosPedido(this.pedido));
@@ -85,7 +82,6 @@ export class PedidoDetalleComponent implements OnInit {
     };
       this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
         window.location.reload();
-        console.log(res);
       });
     }else{
       alert("debe marcar una fecha de entrega");
@@ -127,8 +123,7 @@ export class PedidoDetalleComponent implements OnInit {
     };
 
       this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
-      //  window.location.reload();
-      console.log(res);
+      window.location.reload();
       });
     }else{
       alert("Debe tener fecha de envío y de entrega para poder cerrar el pedido");
