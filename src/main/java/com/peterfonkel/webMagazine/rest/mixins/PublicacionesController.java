@@ -249,9 +249,12 @@ public class PublicacionesController {
 	
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler,@RequestParam("palabrasClave") String[] palabrasClave) {
-		List<Publicacion> publicacionesEncontradas =  this.publicacionDAO.findByTituloContaining(Arrays.stream(palabrasClave).map(String::toLowerCase).toArray(String[]::new));
-		return assembler.toCollectionModel(publicacionesEncontradas);
-		
+	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
+	    List<Publicacion> publicacionesEncontradas = new ArrayList<>();
+	    for (String palabra : palabrasClave) {
+	        publicacionesEncontradas.addAll(publicacionDAO.buscarPorPalabra(palabra));
+	    }
+	    return assembler.toCollectionModel(publicacionesEncontradas);
 	}
+
 }
