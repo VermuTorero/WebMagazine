@@ -250,9 +250,10 @@ public class PublicacionesController {
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
-	    List<Publicacion> publicacionesEncontradas = new ArrayList<>();
+	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
 	    for (String palabra : palabrasClave) {
-	        publicacionesEncontradas.addAll(publicacionDAO.findByTituloContaining(palabra));
+	    	List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContaining(palabra);
+	        publicacionesEncontradas.addAll(publicacionesPorPalabra);
 	    }
 	    return assembler.toCollectionModel(publicacionesEncontradas);
 	}
