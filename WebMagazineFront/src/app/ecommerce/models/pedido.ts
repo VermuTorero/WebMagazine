@@ -12,7 +12,7 @@ export class Pedido {
     usuario!: Usuario; //cambiar cuando la parte de usuario esté implementada y meter en el constructor
     productos: PedidoProducto[];
     precioTotal: number;
-    isCerrado: boolean;
+    cerrado: boolean;
 
     constructor(direccionEntrega: Direccion, precioTotal: number){
        this.idPedido = "";
@@ -20,7 +20,7 @@ export class Pedido {
        this.direccionEntrega = direccionEntrega;
        this.precioTotal = precioTotal;
        this.productos = [];
-       this.isCerrado = false;
+       this.cerrado = false;
     }
     
 }

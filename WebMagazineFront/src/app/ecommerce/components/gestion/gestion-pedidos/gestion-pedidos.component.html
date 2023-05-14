@@ -23,7 +23,7 @@
     <tr *ngFor="let pedido of pedidos " [routerLink]="['pedido', pedido.idPedido]" id="pedido">
       <td> {{ pedido.idPedido }}</td>
       <td> {{ pedido.fechaPedido | date:'short'}} </td>
-      <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio | date:'shorts' }} </td>
+      <td *ngIf="pedido.fechaEnvio"> {{ pedido.fechaEnvio | date:'dd/MM/yyyy' }} </td>
       <td *ngIf="!pedido.fechaEnvio"> Sin enviar </td>
       <td *ngIf="pedido.usuario"> {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido1 }}  {{ pedido.usuario.apellido2 }} </td>
       <td> {{ pedido.precioTotal }} </td>
@@ -41,4 +41,4 @@
   </ng-container>
   </tbody>
 </table>
-<DIV class="m-3"><button routerLink="./secciones" class="btn btn-primary">CONSULTAR PEDIDOS CERRADOS</button></DIV>
+<DIV class="m-3"><button class="btn btn-primary">CONSULTAR PEDIDOS CERRADOS</button></DIV>
