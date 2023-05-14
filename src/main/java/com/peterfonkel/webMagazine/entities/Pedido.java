@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 public class Pedido {
 
@@ -98,7 +100,8 @@ public class Pedido {
         this.precioTotal = precioTotal;
     }
 
-    public boolean isCerrado() {
+    @JsonProperty("isCerrado")
+    public boolean getIsCerrado() {
         return isCerrado;
     }
 

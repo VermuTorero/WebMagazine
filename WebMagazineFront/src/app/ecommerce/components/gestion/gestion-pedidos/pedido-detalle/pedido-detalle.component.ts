@@ -34,7 +34,7 @@ export class PedidoDetalleComponent implements OnInit {
       switchMap((pedidoRes) => {
         this.pedido = pedidoRes;
         console.log(this.pedido);
-        console.log(this.pedido.cerrado);
+        console.log(this.pedido.isCerrado);
 
   
         const usuarioInfo = this.usuariosService.getUsuario(this.pedidoService.extraerUsuarioPedido(this.pedido));
@@ -112,7 +112,7 @@ export class PedidoDetalleComponent implements OnInit {
   }
 
   estadoDelPedido(): string {
-    if(this.pedido.cerrado){
+    if(this.pedido.isCerrado){
       return "Cerrado"
     }else{
       return "Abierto"
@@ -123,8 +123,9 @@ export class PedidoDetalleComponent implements OnInit {
 
     if(this.pedido.fechaEnvio && this.pedido.fechaEntrega){
     const datos = {
-      cerrado: true
+      isCerrado: true
     };
+
       this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
       //  window.location.reload();
       console.log(res);

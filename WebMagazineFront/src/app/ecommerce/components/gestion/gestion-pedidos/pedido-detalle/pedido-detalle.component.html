@@ -76,7 +76,7 @@
         </div>
         <div class="col-md-2">
           <div><strong>Estado del Pedido</strong></div>
-          <div *ngIf="pedido.cerrado; else pedidoCerrado">
+          <div *ngIf="pedido.isCerrado; else pedidoCerrado">
             <strong class="text-danger"> {{ estadoDelPedido() }} </strong>
             <hr class="mt-0" />
           </div>
@@ -218,7 +218,7 @@
 </button>
 </div>
 <div class="col">
-<button *ngIf="!pedido.cerrado"  class="btn btn-danger" (click) ="cerrarPedido()">
+<button *ngIf="!pedido.isCerrado"  class="btn btn-danger" (click) ="cerrarPedido()">
  Cerrar pedido
 </button>
 </div>
