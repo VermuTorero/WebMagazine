@@ -12,6 +12,7 @@ import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
 import { PaginaEditableComponent } from './pagina-editable/pagina-editable.component';
 import { EditorComponent } from './pagina-editable/editor/editor.component';
 import { EditorLateralComponent } from './editor-lateral/editor-lateral.component';
+import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
 
 
 const routes: Routes = [
@@ -113,6 +114,15 @@ const routes: Routes = [
       {
         path: `acerca-de/editor/:paginaNombre`,
         component: EditorComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `publicaciones-buscador/:palabrasClave`,
+        component: PublicacionesBuscadorComponent,
       }
     ],
   }

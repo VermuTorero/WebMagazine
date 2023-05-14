@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.rest.mixins;
 
+import java.text.Normalizer;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -252,8 +253,13 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
 	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
 	    for (String palabra : palabrasClave) {
-	    	List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContaining(palabra);
-	        publicacionesEncontradas.addAll(publicacionesPorPalabra);
+	    	if (palabra.length()>3) {
+	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
+	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
+	    		            .toLowerCase(); // Convertimos a minúsculas
+	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContaining(palabraNormalizada);
+		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
+			}
 	    }
 	    return assembler.toCollectionModel(publicacionesEncontradas);
 	}

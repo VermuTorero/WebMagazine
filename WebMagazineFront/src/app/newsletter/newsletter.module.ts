@@ -20,6 +20,7 @@ import { EditorInicioComponent } from './editor-inicio/editor-inicio.component';
 import { PaginaEditableComponent } from './pagina-editable/pagina-editable.component';
 import { EditorComponent } from './pagina-editable/editor/editor.component';
 import { EditorLateralComponent } from './editor-lateral/editor-lateral.component';
+import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
 
 
 
@@ -40,7 +41,8 @@ import { EditorLateralComponent } from './editor-lateral/editor-lateral.componen
     EditorInicioComponent,
     PaginaEditableComponent,
     EditorComponent,
-    EditorLateralComponent
+    EditorLateralComponent,
+    PublicacionesBuscadorComponent
   ],
   imports: [
     CommonModule,
