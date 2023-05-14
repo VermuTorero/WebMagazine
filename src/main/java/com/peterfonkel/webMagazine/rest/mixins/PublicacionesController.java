@@ -247,14 +247,14 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-//	@GetMapping(path = "buscar-publicaciones")
-//	@ResponseBody
-//	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
-//	    List<Publicacion> publicacionesEncontradas = new ArrayList<>();
-//	    for (String palabra : palabrasClave) {
-//	        publicacionesEncontradas.addAll(publicacionDAO.buscarPorPalabra(palabra));
-//	    }
-//	    return assembler.toCollectionModel(publicacionesEncontradas);
-//	}
+	@GetMapping(path = "buscar-publicaciones")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
+	    List<Publicacion> publicacionesEncontradas = new ArrayList<>();
+	    for (String palabra : palabrasClave) {
+	        publicacionesEncontradas.addAll(publicacionDAO.findByTituloContaining(palabra));
+	    }
+	    return assembler.toCollectionModel(publicacionesEncontradas);
+	}
 
 }
