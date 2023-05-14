@@ -23,6 +23,7 @@ export class PublicacionesComponent implements OnInit {
   imagenInicioCentral: ImagenInicio = new ImagenInicio();
   tituloUrl: string ="";
   lateral: Lateral = new Lateral();
+  palabrasClave: string = "";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -153,6 +154,12 @@ export class PublicacionesComponent implements OnInit {
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
     console.log(html.innerHTML)
+  }
+  buscarPublicacionesPorPalabras() {
+    console.log(this.palabrasClave)
+    let palabrasClaveArray = this.palabrasClave.split(" ");
+    const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
+    this.router.navigateByUrl(url);
   }
 
 }
