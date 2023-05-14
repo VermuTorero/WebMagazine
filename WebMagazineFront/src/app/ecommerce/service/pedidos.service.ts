@@ -47,6 +47,11 @@ export class PedidosService {
     return pedido._links.producto.href;
   }
 
+  extraerUrlPedido(pedido: any): string{
+    return pedido._links.self.href;
+  }
+
+
 
   getPedidos(): Observable<Pedido[]> {   
     return this.http.get<any>(this.endpoint + "/pedidos").pipe(map(response=>response._embedded.pedidos));
@@ -64,6 +69,10 @@ export class PedidosService {
 
   getDireccionEntrega(url: string): Observable<Direccion>{
     return this.http.get<any>(url);
+  }
+
+  patchPedido(url: string, datos:any): Observable<any>{
+    return this.http.patch(url, datos);
   }
 
 }

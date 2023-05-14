@@ -1,0 +1,5 @@
+#pedido:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+    font-weight: bold;
+}

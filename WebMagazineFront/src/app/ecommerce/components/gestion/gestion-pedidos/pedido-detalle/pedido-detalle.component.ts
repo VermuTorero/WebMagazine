@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, map, switchMap } from 'rxjs';
 import { UsuariosService } from 'src/app/core/service/usuarios.service';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
@@ -16,6 +17,7 @@ export class PedidoDetalleComponent implements OnInit {
 
   pedido!: Pedido;
   productos: Product[] = [];
+  fechaEnvio!: NgbDateStruct;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,36 +26,6 @@ export class PedidoDetalleComponent implements OnInit {
     private productoService: ProductService
   ) { }
 
-  /* ngOnInit(): void {
-    const pedidoId = this.route.snapshot.params['id'];
-     this.pedidoService.getPedido(pedidoId).subscribe((pedidoRes) =>{
-      this.pedido = pedidoRes;
-      console.log(this.pedido);
-      const usuarioInfo = this.usuariosService.getUsuario(this.pedidoService.extraerUsuarioPedido(this.pedido));
-      const direccionEntrega = this.pedidoService.getDireccionEntrega(this.pedidoService.extraerDireccionPedido(this.pedido));
-      this.pedidoService.getProductosPedido(this.pedidoService.extraerProductosPedido(this.pedido)).subscribe((arrayPedidoProductos) => {
-        console.log(this.pedido, "dentro de get pedidos productos");
-        console.log(arrayPedidoProductos, "res de dentro de get pedidos productos");
-        this.pedido.productos = arrayPedidoProductos;
-        this.pedido.productos.forEach(productoPedido => {
-         this.productoService.getProductoPorUrl(this.pedidoService.extraerProductoPedidoProducto(productoPedido)).subscribe((res) =>{
-          this.productos.push(res);
-         });
-        });
-      });
-      
-
-      forkJoin([usuarioInfo, direccionEntrega]).subscribe(
-        ([usuario, direccion]) => {
-          this.pedido.usuario = usuario;
-          this.pedido.direccionEntrega = direccion;
-          console.log(this.pedido);
-          console.log(this.productos);
-        }
-      )
-
-    });
-  }*/
   ngOnInit(): void {
     const pedidoId = this.route.snapshot.params['id'];
   
@@ -86,6 +58,24 @@ export class PedidoDetalleComponent implements OnInit {
         console.log(this.productos);
       });
     });
+  }
+
+  fechaMinimaEnvio():NgbDateStruct {
+    const date = new Date(this.pedido.fechaPedido)
+    if(this.pedido.fechaPedido){
+    return { year: date.getFullYear(), month: date.getMonth() , day: date.getDay()}; 
+    }else{
+      return { year: 1999, month: 1 , day: 1}; 
+    }
+  }
+
+  marcarFechaEnvio(): void{
+    if(this.fechaEnvio){
+      this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , this.fechaEnvio).subscribe(() => this.ngOnInit());
+    }else{
+      alert("debe marcar una fecha de envío");
+    }
+    
   }
   
   
