@@ -23,7 +23,7 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByLugar_LugarNombreAndIdNot(String lugarNombre, Long id);
 	List<Publicacion> findByCategoria_categoriaNombre(String categoriaNombre);
 	Publicacion findByTitulo(String titulo);
-	List<Publicacion> findByTituloContaining(String palabra);
+	List<Publicacion> findByTituloContainingIgnoreCase(String palabra);
 
 
 }

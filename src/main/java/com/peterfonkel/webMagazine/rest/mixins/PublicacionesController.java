@@ -257,7 +257,7 @@ public class PublicacionesController {
 	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
 	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
 	    		            .toLowerCase(); // Convertimos a minúsculas
-	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContaining(palabraNormalizada);
+	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContainingIgnoreCase(palabraNormalizada);
 		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
 			}
 	    }
