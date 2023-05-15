@@ -6,8 +6,10 @@
 }
 .twitter-container{
     margin-top: 5%;
+    padding: 5%;
     background-color: black;
-    height: fit-content
+    height: fit-content;
+    
 }
 .numero-tweet{
     color: white;

@@ -23,6 +23,7 @@ export class PublicacionCompletaComponent implements OnInit {
   publicacionesRelacionadas: Publicacion[] = [];
   fechaFormateada: string = "";
   lateral: Lateral = new Lateral();
+  palabrasClave: string = "";
   
 
   constructor(
@@ -198,5 +199,11 @@ export class PublicacionCompletaComponent implements OnInit {
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
     console.log(html.innerHTML)
+  }
+  buscarPublicacionesPorPalabras() {
+    console.log(this.palabrasClave)
+    let palabrasClaveArray = this.palabrasClave.split(" ");
+    const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
+    this.router.navigateByUrl(url);
   }
 }
