@@ -14,4 +14,6 @@ public interface PedidoDAO extends JpaRepository<Pedido, Long>{
 	List<Pedido> findAll();
 
     List<Pedido> findByIdPedido (Long id);
+    List<Pedido> findByIsCerradoIsTrue();
+    List<Pedido> findByIsCerradoIsFalse();
 }
