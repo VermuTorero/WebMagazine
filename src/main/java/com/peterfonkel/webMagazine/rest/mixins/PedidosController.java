@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -53,5 +54,22 @@ public class PedidosController {
         pedidoDAO.save(pedido);
         return assembler.toModel(pedido);
     }
+
+    @GetMapping(path = "pedidos-abiertos")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPedidosAbiertos(PersistentEntityResourceAssembler assembler) {
+		List<Pedido> pedidosAbiertos = pedidoDAO.findByIsCerradoIsFalse();
+		return assembler.toCollectionModel(pedidosAbiertos);
+	}
+
+    @GetMapping(path = "pedidos-cerrados")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPedidosCerrados(PersistentEntityResourceAssembler assembler) {
+		List<Pedido> pedidosCerrados = pedidoDAO.findByIsCerradoIsTrue();
+		return assembler.toCollectionModel(pedidosCerrados);
+	}
+
+
+
 
 }

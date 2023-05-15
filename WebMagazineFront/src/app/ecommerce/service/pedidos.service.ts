@@ -53,8 +53,12 @@ export class PedidosService {
 
 
 
-  getPedidos(): Observable<Pedido[]> {   
-    return this.http.get<any>(this.endpoint + "/pedidos").pipe(map(response=>response._embedded.pedidos));
+  getPedidosAbiertos(): Observable<Pedido[]> {   
+    return this.http.get<any>(this.endpoint + "/pedidos/search/pedidos-abiertos").pipe(map(response=>response._embedded.pedidos));
+  }
+
+  getPedidosCerrados(): Observable<Pedido[]> {   
+    return this.http.get<any>(this.endpoint + "/pedidos/search/pedidos-cerrados").pipe(map(response=>response._embedded.pedidos));
   }
 
   getProductosPedido(url:string): Observable<PedidoProducto[]>{

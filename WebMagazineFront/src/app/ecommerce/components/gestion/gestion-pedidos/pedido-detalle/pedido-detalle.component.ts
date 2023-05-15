@@ -18,6 +18,7 @@ export class PedidoDetalleComponent implements OnInit {
   pedido!: Pedido;
   productos: Product[] = [];
   fechaEnvio!: NgbDateStruct;
+  fechaEntrega!: NgbDateStruct;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,8 +33,7 @@ export class PedidoDetalleComponent implements OnInit {
     this.pedidoService.getPedido(pedidoId).pipe(
       switchMap((pedidoRes) => {
         this.pedido = pedidoRes;
-        console.log(this.pedido);
-  
+
         const usuarioInfo = this.usuariosService.getUsuario(this.pedidoService.extraerUsuarioPedido(this.pedido));
         const direccionEntrega = this.pedidoService.getDireccionEntrega(this.pedidoService.extraerDireccionPedido(this.pedido));
         const productosPedido = this.pedidoService.getProductosPedido(this.pedidoService.extraerProductosPedido(this.pedido));
@@ -41,9 +41,7 @@ export class PedidoDetalleComponent implements OnInit {
         return forkJoin([usuarioInfo, direccionEntrega, productosPedido]);
       })
     ).subscribe(([usuario, direccion, arrayPedidoProductos]) => {
-      console.log(this.pedido, "dentro de get pedidos productos");
-      console.log(arrayPedidoProductos, "res de dentro de get pedidos productos");
-  
+     
       this.pedido.usuario = usuario;
       this.pedido.direccionEntrega = direccion;
       this.pedido.productos = arrayPedidoProductos;
@@ -54,8 +52,6 @@ export class PedidoDetalleComponent implements OnInit {
   
       forkJoin(productoObservables).subscribe((productos) => {
         this.productos = productos;
-        console.log(this.pedido);
-        console.log(this.productos);
       });
     });
   }
@@ -63,20 +59,78 @@ export class PedidoDetalleComponent implements OnInit {
   fechaMinimaEnvio():NgbDateStruct {
     const date = new Date(this.pedido.fechaPedido)
     if(this.pedido.fechaPedido){
-    return { year: date.getFullYear(), month: date.getMonth() , day: date.getDay()}; 
+    return { year: date.getFullYear(), month: date.getMonth() + 1 , day: date.getDay()}; 
     }else{
       return { year: 1999, month: 1 , day: 1}; 
     }
   }
 
-  marcarFechaEnvio(): void{
-    if(this.fechaEnvio){
-      this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , this.fechaEnvio).subscribe(() => this.ngOnInit());
+  fechaMinimaEntrega():NgbDateStruct {
+    const date = new Date(this.pedido.fechaEnvio)
+    if(this.pedido.fechaEnvio){
+    return { year: date.getFullYear(), month: date.getMonth() + 1 , day: date.getDay()}; 
     }else{
-      alert("debe marcar una fecha de envío");
+      return { year: 1999, month: 1 , day: 1}; 
+    }
+  }
+  marcarFechaEntrega(): void{
+    
+    if(this.fechaEntrega){
+      let date = new Date(this.fechaEntrega.year, this.fechaEntrega.month -1, this.fechaEntrega.day);
+    const datos = {
+      fechaEntrega: date
+    };
+      this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
+        window.location.reload();
+      });
+    }else{
+      alert("debe marcar una fecha de entrega");
     }
     
   }
+  marcarFechaEnvio(): void{
+    
+    if(this.fechaEnvio){
+      let date = new Date(this.fechaEnvio.year, this.fechaEnvio.month -1, this.fechaEnvio.day);
+    const datos = {
+      fechaEnvio: date
+    };
+      this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
+        window.location.reload();
+      });
+    }else{
+      alert("debe marcar una fecha de envío");
+    }  
+  }
+
+  volver(): void {
+      window.history.back();
+  }
+
+  estadoDelPedido(): string {
+    if(this.pedido.isCerrado){
+      return "Cerrado"
+    }else{
+      return "Abierto"
+    }
+
+  }
+  cerrarPedido(): void{
+
+    if(this.pedido.fechaEnvio && this.pedido.fechaEntrega){
+    const datos = {
+      isCerrado: true
+    };
+
+      this.pedidoService.patchPedido( this.pedidoService.extraerUrlPedido(this.pedido) , datos).subscribe((res) => {
+      window.location.reload();
+      });
+    }else{
+      alert("Debe tener fecha de envío y de entrega para poder cerrar el pedido");
+    }  
+  }
+
+  }
   
   
-}
+

@@ -74,6 +74,17 @@
             <hr class="mt-0" />
           </div>
         </div>
+        <div class="col-md-2">
+          <div><strong>Estado del Pedido</strong></div>
+          <div *ngIf="pedido.isCerrado; else pedidoCerrado">
+            <strong class="text-danger"> {{ estadoDelPedido() }} </strong>
+            <hr class="mt-0" />
+          </div>
+          <ng-template #pedidoCerrado  >
+           <strong class="text-success">{{ estadoDelPedido() }} </strong>
+            <hr class="mt-0" />
+          </ng-template>
+        </div>
       </div>
     </Div>
   </div>
@@ -86,14 +97,14 @@
       <div class="col-md-2">
         <strong> Fecha del Pedido </strong>
         <div>
-          {{ pedido.fechaPedido | date : "short" }}
+          {{ pedido.fechaPedido | date : "dd/MM/yyyy" }}
           <hr class="mt-0" />
         </div>
       </div>
       <div class="col-md-2">
         <strong> Fecha de envío </strong>
         <div *ngIf ="pedido.fechaEnvio">
-          {{ pedido.fechaEnvio | date : "short" }}
+          {{ pedido.fechaEnvio | date : "dd/MM/yyyy" }}
           <hr class="mt-0" />
         </div>
         <div *ngIf ="!pedido.fechaEnvio">
@@ -101,7 +112,7 @@
           <hr class="mt-0" />
         </div>
       </div>
-      <div class="col-md-2 mt-2">
+      <div class="col-md-2 mt-2" *ngIf ="!pedido.fechaEnvio">
         <div *ngIf ="!pedido.fechaEnvio">
           <form class="row row-cols-sm-auto">
             <div class="col-12">
@@ -128,6 +139,45 @@
       </div>
       <div *ngIf ="!pedido.fechaEnvio" class="col-md-2 mt-2">
       <button class="btn btn-outline-success btn-sm mx-3" (click)="marcarFechaEnvio()">Marcar fecha de envío</button>
+      </div>
+      <div class="col-md-2" *ngIf ="pedido.fechaEnvio">
+        <strong> Fecha de entrega </strong>
+        <div *ngIf ="pedido.fechaEntrega">
+          {{ pedido.fechaEntrega | date : "dd/MM/yyyy" }}
+          <hr class="mt-0" />
+        </div>
+        <div *ngIf ="!pedido.fechaEntrega">
+          &nbsp;
+          <hr class="mt-0" />
+        </div>
+      </div>
+      <div class="col-md-2 mt-2">
+        <div *ngIf ="!pedido.fechaEntrega && pedido.fechaEnvio">
+          <form class="row row-cols-sm-auto">
+            <div class="col-12">
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  placeholder="yyyy-mm-dd"
+                  name="dp"
+                  [(ngModel)]="fechaEntrega"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                  [minDate]="fechaMinimaEntrega()"
+                />
+                <button
+                  class="btn btn-outline-secondary bi bi-calendar3"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                <i class="fa-regular fa-calendar"></i></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf ="!pedido.fechaEntrega && pedido.fechaEnvio" class="col-md-3 mt-2">
+      <button class="btn btn-outline-success btn-sm mx-3" (click)="marcarFechaEntrega()">Marcar fecha de entrega</button>
     </div>
     </div>
   </ng-container>
@@ -160,4 +210,16 @@
       </div>
     </li>
   </ul>
+</div>
+<div *ngIf="pedido" class="row ms-3 mt-3 mb-3 justify-content-around">
+  <div class="col">
+<button  class="btn btn-primary" (click) ="volver()">
+  VOLVER
+</button>
+</div>
+<div class="col">
+<button *ngIf="!pedido.isCerrado"  class="btn btn-danger" (click) ="cerrarPedido()">
+ Cerrar pedido
+</button>
+</div>
 </div>

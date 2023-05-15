@@ -1,16 +1,18 @@
 
 <div class="col-12 col-lg-4 p-4 text-center">
     <div class="nueva-tag-container mb-4">
-        <h3>secciones</h3>
+        <h3>SECCIONES</h3>
         <input type="text" [(ngModel)]="seccionNueva.nombreSeccion">
         <button class="btn btn-success mx-3" (click)="nuevaSeccion()">Crear nueva seccion</button>
-        <button routerLink=".." class="btn btn-primary">
-            VOLVER
-          </button>
+        
     </div>
 
     <div *ngFor="let seccion of secciones" style="display:block;" class="gestionar-tags-container">
         <app-seccion [seccion]="seccion" (eliminarSeccionEvent)="eliminarSeccion($event)"
             (modificarSeccionEvent)="modificarSeccion($event)"></app-seccion>
     </div>
+    
 </div>
+<button routerLink=".." class="btn btn-primary m-4">
+    VOLVER
+  </button>
