@@ -1,0 +1,7 @@
+<div class="my-4 py-2 mx-4">
+    <h3 class="row mx-2 my-4"><b>Relacionados con "{{palabrasClave}}"</b></h3>
+    <hr>
+    <div *ngFor="let publicacion of publicaciones" style="display:inline-block;" class="card col-12 col-md-3 col-xxl-2">
+      <app-publicacion [publicacion]="publicacion"></app-publicacion>
+    </div>
+  </div>

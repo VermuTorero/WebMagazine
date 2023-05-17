@@ -1,5 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Component} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UsuariosService } from 'src/app/core/service/usuarios.service';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
@@ -14,24 +15,47 @@ import { PedidosService } from 'src/app/ecommerce/service/pedidos.service';
 })
 export class GestionPedidosComponent {
   pedidos: Pedido[] = [];
+  abiertos: boolean;
 
   constructor(
     private pedidoService: PedidosService,
-    private usuarioService: UsuariosService
-  ) {}
+    private usuarioService: UsuariosService,
+    private router: Router
+  ) {
+    this.abiertos = localStorage.getItem('abiertos') === 'true';
+  }
 
   ngOnInit(): void {
-    this.pedidoService.getPedidos().subscribe((res) => {
-      console.log(res, "RES API");
+    if(this.abiertos){
+    this.pedidoService.getPedidosAbiertos().subscribe((res) => {
       this.pedidos = res;
-      console.log(this.pedidos);
       this.pedidos.forEach((pedido) => {
         pedido.idPedido = this.pedidoService.getIdPedido(pedido);
         this.usuarioService.getUsuario(this.pedidoService.extraerUsuarioPedido(pedido)).subscribe((resApi) => {
           pedido.usuario = resApi;
-          console.log(pedido.usuario);
         });
       });
     });
+    }else{
+      this.pedidoService.getPedidosCerrados().subscribe((res) => {
+        this.pedidos = res;
+        this.pedidos.forEach((pedido) => {
+          pedido.idPedido = this.pedidoService.getIdPedido(pedido);
+          this.usuarioService.getUsuario(this.pedidoService.extraerUsuarioPedido(pedido)).subscribe((resApi) => {
+            pedido.usuario = resApi;
+          });
+        });
+      });
+    }
   }
+
+  cambiarVistaPedidos(){
+    localStorage.setItem('abiertos', String(!this.abiertos));
+    window.location.reload();
+  }
+
+  volverAGestionTienda(){
+    this.router.navigate(['/ecommerce/gestion']);
+  }
+
 }

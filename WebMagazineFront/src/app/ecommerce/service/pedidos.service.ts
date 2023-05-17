@@ -4,11 +4,17 @@ import { Pedido } from '../models/pedido';
 import { Observable, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { PedidoProducto } from '../models/pedido-producto';
+import { Direccion } from '../models/direccion';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidosService {
+
+
+  getPedido(pedidoId: any): Observable<Pedido> {
+    return this.http.get<any>(this.endpoint + "/pedidos/" + pedidoId);
+  }
 
   endpoint: string = environment.urlAPI;
   constructor(private http: HttpClient) { }
@@ -29,14 +35,48 @@ export class PedidosService {
     return pedido._links.usuario.href;
   }
 
-  getPedidos(): Observable<Pedido[]> {   
-    return this.http.get<any>(this.endpoint + "/pedidos").pipe(map(response=>response._embedded.pedidos));
+  extraerDireccionPedido(pedido: any): string {
+    return pedido._links.direccionEntrega.href;
+  }
+
+  extraerProductosPedido(pedido: any): string{
+    return pedido._links.productos.href;
+  }
+
+  extraerProductoPedidoProducto(pedido: any): string{
+    return pedido._links.producto.href;
+  }
+
+  extraerUrlPedido(pedido: any): string{
+    return pedido._links.self.href;
+  }
+
+
+
+  getPedidosAbiertos(): Observable<Pedido[]> {   
+    return this.http.get<any>(this.endpoint + "/pedidos/search/pedidos-abiertos").pipe(map(response=>response._embedded.pedidos));
+  }
+
+  getPedidosCerrados(): Observable<Pedido[]> {   
+    return this.http.get<any>(this.endpoint + "/pedidos/search/pedidos-cerrados").pipe(map(response=>response._embedded.pedidos));
+  }
+
+  getProductosPedido(url:string): Observable<PedidoProducto[]>{
+    return this.http.get<any>(url).pipe(map(response=>response._embedded.pedidosProductos));
   }
 
   getIdPedido(p: any): string {
     let url = p._links.self.href;
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
+  }
+
+  getDireccionEntrega(url: string): Observable<Direccion>{
+    return this.http.get<any>(url);
+  }
+
+  patchPedido(url: string, datos:any): Observable<any>{
+    return this.http.patch(url, datos);
   }
 
 }

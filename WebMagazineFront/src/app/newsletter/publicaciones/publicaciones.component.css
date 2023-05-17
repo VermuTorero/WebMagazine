@@ -81,10 +81,10 @@ app-publicacion {
 }
 
 .podcast{
-  margin-top: 25%;
+  margin-top: 15%;
   margin-right: 10%;
   background-color: white;
-  padding: 5%;
+  padding: 3%;
   border-style: ridge;
   border-color: black;
   border-width: 1px;
@@ -96,7 +96,7 @@ app-publicacion {
   margin-top: 5%;
   margin-right: 10%;
   background-color: rgb(255, 109, 0, 255);
-  padding: 5%;
+  padding: 3%;
   border-style: ridge;
   border-color: black;
   border-width: 1px;
@@ -106,13 +106,26 @@ app-publicacion {
 .twitter{
   margin-top: 5%;
   margin-right: 10%;
-  padding: 2%;
+  padding: 3%;
   border-style: ridge;
   border-color: black;
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
   height: fit-content;
   
+}
+::ng-deep #twitter-widget-0{
+  width: 100% !important;
+  display: flex;
+}
+::ng-deep #twitter-widget-1{
+  width: 100% !important;
+}
+::ng-deep #twitter-widget-2{
+  width: 100% !important;
+}
+::ng-deep #twitter-widget-3{
+  width: 100% !important;
 }
 
 .recomendaciones{
@@ -131,6 +144,10 @@ app-publicacion {
 .titulo-podcast{
   color: rgb(255, 109, 0, 255);
 }
+.titulo-twitter{
+  color: rgb(255, 109, 0, 255);
+}
+
 .input-buscador{
   width: 80%;
 }
@@ -228,9 +245,7 @@ app-publicacion {
   .texto-titulo{
     font-size: medium;
   }
-  .titulo-buscador{
-    font-size: 2vw;
-  }
+
   .boton-buscador{
     width: 20%;
   }
@@ -259,7 +274,5 @@ app-publicacion {
     display: flex;
     justify-content: center;
   }
-  .titulo-buscador{
-    font-size: 1.5vw;
-  }
+
 }

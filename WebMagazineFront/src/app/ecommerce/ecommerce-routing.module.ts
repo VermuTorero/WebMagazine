@@ -6,6 +6,7 @@ import { GestionComponent } from './components/gestion/gestion.component';
 import { FormularioProductoComponent } from './components/gestion/formulario-producto/formulario-producto.component';
 import { PedidoComponent } from './components/pedido/pedido.component';
 import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
+import { PedidoDetalleComponent } from './components/gestion/gestion-pedidos/pedido-detalle/pedido-detalle.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,13 @@ const routes: Routes = [
           },
           {
             path: 'pedidos',
-            component: GestionPedidosComponent,
+            children: [
+              {
+                path: ``,
+                component: GestionPedidosComponent,
+              },
+              { path: 'pedido/:id', component: PedidoDetalleComponent },
+            ],
           },
         ],
       },

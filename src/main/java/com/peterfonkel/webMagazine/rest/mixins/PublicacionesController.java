@@ -1,7 +1,9 @@
 package com.peterfonkel.webMagazine.rest.mixins;
 
+import java.text.Normalizer;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Autor;
@@ -244,4 +247,21 @@ public class PublicacionesController {
 		publicacionDAO.save(publicacion);
 		return assembler.toModel(publicacion);
 	}
+	
+	@GetMapping(path = "buscar-publicaciones")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
+	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
+	    for (String palabra : palabrasClave) {
+	    	if (palabra.length()>3) {
+	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
+	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
+	    		            .toLowerCase(); // Convertimos a minúsculas
+	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContainingIgnoreCase(palabraNormalizada);
+		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
+			}
+	    }
+	    return assembler.toCollectionModel(publicacionesEncontradas);
+	}
+
 }

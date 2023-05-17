@@ -2,7 +2,10 @@ package com.peterfonkel.webMagazine.repositories;
 
 import java.util.List;
 
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.peterfonkel.webMagazine.entities.Publicacion;
@@ -20,4 +23,7 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByLugar_LugarNombreAndIdNot(String lugarNombre, Long id);
 	List<Publicacion> findByCategoria_categoriaNombre(String categoriaNombre);
 	Publicacion findByTitulo(String titulo);
+	List<Publicacion> findByTituloContainingIgnoreCase(String palabra);
+
+
 }
