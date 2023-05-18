@@ -1,4 +1,15 @@
 <div class="row">
+    <div class="row mt-2">
+        <hr class="mb-1">
+     <div class="h-10">
+     <strong>ORDENAR POR</strong>
+     <select class="ms-2" [(ngModel)]="ordenActual" (ngModelChange)="onChangeOrden()">
+        <option value="precio">Precio</option>
+        <option value="nombreProducto">Nombre</option>
+     </select>
+     </div>
+        <hr class="mt-1">
+    </div>
     <div class="col-md-4" *ngFor="let product of products">
         <app-product-item [product]="product"></app-product-item>
     </div>
