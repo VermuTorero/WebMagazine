@@ -1,16 +1,27 @@
+<div class="container">
 <div class="row">
     <div class="row mt-2">
         <hr class="mb-1">
-     <div class="h-10">
+     <div class="h-10 col">
      <strong>ORDENAR POR</strong>
      <select class="ms-2" [(ngModel)]="ordenActual" (ngModelChange)="onChangeOrden()">
         <option value="precio">Precio</option>
         <option value="nombreProducto">Nombre</option>
      </select>
+     <i *ngIf="ordenAscendente" class="fa-solid fa-arrow-up ms-1" (click)="cambiarOrden()"></i>
+     <i *ngIf="!ordenAscendente" class="fa-solid fa-arrow-down ms-1" (click)="cambiarOrden()"></i>
+     </div>
+     <div class="h-10 col">
+        <strong>FILTRAR POR</strong>
+        <select class="ms-2" [(ngModel)]="filtroSeccion" (ngModelChange)="onChangeFiltro()">
+            <option value="">Todas las secciones</option>
+            <option *ngFor="let seccion of secciones" [value]="seccion.nombreSeccion">{{ seccion.nombreSeccion }}</option>
+          </select>
      </div>
         <hr class="mt-1">
     </div>
-    <div class="col-md-4" *ngFor="let product of products">
+    <div class="col-md-4 d-flex mb-3" *ngFor="let product of filteredProducts">
         <app-product-item [product]="product"></app-product-item>
     </div>
+</div>
 </div>

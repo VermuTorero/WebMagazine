@@ -41,4 +41,8 @@ export class ProductService {
     return trozos[trozos.length - 1];
   }
 
+  extraerUrlSeccion(producto: any): string{
+    return producto._links.seccion.href;
+  }
+
 }

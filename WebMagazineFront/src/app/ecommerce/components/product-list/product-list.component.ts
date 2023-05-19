@@ -1,6 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { SeccionService } from 'src/app/ecommerce/service/seccion.service';
+import {  Component } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../service/product.service';
+import { Seccion } from '../../models/seccion';
 
 @Component({
   selector: 'app-product-list',
@@ -9,54 +11,91 @@ import { ProductService } from '../../service/product.service';
 })
 export class ProductListComponent {
   products: Product[] = [];
-  ordenActual: string = "precio"
+  ordenActual: string = 'precio';
   ordenAscendente: boolean = true;
-  constructor(private productService: ProductService) {}
+  secciones: Seccion[] = []; // Lista de secciones de productos
+  filteredProducts: Product[] = [];
+  filtroSeccion: string = '';
+
+  constructor(private productService: ProductService, private seccionesService: SeccionService) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadSecciones();
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe((res) => {
+      this.products = res;
+      this.products.forEach(producto => {
+        this.seccionesService.getSeccion(this.productService.extraerUrlSeccion(producto)).subscribe((res) =>{
+          producto.seccion = res.nombreSeccion;
+        });
+      });
+      this.applyFilter();
+    });
+  }
+
+  loadSecciones(): void {
+    this.seccionesService.getSecciones().subscribe((res) => {
+      this.secciones = res;
+    });
   }
 
 
-  getProductosOrdenados(): Product[] {
-    if(this.ordenActual == "precio"){
-    return this.products.sort((a, b) => {
+  onChangeOrden(): void {
+    this.applyFilter();
+  }
+
+  onChangeFiltro(): void {
+    this.applyFilter();
+  }
+
+  applyFilter(): void {
+    this.filteredProducts = this.products.filter((product) => {
+      if (this.filtroSeccion) {
+        return product.seccion === this.filtroSeccion;
+      } else {
+        return true; // Si no hay filtro de sección, muestra todos los productos
+      }
+    });
+    this.sortProducts();
+  }
+
+  sortProducts(): void {
+    if (this.ordenActual === 'precio') {
+      this.sortByPrice();
+    } else if (this.ordenActual === 'nombreProducto') {
+      this.sortByName();
+    }
+  }
+
+  sortByPrice(): void {
+    this.filteredProducts.sort((a, b) => {
       if (a.precio < b.precio) {
         return this.ordenAscendente ? -1 : 1;
       } else if (a.precio > b.precio) {
         return this.ordenAscendente ? 1 : -1;
       } else {
         return 0;
-        
       }
     });
-    
-  }else{
-      return this.products.sort((a, b) => {
-        if (a.precio < b.precio) {
-          return this.ordenAscendente ? -1 : 1;
-        } else if (a.precio > b.precio) {
-          return this.ordenAscendente ? 1 : -1;
-        } else {
-          return 0;
-        }
-      });
   }
-    }
-    
 
-
-  loadProducts(): void {
-    this.productService.getProducts().subscribe((res) =>{
-      console.log(res);
-      this.products = res;
-      this.getProductosOrdenados(); // Ordenar los productos al cargarlos inicialmente
+  sortByName(): void {
+    this.filteredProducts.sort((a, b) => {
+      if (a.nombreProducto < b.nombreProducto) {
+        return this.ordenAscendente ? -1 : 1;
+      } else if (a.nombreProducto > b.nombreProducto) {
+        return this.ordenAscendente ? 1 : -1;
+      } else {
+        return 0;
+      }
     });
   }
 
-  onChangeOrden(): void {
-    this.getProductosOrdenados(); // Ordenar los productos cuando se cambia la opción del select
-    this.products = [...this.products];
-    console.log(this.products);
+  cambiarOrden(): void {
+    this.ordenAscendente = !this.ordenAscendente;
+    this.sortProducts();
   }
 }
