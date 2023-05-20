@@ -1,7 +1,7 @@
 package com.peterfonkel.webMagazine.entities;
 
 import java.time.Instant;
-import java.util.Date;
+
 
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class Publicacion {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
-	private List<Cafe> cafes;
+	private List<Invitacion> invitaciones;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -75,7 +75,7 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Autor autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Cafe> cafes, List<Tag> tags ) {
+	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Autor autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Invitacion> invitaciones, List<Tag> tags ) {
 		this();
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
@@ -84,7 +84,7 @@ public class Publicacion {
 		this.autor = autor;
 		this.fechaPublicacion = fechaPublicacion;
 		this.likesRecibidos = likesRecibidos;
-		this.cafes = cafes;
+		this.invitaciones = invitaciones;
 		this.tags = tags;
 	}
 
@@ -147,12 +147,12 @@ public class Publicacion {
 		this.likesRecibidos = likesRecibidos;
 	}
 
-	public List<Cafe> getCafes() {
-		return cafes;
+	public List<Invitacion> getInvitaciones() {
+		return invitaciones;
 	}
 
-	public void setCafes(List<Cafe> cafes) {
-		this.cafes = cafes;
+	public void setInvitaciones(List<Invitacion> invitaciones) {
+		this.invitaciones = invitaciones;
 	}
 
 	public List<Tag> getTags() {

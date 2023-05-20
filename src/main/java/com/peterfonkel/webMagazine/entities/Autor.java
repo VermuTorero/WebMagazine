@@ -3,9 +3,7 @@ package com.peterfonkel.webMagazine.entities;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 
 @Entity
 public class Autor extends Usuario {
@@ -16,7 +14,7 @@ public class Autor extends Usuario {
 		super();
 	}
 	public Autor(String nombre, String apellido1, String apellido2, String edad, String suscripcion,
-			List<Like> likes, List<Cafe> cafes) {
+			List<Like> likes, List<Invitacion> invitaciones) {
 		this();
 		this.setNombre(nombre);
 		this.setApellido1(apellido1);
@@ -24,7 +22,7 @@ public class Autor extends Usuario {
 		this.setEdad(edad);
 		this.setSuscripcion(suscripcion);
 		this.setLikes(likes);
-		this.setCafes(cafes);
+		this.setInvitaciones(invitaciones);
 	}
 	public String getUrlImagen() {
 		return urlImagen;

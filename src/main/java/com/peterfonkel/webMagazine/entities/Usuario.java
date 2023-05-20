@@ -37,7 +37,7 @@ public class Usuario {
 	private List<Like> likes = new ArrayList<Like>();
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	private List<Cafe> cafes = new ArrayList<Cafe>();
+	private List<Invitacion> invitaciones = new ArrayList<Invitacion>();
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
@@ -49,7 +49,7 @@ public class Usuario {
 	}
 
 	public Usuario(String nombre, String apellido1, String apellido2, String edad, String suscripcion,
-			List<Like> likes, List<Cafe> cafes) {
+			List<Like> likes, List<Invitacion> invitaciones) {
 		this();
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -57,7 +57,7 @@ public class Usuario {
 		this.edad = edad;
 		this.suscripcion = suscripcion;
 		this.likes = likes;
-		this.cafes = cafes;
+		this.invitaciones = invitaciones;
 	}
 
 	public Long getId() {
@@ -116,12 +116,12 @@ public class Usuario {
 		this.likes = likes;
 	}
 
-	public List<Cafe> getCafes() {
-		return cafes;
+	public List<Invitacion> getInvitaciones() {
+		return invitaciones;
 	}
 
-	public void setCafes(List<Cafe> cafes) {
-		this.cafes = cafes;
+	public void setInvitaciones(List<Invitacion> invitaciones) {
+		this.invitaciones = invitaciones;
 	}
 
 	public List<Direccion> getDirecciones() {
