@@ -17,7 +17,6 @@ public class Invitacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	private Date fecha;
-	private Float precio;
 	
 
 	public Invitacion() {
@@ -44,15 +43,6 @@ public class Invitacion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
-	public Float getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Float precio) {
-		this.precio = precio;
-	}
-	
 	
 	
 }
