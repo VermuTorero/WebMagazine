@@ -57,6 +57,9 @@ export class PublicacionesServiceService {
   getPublicacion(titulo: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTitulo/" + titulo)
   }
+  getPublicacionFree(titulo: string): Observable<Publicacion>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTituloFree/" + titulo)
+  }
   getPublicacionById(id: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/" + id)
   }

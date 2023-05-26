@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.metrics.StartupStep;
 import org.springframework.core.metrics.StartupStep.Tags;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.remoting.httpinvoker.AbstractHttpInvokerRequestExecutor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +74,14 @@ public class PublicacionesController {
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
 		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
+		return assembler.toModel(publicacion);
+	}
+	
+	@GetMapping(path = "publicacionByTituloFree/{titulo}")
+	@ResponseBody
+	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
+		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
+		publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + "<hr><p><b>Para ver este artículo por completo debes estar suscrito a Vermú Torero</b></p> ");
 		return assembler.toModel(publicacion);
 	}
 	

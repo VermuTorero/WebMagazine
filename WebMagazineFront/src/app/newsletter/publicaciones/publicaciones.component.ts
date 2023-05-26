@@ -32,8 +32,8 @@ export class PublicacionesComponent implements OnInit {
     private lateralService: LateralServiceService) { }
 
   ngOnInit() {
-    this.getLateral();
     this.getImagenesInicio(); 
+    this.getLateral();
     this.getPublicacionesRecientes();
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
@@ -106,11 +106,12 @@ export class PublicacionesComponent implements OnInit {
   getLateral(){
     this.lateralService.getLateral().subscribe(lateral=>{
       this.lateral = lateral;
+      this.showHtmlPodcast();
+      this.showHtmlPodcastSM();
       this.showHtmlTwitter();
       this.showHtmlTwitter2();
       this.showHtmlTwitter3();
-      this.showHtmlPodcast();
-      this.showHtmlPodcastSM();
+  
     })
   }
   

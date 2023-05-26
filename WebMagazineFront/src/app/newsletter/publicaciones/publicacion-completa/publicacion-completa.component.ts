@@ -37,9 +37,14 @@ export class PublicacionCompletaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTitulo();
-    this.getPublicacion();
+    let rol = sessionStorage.getItem("rol");
+    if (rol == "ROLE_ADMIN" || rol == "ROLE_USER_SUSCRIBED" || rol == "ROLE_USER_MEMBER") {
+      this.getPublicacion();
+    }else{
+      this.getPublicacionFree();
+    }
+   
     this.getLateral();
-  
   }
 
   getTitulo(): void {
@@ -47,6 +52,7 @@ export class PublicacionCompletaComponent implements OnInit {
       this.titulo = params['titulo'].replaceAll("-", " ");
     })
   }
+
   getPublicacion(): void {
 
     this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
@@ -94,6 +100,37 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt20">', 'alt="imagenAlt20"></p>');
+      this.showPublicacion();
+ 
+      
+    })
+  }
+
+  getPublicacionFree(){
+    this.publicacionesService.getPublicacionFree(this.titulo).subscribe(publicacion => {
+      this.publicacion = publicacion;
+      this.getFechaPublicacion();
+      this.publicacion.id = this.publicacionesService.getId(publicacion);
+      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+        this.publicacion.autor = autor;
+      })
+      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
+        this.publicacion.tags = tags;
+        this.publicacion.tags.forEach(tag=> {
+          tag.id = this.tagService.getId(tag);
+        });
+        this.getPublicacionesRelacionadas();
+      })
+      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+        this.publicacion.lugar = lugar;
+        this.publicacion.lugar.id = this.lugarService.getId(lugar);
+        this.getPublicacionesCerca();
+      })
+      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+        this.publicacion.categoria = categoria;
+        this.publicacion.categoria.id = this.categoriaService.getId(categoria);
+      })
+      
       this.showPublicacion();
  
       
