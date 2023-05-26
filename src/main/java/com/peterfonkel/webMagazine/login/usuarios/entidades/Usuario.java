@@ -1,7 +1,8 @@
 package com.peterfonkel.webMagazine.login.usuarios.entidades;
 
-import com.peterfonkel.webMagazine.entities.Cafe;
+
 import com.peterfonkel.webMagazine.entities.Direccion;
+import com.peterfonkel.webMagazine.entities.Invitacion;
 import com.peterfonkel.webMagazine.entities.Like;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.sun.istack.NotNull;
@@ -48,7 +49,7 @@ public class Usuario {
 	private List<Like> likes = new ArrayList<Like>();
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	private List<Cafe> cafes = new ArrayList<Cafe>();
+	private List<Invitacion> invitaciones = new ArrayList<Invitacion>();
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
@@ -169,13 +170,7 @@ public class Usuario {
 		this.likes = likes;
 	}
 
-	public List<Cafe> getCafes() {
-		return cafes;
-	}
 
-	public void setCafes(List<Cafe> cafes) {
-		this.cafes = cafes;
-	}
 
 	public List<Direccion> getDirecciones() {
 		return direcciones;
@@ -187,6 +182,15 @@ public class Usuario {
 
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
+	}
+	
+
+	public List<Invitacion> getInvitaciones() {
+		return invitaciones;
+	}
+
+	public void setInvitaciones(List<Invitacion> invitaciones) {
+		this.invitaciones = invitaciones;
 	}
 
 	@Override
