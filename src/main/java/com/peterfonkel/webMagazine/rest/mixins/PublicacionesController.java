@@ -81,15 +81,10 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
-//		logger.info("En controller PUBLICACIONES RECIENTES");
-//		List<Publicacion> publicaciones= publicacionDAO.findAll();
-//		logger.info("PUBLICACIONES RECIENTES: " + publicaciones);
-//		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
-//		logger.info("PUBLICACIONES RECIENTES ORDENADAS: " + publicaciones);
-//		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
-//		logger.info("PUBLICACIONES RECIENTES 12 ultimas: " + publicacionesRecientes);
-		List<Publicacion> publicacionesRecientes = publicacionDAO.findAll();
-		return assembler.toCollectionModel(publicacionesRecientes);
+		List<Publicacion> publicaciones= publicacionDAO.findAll();
+		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		// List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		return assembler.toCollectionModel(publicaciones);
 	}
 	
 
