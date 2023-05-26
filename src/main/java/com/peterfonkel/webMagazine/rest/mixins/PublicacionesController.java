@@ -81,9 +81,9 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones= publicacionDAO.findAll();
-		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
-		// List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		List<Publicacion> publicaciones = publicacionDAO.findAll();
+		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
+		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		return assembler.toCollectionModel(publicaciones);
 	}
 	
