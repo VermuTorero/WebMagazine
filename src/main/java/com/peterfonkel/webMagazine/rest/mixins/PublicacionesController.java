@@ -38,12 +38,13 @@ import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Lugar;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
+import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.repositories.AutorDAO;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
-
-import net.bytebuddy.TypeCache.WithInlineExpunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RepositoryRestController
 @RequestMapping(path = "/publicaciones/search")
@@ -62,6 +63,7 @@ public class PublicacionesController {
 	@Autowired
 	CategoriaDAO categoriaDAO;
 	
+	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
 	public PublicacionesController(PublicacionDAO publicacionDAO){
 		this.publicacionDAO = publicacionDAO;
@@ -79,9 +81,13 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
+		logger.info("En controller PUBLICACIONES RECIENTES");
 		List<Publicacion> publicaciones= publicacionDAO.findAll();
+		logger.info("PUBLICACIONES RECIENTES: " + publicaciones);
 		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		logger.info("PUBLICACIONES RECIENTES ORDENADAS: " + publicaciones);
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		logger.info("PUBLICACIONES RECIENTES 12 ultimas: " + publicacionesRecientes);
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
@@ -142,39 +148,7 @@ public class PublicacionesController {
 		listadoPublicacionesCerca = publicacionDAO.findByCategoria_categoriaNombre(categoriaNombre);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
-//	
-//	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
-//	@ResponseBody
-//	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
-//		Publicacion publicacionRelacionada = publicacionDAO.getById(idPublicacion);
-//		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
-//		List<Publicacion> listadoPublicacionesRelacionadas = new ArrayList<Publicacion>();
-//		int agregados = 0;
-//		
-//		for (Publicacion publicacion : listadoPublicaciones) {
-//			if (publicacion.getTitulo().equals(publicacionRelacionada.getTitulo())) {
-//				continue;
-//			}
-//			int gradoRelacion = 0;
-//			for (Tag tag : publicacion.getTags()) {
-//				for (Tag tagRecibida : publicacionRelacionada.getTags()) {
-//					if (tag.getTagNombre().equals(tagRecibida.getTagNombre())) {
-//						gradoRelacion++;
-//						System.out.println("GRADO DE RELACI�N: " + gradoRelacion);
-//					}
-//				}
-//			}
-//			
-//			for (int i = 5; i > 0  ; i--) {
-//				if (gradoRelacion == i && agregados<2) {
-//					listadoPublicacionesRelacionadas.add(publicacion);
-//					agregados++;
-//				}
-//			}
-//			gradoRelacion = 0;
-//		}
-//		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
-//	}
+
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
