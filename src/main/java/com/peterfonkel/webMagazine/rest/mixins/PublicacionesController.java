@@ -35,10 +35,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
-import com.peterfonkel.webMagazine.entities.Lugar;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
-import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.repositories.AutorDAO;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
@@ -84,7 +82,7 @@ public class PublicacionesController {
 		List<Publicacion> publicaciones = publicacionDAO.findAll();
 		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
-		return assembler.toCollectionModel(publicaciones);
+		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
 
