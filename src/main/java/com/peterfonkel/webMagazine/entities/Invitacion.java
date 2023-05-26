@@ -7,29 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 
 
 @Entity
-public class Cafe {
+public class Invitacion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	private Date fechaCafe;
+	private Date fecha;
 	
 
-	public Cafe() {
+	public Invitacion() {
 		super();
 	}
 
-	public Cafe(Date fechaCafe) {
+	public Invitacion(Date fecha) {
 		super();
-		this.fechaCafe = fechaCafe;
+		this.fecha = fecha;
 	}
-
-	
 	
 	public Long getId() {
 		return id;
@@ -39,14 +36,13 @@ public class Cafe {
 		this.id = id;
 	}
 
-	public Date getFechaCafe() {
-		return fechaCafe;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public void setFechaCafe(Date fechaCafe) {
-		this.fechaCafe = fechaCafe;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
-	
 	
 	
 }
