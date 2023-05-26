@@ -21,6 +21,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -65,6 +66,7 @@ public class PublicacionesController {
 		this.publicacionDAO = publicacionDAO;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
@@ -79,6 +81,19 @@ public class PublicacionesController {
 		List<Publicacion> publicaciones= publicacionDAO.findAll();
 		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		return assembler.toCollectionModel(publicacionesRecientes);
+	}
+	
+	@Cacheable("myCache")
+	@GetMapping(path = "publicacionesRecientesFree")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(PersistentEntityResourceAssembler assembler) {
+		List<Publicacion> publicaciones= publicacionDAO.findAll();
+		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		for (Publicacion publicacion : publicacionesRecientes) {
+			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
+		}
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
@@ -98,6 +113,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesCarousel);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesNoCarousel")
 	@ResponseBody
@@ -107,6 +123,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
@@ -158,6 +175,7 @@ public class PublicacionesController {
 //		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
 //	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
@@ -202,7 +220,7 @@ public class PublicacionesController {
 	}
 
 		
-		
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
@@ -210,6 +228,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
@@ -217,6 +236,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
@@ -232,6 +252,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
@@ -248,6 +269,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
@@ -256,7 +278,7 @@ public class PublicacionesController {
 	    	if (palabra.length()>3) {
 	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
 	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
-	    		            .toLowerCase(); // Convertimos a minúsculas
+	    		            .toLowerCase(); // Convertimos a minï¿½sculas
 	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContainingIgnoreCase(palabraNormalizada);
 		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
 			}

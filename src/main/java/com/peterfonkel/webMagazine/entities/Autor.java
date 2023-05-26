@@ -2,10 +2,13 @@ package com.peterfonkel.webMagazine.entities;
 
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
 @Entity
 public class Autor extends Usuario {

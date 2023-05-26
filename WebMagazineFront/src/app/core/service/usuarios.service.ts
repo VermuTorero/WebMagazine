@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
 import { Direccion } from 'src/app/ecommerce/models/direccion';
 import { Usuario } from 'src/app/newsletter/models/usuario';
+import { EmailDTO } from 'src/app/security/models/email-dto';
+import { TokenDTO } from 'src/app/security/models/token-dto';
 import { environment } from 'src/environments/environment';
+const EMAIL = 'email';
+const ROL = 'rol';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +17,7 @@ export class UsuariosService {
   constructor(private http: HttpClient) { }
 
   endpoint: string = environment.urlAPI;
+  endpointBack: string = environment.urlBack;
 
   getUsuarios(): Observable<Usuario[]> {   
     return this.http.get<any>(this.endpoint + "/usuarios").pipe(map(response=>response._embedded.usuarios));
@@ -48,6 +53,19 @@ export class UsuariosService {
     let url = p._links.self.href;
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
+  }
+  getUsuarioFromEmail(email: string): Observable<Usuario>{
+    let emailDto = new EmailDTO();
+    emailDto.value = email;
+    return this.http.post<any>(this.endpointBack + "/usuarios/search/usuarioFromEmail", emailDto)
+  }
+  public setUser(email: string): void {
+    sessionStorage.removeItem(EMAIL);
+    sessionStorage.setItem(EMAIL, email);
+  }
+  public setRol(rol: string): void {
+    sessionStorage.removeItem(ROL);
+    sessionStorage.setItem(ROL, rol);
   }
 
 }

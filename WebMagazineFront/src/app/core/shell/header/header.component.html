@@ -55,7 +55,7 @@
             <a class="nav-link active" aria-current="page" href="sobre-nosotros">Sobre nosotros</a>
           </li> -->
       
-          <li class="nav-item dropdown">
+          <li *ngIf="isLoggedAdmin" class="nav-item dropdown">
             <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Administración
             </a>
@@ -78,11 +78,9 @@
               <li><a class="dropdown-item" href="ecommerce/gestion">Gestión de tienda</a></li>
             </ul>
           </li>
-          <li>
-            <button class="btn btn-outline-success btn-sm boton-login ml-4 mx-2 " type="submit">Log in</button>
-            <button class="btn  btn-outline-light btn-sm boton-login" type="submit">Suscríbete</button>
-          </li>
+         <app-login></app-login>
         </ul>
       </div>
     </div>
   </nav>
+

@@ -1,4 +1,4 @@
-.hoja{
+.hoja {
     background-color: white;
     margin-left: 14%;
     margin-right: 11%;
@@ -9,7 +9,7 @@
     /* background-image: url(../../../../assets/fondo_periodico.jpg); */
 }
 
-.lateral{
+.lateral {
     background-color: white;
     box-shadow: 2px 2px 10px #666;
     margin-right: 0%;
@@ -18,12 +18,12 @@
 }
 
 
-.publicaciones-cerca{
+.publicaciones-cerca {
     align-content: start;
-    
+
 }
 
-.card{  
+.card {
     margin-top: 2%;
     margin-bottom: 4%;
     padding-top: 0%;
@@ -33,7 +33,7 @@
     height: fit-content !important
 }
 
-.fondo{
+.fondo {
     background-color: rgb(205, 205, 205);
     margin-top: 0%;
     margin-bottom: 0%;
@@ -41,78 +41,93 @@
     padding-right: 3%;
 }
 
-.tag{
+.tag {
     background-color: orange;
     border-radius: 15px;
     height: 1.3rem;
     width: auto;
-    cursor:pointer; 
+    cursor: pointer;
     cursor: hand
 }
-.tag:hover{
+
+.tag:hover {
     opacity: 0.5;
 }
-.tagNombre{
-    font-size:small
+
+.tagNombre {
+    font-size: small
 }
 
 
-.lugar{
+.lugar {
     background-color: rgb(162, 235, 222);
     border-radius: 15px;
     height: 1.3rem;
     width: fit-content;
     margin: 0px auto;
 }
-.lugar:hover{
+
+.lugar:hover {
     opacity: 0.5;
 }
-.lugarNombre{
-    font-size:small
+
+.lugarNombre {
+    font-size: small
 }
 
-.foto-autor{
+.foto-autor {
     width: 45px;
     border-radius: 50%;
 }
-.foto-autor:hover{
+
+.foto-autor:hover {
     opacity: 0.5;
 }
-.icono-rrss:hover{
-opacity: 0.5;
+
+.icono-rrss:hover {
+    opacity: 0.5;
 }
-.invitar-vino{
+
+.invitar-vino {
     width: 15em;
 }
-.icono-like{
+
+.icono-like {
     width: 2em;
-    cursor:pointer; 
+    cursor: pointer;
     cursor: hand
 }
-.icono-like:hover{
+
+.icono-like:hover {
     opacity: 0.5;
 }
-.icono-vino{
+
+.icono-vino {
     width: 2em;
-    cursor:pointer; 
+    cursor: pointer;
     cursor: hand
 }
-.icono-vino:hover{
+
+.icono-vino:hover {
     opacity: 0.5;
 }
-.likes{
+
+.likes {
     display: flex;
     align-items: center;
 }
-.numero{
+
+.numero {
     vertical-align: middle;
     font-size: x-small;
 }
-.modal-header{
-    background-color: rgb(255,109,0,255);
+
+.modal-header {
+    background-color: rgb(255, 109, 0, 255);
     color: white;
 }
-.podcast{
+
+.podcast {
     margin-top: 3%;
     background-color: white;
     padding: 3%;
@@ -121,9 +136,9 @@ opacity: 0.5;
     border-width: 1px;
     box-shadow: 2px 2px 10px #666;
     height: fit-content;
-  }
-  
-  .buscador{
+}
+
+.buscador {
     margin-top: 5%;
     background-color: rgb(255, 109, 0, 255);
     padding: 3%;
@@ -131,9 +146,9 @@ opacity: 0.5;
     border-color: black;
     border-width: 1px;
     box-shadow: 2px 2px 10px #666;
-  }
-  
-  .twitter{
+}
+
+.twitter {
     margin-top: 5%;
     padding: 3%;
     border-style: ridge;
@@ -141,56 +156,70 @@ opacity: 0.5;
     border-width: 1px;
     box-shadow: 2px 2px 10px #666;
     height: fit-content;
-    
-  }
-  .titulo-podcast{
+}
+
+.titulo-podcast {
     color: rgb(255, 109, 0, 255);
-  }
-  .titulo-twitter{
+}
+
+.titulo-twitter {
     color: rgb(255, 109, 0, 255);
-  }
-  
-  .input-buscador{
+}
+
+.input-buscador {
     width: 80%;
+}
+.titulo-publicaciones-lateral{
+    color: rgb(255, 109, 0, 255);
   }
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
-    ::ng-deep  img[alt="imagenAlt100"]{
-        width:100% !important;
+    ::ng-deep img[alt="imagenAlt100"] {
+        width: 100% !important;
     }
-    ::ng-deep  img[alt="imagenAlt75"]{
-        width:90% !important;
+
+    ::ng-deep img[alt="imagenAlt75"] {
+        width: 90% !important;
     }
-    ::ng-deep  img[alt="imagenAlt50"]{
-        width:70% !important;
+
+    ::ng-deep img[alt="imagenAlt50"] {
+        width: 70% !important;
     }
-    ::ng-deep img[alt="imagenAlt35"]{
-        width:60% !important;
+
+    ::ng-deep img[alt="imagenAlt35"] {
+        width: 60% !important;
     }
-    ::ng-deep img[alt="imagenAlt20"]{
-        width:50% !important;
+
+    ::ng-deep img[alt="imagenAlt20"] {
+        width: 50% !important;
     }
-    ::ng-deep .iframe-container{
-        width:100% !important;
+
+    ::ng-deep .iframe-container {
+        width: 100% !important;
         height: fit-content !important;
     }
-    ::ng-deep iframe[tipo="podcast"]{
+
+    ::ng-deep iframe[tipo="podcast"] {
         width: 100% !important;
         height: 25vw !important;
     }
-    ::ng-deep iframe[tipo="youtube"]{
+
+    ::ng-deep iframe[tipo="youtube"] {
         width: 100% !important;
         height: 48vw !important;
     }
-    .icono-rrss{
+
+    .icono-rrss {
         width: 8vw;
     }
-    .autor{
+
+    .autor {
         margin-top: 3%;
         font-size: small;
     }
-    .hoja{
+
+    .hoja {
         background-color: white;
         margin-left: 3%;
         margin-right: 1%;
@@ -205,42 +234,50 @@ opacity: 0.5;
 
 /* Estilos tamaño grande */
 @media (min-width: 41em) {
-    ::ng-deep img[alt="imagenAlt100"]{
-        width:100% !important;
+    ::ng-deep img[alt="imagenAlt100"] {
+        width: 100% !important;
     }
-    ::ng-deep img[alt="imagenAlt75"]{
-        width:75% !important;
+
+    ::ng-deep img[alt="imagenAlt75"] {
+        width: 75% !important;
     }
-    ::ng-deep img[alt="imagenAlt50"]{
-        width:50% !important;
+
+    ::ng-deep img[alt="imagenAlt50"] {
+        width: 50% !important;
     }
-    ::ng-deep img[alt="imagenAlt35"]{
-        width:35% !important;
+
+    ::ng-deep img[alt="imagenAlt35"] {
+        width: 35% !important;
     }
-    ::ng-deep img[alt="imagenAlt20"]{
-        width:20% !important;
+
+    ::ng-deep img[alt="imagenAlt20"] {
+        width: 20% !important;
     }
-    ::ng-deep iframe[tipo="podcast"]{
+
+    ::ng-deep iframe[tipo="podcast"] {
         width: 75% !important;
         height: 220px !important;
     }
-    ::ng-deep iframe[tipo="youtube"]{
+
+    ::ng-deep iframe[tipo="youtube"] {
         width: 75% !important;
         height: 28vw !important;
     }
 
-    .icono-rrss{
+    .icono-rrss {
         width: 2.2vw;
     }
-    .autor{
+
+    .autor {
         margin-top: 3%;
         font-size: medium;
     }
-    .datos{
-        display:flex
+
+    .datos {
+        display: flex
     }
-    
-    .hoja{
+
+    .hoja {
         background-color: white;
         margin-left: 4%;
         margin-right: 2%;
@@ -251,15 +288,16 @@ opacity: 0.5;
         /* background-image: url(../../../../assets/fondo_periodico.jpg); */
     }
 }
+
 /* Estilos tamaño muy grande */
 @media (min-width: 81em) {
-    .lateral{
+    .lateral {
         padding-left: 5%;
         padding-right: 5%;
         padding-bottom: 10%;
     }
 
-    .hoja{
+    .hoja {
         background-color: white;
         margin-left: 14%;
         margin-right: 11%;
@@ -271,12 +309,13 @@ opacity: 0.5;
     }
 }
 
-a:link, a:visited, a:active {
-    text-decoration:none;
+a:link,
+a:visited,
+a:active {
+    text-decoration: none;
     color: black;
 }
-::ng-deep a{
+
+::ng-deep a {
     color: rgb(209, 113, 3);
 }
-
-

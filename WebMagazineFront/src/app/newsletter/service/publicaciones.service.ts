@@ -8,6 +8,10 @@ import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
 
+const cabecera = {
+  headers: new HttpHeaders({ "Content-Type": "application/json" }),
+};
+
 @Injectable({
   providedIn: 'root'
 })

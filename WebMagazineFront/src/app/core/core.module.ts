@@ -5,6 +5,8 @@ import { MainComponent } from './shell/main/main.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { ShellComponent } from './shell/shell.component';
 import { CoreRoutingModule } from './core-routing.module';
+import { FormsModule } from '@angular/forms';
+import { SecurityModule } from '../security/security.module';
 
 
 
@@ -18,7 +20,10 @@ import { CoreRoutingModule } from './core-routing.module';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    FormsModule,
+    SecurityModule,
+    SecurityModule
   ],
   exports: [
     HeaderComponent,
