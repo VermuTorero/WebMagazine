@@ -1,12 +1,5 @@
 package com.peterfonkel.webMagazine.login;
 
-
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.peterfonkel.webMagazine.login.dto.TokenDto;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.RolService;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
@@ -22,8 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
-import java.util.Collections;
+
 import com.peterfonkel.webMagazine.login.dto.AuthenticationRequest;
 import com.peterfonkel.webMagazine.login.dto.AuthenticationResponse;
 
