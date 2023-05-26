@@ -9,7 +9,7 @@ plugins {
 group = 'com.peterfonkel'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = '1.8'
+sourceCompatibility = '8'
 
 configurations {
   compileOnly {
@@ -62,12 +62,6 @@ dependencies {
 	
 }
 
-
-dependencyManagement {
-     imports {
-          mavenBom 'org.keycloak.bom:keycloak-adapter-bom:11.0.0'
-     }
-}
 
 test {
 	useJUnitPlatform()
