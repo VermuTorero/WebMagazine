@@ -180,10 +180,6 @@ public class Usuario {
 		this.direcciones = direcciones;
 	}
 
-	public void setRoles(Set<Rol> roles) {
-		this.roles = roles;
-	}
-	
 
 	public List<Invitacion> getInvitaciones() {
 		return invitaciones;

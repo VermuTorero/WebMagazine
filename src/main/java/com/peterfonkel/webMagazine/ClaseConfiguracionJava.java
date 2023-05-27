@@ -3,11 +3,11 @@ package com.peterfonkel.webMagazine;
 
 import java.util.Arrays;
 
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,14 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.peterfonkel.webMagazine.entities.Autor;
+import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
 import com.peterfonkel.webMagazine.entities.Lugar;
@@ -38,6 +36,7 @@ import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.AutorDAO;
+import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LateralDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
@@ -78,6 +77,9 @@ public class ClaseConfiguracionJava {
 
 	@Autowired 
 	AutorDAO autorDAO;
+	
+	@Autowired
+	CategoriaDAO categoriaDAO;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -172,6 +174,18 @@ public class ClaseConfiguracionJava {
 			roles.add(rolAdmin);
 			usuarioAdmin.agregarRoles(roles);
 			usuarioDAO.save(usuarioAdmin);
-		}	
+		}
+		if (autorDAO.findAll().size()<1) {
+			Autor autor = new Autor();
+			autor.setNombre("Elisabeth");
+			autor.setApellido1("G.");
+			autor.setApellido2("Iborra");
+			autorDAO.save(autor);
+		}
+		if (categoriaDAO.findAll().size()<1) {
+			Categoria categoria = new Categoria();
+			categoria.setCategoriaNombre("Gastrosofia");
+			categoriaDAO.save(categoria);
+		}
 	}
 }

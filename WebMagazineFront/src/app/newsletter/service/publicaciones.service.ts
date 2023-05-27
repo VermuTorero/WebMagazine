@@ -9,8 +9,7 @@ import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
 
 const cabecera = {
-  headers: new HttpHeaders({ "Content-Type": "application/json"
-}),
+  headers: new HttpHeaders({ "Content-Type": "application/json"})
 };
 
 @Injectable({
@@ -68,7 +67,7 @@ export class PublicacionesServiceService {
     return this.http.delete(this.endpoint + "/publicaciones/" + id);
   }
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
-    return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion, cabecera);
+    return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion);
   }
   getPublicacionesCerca(lugarNombre: string, idPublicacion: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCerca/" + lugarNombre + "/" + idPublicacion).pipe(map(response=>response._embedded.publicaciones))
