@@ -37,6 +37,7 @@ import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
+import com.peterfonkel.webMagazine.repositories.AutorDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LateralDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
@@ -75,7 +76,8 @@ public class ClaseConfiguracionJava {
 	@Autowired
 	UsuarioDAO usuarioDAO;
 
-
+	@Autowired 
+	AutorDAO autorDAO;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -133,8 +135,6 @@ public class ClaseConfiguracionJava {
     	if (lateralDAO.findAll().size()<1) {	
     		Lateral lateral = new Lateral("", "", "","");
     		lateralDAO.save(lateral);
-    		
-    		
 		}
     }
     
@@ -172,7 +172,6 @@ public class ClaseConfiguracionJava {
 			roles.add(rolAdmin);
 			usuarioAdmin.agregarRoles(roles);
 			usuarioDAO.save(usuarioAdmin);
-		}
+		}	
 	}
-	
 }
