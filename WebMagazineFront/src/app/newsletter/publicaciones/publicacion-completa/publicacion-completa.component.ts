@@ -24,6 +24,7 @@ export class PublicacionCompletaComponent implements OnInit {
   fechaFormateada: string = "";
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
+  rol : string | null= "";
   
 
   constructor(
@@ -37,8 +38,8 @@ export class PublicacionCompletaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTitulo();
-    let rol = sessionStorage.getItem("rol");
-    if (rol == "ROLE_ADMIN" || rol == "ROLE_USER_SUSCRIBED" || rol == "ROLE_USER_MEMBER") {
+    this.rol = sessionStorage.getItem("rol");
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacion();
     }else{
       this.getPublicacionFree();

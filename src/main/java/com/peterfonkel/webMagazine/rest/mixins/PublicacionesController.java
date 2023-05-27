@@ -81,7 +81,7 @@ public class PublicacionesController {
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
 		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
-		publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + "<hr><p><b>Para ver este artículo por completo debes estar suscrito a Vermú Torero</b></p> ");
+		publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<hr><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
 		return assembler.toModel(publicacion);
 	}
 	
