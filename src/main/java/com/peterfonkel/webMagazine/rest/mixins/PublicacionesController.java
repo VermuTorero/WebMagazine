@@ -226,7 +226,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
