@@ -226,10 +226,10 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
-	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
+	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler, Publicacion publicacion) {	
 		Autor autor = autorDAO.getById(publicacion.getAutor().getId());
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
