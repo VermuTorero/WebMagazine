@@ -14,7 +14,6 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @EnableCaching
 @ImportResource({ "classpath:config/jpa-config.xml" })
-@Import({ ClaseConfiguracionJava.class})
 public class WebMagazineApplication {
 
 	public static void main(String[] args) {
