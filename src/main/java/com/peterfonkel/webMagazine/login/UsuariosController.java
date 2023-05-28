@@ -127,7 +127,11 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado) {
 		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
-		usuarioAntiguo = usuarioModificado;
+		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
+		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
+		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
+		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
+		usuarioAntiguo.agregarRoles(usuarioModificado.getRoles());
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
 	}

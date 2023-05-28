@@ -74,7 +74,7 @@ export class UsuariosService {
     return this.http.get<any>(this.endpointBack + "/usuarios/search/autores/" + id)
   }
   patchUsuario(user: Usuario): Observable<Usuario>{
-    return this.http.patch<any>(this.endpoint + "usuarios/search/modificarUsuario" , user);
+    return this.http.patch<any>(this.endpointBack + "/usuarios/search/modificarUsuario" , user);
   }
 
 }
