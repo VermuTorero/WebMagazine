@@ -123,7 +123,7 @@ public class UsuariosController {
 //		return assembler.toCollectionModel(usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN"));
 	}
 	
-	@GetMapping(path="modificarUsuario")
+	@PatchMapping(path="modificarUsuario")
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado) {
 		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
