@@ -8,7 +8,7 @@ import { Usuario } from '../models/usuario';
   providedIn: 'root'
 })
 export class UsuariosServiceService {
-  endpoint: string = environment.urlAPI;
+  endpoint: string = environment.urlBack;
 
   constructor(private http: HttpClient) { }
 
