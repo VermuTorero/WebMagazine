@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
 import { TokenService } from '../service/token.service';
 import { Usuario } from 'src/app/newsletter/models/usuario';
-import { UsuariosService } from 'src/app/core/service/usuarios.service';
+import { UsuariosService } from '../service/usuarios.service';
 const ROLE_KEY = "rol";
 declare var $: any;
 

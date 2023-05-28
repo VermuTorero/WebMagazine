@@ -1,4 +1,4 @@
-import { UsuariosService } from './../../../core/service/usuarios.service';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
 import { Usuario } from 'src/app/newsletter/models/usuario';
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { PedidoProducto } from '../../models/pedido-producto';
 import { Observable, forkJoin, map } from 'rxjs';
 import { Router } from '@angular/router';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
 
 
 @Component({

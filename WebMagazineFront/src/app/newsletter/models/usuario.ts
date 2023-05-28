@@ -6,7 +6,7 @@ export class Usuario {
     apellido1!: string;
     apellido2!: string;
     direccion!: string;
-    user!: string;
+    email!: string;
     password!: string; 
     rol: Rol = new Rol();
     urlImagen: string =""

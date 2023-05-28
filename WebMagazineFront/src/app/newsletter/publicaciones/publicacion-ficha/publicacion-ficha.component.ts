@@ -15,8 +15,7 @@ declare var $: any;
 import { Categoria } from '../../models/Categoria';
 import { LugaresServiceService } from '../../service/lugares.service';
 import { Usuario } from '../../models/usuario';
-import { UsuariosService } from 'src/app/core/service/usuarios.service';
-import { UsuariosServiceService } from '../../service/usuarios.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -71,7 +70,7 @@ export class PublicacionFichaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
-    private usuariosService: UsuariosServiceService,
+    private usuariosService: UsuariosService,
     private imagenesService: ImagenesService,
     private categoriasService: CategoriasServiceService,
     private lugaresService: LugaresServiceService

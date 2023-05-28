@@ -67,5 +67,14 @@ export class UsuariosService {
     sessionStorage.removeItem(ROL);
     sessionStorage.setItem(ROL, rol);
   }
+  getAutores(): Observable<Usuario[]>{
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/autores").pipe(map(response=>response._embedded.usuarios))
+  }
+  getAutor(id: string): Observable<Usuario>{
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/autores/" + id)
+  }
+  patchUsuario(user: Usuario): Observable<Usuario>{
+    return this.http.patch<any>(this.endpoint + "usuarios/search/modificarUsuario" , user);
+  }
 
 }

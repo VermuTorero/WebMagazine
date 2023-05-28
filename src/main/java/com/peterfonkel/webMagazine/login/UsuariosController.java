@@ -122,5 +122,14 @@ public class UsuariosController {
 		return assembler.toCollectionModel(usuarioDAO.findAll());
 //		return assembler.toCollectionModel(usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN"));
 	}
+	
+	@GetMapping(path="modificarUsuario")
+	@ResponseBody
+	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado) {
+		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
+		usuarioAntiguo = usuarioModificado;
+		usuarioDAO.save(usuarioAntiguo);
+		return assembler.toModel(usuarioAntiguo);
+	}
 
 }
