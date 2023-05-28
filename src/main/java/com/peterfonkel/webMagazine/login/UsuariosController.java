@@ -119,7 +119,8 @@ public class UsuariosController {
 	@GetMapping(path = "autores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getAutores(PersistentEntityResourceAssembler assembler) {
-		return assembler.toCollectionModel(usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN"));
+		return assembler.toCollectionModel(usuarioDAO.findAll());
+//		return assembler.toCollectionModel(usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN"));
 	}
 
 }
