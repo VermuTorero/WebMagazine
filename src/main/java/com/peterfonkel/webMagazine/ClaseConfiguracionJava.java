@@ -168,8 +168,6 @@ public class ClaseConfiguracionJava {
 			Rol rolAdmin = rolDAO.findByRolNombre(RolNombre.ROLE_ADMIN).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolAdmin);
-			Rol rolWritter = rolDAO.findByRolNombre(RolNombre.ROLE_WRITTER).get();
-			roles.add(rolWritter);
 			usuarioAdmin.agregarRoles(roles);
 			usuarioDAO.save(usuarioAdmin);
 		}

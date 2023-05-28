@@ -24,6 +24,7 @@ export class PublicacionesComponent implements OnInit {
   tituloUrl: string ="";
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
+  rol: string | null = "";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -32,9 +33,14 @@ export class PublicacionesComponent implements OnInit {
     private lateralService: LateralServiceService) { }
 
   ngOnInit() {
+    this.rol = sessionStorage.getItem('rol');
     this.getImagenesInicio(); 
     this.getLateral();
-    this.getPublicacionesRecientes();
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITTER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+      this.getPublicacionesRecientes();
+    }else{
+      this.getPublicacionesRecientesFree();
+    }
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
   }
@@ -42,6 +48,22 @@ export class PublicacionesComponent implements OnInit {
   getPublicacionesRecientes(){
     this.publicaciones = [];
     this.publicacionesService.getPublicacionesRecientes().subscribe(publicaciones => {
+      this.publicaciones = publicaciones;
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            publicacion.autor = autor;
+          })
+        })
+      });
+    })
+  }
+  /* Publicaciones recientes - 12 ultimas */
+  getPublicacionesRecientesFree(){
+    this.publicaciones = [];
+    this.publicacionesService.getPublicacionesRecientesFree().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);

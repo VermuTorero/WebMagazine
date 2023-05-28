@@ -27,6 +27,9 @@ export class PublicacionesServiceService {
   getPublicacionesRecientes(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes").pipe(map(response=>response._embedded.publicaciones))
   }
+  getPublicacionesRecientesFree(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientesFree").pipe(map(response=>response._embedded.publicaciones))
+  }
 
   getPublicacionesDestacadas(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesDestacadas").pipe(map(response=>response._embedded.publicaciones))

@@ -39,7 +39,7 @@ export class PublicacionCompletaComponent implements OnInit {
   ngOnInit(): void {
     this.getTitulo();
     this.rol = sessionStorage.getItem("rol");
-    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+    if (this.rol == "ROLE_ADMIN" ||this.rol == "ROLE_WRITTER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacion();
     }else{
       this.getPublicacionFree();
