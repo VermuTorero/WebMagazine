@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
+
 
 
 
@@ -43,7 +45,7 @@ public class Publicacion {
 	private boolean carousel;
 
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
-	private Autor autor;
+	private Usuario autor;
 	
 	private Instant fechaPublicacion;
 	
@@ -75,7 +77,7 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Autor autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Invitacion> invitaciones, List<Tag> tags ) {
+	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Usuario autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Invitacion> invitaciones, List<Tag> tags ) {
 		this();
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
@@ -123,11 +125,11 @@ public class Publicacion {
 		this.htmlPublicacion = htmlPublicacion;
 	}
 
-	public Autor getAutor() {
+	public Usuario getAutor() {
 		return autor;
 	}
 
-	public void setAutor(Autor autor) {
+	public void setAutor(Usuario autor) {
 		this.autor = autor;
 	}
 

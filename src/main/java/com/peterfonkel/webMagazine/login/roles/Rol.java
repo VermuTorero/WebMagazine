@@ -8,12 +8,6 @@ import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 
 import javax.persistence.*;
 
-/**
- * Clase de ROL de usuario.
- * 
- * @author albal
- *
- */
 @Entity
 public class Rol {
     @Id

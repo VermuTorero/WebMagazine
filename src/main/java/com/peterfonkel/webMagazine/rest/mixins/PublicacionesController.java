@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.rest.mixins;
 
 import java.text.Normalizer;
 
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,12 +30,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
-import com.peterfonkel.webMagazine.repositories.AutorDAO;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
@@ -53,7 +53,7 @@ public class PublicacionesController {
 	TagDAO tagDAO;
 	
 	@Autowired
-	AutorDAO autorDAO;
+	UsuarioDAO usuarioDAO;
 	
 	@Autowired
 	CategoriaDAO categoriaDAO;
@@ -80,7 +80,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
@@ -214,7 +214,7 @@ public class PublicacionesController {
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Autor autor = autorDAO.getById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
@@ -230,7 +230,7 @@ public class PublicacionesController {
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Autor autor = autorDAO.getById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {

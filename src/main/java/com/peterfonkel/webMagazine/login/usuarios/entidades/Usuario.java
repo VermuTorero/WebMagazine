@@ -13,12 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * entidad que almacena la informacion de un usaurio, ID, mail, Password y roles
- * 
- * @author jl_pu
- *
- */
 
 @Entity
 public class Usuario {

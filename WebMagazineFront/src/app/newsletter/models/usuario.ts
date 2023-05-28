@@ -9,6 +9,7 @@ export class Usuario {
     user!: string;
     password!: string; 
     rol: Rol = new Rol();
+    urlImagen: string =""
     constructor(){
 
     }

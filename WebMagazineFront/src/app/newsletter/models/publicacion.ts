@@ -1,6 +1,5 @@
 import { Lugar } from "./Lugar";
 import { Tag } from "./Tag";
-import { Autor } from "./autor";
 import { Cafe } from "./cafe";
 import { Like } from "./like";
 

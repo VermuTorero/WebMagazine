@@ -11,12 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
-/**
- * Servicio de carga de un usuario por su email
- * 
- * @author albal
- *
- */
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -25,9 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	UsuarioService usuarioService;
 
 	
-	/**
-	 * Carga usuario a partir de su mail
-	 */	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Usuario usuario = usuarioService.getByEmail(email)

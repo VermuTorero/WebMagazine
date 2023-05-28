@@ -3,10 +3,10 @@ import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Publicacion } from '../models/publicacion';
 import { environment } from 'src/environments/environment';
-import { Autor } from '../models/autor';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
+import { Usuario } from '../models/usuario';
 
 const cabecera = {
   headers: new HttpHeaders({ "Content-Type": "application/json"})
@@ -41,7 +41,7 @@ export class PublicacionesServiceService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
-  getAutorFromPublicacion(publicacion: any): Observable<Autor> {
+  getAutorFromPublicacion(publicacion: any): Observable<Usuario> {
     return this.http.get<any>(publicacion._links.autor.href);
   }
   getTagsFromPublicacion(publicacion: any): Observable<Tag[]> {

@@ -24,7 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
@@ -35,7 +34,6 @@ import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
-import com.peterfonkel.webMagazine.repositories.AutorDAO;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LateralDAO;
@@ -75,8 +73,6 @@ public class ClaseConfiguracionJava {
 	@Autowired
 	UsuarioDAO usuarioDAO;
 
-	@Autowired 
-	AutorDAO autorDAO;
 	
 	@Autowired
 	CategoriaDAO categoriaDAO;
@@ -172,16 +168,12 @@ public class ClaseConfiguracionJava {
 			Rol rolAdmin = rolDAO.findByRolNombre(RolNombre.ROLE_ADMIN).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolAdmin);
+			Rol rolWritter = rolDAO.findByRolNombre(RolNombre.ROLE_WRITTER).get();
+			roles.add(rolWritter);
 			usuarioAdmin.agregarRoles(roles);
 			usuarioDAO.save(usuarioAdmin);
 		}
-		if (autorDAO.findAll().size()<1) {
-			Autor autor = new Autor();
-			autor.setNombre("Elisabeth");
-			autor.setApellido1("G.");
-			autor.setApellido2("Iborra");
-			autorDAO.save(autor);
-		}
+	
 		if (categoriaDAO.findAll().size()<1) {
 			Categoria categoria = new Categoria();
 			categoria.setCategoriaNombre("Gastrosofia");

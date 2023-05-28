@@ -13,11 +13,6 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * CRUD mediante JpaRepository de usuarios en la BD
- * @author jl_pu
- *
- */
 @RepositoryRestResource(path = "usuarios", 
 						itemResourceRel = "usuario", 
 						collectionResourceRel = "usuarios")
@@ -26,6 +21,6 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByEmail(@RequestParam String email);
     boolean existsByEmail(String email);
     Usuario findById(Long id);
-    
+    List<Usuario> findByRoles_RolNombre(String rol);
     List<Usuario> findAll();
 }

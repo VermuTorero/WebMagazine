@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.login;
 
 import java.time.Instant;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
@@ -29,7 +29,6 @@ import com.peterfonkel.webMagazine.login.roles.RolService;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
-import com.peterfonkel.webMagazine.repositories.AutorDAO;
 
 
 
@@ -53,8 +52,6 @@ public class UsuariosController {
 	@Autowired
 	UsuarioDAO usuarioDAO;
 	
-	@Autowired
-	AutorDAO autorDAO;
 
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
@@ -122,7 +119,7 @@ public class UsuariosController {
 	@GetMapping(path = "autores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getAutores(PersistentEntityResourceAssembler assembler) {
-		return assembler.toCollectionModel(autorDAO.findAll());
+		return assembler.toCollectionModel(usuarioDAO.findByRoles_RolNombre("ROLE_WRITTER"));
 	}
 
 }
