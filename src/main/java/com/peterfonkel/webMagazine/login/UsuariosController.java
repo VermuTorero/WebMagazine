@@ -5,6 +5,7 @@ import java.time.Instant;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 
@@ -27,6 +28,7 @@ import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.RolService;
+import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
@@ -75,9 +77,11 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
-		Rol rol = rolDAO.findByRolNombre(usuario.getRol().getRolNombre()).get();
-		logger.info("Asignando el rol: ", rol);
-		usuarioNuevo.setRoles(usuario.getRoles());
+		Set<Rol> roles = usuario.getRoles();
+		for (Rol rol : roles) {
+			rol = rolDAO.findByRolNombre(rol.getRolNombre()).get();
+		}
+		usuarioNuevo.setRoles(roles);
 		usuarioDAO.save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
