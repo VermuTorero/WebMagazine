@@ -73,13 +73,14 @@ public class UsuariosController {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuario")
-	private Usuario saveNuevoUsuario(@RequestBody Usuario usuario) {
+	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		Rol rol = getRolService().getByRolNombre(usuario.getRol().getRolNombre()).get();
 		logger.info("Asignando el rol: ", rol);
 		usuarioNuevo.getRoles().add(rol);
-		return getUsuarioService().save(usuarioNuevo);
+		getUsuarioService().save(usuarioNuevo);
+		return assembler.toModel(usuarioNuevo);
 	}
 	
 
