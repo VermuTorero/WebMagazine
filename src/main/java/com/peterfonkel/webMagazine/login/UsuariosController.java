@@ -25,6 +25,7 @@ import com.peterfonkel.webMagazine.entities.Tag;
 import com.peterfonkel.webMagazine.login.dto.EmailDto;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
+import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.RolService;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
@@ -47,7 +48,7 @@ public class UsuariosController {
 	UsuarioService usuarioService;
 
 	@Autowired
-	RolService rolService;
+	RolDAO rolDAO;
 	
 	@Autowired
 	UsuarioDAO usuarioDAO;
@@ -63,9 +64,7 @@ public class UsuariosController {
 		return passwordEncoder;
 	}
 
-	public RolService getRolService() {
-		return rolService;
-	}
+
 
 	public UsuarioService getUsuarioService() {
 		return usuarioService;
@@ -76,10 +75,10 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
-		Rol rol = getRolService().getByRolNombre(usuario.getRol().getRolNombre()).get();
+		Rol rol = rolDAO.findByRolNombre(usuario.getRol().getRolNombre()).get();
 		logger.info("Asignando el rol: ", rol);
-		usuarioNuevo.getRoles().add(rol);
-		getUsuarioService().save(usuarioNuevo);
+		usuarioNuevo.agregarRoles(usuarioNuevo.getRoles());
+		usuarioDAO.save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
 	
