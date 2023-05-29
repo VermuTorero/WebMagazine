@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { Usuario } from 'src/app/newsletter/models/usuario';
 import { LoginService } from 'src/app/security/service/login.service';
-import { TokenService } from 'src/app/security/service/token.service';
 const ROLE_KEY = "rol";
 declare var $: any;
 

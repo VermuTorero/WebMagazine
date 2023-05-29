@@ -5,7 +5,7 @@ import { TokenDTO } from '../models/token-dto';
 import { AuthReq } from '../models/auth-req';
 import { environment } from 'src/environments/environment';
 import { TokenService } from './token.service';
-import { Usuario } from 'src/app/newsletter/models/usuario';
+import { Usuario } from '../models/usuario';
 const USER_KEY = "email";
 const ROLE_KEY = "rol";
 

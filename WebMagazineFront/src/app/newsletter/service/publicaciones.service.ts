@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
-import { Usuario } from '../models/usuario';
+import { Usuario } from 'src/app/security/models/usuario';
 
 const cabecera = {
   headers: new HttpHeaders({ "Content-Type": "application/json"})

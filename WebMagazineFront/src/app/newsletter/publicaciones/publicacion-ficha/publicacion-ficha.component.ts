@@ -14,8 +14,8 @@ import { CategoriasServiceService } from '../../service/categorias.service';
 declare var $: any;
 import { Categoria } from '../../models/Categoria';
 import { LugaresServiceService } from '../../service/lugares.service';
-import { Usuario } from '../../models/usuario';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
+import { Usuario } from 'src/app/security/models/usuario';
 
 const quill = new Quill('#editor', {
   theme: 'snow',

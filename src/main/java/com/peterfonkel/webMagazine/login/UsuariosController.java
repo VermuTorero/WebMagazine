@@ -77,7 +77,7 @@ public class UsuariosController {
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		Rol rol = rolDAO.findByRolNombre(usuario.getRol().getRolNombre()).get();
 		logger.info("Asignando el rol: ", rol);
-		usuarioNuevo.agregarRoles(usuario.getRoles());
+		usuarioNuevo.setRoles(usuario.getRoles());
 		usuarioDAO.save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
@@ -131,7 +131,7 @@ public class UsuariosController {
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
-		usuarioAntiguo.agregarRoles(usuarioModificado.getRoles());
+		usuarioAntiguo.setRoles(usuarioModificado.getRoles());
 		usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
 		
 		usuarioDAO.save(usuarioAntiguo);

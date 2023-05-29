@@ -96,14 +96,14 @@ public class Usuario {
 		return roles;
 	}
 
-	public void setRoles(Rol[] roles) {
+	public void agregarRoles(Rol[] roles) {
 		this.roles = new HashSet<Rol>();
 		for (Rol rol2 : roles) {
 			this.roles.add(rol2);
 		}
 	}
 
-	public void agregarRoles(Set<Rol> roles) {
+	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
 	}
 
