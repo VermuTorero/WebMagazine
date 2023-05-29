@@ -90,7 +90,7 @@ public class UsuariosController {
 	@PostMapping(path = "usuarioFromEmail")
 	@ResponseBody
 	public PersistentEntityResource usuarioFromEmail(PersistentEntityResourceAssembler assembler,@RequestBody EmailDto emailDto) {	
-		Usuario usuario = usuarioService.getByEmail(emailDto.getValue()).get();
+		Usuario usuario = usuarioDAO.findByEmail(emailDto.getValue());
 		return assembler.toModel(usuario);
 	}
 
