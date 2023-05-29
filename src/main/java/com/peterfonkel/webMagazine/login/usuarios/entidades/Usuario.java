@@ -38,6 +38,8 @@ public class Usuario {
 	
 	private String suscripcion;
 	
+	private String urlImagen;
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Like> likes = new ArrayList<Like>();
@@ -181,6 +183,15 @@ public class Usuario {
 
 	public void setInvitaciones(List<Invitacion> invitaciones) {
 		this.invitaciones = invitaciones;
+	}
+	
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
 	}
 
 	@Override

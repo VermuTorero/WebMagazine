@@ -4,7 +4,7 @@ import { Rol } from "src/app/newsletter/models/Rol";
 
 
 export class Usuario {
-    id: string = "";
+    id: string | undefined = "";
     nombre!: string;
     apellido1!: string;
     apellido2!: string;

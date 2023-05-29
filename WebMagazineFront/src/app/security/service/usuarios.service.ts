@@ -80,6 +80,7 @@ export class UsuariosService {
     return this.http.delete(this.endpointBack + "/usuarios/search/eliminarUsuario/" + user.id)
   }
   postUsuario(user: Usuario): Observable<Usuario>{
+    user.id = undefined;
     return this.http.post<any>(this.endpointBack + "/usuarios/search/nuevoUsuario", user);
   }
 
