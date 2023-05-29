@@ -53,7 +53,7 @@ export class UsuariosService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
-  getUsuarioFromEmail(email: string): Observable<Usuario>{
+  getUsuarioFromEmail(email: string): Observable<any>{
     let emailDto = new EmailDTO();
     emailDto.value = email;
     return this.http.post<any>(this.endpointBack + "/usuarios/search/usuarioFromEmail", emailDto)

@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   usuario: Usuario = new Usuario();
   usuarioNuevo: Usuario = new Usuario();
   password2: string = "";
+  rolNombreSeleccionado: string = "";
 
   constructor(private loginService: LoginService,
     private tokenService: TokenService,
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
       console.log("TOKEN RECIBIDO", tokenDTO.token);
       this.tokenService.setToken(tokenDTO.token);
       this.usuariosService.getUsuarioFromEmail(this.email).subscribe(usuario => {
+        console.log("USUARIO FROM EMAIL:", usuario)
         this.usuariosService.setUser(this.email);
         this.usuariosService.setRol(usuario.roles[0].rolNombre);
         this.loginService.setIsLoggedFlagObs(true);
@@ -69,8 +71,8 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
-    this.loginService.signin(this.usuarioNuevo).subscribe(usuario=>{
-
+    this.usuarioNuevo.roles[0].rolNombre = this.rolNombreSeleccionado;
+    this.loginService.signin(this.usuarioNuevo).subscribe(usuario => {
     });
   }
 
