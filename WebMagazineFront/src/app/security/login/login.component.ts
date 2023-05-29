@@ -56,9 +56,9 @@ export class LoginComponent implements OnInit {
       this.tokenService.setToken(tokenDTO.token);
       this.usuariosService.getUsuarioFromEmail(this.email).subscribe(usuario => {
         this.usuariosService.setUser(this.email);
-        this.usuariosService.setRol(usuario.rol.rolNombre);
+        this.usuariosService.setRol(usuario.roles[0].rolNombre);
         this.loginService.setIsLoggedFlagObs(true);
-        if (usuario.rol.rolNombre == "ROLE_ADMIN") {
+        if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
           this.loginService.setIAdminFlagObs(true);
         }
         this.usuario = usuario;

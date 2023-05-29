@@ -3,7 +3,7 @@
     <div class="col-1">{{user.apellido1}}</div>
     <div class="col-1">{{user.apellido2}}</div>
     <div class="col-2">{{user.email}}</div>
-    <div class="col-2">{{user.rol.rolNombre}}</div>
+    <div class="col-2">{{user.roles[0].rolNombre}}</div>
     <button class="btn btn-warning col-1 mx-1" data-bs-toggle="modal" data-bs-target="#modificarModal">Modificar</button>
     <button class="btn btn-danger col-1 mx-1">Eliminar</button>
 </div>
@@ -36,7 +36,7 @@
           </div>
           <div class="row my-1">
             <div class="col-5">Rol</div>
-            <input class="col-5" [(ngModel)]="user.rol.rolNombre">
+            <input class="col-5" [(ngModel)]="user.roles[0].rolNombre">
           </div>
         </div>
         <div class="modal-footer">

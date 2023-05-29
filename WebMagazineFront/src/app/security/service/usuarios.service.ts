@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
 import { Direccion } from 'src/app/ecommerce/models/direccion';
 import { EmailDTO } from 'src/app/security/models/email-dto';
-import { TokenDTO } from 'src/app/security/models/token-dto';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario';
 const EMAIL = 'email';
@@ -83,5 +82,4 @@ export class UsuariosService {
     user.id = undefined;
     return this.http.post<any>(this.endpointBack + "/usuarios/search/nuevoUsuario", user);
   }
-
 }

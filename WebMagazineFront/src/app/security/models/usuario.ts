@@ -11,7 +11,7 @@ export class Usuario {
     direccion!: Direccion;
     email!: string;
     password!: string; 
-    rol: Rol = new Rol();
+    roles: Rol[] = [];
     urlImagen: string =""
     constructor(){
 
