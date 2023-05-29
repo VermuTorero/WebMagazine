@@ -148,5 +148,13 @@ public class UsuariosController {
 		Usuario usuario = usuarioDAO.findById(id);
 		usuarioDAO.delete(usuario);
 	}
+	
+	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler, @PathVariable("idUsuario") Long idUsuario){
+		 Usuario usuario = usuarioDAO.findById(idUsuario);
+		 Set<Rol> roles = usuario.getRoles();
+		 return assembler.toCollectionModel(roles);
+	}
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../service/usuarios.service';
 import { Usuario } from '../models/usuario';
+import { RolesService } from '../service/roles.service';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,8 @@ export class UsersComponent implements OnInit {
   usuarioNuevo: Usuario = new Usuario();
   password2: string = "";
 
-  constructor(private usuariosService: UsuariosService) {
+  constructor(private usuariosService: UsuariosService,
+    private rolesService: RolesService) {
 
   }
   ngOnInit(): void {
@@ -24,6 +26,9 @@ export class UsersComponent implements OnInit {
       this.users = users;
       this.users.forEach(user => {
         user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles=>{
+          user.roles = roles;
+        })
       });
     })
   }

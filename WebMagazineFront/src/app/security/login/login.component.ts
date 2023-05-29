@@ -3,6 +3,7 @@ import { LoginService } from '../service/login.service';
 import { TokenService } from '../service/token.service';
 import { UsuariosService } from '../service/usuarios.service';
 import { Usuario } from '../models/usuario';
+import { RolesService } from '../service/roles.service';
 const ROLE_KEY = "rol";
 declare var $: any;
 
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService,
     private tokenService: TokenService,
-    private usuariosService: UsuariosService) {
+    private usuariosService: UsuariosService,
+    private rolesService: RolesService) {
   }
 
   ngOnInit(): void {
@@ -57,8 +59,12 @@ export class LoginComponent implements OnInit {
       this.tokenService.setToken(tokenDTO.token);
       this.usuariosService.getUsuarioFromEmail(this.email).subscribe(usuario => {
         console.log("USUARIO FROM EMAIL:", usuario)
+        usuario.id = this.usuariosService.getId(usuario);
+        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
+          usuario.roles = roles;
+        });
         this.usuariosService.setUser(this.email);
-        this.usuariosService.setRol(usuario.roles[0].rolNombre);
+        this.usuariosService.setRol(usuario.rol.rolNombre);
         this.loginService.setIsLoggedFlagObs(true);
         if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
           this.loginService.setIAdminFlagObs(true);
