@@ -77,7 +77,7 @@ public class UsuariosController {
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		Rol rol = rolDAO.findByRolNombre(usuario.getRol().getRolNombre()).get();
 		logger.info("Asignando el rol: ", rol);
-		usuarioNuevo.agregarRoles(usuarioNuevo.getRoles());
+		usuarioNuevo.agregarRoles(usuario.getRoles());
 		usuarioDAO.save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
