@@ -18,7 +18,7 @@ public class UsuarioService {
     @Autowired
     UsuarioDAO usuarioDAO;
 
-    public Usuario getByEmail(String email){
+    public Optional<Usuario> getByEmail(String email){
         return usuarioDAO.findByEmail(email);
     }
 

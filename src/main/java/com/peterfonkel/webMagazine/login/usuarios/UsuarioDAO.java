@@ -18,7 +18,7 @@ import java.util.Optional;
 						collectionResourceRel = "usuarios")
 public interface UsuarioDAO extends JpaRepository<Usuario, Integer> {
 	
-    Usuario findByEmail(String email);
+    Optional<Usuario> findByEmail(@RequestParam String email);
     boolean existsByEmail(String email);
     Usuario findById(Long id);
     List<Usuario> findByRoles_RolNombre(String rol);
