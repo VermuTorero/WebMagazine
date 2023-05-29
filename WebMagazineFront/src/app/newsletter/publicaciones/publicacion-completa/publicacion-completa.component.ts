@@ -132,9 +132,7 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
       
-      this.showPublicacion();
- 
-      
+      this.showPublicacion();     
     })
   }
   getPublicacionesCerca(){

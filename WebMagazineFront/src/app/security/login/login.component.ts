@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
+        document.location.reload();
       })
     })
   }
@@ -80,5 +81,6 @@ export class LoginComponent implements OnInit {
     sessionStorage.removeItem("AuthToken");
     sessionStorage.removeItem("rol");
     sessionStorage.removeItem("email");
+    document.location.reload();
   }
 }

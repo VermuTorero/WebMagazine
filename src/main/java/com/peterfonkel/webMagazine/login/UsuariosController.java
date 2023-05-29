@@ -72,10 +72,10 @@ public class UsuariosController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("/nuevousuario")
+	@PostMapping(path = "nuevoUsuario")
 	private Usuario saveNuevoUsuario(@RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
-		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(getSecretPsw()));
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		Rol rol = getRolService().getByRolNombre(usuario.getRol().getRolNombre()).get();
 		logger.info("Asignando el rol: ", rol);
 		usuarioNuevo.getRoles().add(rol);
@@ -85,7 +85,7 @@ public class UsuariosController {
 
 	@PostMapping(path = "usuarioFromEmail")
 	@ResponseBody
-	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody EmailDto emailDto) {	
+	public PersistentEntityResource usuarioFromEmail(PersistentEntityResourceAssembler assembler,@RequestBody EmailDto emailDto) {	
 		Usuario usuario = usuarioService.getByEmail(emailDto.getValue()).get();
 		return assembler.toModel(usuario);
 	}
@@ -132,8 +132,17 @@ public class UsuariosController {
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
 		usuarioAntiguo.agregarRoles(usuarioModificado.getRoles());
+		usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
+		
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
+	}
+	
+	@DeleteMapping(path="eliminarUsuario/{id}")
+	@ResponseBody
+	public void eliminarUsuarioEntityResource (PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id) {
+		Usuario usuario = usuarioDAO.findById(id);
+		usuarioDAO.delete(usuario);
 	}
 
 }

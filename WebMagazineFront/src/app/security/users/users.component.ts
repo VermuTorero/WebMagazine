@@ -9,6 +9,8 @@ import { UsuariosService } from '../service/usuarios.service';
 })
 export class UsersComponent implements OnInit {
   users: Usuario[] = [];
+  usuarioNuevo: Usuario = new Usuario();
+  password2: string = "";
 
   constructor(private usuariosService: UsuariosService) {
 
@@ -27,7 +29,18 @@ export class UsersComponent implements OnInit {
   }
   patchUsuario(user: any){
     this.usuariosService.patchUsuario(user).subscribe(usuario=>{
-      this.ngOnInit();
+      document.location.reload();
+    })
+  }
+  deleteUsuario(user: any){
+    this.usuariosService.deleteUsuario(user).subscribe(response=>{
+      document.location.reload();
+    })
+  }
+  postUsuario(){
+    this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario=>{
+      console.log("USUARIO CREADO: " + usuario)
+     /* document.location.reload(); */
     })
   }
   

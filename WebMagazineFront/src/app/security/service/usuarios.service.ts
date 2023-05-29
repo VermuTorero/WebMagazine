@@ -76,5 +76,11 @@ export class UsuariosService {
   patchUsuario(user: Usuario): Observable<Usuario>{
     return this.http.patch<any>(this.endpointBack + "/usuarios/search/modificarUsuario" , user);
   }
+  deleteUsuario(user: Usuario): Observable<any>{
+    return this.http.delete(this.endpointBack + "/usuarios/search/eliminarUsuario/" + user.id)
+  }
+  postUsuario(user: Usuario): Observable<Usuario>{
+    return this.http.post<any>(this.endpointBack + "/usuarios/search/nuevoUsuario", user);
+  }
 
 }

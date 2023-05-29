@@ -83,16 +83,18 @@
             <!-- Contenido de la publicacion -->
             <section class="body" id="body">
             </section>
-
             <div class="text-center">
                 <p>Publicado el {{fechaFormateada}}</p>
             </div>
             <div class="row justify-content-center">
-                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-warning m-2" style="width: fit-content;"
+                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-outline-warning m-2" style="width: fit-content;"
                     href="formulario/{{publicacion.id}}">Modificar
                     publicación</a>
-                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-danger m-2" style="width: fit-content;" (click)="eliminarPublicacion()">Eliminar
+                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-outline-danger m-2" style="width: fit-content;"
+                    (click)="eliminarPublicacion()">Eliminar
                     publicación</a>
+                <a *ngIf="rol !== 'ROLE_ADMIN' && rol !== 'ROLE_WRITTER' && rol !== 'ROLE_USER_MEMBER' && rol !== 'ROLE_USER_SUSCRIBED'" 
+                class="btn btn-outline-primary m-2" style="width: fit-content;" href="suscripcion">Suscribirme</a>
             </div>
         </section>
 
@@ -111,7 +113,7 @@
             <form class="d-flex" role="search">
                 <input class="form-control me-2 input-buscador" placeholder="Buscar" aria-label="Buscar"
                     [(ngModel)]="palabrasClave" id="palabrasClave" name="palabrasClave">
-                <button class="btn btn-outline-success btn-sm" type="submit"
+                <button class="btn btn-outline-light btn-sm" type="submit"
                     (click)="buscarPublicacionesPorPalabras()">Buscar</button>
             </form>
         </section>
@@ -150,7 +152,7 @@
     </section>
 </main>
 
-
+  
 <!-- Modal Vino-->
 <div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
