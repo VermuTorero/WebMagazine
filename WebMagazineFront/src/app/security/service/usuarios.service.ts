@@ -58,6 +58,9 @@ export class UsuariosService {
     emailDto.value = email;
     return this.http.post<any>(this.endpointBack + "/usuarios/search/usuarioFromEmail", emailDto)
   }
+  getUsuarioFromToken(): Observable<any>{
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuarioFromToken")
+  }
   public setUser(email: string): void {
     sessionStorage.removeItem(EMAIL);
     sessionStorage.setItem(EMAIL, email);

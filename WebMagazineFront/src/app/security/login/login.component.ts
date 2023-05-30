@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.email, this.password).subscribe(tokenDTO => {
       console.log("TOKEN RECIBIDO", tokenDTO.token);
       this.tokenService.setToken(tokenDTO.token);
-      this.usuariosService.getUsuarioFromEmail(this.email).subscribe(usuario => {
-        console.log("USUARIO FROM EMAIL:", usuario)
+      this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
+        console.log("USUARIO FROM TOKEN:", usuario)
         usuario.id = this.usuariosService.getId(usuario);
         this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
           usuario.roles = roles;

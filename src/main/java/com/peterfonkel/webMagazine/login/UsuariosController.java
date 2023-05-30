@@ -110,9 +110,13 @@ public class UsuariosController {
 		 String header = request.getHeader("Authorization");
 		 if (header != null && header.startsWith("Bearer ")) {
 		      String token = header.substring(7);
+		      logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
 		     Claims bodyToken =  Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		     logger.info("BODY TOKEN: " + bodyToken);
 		     String username = (String) bodyToken.get("username");
+		     logger.info("USERNAME: " + username);
 		     Usuario usuario = usuarioDAO.findByEmail(username).get();
+		     logger.info("USUARIO: " + usuario);
 		     return assembler.toModel(usuario);
 		    }else {
 		    	Usuario usuarioVacio = new Usuario();
