@@ -73,11 +73,6 @@ public class UsuariosController {
 		return secretPsw;
 	}
 
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
-	}
-
-
 
 	public UsuarioService getUsuarioService() {
 		return usuarioService;
@@ -88,8 +83,9 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
+		logger.info("Email recibido: " + usuario.getEmail());
 		logger.info("Password codificada: " + passwordEncoder.encode(usuario.getPassword()));
-		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), passwordEncoder.encode(usuario.getPassword()));
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), usuario.getPassword());
 		Rol rol = rolDAO.findByRolNombre(usuario.getRoles().iterator().next().getRolNombre()).get();
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
@@ -119,6 +115,7 @@ public class UsuariosController {
 		     logger.info("USERNAME: " + username);
 		     Usuario usuario = usuarioDAO.findByEmail(username).get();
 		     logger.info("USUARIO: " + usuario);
+		     usuario.setPassword("password");
 		     return assembler.toModel(usuario);
 		    }else {
 		    	Usuario usuarioVacio = new Usuario();

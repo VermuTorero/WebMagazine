@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
-       document.location.reload();
+       /* document.location.reload(); */
         });
         
       })
