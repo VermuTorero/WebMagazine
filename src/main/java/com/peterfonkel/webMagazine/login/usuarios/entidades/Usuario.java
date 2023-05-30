@@ -182,4 +182,10 @@ public class Usuario {
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido1=" + apellido1 +", email=" + email + ", password=" + password + ", roles=" + roles + "]";
+	}
+
 }
