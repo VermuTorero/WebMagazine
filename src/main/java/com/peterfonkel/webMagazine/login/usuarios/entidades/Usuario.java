@@ -157,8 +157,6 @@ public class Usuario {
 		this.likes = likes;
 	}
 
-
-
 	public List<Direccion> getDirecciones() {
 		return direcciones;
 	}
@@ -184,10 +182,4 @@ public class Usuario {
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
 	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", email=" + email + ", password=" + password + ", roles=" + roles + "]";
-	}
-
 }
