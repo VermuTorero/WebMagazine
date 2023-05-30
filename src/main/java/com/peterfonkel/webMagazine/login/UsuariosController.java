@@ -165,6 +165,7 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado) {
 		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
+		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
 		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
