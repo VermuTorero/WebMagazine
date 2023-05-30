@@ -70,14 +70,14 @@ export class LoginComponent implements OnInit {
         this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
           usuario.roles = roles;
           this.usuariosService.setUser(this.email);
-        this.usuariosService.setRol(usuario.rol.rolNombre);
+        this.usuariosService.setRol(usuario.roles[0].rolNombre);
         this.loginService.setIsLoggedFlagObs(true);
         if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
           this.loginService.setIAdminFlagObs(true);
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
-       /*  document.location.reload(); */
+       document.location.reload();
         });
         
       })

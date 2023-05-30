@@ -243,7 +243,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
+
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {

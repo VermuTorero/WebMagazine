@@ -170,7 +170,10 @@ public class UsuariosController {
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
 		usuarioAntiguo.setRoles(usuarioModificado.getRoles());
-		usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
+		if (usuarioModificado.getPassword()!=null) {
+			usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
+		}
+		
 		
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);

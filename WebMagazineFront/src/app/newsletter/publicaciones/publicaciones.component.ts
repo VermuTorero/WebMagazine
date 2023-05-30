@@ -33,9 +33,9 @@ export class PublicacionesComponent implements OnInit {
     private lateralService: LateralServiceService) { }
 
   ngOnInit() {
-    this.rol = sessionStorage.getItem('rol');
-    this.getImagenesInicio(); 
     this.getLateral();
+    this.getImagenesInicio(); 
+    this.rol = sessionStorage.getItem('rol');
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITTER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacionesRecientes();
     }else{
