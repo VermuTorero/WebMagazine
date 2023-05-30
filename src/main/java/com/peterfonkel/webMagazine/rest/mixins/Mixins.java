@@ -6,6 +6,6 @@ public class Mixins {
 
 //	@JsonIgnoreProperties(value = { "password" })
 //	public abstract class Usuario {
-
-	}
+//
+//	}
 }
