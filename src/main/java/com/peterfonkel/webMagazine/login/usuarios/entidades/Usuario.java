@@ -109,15 +109,6 @@ public class Usuario {
 		this.roles = roles;
 	}
 
-	public Rol getRol() {
-		Rol rolUsuario = new Rol();
-		for (Rol rol : roles) {
-			rolUsuario = rol;
-		}
-		return rolUsuario;
-	}
-	
-
 	public String getNombre() {
 		return nombre;
 	}
