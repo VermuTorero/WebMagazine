@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from '../service/usuarios.service';
 import { Usuario } from '../models/usuario';
 import { RolesService } from '../service/roles.service';
+import { Rol } from 'src/app/newsletter/models/Rol';
 
 @Component({
   selector: 'app-users',
@@ -19,6 +20,9 @@ export class UsersComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getUsuarios();
+    let rol = new Rol();
+    rol.rolNombre = "";
+    this.usuarioNuevo.roles = [rol];
   }
 
   getUsuarios() {

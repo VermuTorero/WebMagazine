@@ -31,8 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.getUsuario();
     this.getFlags();
+    
   }
 
   getFlags() {
@@ -48,7 +50,12 @@ export class LoginComponent implements OnInit {
     let email = sessionStorage.getItem('email');
     if (email !== null) {
       this.usuariosService.getUsuarioFromEmail(email).subscribe(usuario => {
-        this.usuario = usuario;
+        usuario.id = this.usuariosService.getId(usuario);
+        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
+          usuario.roles = roles;
+          this.usuario = usuario;
+        })
+        
       })
     }
   }
@@ -62,8 +69,7 @@ export class LoginComponent implements OnInit {
         usuario.id = this.usuariosService.getId(usuario);
         this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
           usuario.roles = roles;
-        });
-        this.usuariosService.setUser(this.email);
+          this.usuariosService.setUser(this.email);
         this.usuariosService.setRol(usuario.rol.rolNombre);
         this.loginService.setIsLoggedFlagObs(true);
         if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
@@ -71,7 +77,9 @@ export class LoginComponent implements OnInit {
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
-        document.location.reload();
+       /*  document.location.reload(); */
+        });
+        
       })
     })
   }

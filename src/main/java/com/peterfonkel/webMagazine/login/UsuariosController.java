@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,8 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +37,9 @@ import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
 
 
 @RepositoryRestController
@@ -42,6 +49,9 @@ public class UsuariosController {
 
 	@Value("${secretPsw}")
 	String secretPsw;
+	
+	@Value("${jwt.secret}")
+	String secretKey;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -94,6 +104,26 @@ public class UsuariosController {
 		return assembler.toModel(usuario);
 	}
 
+	@GetMapping(path = "usuarioFromToken")
+	@ResponseBody
+	public PersistentEntityResource usuarioFromToken(PersistentEntityResourceAssembler assembler,HttpServletRequest request) {	
+		 String header = request.getHeader("Authorization");
+		 if (header != null && header.startsWith("Bearer ")) {
+		      String token = header.substring(7);
+		     Claims bodyToken =  Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		     String username = (String) bodyToken.get("username");
+		     Usuario usuario = usuarioDAO.findByEmail(username).get();
+		     return assembler.toModel(usuario);
+		    }else {
+		    	Usuario usuarioVacio = new Usuario();
+		    	usuarioVacio.setNombre("Usuario no encontrado");
+		    	return assembler.toModel(usuarioVacio);
+		    }
+		 
+		
+		
+	}
+	
 	@GetMapping(path = "usuariosPremium")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosPremium(PersistentEntityResourceAssembler assembler) {
@@ -156,5 +186,7 @@ public class UsuariosController {
 		 Set<Rol> roles = usuario.getRoles();
 		 return assembler.toCollectionModel(roles);
 	}
+	
+	
 
 }
