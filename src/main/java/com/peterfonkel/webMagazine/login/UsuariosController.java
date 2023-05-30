@@ -84,7 +84,7 @@ public class UsuariosController {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
 		logger.info("Email recibido: " + usuario.getEmail());
-		logger.info("Password codificada: " + passwordEncoder.encode(usuario.getPassword()));
+//		logger.info("Password codificada: " + passwordEncoder.encode(usuario.getPassword()));
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), usuario.getPassword());
 		Rol rol = rolDAO.findByRolNombre(usuario.getRoles().iterator().next().getRolNombre()).get();
 		Set<Rol> roles = new HashSet<>();
