@@ -81,6 +81,7 @@ public class UsuariosController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuario")
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
+		logger.info("Prueba passwordEncoder: " + passwordEncoder.encode("rgegergergerhetregherh"));
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
 		logger.info("Email recibido: " + usuario.getEmail());
