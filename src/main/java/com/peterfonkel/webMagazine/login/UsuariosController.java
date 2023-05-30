@@ -178,9 +178,6 @@ public class UsuariosController {
 		roles = new HashSet<>();
 		roles.add(rolDAO.findByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
-		if (usuarioModificado.getPassword()!=null && usuarioModificado.getPassword() != "" && usuarioModificado.getPassword()!="null" ) {
-			usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
-		}	
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
 	}
