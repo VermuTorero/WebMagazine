@@ -4,6 +4,7 @@ import java.time.Instant;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -87,10 +88,9 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuario) {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
-		Set<Rol> roles = usuario.getRoles();
-		for (Rol rol : roles) {
-			rol = rolDAO.findByRolNombre(rol.getRolNombre()).get();
-		}
+		Rol rol = rolDAO.findByRolNombre(usuario.getRoles().iterator().next().getRolNombre()).get();
+		Set<Rol> roles = new HashSet<>();
+		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
 		usuarioDAO.save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
@@ -171,7 +171,11 @@ public class UsuariosController {
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
-		usuarioAntiguo.setRoles(usuarioModificado.getRoles());
+		Set<Rol> roles = usuarioModificado.getRoles();
+		Rol rol =  roles.iterator().next();
+		roles = new HashSet<>();
+		roles.add(rolDAO.findByRolNombre(rol.getRolNombre()).get());
+		usuarioAntiguo.setRoles(roles);
 		if (usuarioModificado.getPassword()!=null || usuarioModificado.getPassword() != "") {
 			usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
 		}
