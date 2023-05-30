@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class Mixins {
 
-	@JsonIgnoreProperties(value = { "password" })
-	public abstract class Usuario {
+//	@JsonIgnoreProperties(value = { "password" })
+//	public abstract class Usuario {
 
 	}
 }
