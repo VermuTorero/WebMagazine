@@ -165,15 +165,15 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado) {
 		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
+		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
 		usuarioAntiguo.setRoles(usuarioModificado.getRoles());
-		if (usuarioModificado.getPassword()!=null) {
+		if (usuarioModificado.getPassword()!=null || usuarioModificado.getPassword() != "") {
 			usuarioAntiguo.setPassword(passwordEncoder.encode(usuarioModificado.getPassword()));
 		}
-		
 		
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
