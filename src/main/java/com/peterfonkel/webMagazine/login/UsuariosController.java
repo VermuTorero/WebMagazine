@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
+import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
@@ -78,7 +79,8 @@ public class UsuariosController {
 		logger.info("Email recibido: " + usuario.getEmail());
 		logger.info("Password codificada: " + getPasswordEncoder().encode(usuario.getPassword()));
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
-		Rol rol = rolDAO.findByRolNombre(usuario.getRoles().iterator().next().getRolNombre()).get();
+		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
+		Rol rol = rolDAO.findByRolNombre(rolNombre).get();
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
