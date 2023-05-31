@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit{
   userLogged$: any;
   isLoggedUser: any;
   isLoggedAdmin: any;
-  
+  public isCollapsed = true;  
   constructor(private loginService: LoginService){
   }
 
