@@ -93,7 +93,7 @@ public class UsuariosController {
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
-		usuarioDAO.save(usuarioNuevo);
+		getUsuarioDAO().save(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
 
