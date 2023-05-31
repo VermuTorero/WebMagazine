@@ -16,7 +16,7 @@ import com.peterfonkel.webMagazine.login.UsuariosController;
 @SpringBootApplication
 @EnableCaching
 @ImportResource({ "classpath:config/jpa-config.xml" })
-@Import({ ClaseConfiguracionJava.class, UsuariosController.class})
+@Import({ ClaseConfiguracionJava.class})
 public class WebMagazineApplication {
 
 	public static void main(String[] args) {

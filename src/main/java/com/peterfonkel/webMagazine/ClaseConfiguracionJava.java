@@ -178,4 +178,10 @@ public class ClaseConfiguracionJava {
 			categoriaDAO.save(categoria);
 		}
 	}
+	
+	@Bean
+	public PasswordEncoder paswordEncoder(){
+		return passwordEncoder;
+		
+	}
 }

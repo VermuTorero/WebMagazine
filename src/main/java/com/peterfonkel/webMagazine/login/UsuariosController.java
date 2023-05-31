@@ -29,7 +29,6 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-@Configuration
 @RepositoryRestController
 @RequestMapping(path = "/usuarios/search")
 @CrossOrigin
