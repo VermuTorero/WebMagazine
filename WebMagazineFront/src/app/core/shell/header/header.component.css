@@ -62,6 +62,30 @@
     width:60px;
     height:80px;
 }
+.ventana {
+    width: 300px; /* Ancho de la ventana */
+    height: 400px; /* Altura de la ventana */
+    background-color: #fff; /* Color de fondo de la ventana */
+    border: 1px solid #000; /* Borde de la ventana */
+    border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra de la ventana */
+  }
+
+
+
+.invitacion h4{
+    font-family: avenir heavy,sans-serif;
+    color: white;
+    background-color: #222;
+    border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */
+    height: 100%;
+}
+
+#tituloPago{
+    border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */
+    height: 15%;
+}
+
 
 #iconoVino {
     width:60px;
@@ -75,34 +99,30 @@
     padding-top: 25%;
 
   }
-  
-  .texto {
-    position:fixed;
-    width:180px;
-    height:60px;
-    bottom:40px;
-    right: -200px;
-    color:#ffffff;
-    background-color: #000000;
-    text-align: center;
-    border-radius:5px;
-    font-size:10x;
-    z-index:100;
-    padding-top: 1%;
-    margin-bottom: 0.5%;
+
+  .pago {
+    position:absolute;
+    bottom: 75px;
+    right: 10px;
+
   }
-
-
-  #iconoVino, .texto {
+ 
+  #iconoVino {
     transition: all 0.3s ease-out;
   }
 
- .invitacion:hover #iconoVino,
- .invitacion:hover .texto {
+ .invitacion:hover #iconoVino {
     cursor: pointer;
-    transform: translateX(-210px)
+    transform: scale(1.1);
  }
 
   .fa-wine-glass {
     margin-top:13px;
+  }
+
+
+  .img-fluid{
+    height: 60%;
+    width: 60%;
+
   }

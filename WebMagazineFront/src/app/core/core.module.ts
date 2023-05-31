@@ -5,6 +5,7 @@ import { MainComponent } from './shell/main/main.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { ShellComponent } from './shell/shell.component';
 import { CoreRoutingModule } from './core-routing.module';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -18,7 +19,8 @@ import { CoreRoutingModule } from './core-routing.module';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    NgbCollapseModule
   ],
   exports: [
     HeaderComponent,
