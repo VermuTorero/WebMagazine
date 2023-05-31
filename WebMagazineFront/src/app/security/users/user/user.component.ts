@@ -18,5 +18,6 @@ export class UserComponent {
 
   eliminarUsuario(){
     this.eliminarUserEvent.emit(this.user);
+    /* document.location.reload(); */
   }
 }

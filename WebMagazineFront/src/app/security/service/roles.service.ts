@@ -22,5 +22,8 @@ export class RolesService {
   getRolesFromUsuario(usuario: Usuario): Observable<Rol[]> {   
     return this.http.get<any>(this.endpoint + "/usuarios/search/getRolesFromUsuario/" + usuario.id).pipe(map(response=>response._embedded.roles));
   }
+  getRoles(){
+    return this.http.get<any>(this.endpoint + "/roles").pipe(map(response=>response._embedded.roles));
+  }
 
 }

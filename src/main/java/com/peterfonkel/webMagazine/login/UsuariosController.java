@@ -186,8 +186,8 @@ public class UsuariosController {
 	@ResponseBody
 	public void eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
-		Usuario usuario = usuarioDAO.findById(id);
-		usuarioDAO.delete(usuario);
+		Usuario usuario = getUsuarioDAO().findById(id);
+		getUsuarioDAO().delete(usuario);
 	}
 	
 	@PreAuthorize("isAuthenticated()")
