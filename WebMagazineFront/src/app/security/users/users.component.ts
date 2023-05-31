@@ -43,7 +43,10 @@ export class UsersComponent implements OnInit {
   }
   deleteUsuario(user: any){
     this.usuariosService.deleteUsuario(user).subscribe(response=>{
-      document.location.reload();
+      this.usuariosService.deleteUsuario(user).subscribe(user=>{
+        document.location.reload();
+      })
+      
     })
   }
   postUsuario(){

@@ -2,9 +2,8 @@
     <button class="btn btn-outline-primary my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar usuario</button>
 </div>
 
-
 <div *ngFor="let user of users">
-    <app-user [user]="user" (modificarUserEvent)="patchUsuario($event)"></app-user>
+    <app-user [user]="user" (modificarUserEvent)="patchUsuario($event)" (eliminarUserEvent)="deleteUsuario($event)"></app-user>
 </div>
 
 <!-- Modal Signin-->

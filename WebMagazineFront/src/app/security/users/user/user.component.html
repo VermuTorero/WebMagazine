@@ -5,7 +5,7 @@
     <div class="col-2">{{user.email}}</div>
     <div  *ngIf="user.roles" class="col-2">{{user.roles[0].rolNombre}}</div>
     <button class="btn btn-warning col-1 mx-1" data-bs-toggle="modal" data-bs-target="#modificarModal">Modificar</button>
-    <button class="btn btn-danger col-1 mx-1">Eliminar</button>
+    <button class="btn btn-danger col-1 mx-1" (click)="eliminarUsuario()">Eliminar</button>
 </div>
 
 
