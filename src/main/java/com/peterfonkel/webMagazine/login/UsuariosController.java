@@ -65,6 +65,10 @@ public class UsuariosController {
 		return rolDAO;
 	}
 	
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
+	
 	public String getSecretPsw() {
 		return secretPsw;
 	}
