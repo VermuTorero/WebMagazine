@@ -61,6 +61,10 @@ public class UsuariosController {
 		return passwordEncoder;
 	}
 
+	public RolDAO getRolDAO() {
+		return rolDAO;
+	}
+	
 	public String getSecretPsw() {
 		return secretPsw;
 	}
@@ -81,7 +85,7 @@ public class UsuariosController {
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
-		Rol rol = rolDAO.findByRolNombre(rolNombre).get();
+		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
