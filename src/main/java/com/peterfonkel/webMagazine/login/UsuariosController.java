@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+
+import org.mapstruct.BeanMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,10 @@ public class UsuariosController {
 	private UsuarioDAO usuarioDAO;
 
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+	
+	public PasswordEncoder getPasswordEncoder() {
+		return passwordEncoder;
+	}
 
 	public String getSecretPsw() {
 		return secretPsw;
@@ -70,8 +76,8 @@ public class UsuariosController {
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
 		logger.info("Email recibido: " + usuario.getEmail());
-		logger.info("Password codificada: " + passwordEncoder.encode(usuario.getPassword()));
-		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), passwordEncoder.encode(usuario.getPassword()));
+		logger.info("Password codificada: " + getPasswordEncoder().encode(usuario.getPassword()));
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
 		Rol rol = rolDAO.findByRolNombre(usuario.getRoles().iterator().next().getRolNombre()).get();
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
