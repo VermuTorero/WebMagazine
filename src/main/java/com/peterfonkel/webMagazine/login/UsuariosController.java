@@ -157,7 +157,7 @@ public class UsuariosController {
 	@GetMapping(path = "autores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getAutores(PersistentEntityResourceAssembler assembler) {
-		return assembler.toCollectionModel(usuarioDAO.findAll());
+		return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombre("ROLE_WRITTER"));
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
