@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
   }
 
   getUsuario() {
-    let email = sessionStorage.getItem('email');
-    if (email !== null) {
-      this.usuariosService.getUsuarioFromEmail(email).subscribe(usuario => {
+    let token = sessionStorage.getItem('AuthToken');
+    if (token !== null) {
+      this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
         usuario.id = this.usuariosService.getId(usuario);
         this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
           usuario.roles = roles;
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
-       /* document.location.reload(); */
+       document.location.reload();
         });
         
       })
