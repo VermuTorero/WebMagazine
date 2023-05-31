@@ -6,6 +6,8 @@ import { FooterComponent } from './shell/footer/footer.component';
 import { ShellComponent } from './shell/shell.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { SecurityModule } from '../security/security.module';
 
 
 
@@ -20,6 +22,9 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     CoreRoutingModule,
+    FormsModule,
+    SecurityModule,
+    SecurityModule,
     NgbCollapseModule
   ],
   exports: [

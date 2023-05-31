@@ -2,13 +2,14 @@ package com.peterfonkel.webMagazine.rest.mixins;
 
 
 import com.peterfonkel.webMagazine.entities.Direccion;
+
 import com.peterfonkel.webMagazine.entities.Pedido;
 import com.peterfonkel.webMagazine.entities.PedidoProducto;
-import com.peterfonkel.webMagazine.entities.Usuario;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.DireccionDAO;
 import com.peterfonkel.webMagazine.repositories.PedidoDAO;
 import com.peterfonkel.webMagazine.repositories.PedidoProductoDAO;
-import com.peterfonkel.webMagazine.repositories.UsuarioDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -41,7 +42,7 @@ public class PedidosController {
     @PostMapping(path = "crearPedido")
     @ResponseBody
     public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler, @RequestBody Pedido pedido){
-        Usuario usuario = usuarioDAO.getById(pedido.getUsuario().getId());
+        Usuario usuario = usuarioDAO.findById(pedido.getUsuario().getId());
         Direccion direccion = direccionDAO.getById(pedido.getDireccionEntrega().getIdDireccion()); //cambiar cuando esté implementeda las direcciones
         List<PedidoProducto> productos = new ArrayList<>();
         for (PedidoProducto pedidoProducto:

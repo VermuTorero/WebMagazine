@@ -1,6 +1,7 @@
 package com.peterfonkel.webMagazine.entities;
 
 import java.time.Instant;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
 @Entity
 public class Pedido {

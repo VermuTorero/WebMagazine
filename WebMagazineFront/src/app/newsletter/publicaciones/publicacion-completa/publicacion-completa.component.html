@@ -83,16 +83,18 @@
             <!-- Contenido de la publicacion -->
             <section class="body" id="body">
             </section>
-
             <div class="text-center">
                 <p>Publicado el {{fechaFormateada}}</p>
             </div>
             <div class="row justify-content-center">
-                <a class="btn btn-warning m-2" style="width: fit-content;"
+                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-outline-warning m-2" style="width: fit-content;"
                     href="formulario/{{publicacion.id}}">Modificar
                     publicación</a>
-                <a class="btn btn-danger m-2" style="width: fit-content;" (click)="eliminarPublicacion()">Eliminar
+                <a *ngIf="rol == 'ROLE_ADMIN'" class="btn btn-outline-danger m-2" style="width: fit-content;"
+                    (click)="eliminarPublicacion()">Eliminar
                     publicación</a>
+                <a *ngIf="rol !== 'ROLE_ADMIN' && rol !== 'ROLE_WRITTER' && rol !== 'ROLE_USER_MEMBER' && rol !== 'ROLE_USER_SUSCRIBED'" 
+                class="btn btn-outline-primary m-2" style="width: fit-content;" href="suscripcion">Suscribirme</a>
             </div>
         </section>
 
@@ -111,23 +113,23 @@
             <form class="d-flex" role="search">
                 <input class="form-control me-2 input-buscador" placeholder="Buscar" aria-label="Buscar"
                     [(ngModel)]="palabrasClave" id="palabrasClave" name="palabrasClave">
-                <button class="btn btn-outline-success btn-sm" type="submit"
+                <button class="btn btn-outline-light btn-sm" type="submit"
                     (click)="buscarPublicacionesPorPalabras()">Buscar</button>
             </form>
         </section>
         <section class="row twitter lateral mb-4">
             <h5 class="row titulo-twitter">Twitter</h5>
-            <div class="row" id="twitter">
+            <div class="col-12" id="twitter">
             </div>
-            <div class="row" id="twitter2">
+            <div class="col-12" id="twitter2">
             </div>
-            <div class="row" id="twitter3">
+            <div class="col-12" id="twitter3">
             </div>
         </section>
         <!-- Publicaciones en la misma provincia -->
         <section *ngIf="publicacionesCerca[0]" class="row lateral mb-4">
-            <div class="col-12 p-3 pt-4 text-center">
-                <h3><strong>Cerca de aquí...</strong></h3>
+            <div class="col-12 pt-4">
+                <h5 class="titulo-publicaciones-lateral">Cerca de aquí</h5>
             </div>
             <div class="col-12 preview">
                 <div *ngFor="let publicacion of publicacionesCerca" style="display:inline-block;" class="card">
@@ -137,9 +139,9 @@
         </section>
 
         <!-- Publicaciones relacionadas con las tag -->
-        <section *ngIf="publicacionesRelacionadas[0]" class="row lateral">
-            <div class="col-12 p-3 text-center mt-4">
-                <h3><strong>Relacionadas</strong></h3>
+        <section *ngIf="publicacionesRelacionadas[0]" class="row lateral mb-3">
+            <div class="col-12 mt-4">
+                <h5 class="titulo-publicaciones-lateral">Relacionadas</h5>
             </div>
             <div class="col-12 preview">
                 <div *ngFor="let publicacion of publicacionesRelacionadas" style="display:inline-block;" class="card">
@@ -150,7 +152,7 @@
     </section>
 </main>
 
-
+  
 <!-- Modal Vino-->
 <div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

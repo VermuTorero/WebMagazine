@@ -1,9 +1,10 @@
 package com.peterfonkel.webMagazine.rest.mixins;
 
 import java.text.Normalizer;
+
+
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -15,12 +16,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.core.metrics.StartupStep;
-import org.springframework.core.metrics.StartupStep.Tags;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,18 +30,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.peterfonkel.webMagazine.entities.Autor;
 import com.peterfonkel.webMagazine.entities.Categoria;
-import com.peterfonkel.webMagazine.entities.Lugar;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
-import com.peterfonkel.webMagazine.repositories.AutorDAO;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
-
-import net.bytebuddy.TypeCache.WithInlineExpunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RepositoryRestController
 @RequestMapping(path = "/publicaciones/search")
@@ -55,16 +53,18 @@ public class PublicacionesController {
 	TagDAO tagDAO;
 	
 	@Autowired
-	AutorDAO autorDAO;
+	UsuarioDAO usuarioDAO;
 	
 	@Autowired
 	CategoriaDAO categoriaDAO;
 	
+	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
 	public PublicacionesController(PublicacionDAO publicacionDAO){
 		this.publicacionDAO = publicacionDAO;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
@@ -72,17 +72,38 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@Cacheable("myCache")
+	@GetMapping(path = "publicacionByTituloFree/{titulo}")
+	@ResponseBody
+	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
+		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
+		publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
+		return assembler.toModel(publicacion);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones= publicacionDAO.findAll();
-		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		List<Publicacion> publicaciones = publicacionDAO.findAll();
+		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
-	@Cacheable("myCache")
+
+	@GetMapping(path = "publicacionesRecientesFree")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(PersistentEntityResourceAssembler assembler) {
+		List<Publicacion> publicaciones= publicacionDAO.findAll();
+		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+		for (Publicacion publicacion : publicacionesRecientes) {
+			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
+		}
+		return assembler.toCollectionModel(publicacionesRecientes);
+	}
+	
+
 	@GetMapping(path = "publicacionesDestacadas")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(PersistentEntityResourceAssembler assembler) {
@@ -90,7 +111,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
 	}
 	
-	@Cacheable("myCache")
+	
 	@GetMapping(path = "publicacionesCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCarousel(PersistentEntityResourceAssembler assembler) {
@@ -98,6 +119,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesCarousel);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesNoCarousel")
 	@ResponseBody
@@ -107,6 +129,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
@@ -124,40 +147,9 @@ public class PublicacionesController {
 		listadoPublicacionesCerca = publicacionDAO.findByCategoria_categoriaNombre(categoriaNombre);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
-//	
-//	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
-//	@ResponseBody
-//	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
-//		Publicacion publicacionRelacionada = publicacionDAO.getById(idPublicacion);
-//		List<Publicacion> listadoPublicaciones = publicacionDAO.findAll();
-//		List<Publicacion> listadoPublicacionesRelacionadas = new ArrayList<Publicacion>();
-//		int agregados = 0;
-//		
-//		for (Publicacion publicacion : listadoPublicaciones) {
-//			if (publicacion.getTitulo().equals(publicacionRelacionada.getTitulo())) {
-//				continue;
-//			}
-//			int gradoRelacion = 0;
-//			for (Tag tag : publicacion.getTags()) {
-//				for (Tag tagRecibida : publicacionRelacionada.getTags()) {
-//					if (tag.getTagNombre().equals(tagRecibida.getTagNombre())) {
-//						gradoRelacion++;
-//						System.out.println("GRADO DE RELACIï¿½N: " + gradoRelacion);
-//					}
-//				}
-//			}
-//			
-//			for (int i = 5; i > 0  ; i--) {
-//				if (gradoRelacion == i && agregados<2) {
-//					listadoPublicacionesRelacionadas.add(publicacion);
-//					agregados++;
-//				}
-//			}
-//			gradoRelacion = 0;
-//		}
-//		return assembler.toCollectionModel(listadoPublicacionesRelacionadas);
-//	}
+
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
@@ -202,7 +194,7 @@ public class PublicacionesController {
 	}
 
 		
-		
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
@@ -210,6 +202,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
@@ -217,10 +210,11 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Autor autor = autorDAO.getById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
@@ -232,10 +226,11 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Autor autor = autorDAO.getById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
@@ -248,6 +243,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
+
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
@@ -256,7 +252,7 @@ public class PublicacionesController {
 	    	if (palabra.length()>3) {
 	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
 	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
-	    		            .toLowerCase(); // Convertimos a minúsculas
+	    		            .toLowerCase(); // Convertimos a minï¿½sculas
 	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContainingIgnoreCase(palabraNormalizada);
 		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
 			}

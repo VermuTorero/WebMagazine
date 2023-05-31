@@ -3,14 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EcommerceModule } from './ecommerce/ecommerce.module';
-import { CoreModule } from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EcommerceModule } from './ecommerce/ecommerce.module';
+import { CoreModule } from './core/core.module';
+import { fichaInterceptor } from './security/interceptors/ficha.interceptor';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [fichaInterceptor],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

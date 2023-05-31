@@ -13,7 +13,7 @@ public interface PedidoDAO extends JpaRepository<Pedido, Long>{
     @Override
 	List<Pedido> findAll();
 
-    List<Pedido> findByIdPedido (Long id);
+    List<Pedido> findByIdPedido(Long id);
     List<Pedido> findByIsCerradoIsTrue();
     List<Pedido> findByIsCerradoIsFalse();
 }

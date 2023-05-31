@@ -102,6 +102,9 @@ app-publicacion {
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
 }
+.titulo-buscador{
+  color: white;
+}
 
 .twitter{
   margin-top: 5%;
@@ -112,21 +115,9 @@ app-publicacion {
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
   height: fit-content;
-  
 }
-::ng-deep #twitter-widget-0{
-  width: 100% !important;
-  display: flex;
-}
-::ng-deep #twitter-widget-1{
-  width: 100% !important;
-}
-::ng-deep #twitter-widget-2{
-  width: 100% !important;
-}
-::ng-deep #twitter-widget-3{
-  width: 100% !important;
-}
+
+
 
 .recomendaciones{
   margin-top: 5%;
@@ -145,6 +136,9 @@ app-publicacion {
   color: rgb(255, 109, 0, 255);
 }
 .titulo-twitter{
+  color: rgb(255, 109, 0, 255);
+}
+.titulo-publicaciones-lateral{
   color: rgb(255, 109, 0, 255);
 }
 

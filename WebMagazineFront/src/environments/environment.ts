@@ -6,7 +6,7 @@ export const environment = {
   
     title: `WebMagazine`,
     /* urlAPI: `http://localhost:8080/api`, */
-    urlAPI: `https://vermutoreroapp.herokuapp.com/api`,
+    urlAPI: `https://vermutoreroapp.herokuapp.com/api`, 
     /* urlBack: `http://localhost:8080`, */
     urlBack: `https://vermutoreroapp.herokuapp.com`,
     provincias: provincias,

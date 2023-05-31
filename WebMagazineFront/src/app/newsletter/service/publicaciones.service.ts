@@ -3,10 +3,14 @@ import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Publicacion } from '../models/publicacion';
 import { environment } from 'src/environments/environment';
-import { Autor } from '../models/autor';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
+import { Usuario } from 'src/app/security/models/usuario';
+
+const cabecera = {
+  headers: new HttpHeaders({ "Content-Type": "application/json"})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +27,9 @@ export class PublicacionesServiceService {
   getPublicacionesRecientes(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes").pipe(map(response=>response._embedded.publicaciones))
   }
+  getPublicacionesRecientesFree(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientesFree").pipe(map(response=>response._embedded.publicaciones))
+  }
 
   getPublicacionesDestacadas(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesDestacadas").pipe(map(response=>response._embedded.publicaciones))
@@ -37,7 +44,7 @@ export class PublicacionesServiceService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
-  getAutorFromPublicacion(publicacion: any): Observable<Autor> {
+  getAutorFromPublicacion(publicacion: any): Observable<Usuario> {
     return this.http.get<any>(publicacion._links.autor.href);
   }
   getTagsFromPublicacion(publicacion: any): Observable<Tag[]> {
@@ -52,6 +59,9 @@ export class PublicacionesServiceService {
   } 
   getPublicacion(titulo: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTitulo/" + titulo)
+  }
+  getPublicacionFree(titulo: string): Observable<Publicacion>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTituloFree/" + titulo)
   }
   getPublicacionById(id: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/" + id)

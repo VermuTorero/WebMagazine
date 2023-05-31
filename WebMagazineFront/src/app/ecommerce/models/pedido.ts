@@ -1,7 +1,7 @@
-import { Usuario } from "src/app/newsletter/models/usuario";
 import { Product } from "./product";
 import { Direccion } from "./direccion";
 import { PedidoProducto } from "./pedido-producto";
+import { Usuario } from "src/app/security/models/usuario";
 
 export class Pedido {
     idPedido: string;

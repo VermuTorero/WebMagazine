@@ -4,10 +4,8 @@ import { ActivatedRoute, ParamMap, Router, RouterLink, RouterLinkActive } from '
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
 import Quill from 'quill';
 import { Tag } from '../../models/Tag';
-import { Autor } from '../../models/autor';
 import { environment } from 'src/environments/environment';
 import { TagsServiceService } from '../../service/tags.service';
-import { AutoresServiceService } from '../../service/autores.service';
 import { saveAs } from 'file-saver';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
@@ -16,6 +14,8 @@ import { CategoriasServiceService } from '../../service/categorias.service';
 declare var $: any;
 import { Categoria } from '../../models/Categoria';
 import { LugaresServiceService } from '../../service/lugares.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
+import { Usuario } from 'src/app/security/models/usuario';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -58,7 +58,7 @@ export class PublicacionFichaComponent implements OnInit {
   categorias: Categoria[] = [];
   tags: Tag[] = [];
   tagNueva: Tag = new Tag();
-  autores: Autor[] = [];
+  autores: Usuario[] = [];
   /* Selecciones en el formulario */
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
@@ -70,14 +70,14 @@ export class PublicacionFichaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private publicacionesService: PublicacionesServiceService,
     private tagsService: TagsServiceService,
-    private autoresService: AutoresServiceService,
+    private usuariosService: UsuariosService,
     private imagenesService: ImagenesService,
     private categoriasService: CategoriasServiceService,
     private lugaresService: LugaresServiceService
   ) { }
 
   ngOnInit(): void {
-    this.publicacion.autor = new Autor();
+    this.publicacion.autor = new Usuario();
     this.publicacion.categoria = new Categoria();
     this.getTags();
     this.getAutores();
@@ -237,11 +237,11 @@ export class PublicacionFichaComponent implements OnInit {
 
 
   getAutores(): void {
-    this.autoresService.getAutores().subscribe(autores => {
+    this.usuariosService.getAutores().subscribe(autores => {
       console.log(autores)
       this.autores = autores;
       this.autores.forEach(autor => {
-        autor.id = this.autoresService.getId(autor);
+        autor.id = this.usuariosService.getId(autor);
       });
       console.log("AUTORES CON ID:", this.autores)
     });
@@ -249,7 +249,7 @@ export class PublicacionFichaComponent implements OnInit {
 
   getAutorPublicacion() {
     this.publicacionesService.getAutorFromPublicacion(this.publicacion).subscribe(autorPublicacion => {
-      autorPublicacion.id = this.autoresService.getId(autorPublicacion)
+      autorPublicacion.id = this.usuariosService.getId(autorPublicacion)
       console.log("AUTOR PUBLICACION:", autorPublicacion)
       this.publicacion.autor = autorPublicacion;
 
@@ -355,7 +355,7 @@ export class PublicacionFichaComponent implements OnInit {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob2 as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "publicacion").subscribe(url => {
           this.setImagePreview(url)
         });
       }

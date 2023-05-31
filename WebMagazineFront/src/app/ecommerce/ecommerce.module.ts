@@ -6,7 +6,7 @@ import { ModalReceiptComponent } from './components/modal-receipt/modal-receipt.
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { PrincipalEcommerceComponent } from './components/principal-ecommerce/principal-ecommerce.component';
-import { CoreModule } from '../core/core.module';
+
 
 //libreria externas
 import { NgxPayPalModule } from 'ngx-paypal';
@@ -23,6 +23,7 @@ import { PedidoComponent } from './components/pedido/pedido.component';
 import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/gestion-pedidos.component';
 import localeEs from '@angular/common/locales/es';
 import { PedidoDetalleComponent } from './components/gestion/gestion-pedidos/pedido-detalle/pedido-detalle.component'
+import { CoreModule } from '../core/core.module';
 
 //Para formatear fechas a hora local de España
 registerLocaleData(localeEs, 'es');

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, map, switchMap } from 'rxjs';
-import { UsuariosService } from 'src/app/core/service/usuarios.service';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
 import { Product } from 'src/app/ecommerce/models/product';
 import { PedidosService } from 'src/app/ecommerce/service/pedidos.service';
 import { ProductService } from 'src/app/ecommerce/service/product.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
 
 @Component({
   selector: 'app-pedido-detalle',

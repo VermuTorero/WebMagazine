@@ -1,11 +1,9 @@
 import { DecimalPipe } from '@angular/common';
 import { Component} from '@angular/core';
 import { Router } from '@angular/router';
-
-import { UsuariosService } from 'src/app/core/service/usuarios.service';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
-
 import { PedidosService } from 'src/app/ecommerce/service/pedidos.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
 
 @Component({
   selector: 'app-gestion-pedidos',

@@ -144,7 +144,7 @@ export class EditorLateralComponent implements OnInit{
   }
 
   guardarCambios(){
-    if(this.lateral.id){
+    if(this.lateral.id == "1"){
       this.lateralService.patchLateral(this.lateral).subscribe(lateral=>{
         this.lateral = lateral;
         location.reload();

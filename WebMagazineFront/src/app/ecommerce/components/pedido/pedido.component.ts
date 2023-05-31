@@ -1,7 +1,6 @@
-import { UsuariosService } from './../../../core/service/usuarios.service';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService } from '../../service/storage.service';
-import { Usuario } from 'src/app/newsletter/models/usuario';
 import { Direccion } from '../../models/direccion';
 import { CartItemModel } from '../../models/cart-item-model';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
@@ -14,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { PedidoProducto } from '../../models/pedido-producto';
 import { Observable, forkJoin, map } from 'rxjs';
 import { Router } from '@angular/router';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
+import { Usuario } from 'src/app/security/models/usuario';
 
 
 @Component({

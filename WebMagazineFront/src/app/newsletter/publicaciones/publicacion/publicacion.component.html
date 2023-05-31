@@ -3,7 +3,7 @@
         <div class="card-image mb-2">
             <img src="{{publicacion.imagenPreviewUrl}}" class="img-card img-fluid w-100" alt="">  
             <div class="categoria-container">
-                <p class="categoria"><b>{{publicacion.categoria.categoriaNombre}}</b></p>   
+                <p *ngIf="publicacion.categoria" class="categoria"><b>{{publicacion.categoria.categoriaNombre}}</b></p>   
             </div>
         </div>
         <div class="card-body p-0">
@@ -12,7 +12,7 @@
                 <hr class="divisor">
                 <div class="card-text-container">
                     <p class="card-text my-3">{{publicacion.subtitulo}}</p>
-                    <p class="card-text autor">Por {{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
+                    <p  *ngIf="publicacion.autor" class="card-text autor">Por {{publicacion.autor.nombre}} {{publicacion.autor.apellido1}} {{publicacion.autor.apellido2}}</p>
                 </div>
             </div>
         </div>
