@@ -57,7 +57,7 @@ export class LoginService {
     return sessionStorage.getItem(ROLE_KEY);
   }
   refreshToken(): Observable<TokenDTO>{
-    return this.http.get<TokenDTO>(this.endpoint + "/oauth/refreshToken");
+    return this.http.get<TokenDTO>(this.endpoint + "/oauth/renovarToken");
   }
   getExpirationTime(): number {
     const token = sessionStorage.getItem('AuthToken');

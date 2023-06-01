@@ -100,7 +100,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioNuevo);
 	}
 
-	@PreAuthorize("isAuthenticated()")
+//	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")
 	@ResponseBody
 	public PersistentEntityResource usuarioFromToken(PersistentEntityResourceAssembler assembler,
