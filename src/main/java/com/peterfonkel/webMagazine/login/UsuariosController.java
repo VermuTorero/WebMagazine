@@ -113,7 +113,7 @@ public class UsuariosController {
 			logger.info("BODY TOKEN: " + bodyToken);
 			String email = (String) bodyToken.get("sub");
 			logger.info("USERNAME: " + email);
-			Usuario usuario = usuarioDAO.findByEmail(email).get();
+			Usuario usuario = getUsuarioService().getByEmail(email).get();
 			logger.info("USUARIO: " + usuario);
 			usuario.setPassword("password");
 			return assembler.toModel(usuario);
