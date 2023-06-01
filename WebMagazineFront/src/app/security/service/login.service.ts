@@ -56,5 +56,8 @@ export class LoginService {
   getRol(): string | null{
     return sessionStorage.getItem(ROLE_KEY);
   }
+  refreshToken(): Observable<TokenDTO>{
+    return this.http.get<any>(this.endpoint + "/oauth/refreshToken");
+  }
 
 }

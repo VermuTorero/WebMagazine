@@ -77,6 +77,11 @@ export class LoginComponent implements OnInit {
         }
         this.usuario = usuario;
         console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
+        setTimeout(()=>{
+          this.loginService.refreshToken().subscribe(tokenDTO=>{
+            sessionStorage.setItem('AuthToken', tokenDTO.token);
+          })
+        }, 1400000);
        document.location.reload();
         });
         

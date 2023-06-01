@@ -18,39 +18,38 @@
       </div>
       <div class="modal-body">
         <div class="email-input m-2">
-          <label for="email">Nombre</label>
-          <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.nombre">
+          <label for="nombre" class="col-5">Nombre</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
         </div>
         <div class="email-input m-2">
-          <label for="email">Primer apellido</label>
-          <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.apellido1">
+          <label for="apellido1"class="col-5">Primer apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
         </div>
         <div class="email-input m-2">
-          <label for="email">Segundo apellido</label>
-          <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.apellido2">
+          <label for="apellido2" class="col-5">Segundo apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
         <div class="email-input m-2">
-          <label for="email">Dirección</label>
-          <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.direccion">
+          <label for="dirección"class="col-5">Dirección</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
         </div>
         <div class="email-input m-2">
-          <label for="rol">Rol</label>
-          <select class="m-2" [(ngModel)]="usuarioNuevo.roles[0].rolNombre">
+          <label for="rol" class="col-5">Rol</label>
+          <select class="m-2 col-5" [(ngModel)]="usuarioNuevo.roles[0].rolNombre">
             <option *ngFor="let rol of roles" name="roles" id="roles" value="{{rol.rolNombre}}">{{rol.rolNombre}}</option>
           </select>
         </div>
-
         <div class="email-input m-2">
-          <label for="email">Email</label>
-          <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.email">
+          <label for="email" class="col-5">Email</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
         </div>
         <div class="email-input m-2">
-          <label for="password">Password</label>
-          <input type="password" class="mx-2" [(ngModel)]="usuarioNuevo.password">
+          <label for="password" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
         </div>
         <div class="email-input m-2">
-          <label for="password">Password</label>
-          <input type="password" class="mx-2" [(ngModel)]="password2">
+          <label for="password2" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
         </div>
       </div>
       <div class="modal-footer">
