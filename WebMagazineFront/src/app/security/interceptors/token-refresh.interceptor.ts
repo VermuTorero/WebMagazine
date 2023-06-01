@@ -19,7 +19,7 @@ export class TokenRefreshInterceptor implements HttpInterceptor {
         tap(() => {
           const expirationTime = this.loginService.getExpirationTime(); // Obtén el tiempo de expiración del token desde tu servicio de login
           const currentTime = new Date().getTime() / 1000; // Obtén el tiempo actual en segundos
-          const refreshThreshold = 60; // Umbral de tiempo en segundos antes de que expire el token para solicitar la renovación
+          const refreshThreshold = 300; // Umbral de tiempo en segundos antes de que expire el token para solicitar la renovación
           console.log("EXPIRATION TIME", expirationTime);
           console.log("CURRENT TIME", currentTime);
           console.log("TIEMPO REFRENCO", refreshThreshold)

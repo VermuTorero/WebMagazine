@@ -100,7 +100,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioNuevo);
 	}
 
-//	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")
 	@ResponseBody
 	public PersistentEntityResource usuarioFromToken(PersistentEntityResourceAssembler assembler,
@@ -199,7 +199,7 @@ public class UsuariosController {
 		getUsuarioDAO().delete(usuario);
 	}
 	
-//	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
