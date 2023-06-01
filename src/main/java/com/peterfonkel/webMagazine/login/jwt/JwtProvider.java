@@ -56,17 +56,9 @@ public class JwtProvider {
     }
     
     public String generateTokenFromUserDetails(UserDetails userDetails) {
-        // Obtener los datos del usuario
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", userDetails.getUsername());
-        claims.put("roles", userDetails.getAuthorities());
-
-        // Generar el token JWT
-        Date now = new Date();
-        Date expirationDate = new Date(now.getTime() + expiration);
-
+     
         return Jwts.builder()
-                .setClaims(claims)
+        		.setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS512, secret)
