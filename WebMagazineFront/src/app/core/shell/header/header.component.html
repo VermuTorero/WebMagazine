@@ -1,104 +1,112 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="row text-center">
-      <a class="navbar-brand row" href="">
-        <img src="../../../../assets/Logo_Vermu_Torero_Horizontal.png" class="navbar-icon" alt="navbar-icon">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse mx-1 row" id="navbarSupportedContent">
-        <ul class="nav navbar-nav me-auto mb-2 mb-lg-0 col-12 justify-content-center">
-          <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Gastrosofía
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="publicaciones-categoria/Patata-Santa">Patata Santa</a></li>
-              <li><a class="dropdown-item" href="publicaciones-categoria/Restaurantes">Restaurantes</a></li>
-              <li><a class="dropdown-item" href="publicaciones-categoria/Bares">Bares</a></li>
-              <li><a class="dropdown-item" href="publicaciones-categoria/Mercados">Mercados</a></li>
-            </ul>
-          </li>
-     <!--      <li class="nav-item">
+  <div class="row text-center">
+    <a class="navbar-brand row" href="">
+      <img src="../../../../assets/Logo_Vermu_Torero_Horizontal.png" class="navbar-icon" alt="navbar-icon">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mx-1 row" id="navbarSupportedContent">
+      <ul class="nav navbar-nav me-auto mb-2 mb-lg-0 col-12 justify-content-center">
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Gastrosofía
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="publicaciones-categoria/Patata-Santa">Patata Santa</a></li>
+            <li><a class="dropdown-item" href="publicaciones-categoria/Restaurantes">Restaurantes</a></li>
+            <li><a class="dropdown-item" href="publicaciones-categoria/Bares">Bares</a></li>
+            <li><a class="dropdown-item" href="publicaciones-categoria/Mercados">Mercados</a></li>
+          </ul>
+        </li>
+        <!--      <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Gastrosofía">Gastrosofía</a>
           </li> -->
-          <li class="nav-item">
-            <a class="nav-link active" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Viajar-a-solas">Viajar a solas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Beber-bien">Beber bien</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Culturoides">Culturoides</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
-          </li>
-         <!--  <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link active" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Viajar-a-solas">Viajar a
+            solas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Beber-bien">Beber bien</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Culturoides">Culturoides</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
+        </li>
+        <!--  <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Culturoides">Autoamor</a>
           </li> -->
-          <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             Autoamor
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="publicaciones-categoria/Relaciones">Relaciones</a></li>
-              <li><a class="dropdown-item" href="publicaciones-categoria/Autocuidado">Autocuidado</a></li>
-            </ul>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Autoamor
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="publicaciones-categoria/Relaciones">Relaciones</a></li>
+            <li><a class="dropdown-item" href="publicaciones-categoria/Autocuidado">Autocuidado</a></li>
+          </ul>
+        </li>
 
         <!--   <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="sobre-nosotros">Sobre nosotros</a>
           </li> -->
-      
-          <li *ngIf="isLoggedAdmin" class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Administración
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="formulario">Añadir publicación</a></li>
-              <li><a class="dropdown-item" href="tags">Tags y lugares</a></li>
-              <li><a class="dropdown-item" href="security/usuarios">Usuarios</a></li>
-              <!-- <li><a class="dropdown-item" href="tags">Usuarios</a></li> -->
-              <hr>
-              <li><a class="dropdown-item" href="/descubriendo-vermutorero">Landing-page</a></li>
-              <!-- <li><a class="dropdown-item" href="tags">RRSS</a></li> -->
-              <li><a class="dropdown-item" href="editor-inicio">Inicio</a></li>
-              <li><a class="dropdown-item" href="editor-lateral">Lateral</a></li>
-              <hr>
-              <li><a class="dropdown-item" href="acerca-de/editor/sobre-nosotros">Sobre nosotros</a></li>
-              <li><a class="dropdown-item" href="acerca-de/editor/quienes-formamos-vermú-torero">Quienes somos</a></li>
-              <li><a class="dropdown-item" href="acerca-de/editor/quieres-aparecer-en-nuestra-plataforma">Quienes aparecer...</a></li>
-              <li><a class="dropdown-item" href="acerca-de/editor/politica-de-a-juzgar-a-la-juzguería">Política de a juz...</a></li>
-              <li><a class="dropdown-item" href="acerca-de/editor/iborra-&-com">Iborra & Com</a></li>
-              <hr>
-              <li><a class="dropdown-item" href="ecommerce/gestion">Gestión de tienda</a></li>
-            </ul>
-          </li>
-         <app-login></app-login>
-        </ul>
-      </div>
-    </div> 
-  </nav>
-  <div class="invitacion">
-      <i class="fa-solid fa-wine-glass" id="iconoVino" 	(click)="collapse.toggle()"
-      [attr.aria-expanded]="!isCollapsed"></i>
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" style="max-width: 300px" class="pago">
-        <div class="ventana pt-0">
-          <div class="row" id="tituloPago">
-            <div class="col" >
-            <h4 class="text-center">¡Invítame a un vino!</h4>
-            </div>
-          </div>
-          <div class="row">
-            <img src="../../../../assets/Invitacion.jpg" class="img-fluid rounded mx-auto" alt="invitacion">
-          </div>
+
+        <li *ngIf="isLoggedAdmin" class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Administración
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="formulario">Añadir publicación</a></li>
+            <li><a class="dropdown-item" href="tags">Tags y lugares</a></li>
+            <li><a class="dropdown-item" href="security/usuarios">Usuarios</a></li>
+            <!-- <li><a class="dropdown-item" href="tags">Usuarios</a></li> -->
+            <hr>
+            <li><a class="dropdown-item" href="/descubriendo-vermutorero">Landing-page</a></li>
+            <!-- <li><a class="dropdown-item" href="tags">RRSS</a></li> -->
+            <li><a class="dropdown-item" href="editor-inicio">Inicio</a></li>
+            <li><a class="dropdown-item" href="editor-lateral">Lateral</a></li>
+            <hr>
+            <li><a class="dropdown-item" href="acerca-de/editor/sobre-nosotros">Sobre nosotros</a></li>
+            <li><a class="dropdown-item" href="acerca-de/editor/quienes-formamos-vermú-torero">Quienes somos</a></li>
+            <li><a class="dropdown-item" href="acerca-de/editor/quieres-aparecer-en-nuestra-plataforma">Quienes
+                aparecer...</a></li>
+            <li><a class="dropdown-item" href="acerca-de/editor/politica-de-a-juzgar-a-la-juzguería">Política de a
+                juz...</a></li>
+            <li><a class="dropdown-item" href="acerca-de/editor/iborra-&-com">Iborra & Com</a></li>
+            <hr>
+            <li><a class="dropdown-item" href="ecommerce/gestion">Gestión de tienda</a></li>
+          </ul>
+        </li>
+        <app-login></app-login>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="invitacion">
+  <i class="fa-solid fa-wine-glass" id="iconoVino" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"></i>
+  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" style="max-width: 300px" class="pago">
+    <div class="container">
+      <div class="card custom-card-size">
+        <div class="card-header">
+          <h4 class="text-center">¡Invítame a un vino!</h4>
+        </div>
+        <div class="card-body d-flex align-items-center justify-content-center text-center mb-5">
+          <i *ngIf= "!activarAnimacion" class="fa-solid fa-champagne-glasses fa-8x custom-icon" style="color: #000000;"></i>
+          <i *ngIf= "activarAnimacion" class="fa-solid fa-champagne-glasses fa-8x custom-icon fa-beat" style="color: #000000;"></i>
+        </div>
+        <div class="card-footer text-center fixed-bottom">
+          <button (mouseenter)="animacionLatidoIcono(true)" (mouseleave)="animacionLatidoIcono(false)" class="btn btn-dark">Pagar invitación de 2€
+          </button>
         </div>
       </div>
+    </div>
   </div>
- 
-
+</div>

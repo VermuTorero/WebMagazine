@@ -62,24 +62,13 @@
     width:60px;
     height:80px;
 }
-.ventana {
-    width: 300px; /* Ancho de la ventana */
-    height: 400px; /* Altura de la ventana */
-    background-color: #fff; /* Color de fondo de la ventana */
-    border: 1px solid #000; /* Borde de la ventana */
-    border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra de la ventana */
+
+.custom-card-size {
+    width: 500px; /* Ancho deseado */
+    height: 400px; /* Alto deseado */
+    transform: translateX(-200px);
   }
 
-
-
-.invitacion h4{
-    font-family: avenir heavy,sans-serif;
-    color: white;
-    background-color: #222;
-    border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */
-    height: 100%;
-}
 
 #tituloPago{
     border-radius: 10px; /* Radio de los bordes para que se vea como un rectángulo */

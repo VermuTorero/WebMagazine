@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit{
   userLogged$: any;
   isLoggedUser: any;
   isLoggedAdmin: any;
+  activarAnimacion = false;
   public isCollapsed = true;  
   constructor(private loginService: LoginService){
   }
@@ -23,5 +24,13 @@ export class HeaderComponent implements OnInit{
      this.loginService.getIsAdminFlagObs().subscribe((flag) => {
       this.isLoggedAdmin = flag;
     });
+  }
+
+  animacionLatidoIcono(ratonEnBoton: boolean): void{
+    if(ratonEnBoton){
+      this.activarAnimacion = true;
+    }else{
+      this.activarAnimacion = false;
+    }
   }
 }
