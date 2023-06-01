@@ -111,7 +111,13 @@ public class UsuariosController {
 			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
 			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 			logger.info("BODY TOKEN: " + bodyToken);
-			String email = (String) bodyToken.get("sub");
+			String email = "";
+			if((String) bodyToken.get("sub")!=null) {
+				email = (String) bodyToken.get("sub");
+			}else {
+				email = (String) bodyToken.get("username");
+			}
+			
 			logger.info("USERNAME: " + email);
 			Usuario usuario = getUsuarioService().getByEmail(email).get();
 			logger.info("USUARIO: " + usuario);
