@@ -57,7 +57,15 @@ export class LoginService {
     return sessionStorage.getItem(ROLE_KEY);
   }
   refreshToken(): Observable<TokenDTO>{
-    return this.http.get<any>(this.endpoint + "/oauth/refreshToken");
+    return this.http.get<TokenDTO>(this.endpoint + "/oauth/refreshToken");
+  }
+  getExpirationTime(): number {
+    const token = sessionStorage.getItem('AuthToken');
+    if (token) {
+      const tokenData = JSON.parse(atob(token.split('.')[1])); // Decodificar el token JWT
+      return tokenData.exp; // Obtener el tiempo de expiración del token desde el payload decodificado
+    }
+    return 0;
   }
 
 }

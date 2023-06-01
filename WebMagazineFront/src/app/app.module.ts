@@ -5,13 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { AngularCropperjsModule } from 'angular-cropperjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EcommerceModule } from './ecommerce/ecommerce.module';
 import { CoreModule } from './core/core.module';
 import { fichaInterceptor } from './security/interceptors/ficha.interceptor';
+import { TokenRefreshInterceptor } from './security/interceptors/token-refresh.interceptor';
 
 
 @NgModule({
@@ -31,7 +32,11 @@ import { fichaInterceptor } from './security/interceptors/ficha.interceptor';
     BrowserAnimationsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [fichaInterceptor],
+  providers: [fichaInterceptor, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenRefreshInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

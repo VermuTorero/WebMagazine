@@ -99,7 +99,7 @@ public class OauthController {
 		}
 	}
 	
-	@PostMapping("/renovarToken")
+	@GetMapping("/renovarToken")
 	public ResponseEntity<?> renovarToken(HttpServletRequest request) {
 	    String token = getTokenFromRequest(request);
 	    
@@ -114,7 +114,7 @@ public class OauthController {
 	            return ResponseEntity.ok(new AuthenticationResponse(nuevoToken));
 	        }
 	    }
-	    
+	     
 	    // En caso de error, devuelve una respuesta de error
 	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
