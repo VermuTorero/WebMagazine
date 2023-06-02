@@ -40,24 +40,6 @@ public interface ImagenInicioDAO extends JpaRepository<ImagenInicio, Long> {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
-	int hashCode();
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@Override
-	boolean equals(Object obj);
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	Object clone() throws CloneNotSupportedException;
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@Override
-	String toString();
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	void finalize() throws Throwable;
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@Override
 	<S extends ImagenInicio> List<S> saveAll(Iterable<S> entities);
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
