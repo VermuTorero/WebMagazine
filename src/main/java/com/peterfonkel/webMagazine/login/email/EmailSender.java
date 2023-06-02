@@ -4,7 +4,11 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+
+import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 
 
 
@@ -16,7 +20,7 @@ public class EmailSender {
 	@Value("${passwordGmailAdmin}")
 	String passwordGmailAdmin;
 	
-	
+	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 	
     public boolean enviarEmail(String destinatario, String subject, String text) {
         Properties props = new Properties();
@@ -44,6 +48,7 @@ public class EmailSender {
             return true;
         } catch (MessagingException e) {
             System.out.println("Error al enviar el correo electrónico: " + e.getMessage());
+            logger.info("Error al enviar el correo electrónico: " + e.getMessage());
             return false;
         }
     }
