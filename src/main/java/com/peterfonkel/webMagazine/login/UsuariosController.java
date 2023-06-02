@@ -99,7 +99,10 @@ public class UsuariosController {
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
 		getUsuarioDAO().save(usuarioNuevo);
-		emailSender.enviarEmail("albaladejopedro84@gmail.com", "Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
+		logger.info("Usuario creado");
+		logger.info("Se va a enviar un correo a: " + usuario.getEmail() );
+		emailSender.enviarEmail(usuario.getEmail(), "Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
+		logger.info("Enviado un correo a: " + usuario.getEmail() );
 		return assembler.toModel(usuarioNuevo);
 	}
 
