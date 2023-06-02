@@ -17,13 +17,13 @@ export class TokenRefreshInterceptor implements HttpInterceptor {
       this.isIntercepting = true;
       return next.handle(req).pipe(
         tap(() => {
-          const expirationTime = this.loginService.getExpirationTime(); // Obtén el tiempo de expiración del token desde tu servicio de login
-          const currentTime = new Date().getTime() / 1000; // Obtén el tiempo actual en segundos
+          const expirationTime = this.loginService.getExpirationTime(); // Tiempo de expiración del token desde tu servicio de login
+          const currentTime = new Date().getTime() / 1000; // Tiempo actual en segundos
           const refreshThreshold = 300; // Umbral de tiempo en segundos antes de que expire el token para solicitar la renovación
-          console.log("EXPIRATION TIME", expirationTime);
+          /* console.log("EXPIRATION TIME", expirationTime);
           console.log("CURRENT TIME", currentTime);
           console.log("TIEMPO REFRENCO", refreshThreshold)
-          console.log("RESTA TIEMPO: ", expirationTime - currentTime)
+          console.log("RESTA TIEMPO: ", expirationTime - currentTime) */
           if (expirationTime!=0 && expirationTime - currentTime < refreshThreshold) {
             this.loginService.refreshToken().subscribe(tokenDTO => {
               console.log('Solicitando refresco de token');

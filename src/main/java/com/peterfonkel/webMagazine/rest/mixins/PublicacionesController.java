@@ -64,7 +64,7 @@ public class PublicacionesController {
 		this.publicacionDAO = publicacionDAO;
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
@@ -80,7 +80,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
@@ -129,7 +129,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
+	
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
@@ -149,7 +149,6 @@ public class PublicacionesController {
 	}
 
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
@@ -192,9 +191,7 @@ public class PublicacionesController {
 	    }
 	    return conjunto;
 	}
-
-		
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")	
+	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
@@ -202,7 +199,6 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
@@ -210,7 +206,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
@@ -226,7 +222,7 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	

@@ -35,7 +35,7 @@ public class CategoriasController {
 	
 	@GetMapping(path = "categoriaByCategoriaNombre/{categoriaNombre}")
 	@ResponseBody
-	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("categoriaNombre") String categoriaNombre) {
+	public PersistentEntityResource getCategoriaByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("categoriaNombre") String categoriaNombre) {
 		Categoria categoria = categoriaDAO.findByCategoriaNombre(categoriaNombre);
 		return assembler.toModel(categoria);
 	}
