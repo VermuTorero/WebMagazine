@@ -179,9 +179,4 @@ public class ClaseConfiguracionJava {
 		}
 	}
 	
-	@Bean
-	public PasswordEncoder paswordEncoder(){
-		return passwordEncoder;
-		
-	}
 }
