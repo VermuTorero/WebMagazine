@@ -22,6 +22,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import com.peterfonkel.webMagazine.login.email.EmailSender;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
@@ -81,7 +83,7 @@ public class UsuariosController {
 	@PostMapping(path = "nuevoUsuario")
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuario) {
-	
+		EmailSender emailSender = new EmailSender();
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
 		logger.info("Email recibido: " + usuario.getEmail());
@@ -97,6 +99,7 @@ public class UsuariosController {
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
 		getUsuarioDAO().save(usuarioNuevo);
+		emailSender.enviarEmail("albaladejopedro84@gmail.com", "Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
 		return assembler.toModel(usuarioNuevo);
 	}
 
