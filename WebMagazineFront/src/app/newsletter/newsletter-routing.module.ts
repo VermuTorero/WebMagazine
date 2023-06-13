@@ -13,6 +13,8 @@ import { PaginaEditableComponent } from './pagina-editable/pagina-editable.compo
 import { EditorComponent } from './pagina-editable/editor/editor.component';
 import { EditorLateralComponent } from './editor-lateral/editor-lateral.component';
 import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
+import { SuscripcionComponent } from './suscripcion/suscripcion.component';
+import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
 
 
 const routes: Routes = [
@@ -123,6 +125,24 @@ const routes: Routes = [
       {
         path: `publicaciones-buscador/:palabrasClave`,
         component: PublicacionesBuscadorComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `suscripcion`,
+        component: SuscripcionComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `suscripcion-ficha`,
+        component: SuscripcionFichaComponent,
       }
     ],
   }

@@ -1,13 +1,17 @@
 package com.peterfonkel.webMagazine;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.mapping.Array;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +22,34 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.relational.core.sql.IdentifierProcessing.LetterCasing;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.peterfonkel.webMagazine.entities.CaracteristicaSuscripcion;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
 import com.peterfonkel.webMagazine.entities.Lugar;
+import com.peterfonkel.webMagazine.entities.TipoSuscripcion;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
+import com.peterfonkel.webMagazine.repositories.CaracteristicasSuscripcionDAO;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LateralDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
+import com.peterfonkel.webMagazine.repositories.TipoSuscripcionDAO;
 import com.peterfonkel.webMagazine.rest.mixins.Mixins;
+
+
 
 
 
@@ -76,6 +87,12 @@ public class ClaseConfiguracionJava {
 	
 	@Autowired
 	CategoriaDAO categoriaDAO;
+	
+	@Autowired
+	TipoSuscripcionDAO tipoSuscripcionDAO;
+	
+	@Autowired
+	CaracteristicasSuscripcionDAO caracteristicaSuscripcionDAO;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -176,6 +193,31 @@ public class ClaseConfiguracionJava {
 			Categoria categoria = new Categoria();
 			categoria.setCategoriaNombre("Gastrosofia");
 			categoriaDAO.save(categoria);
+		}
+		
+		if(tipoSuscripcionDAO.findAll().size()<1) {
+			CaracteristicaSuscripcion caracteristicaSuscripcion1 = new CaracteristicaSuscripcion();
+			caracteristicaSuscripcion1.setCaracteristica("caracteristica1");
+			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion1);
+			CaracteristicaSuscripcion caracteristicaSuscripcion2 = new CaracteristicaSuscripcion();
+			caracteristicaSuscripcion2.setCaracteristica("caracteristica2");
+			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion2);
+			CaracteristicaSuscripcion caracteristicaSuscripcion3 = new CaracteristicaSuscripcion();
+			caracteristicaSuscripcion3.setCaracteristica("caracteristica3");
+			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion3);
+			TipoSuscripcion tipoSuscripcion1 = new TipoSuscripcion();
+			TipoSuscripcion tipoSuscripcion2 = new TipoSuscripcion();
+			TipoSuscripcion tipoSuscripcion3 = new TipoSuscripcion();
+			tipoSuscripcion1.setNombre("Nombre1");
+			tipoSuscripcion2.setNombre("Nombre2");
+			tipoSuscripcion3.setNombre("Nombre3");
+			tipoSuscripcion1.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
+			tipoSuscripcion2.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
+			tipoSuscripcion3.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
+			tipoSuscripcionDAO.save(tipoSuscripcion1);
+			tipoSuscripcionDAO.save(tipoSuscripcion2);
+			tipoSuscripcionDAO.save(tipoSuscripcion3);
+					
 		}
 	}
 	

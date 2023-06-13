@@ -1,56 +1,39 @@
 package com.peterfonkel.webMagazine.login.email;
-
 import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
-
-
-
+/* Class to demonstrate the use of Gmail Create Email API  */
 public class EmailSender {
-	
-	@Value("${correoAdmin}")
-	String correoAdmin;
-	
-	@Value("${passwordGmailAdmin}")
-	String passwordGmailAdmin;
-	
-	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
-	
-    public boolean enviarEmail(String destinatario, String subject, String text) {
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(correoAdmin, passwordGmailAdmin);
-            }
-        });
+  /**
+   * Create a MimeMessage using the parameters provided.
+   *
+   * @param toEmailAddress   email address of the receiver
+   * @param fromEmailAddress email address of the sender, the mailbox account
+   * @param subject          subject of the email
+   * @param bodyText         body text of the email
+   * @return the MimeMessage to be used to send email
+   * @throws MessagingException - if a wrongly formatted address is encountered.
+   */
+  public static MimeMessage createEmail(String toEmailAddress,
+                                        String fromEmailAddress,
+                                        String subject,
+                                        String bodyText)
+      throws MessagingException {
+    Properties props = new Properties();
+    Session session = Session.getDefaultInstance(props, null);
 
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(correoAdmin));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario)); // Reemplaza con la dirección de correo electrónico del destinatario
-            message.setSubject(subject);
-            message.setText(text);
+    MimeMessage email = new MimeMessage(session);
 
-            Transport.send(message);
-
-            System.out.println("El correo electrónico ha sido enviado con éxito.");
-            return true;
-        } catch (MessagingException e) {
-            System.out.println("Error al enviar el correo electrónico: " + e.getMessage());
-            logger.info("Error al enviar el correo electrónico: " + e.getMessage());
-            return false;
-        }
-    }
+    email.setFrom(new InternetAddress(fromEmailAddress));
+    email.addRecipient(javax.mail.Message.RecipientType.TO,
+        new InternetAddress(toEmailAddress));
+    email.setSubject(subject);
+    email.setText(bodyText);
+    return email;
+  }
 }
-

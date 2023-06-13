@@ -4,6 +4,7 @@ package com.peterfonkel.webMagazine.login.usuarios.entidades;
 import com.peterfonkel.webMagazine.entities.Direccion;
 import com.peterfonkel.webMagazine.entities.Invitacion;
 import com.peterfonkel.webMagazine.entities.Like;
+import com.peterfonkel.webMagazine.entities.Suscripcion;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.sun.istack.NotNull;
 import javax.persistence.*;
@@ -36,13 +37,12 @@ public class Usuario {
 	
 	private String edad;
 	
-	private String suscripcion;
-	
 	private String urlImagen;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Like> likes = new ArrayList<Like>();
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Invitacion> invitaciones = new ArrayList<Invitacion>();
@@ -50,9 +50,13 @@ public class Usuario {
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Direccion> direcciones = new ArrayList<Direccion>();
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Set<Rol> roles = new HashSet<Rol>();
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	private Suscripcion suscripcion;
 
 	public Usuario() {
 	}
@@ -141,11 +145,11 @@ public class Usuario {
 		this.edad = edad;
 	}
 
-	public String getSuscripcion() {
+	public Suscripcion getSuscripcion() {
 		return suscripcion;
 	}
 
-	public void setSuscripcion(String suscripcion) {
+	public void setSuscripcion(Suscripcion suscripcion) {
 		this.suscripcion = suscripcion;
 	}
 

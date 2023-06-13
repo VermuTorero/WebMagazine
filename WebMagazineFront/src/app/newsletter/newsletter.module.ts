@@ -21,6 +21,8 @@ import { PaginaEditableComponent } from './pagina-editable/pagina-editable.compo
 import { EditorComponent } from './pagina-editable/editor/editor.component';
 import { EditorLateralComponent } from './editor-lateral/editor-lateral.component';
 import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
+import { SuscripcionComponent } from './suscripcion/suscripcion.component';
+import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
 
 
 
@@ -42,7 +44,9 @@ import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-bu
     PaginaEditableComponent,
     EditorComponent,
     EditorLateralComponent,
-    PublicacionesBuscadorComponent
+    PublicacionesBuscadorComponent,
+    SuscripcionComponent,
+    SuscripcionFichaComponent
   ],
   imports: [
     CommonModule,

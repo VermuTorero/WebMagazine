@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.mapstruct.BeanMapping;
@@ -39,6 +41,9 @@ import io.jsonwebtoken.Jwts;
 @CrossOrigin
 public class UsuariosController {
 
+	@Value("${correoAdmin}")
+	private String correoAdmin;
+	
 	@Value("${secretPsw}")
 	private String secretPsw;
 
@@ -82,8 +87,8 @@ public class UsuariosController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuario")
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
-			@RequestBody Usuario usuario) {
-		EmailSender emailSender = new EmailSender();
+			@RequestBody Usuario usuario) throws MessagingException {
+		
 		logger.info("Salvando nuevo Usuario: " + usuario);
 		logger.info("Password recibida: " + usuario.getPassword());
 		logger.info("Email recibido: " + usuario.getEmail());
@@ -101,7 +106,7 @@ public class UsuariosController {
 		getUsuarioDAO().save(usuarioNuevo);
 		logger.info("Usuario creado");
 		logger.info("Se va a enviar un correo a: " + usuario.getEmail() );
-		emailSender.enviarEmail(usuario.getEmail(), "Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
+		EmailSender.createEmail(usuario.getEmail(), correoAdmin ,"Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
 		logger.info("Enviado un correo a: " + usuario.getEmail() );
 		return assembler.toModel(usuarioNuevo);
 	}
