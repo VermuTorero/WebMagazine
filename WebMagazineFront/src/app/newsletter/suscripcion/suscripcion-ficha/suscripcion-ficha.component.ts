@@ -8,34 +8,35 @@ import { TipoSuscripcion } from '../../models/TipoSuscripcion';
   styleUrls: ['./suscripcion-ficha.component.css']
 })
 export class SuscripcionFichaComponent implements OnInit {
-  tipoSuscripcions: TipoSuscripcion[] = [];
+  suscripciones: TipoSuscripcion[] = [];
 
-  constructor(private tipoSuscripcionService: TipoSuscripcionService) {
+  constructor(private tiposSuscripcionService: TipoSuscripcionService) {
 
   }
 
   ngOnInit(): void {
-    this.getTipoSuscripciones();
+    this.getSuscripciones();
 
   }
 
-  getTipoSuscripciones() {
-    this.tipoSuscripcionService.getTiposSuscripcion().subscribe(tiposuscripcions => {
-      this.tipoSuscripcions = tiposuscripcions;
-      console.log("TIPO SUSCRIPCIONES", this.tipoSuscripcions)
-      this.tipoSuscripcions.forEach(tipoSuscripcion => {
-        tipoSuscripcion.id = this.tipoSuscripcionService.getId(tipoSuscripcion);
-        this.tipoSuscripcionService.getCaracteristicasFromSuscripcion(tipoSuscripcion).subscribe(caracteristicas=>{
-          tipoSuscripcion.caracteristicas = caracteristicas;
-          console.log("CARACTERISTICAS DE " + tipoSuscripcion.nombre, caracteristicas)
+  getSuscripciones(){
+    this.tiposSuscripcionService.getTiposSuscripcion().subscribe(tipos=>{
+      this.suscripciones = tipos;
+      this.suscripciones.forEach(suscripcion => {
+        suscripcion.id =  this.tiposSuscripcionService.getId(suscripcion);
+        this.tiposSuscripcionService.getCaracteristicasFromSuscripcion(suscripcion).subscribe(caracteristicas=>{
+          suscripcion.caracteristicas = caracteristicas;
+          caracteristicas.forEach(caracteristica => {
+            caracteristica.id = this.tiposSuscripcionService.getId(caracteristica);
+          });
         })
       });
     })
   }
 
   patchTipoSuscripcions() {
-    this.tipoSuscripcions.forEach(tipoSuscripcion => {
-      this.tipoSuscripcionService.patchTipoSuscripcion(tipoSuscripcion).subscribe();
+    this.suscripciones.forEach(tipoSuscripcion => {
+      this.tiposSuscripcionService.patchTipoSuscripcion(tipoSuscripcion).subscribe();
     });
   }
 }

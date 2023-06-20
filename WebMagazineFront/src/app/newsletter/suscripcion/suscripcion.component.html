@@ -5,16 +5,15 @@
     <div class="col-1"></div>
     <div class="col-3 tipo-suscripcion tipo-suscripcion-1">
         <div class="text-center titulo-suscripcion">
-            <h3 class="texto-titulo">Amigo de VermuTorero</h3>
+            <h4 class="texto-titulo">{{suscripciones[0].nombre}}</h4>
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <li class="my-2">Recibe emails con las novedades en contenidos gratuitos</li>
-                <li class="my-2">Recibe información sobre promociones y sorteos</li>
+                <li *ngFor="let caracteristica of suscripciones[0].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>Gratuito</p>
+            <p>{{suscripciones[0].precio}}</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>
@@ -23,18 +22,15 @@
 
     <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
         <div class="text-center titulo-suscripcion">
-            <h4 class="texto-titulo">Sucripción</h4>
+            <h4 class="texto-titulo">{{suscripciones[1].nombre}}</h4>
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <li class="my-2">Recibe emails con las novedades en contenidos gratuitos</li>
-                <li class="my-2">Recibe información sobre promociones y sorteos</li>
-                <li class="my-2">Accede a exclusivos contenidos de pago</li>
-                <li class="my-2">Difruta de promociones y descuentos</li>
+                <li *ngFor="let caracteristica of suscripciones[1].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>10 Euros / mes</p>
+            <p>{{suscripciones[0].precio}}</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>
@@ -43,20 +39,15 @@
 
     <div class="col-3 tipo-suscripcion tipo-suscripcion-3">
         <div class="text-center titulo-suscripcion">
-            <h4 class="texto-titulo">Hazte miembro del club VermuTorero</h4>
+            <h4 class="texto-titulo">{{suscripciones[2].nombre}}</h4>
         </div>
         <div class="caracteristicas-suscripcion">
             <ul>
-                <li class="my-2">Recibe emails con las novedades en contenidos gratuitos</li>
-                <li class="my-2">Recibe información sobre promociones y sorteos</li>
-                <li class="my-2">Accede a exclusivos contenidos de pago</li>
-                <li class="my-2">Difruta de promociones y descuentos</li>
-                <li class="my-2">Accede a nuestro chat de miembros y comparte tus experiencias</li>
-                <li class="my-2">Preguntanos y te recomendarmos a donde ir y que hacer de forma personalizada</li>
+                <li *ngFor="let caracteristica of suscripciones[2].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>20 Euros / mes</p>
+            <p>{{suscripciones[0].precio}}</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>

@@ -26,7 +26,7 @@ export class TipoSuscripcionService {
   }
 
   patchTipoSuscripcion(tipoSuscripcion: TipoSuscripcion): Observable<TipoSuscripcion>{
-    return this.http.patch<any>(this.endpoint + "/tipoSuscripcions/"+ tipoSuscripcion.id, tipoSuscripcion);
+    return this.http.patch<any>(this.endpoint + "/tipoSuscripcions/search/patchSuscripciones", tipoSuscripcion);
   }
   deleteTipoSuscripcion(tipoSuscripcion: any): Observable<any>{
     return this.http.delete<any>(this.endpoint + "/tipoSuscripcions/"+ tipoSuscripcion.id);

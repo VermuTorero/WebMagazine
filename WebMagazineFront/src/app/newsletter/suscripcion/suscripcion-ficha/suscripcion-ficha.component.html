@@ -1,71 +1,53 @@
 <div class="row descripcion-pagina text-center">
-    <h3 class="col-11 m-4 texto-descripcion">Edicion de los tipos de suscripción</h3>
+    <h3 class="col-11 m-4 texto-descripcion">Suscribete a nuestra web y disfruta de los mejores contenidos premium.</h3>
 </div>
 <div class="row mb-4 suscripciones">
     <div class="col-1"></div>
     <div class="col-3 tipo-suscripcion tipo-suscripcion-1">
-        <div  class="text-center titulo-suscripcion">
-            <input *ngIf="tipoSuscripcions[0]" class="texto-titulo" [(ngModel)]="tipoSuscripcions[0].nombre">
-        </div>
-        <div *ngIf="tipoSuscripcions[0]" class="caracteristicas-suscripcion mt-3">
-            <ul>
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[0].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[1].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas"class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[2].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[3].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[4].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[5].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[6].caracteristica">
-                <input *ngIf="tipoSuscripcions[0].caracteristicas" class="my-2" [(ngModel)]="tipoSuscripcions[0].caracteristicas[7].caracteristica">
-            </ul>
-        </div>
-        <div *ngIf="tipoSuscripcions[0]" class="text-center precio-suscripcion">
-            <input [(ngModel)]="tipoSuscripcions[0].precio">
-        </div>
-    </div>
-
-<!--     <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
         <div class="text-center titulo-suscripcion">
-            <input class="texto-titulo" [(ngModel)]="tipoSuscripcions[1].nombre">
+            <input class="texto-titulo" [(ngModel)]="suscripciones[0].nombre">
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[0].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[1].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[2].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[3].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[4].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[5].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[6].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[1].caracteristicas[7].caracteristica">
+                <input *ngFor="let caracteristica of suscripciones[0].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <input [(ngModel)]="tipoSuscripcions[1].precio">
+            <input [(ngModel)]="suscripciones[0].precio">
+        </div>
+
+    </div>
+
+    <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
+        <div class="text-center titulo-suscripcion">
+            <input class="texto-titulo" [(ngModel)]="suscripciones[1].nombre">
+        </div>
+        <div class="caracteristicas-suscripcion mt-3">
+            <ul>
+                <input *ngFor="let caracteristica of suscripciones[1].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
+            </ul>
+        </div>
+        <div class="text-center precio-suscripcion">
+            <input [(ngModel)]="suscripciones[1].precio">
         </div>
     </div>
 
     <div class="col-3 tipo-suscripcion tipo-suscripcion-3">
         <div class="text-center titulo-suscripcion">
-            <input class="texto-titulo" [(ngModel)]="tipoSuscripcions[2].nombre">
+            <input class="texto-titulo" [(ngModel)]="suscripciones[2].nombre">
         </div>
-        <div  class="caracteristicas-suscripcion mt-3">
+        <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[0].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[1].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[2].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[3].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[4].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[5].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[6].caracteristica">
-                <input class="my-2" [(ngModel)]="tipoSuscripcions[2].caracteristicas[7].caracteristica">
+                <input *ngFor="let caracteristica of suscripciones[2].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <input [(ngModel)]="tipoSuscripcions[2].precio">
+            <input [(ngModel)]="suscripciones[2].precio">
         </div>
-    </div> -->
+
+    </div>
 </div>
+
 <div class="text-center mb-4">
     <button class="btn btn-primary my-2" style="width: 20%;" (click)="patchTipoSuscripcions()">Guardar cambios</button>
 </div>

@@ -13,10 +13,13 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.api.services.gmail.Gmail.Users.Settings.GetPop;
 import com.peterfonkel.webMagazine.entities.CaracteristicaSuscripcion;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.TipoSuscripcion;
@@ -43,6 +46,17 @@ public class TipoSuscripcionController {
 		TipoSuscripcion tipoSuscripcion = tipoSuscripcionDAO.findById(idSuscripcion).get();
 		List<CaracteristicaSuscripcion> caracteristicas = tipoSuscripcion.getCaracteristicas();
 		return assembler.toCollectionModel(caracteristicas);
+	}
+	
+	@PatchMapping(path = "patchSuscripciones")
+	@ResponseBody
+	public PersistentEntityResource patchSuscripcion(PersistentEntityResourceAssembler assembler,@RequestBody TipoSuscripcion tipoSuscripcion) {
+		TipoSuscripcion tipoSuscripcionAntigua = tipoSuscripcionDAO.findById(tipoSuscripcion.getId()).get();
+		tipoSuscripcionAntigua.setCaracteristicas(tipoSuscripcion.getCaracteristicas());
+		tipoSuscripcionAntigua.setNombre(tipoSuscripcion.getNombre());
+		tipoSuscripcionAntigua.setPrecio(tipoSuscripcion.getPrecio());
+		tipoSuscripcionDAO.save(tipoSuscripcionAntigua);
+		return assembler.toModel(tipoSuscripcionAntigua);
 	}
 	
 	
