@@ -26,6 +26,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import com.peterfonkel.webMagazine.ClaseConfiguracionJava;
+import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.login.email.EmailSender;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
@@ -62,6 +64,10 @@ public class UsuariosController {
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private EmailSender emailSender;
+
 
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 	
@@ -83,6 +89,10 @@ public class UsuariosController {
 
 	public UsuarioService getUsuarioService() {
 		return usuarioService;
+	}
+	
+	public EmailSender getEmailSender() {
+		return emailSender;
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -120,8 +130,8 @@ public class UsuariosController {
 			int codigoActivacion = random.nextInt(90000000) + 10000000;
 			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
 			getUsuarioDAO().save(usuario);
-			EmailSender emailSender = new EmailSender();
-			emailSender.sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://localhost:8080/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
+			
+			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://localhost:8080/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
 			logger.info("Enviado un correo a: " + usuario.getEmail() );
 			return true;
 		} catch (Exception e) {

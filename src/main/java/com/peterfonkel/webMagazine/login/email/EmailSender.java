@@ -4,14 +4,23 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import com.peterfonkel.webMagazine.ClaseConfiguracionJava;
+
+@Component
 public class EmailSender {
 	
-	private final String username = "vermutorero@hotmail.com";
-    private final String password = "Iborra2023";
+	@Value("${correo.remitente}")
+	private String username;
+	
+	@Value("${password.email}")
+	private String password;
+	
     private final Session session;
 
     public EmailSender() {
+    	
        
         // Configuración de las propiedades del servidor de correo
         Properties props = new Properties();

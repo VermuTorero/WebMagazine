@@ -3,6 +3,7 @@ package com.peterfonkel.webMagazine;
 
 import java.util.ArrayList;
 
+
 import java.util.Arrays;
 
 
@@ -53,7 +54,7 @@ import com.peterfonkel.webMagazine.rest.mixins.Mixins;
 
 
 @Configuration
-@ComponentScan("peterfonkel")
+@ComponentScan("com.peterfonkel.webMagazine")
 public class ClaseConfiguracionJava {
 	
 
@@ -67,7 +68,14 @@ public class ClaseConfiguracionJava {
 
 	@Value("${correoAdmin}")
 	String correoAdmin;
-
+	
+	@Value("${correo.remitente}")
+	String username;
+	
+	@Value("${password.email}")
+	String password;
+	
+	
 	@Autowired
 	LugarDAO lugarDAO;
 	
@@ -136,8 +144,7 @@ public class ClaseConfiguracionJava {
     		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", "izquierda");
     		imagenInicioDAO.save(imagenInicio2);
     		ImagenInicio imagenInicio3 = new ImagenInicio(3L, "", "centro");
-    		imagenInicioDAO.save(imagenInicio3);
-    		
+    		imagenInicioDAO.save(imagenInicio3);		
 		}
     }
     
