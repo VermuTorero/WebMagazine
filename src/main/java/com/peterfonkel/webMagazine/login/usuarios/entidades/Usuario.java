@@ -57,6 +57,13 @@ public class Usuario {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Suscripcion suscripcion;
+	
+	private String claveActivacion;
+	
+	private Boolean isConfirmadoEmail;
+	
+	@ManyToOne
+	private Rol rolSeleccionado;
 
 	public Usuario() {
 	}
@@ -185,6 +192,31 @@ public class Usuario {
 
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
+	}
+
+	public String getClaveActivacion() {
+		return claveActivacion;
+	}
+
+	public void setClaveActivacion(String claveActivacion) {
+		this.claveActivacion = claveActivacion;
+	}
+
+	public Boolean getIsConfirmadoEmail() {
+		return isConfirmadoEmail;
+	}
+
+	public void setIsConfirmadoEmail(Boolean isConfirmadoEmail) {
+		this.isConfirmadoEmail = isConfirmadoEmail;
+	}
+	
+	
+	public Rol getRolSeleccionado() {
+		return rolSeleccionado;
+	}
+
+	public void setRolSeleccionado(Rol rolSeleccionado) {
+		this.rolSeleccionado = rolSeleccionado;
 	}
 
 	@Override

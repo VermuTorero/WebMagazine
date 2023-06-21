@@ -1,39 +1,50 @@
 package com.peterfonkel.webMagazine.login.email;
 import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.*;
 
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
 
-/* Class to demonstrate the use of Gmail Create Email API  */
 public class EmailSender {
+	
+	private final String username = "vermutorero@hotmail.com";
+    private final String password = "Iborra2023";
+    private final Session session;
 
-  /**
-   * Create a MimeMessage using the parameters provided.
-   *
-   * @param toEmailAddress   email address of the receiver
-   * @param fromEmailAddress email address of the sender, the mailbox account
-   * @param subject          subject of the email
-   * @param bodyText         body text of the email
-   * @return the MimeMessage to be used to send email
-   * @throws MessagingException - if a wrongly formatted address is encountered.
-   */
-  public static MimeMessage createEmail(String toEmailAddress,
-                                        String fromEmailAddress,
-                                        String subject,
-                                        String bodyText)
-      throws MessagingException {
-    Properties props = new Properties();
-    Session session = Session.getDefaultInstance(props, null);
+    public EmailSender() {
+       
+        // Configuración de las propiedades del servidor de correo
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.office365.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.ssl.protocols: TLSv1.2", "mail.smtp.ssl.ciphersuites: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
 
-    MimeMessage email = new MimeMessage(session);
+        // Crear la sesión de correo
+        session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+    }
 
-    email.setFrom(new InternetAddress(fromEmailAddress));
-    email.addRecipient(javax.mail.Message.RecipientType.TO,
-        new InternetAddress(toEmailAddress));
-    email.setSubject(subject);
-    email.setText(bodyText);
-    return email;
-  }
+    public void sendEmail(String recipient, String subject, String content) {
+        try {
+        	System.out.println(recipient + "/" + subject + "/" + content + "/" + username + "/" + password);
+            // Crear el mensaje de correo
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username)); // Remitente
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient)); // Destinatario
+            message.setSubject(subject); // Asunto del correo
+            message.setText(content); // Contenido del correo
+
+            // Enviar el mensaje de correo
+            Transport.send(message);
+
+            System.out.println("El correo electrónico ha sido enviado con éxito.");
+        } catch (MessagingException e) {
+            System.out.println("Error al enviar el correo electrónico: " + e.getMessage());
+        }
+    }
 }

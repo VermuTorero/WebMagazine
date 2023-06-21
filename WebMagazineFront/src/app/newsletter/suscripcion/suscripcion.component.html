@@ -9,11 +9,19 @@
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <li *ngFor="let caracteristica of suscripciones[0].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica1" class="row my-2">{{suscripciones[0].caracteristica1}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica2" class="row my-2">{{suscripciones[0].caracteristica2}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica3" class="row my-2">{{suscripciones[0].caracteristica3}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica4" class="row my-2">{{suscripciones[0].caracteristica4}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica5" class="row my-2">{{suscripciones[0].caracteristica5}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica6" class="row my-2">{{suscripciones[0].caracteristica6}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica7" class="row my-2">{{suscripciones[0].caracteristica7}}</li>
+                <li  *ngIf="suscripciones[0].caracteristica8" class="row my-2">{{suscripciones[0].caracteristica8}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>{{suscripciones[0].precio}}</p>
+            <p *ngIf="suscripciones[0].precio">{{suscripciones[0].precio}}</p>
+            <p *ngIf="!suscripciones[0].precio">GRATIS</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>
@@ -26,11 +34,18 @@
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <li *ngFor="let caracteristica of suscripciones[1].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica1" class="row my-2">{{suscripciones[1].caracteristica1}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica2" class="row my-2">{{suscripciones[1].caracteristica2}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica3" class="row my-2">{{suscripciones[1].caracteristica3}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica4" class="row my-2">{{suscripciones[1].caracteristica4}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica5" class="row my-2">{{suscripciones[1].caracteristica5}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica6" class="row my-2">{{suscripciones[1].caracteristica6}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica7" class="row my-2">{{suscripciones[1].caracteristica7}}</li>
+                <li  *ngIf="suscripciones[1].caracteristica8" class="row my-2">{{suscripciones[1].caracteristica8}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>{{suscripciones[0].precio}}</p>
+            <p>{{suscripciones[1].precio}}</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>
@@ -43,11 +58,18 @@
         </div>
         <div class="caracteristicas-suscripcion">
             <ul>
-                <li *ngFor="let caracteristica of suscripciones[2].caracteristicas" class="my-2">{{caracteristica.caracteristica}}</li>
+                <li *ngIf="suscripciones[2].caracteristica1" class="row my-2">{{suscripciones[2].caracteristica1}}</li>
+                <li *ngIf="suscripciones[2].caracteristica2" class="row my-2">{{suscripciones[2].caracteristica2}}</li>
+                <li *ngIf="suscripciones[2].caracteristica3" class="row my-2">{{suscripciones[2].caracteristica3}}</li>
+                <li *ngIf="suscripciones[2].caracteristica4" class="row my-2">{{suscripciones[2].caracteristica4}}</li>
+                <li *ngIf="suscripciones[2].caracteristica5" class="row my-2">{{suscripciones[2].caracteristica5}}</li>
+                <li *ngIf="suscripciones[2].caracteristica6" class="row my-2">{{suscripciones[2].caracteristica6}}</li>
+                <li *ngIf="suscripciones[2].caracteristica7" class="row my-2">{{suscripciones[2].caracteristica7}}</li>
+                <li *ngIf="suscripciones[2].caracteristica8" class="row my-2">{{suscripciones[2].caracteristica8}}</li>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
-            <p>{{suscripciones[0].precio}}</p>
+            <p>{{suscripciones[2].precio}}</p>
         </div>
         <div class="text-center">
             <button class="btn btn-primary">Suscribirme</button>

@@ -1,6 +1,3 @@
-<div class="row descripcion-pagina text-center">
-    <h3 class="col-11 m-4 texto-descripcion">Suscribete a nuestra web y disfruta de los mejores contenidos premium.</h3>
-</div>
 <div class="row mb-4 suscripciones">
     <div class="col-1"></div>
     <div class="col-3 tipo-suscripcion tipo-suscripcion-1">
@@ -9,22 +6,35 @@
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <input *ngFor="let caracteristica of suscripciones[0].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica1"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica2"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica3"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica4"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica5"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica6"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica7"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica8"></textarea>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
             <input [(ngModel)]="suscripciones[0].precio">
         </div>
-
     </div>
-
+    
     <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
         <div class="text-center titulo-suscripcion">
             <input class="texto-titulo" [(ngModel)]="suscripciones[1].nombre">
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <input *ngFor="let caracteristica of suscripciones[1].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica1"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica2"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica3"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica4"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica5"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica6"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica7"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica8"></textarea>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
@@ -38,13 +48,19 @@
         </div>
         <div class="caracteristicas-suscripcion mt-3">
             <ul>
-                <input *ngFor="let caracteristica of suscripciones[2].caracteristicas" class="my-2" [(ngModel)]="caracteristica.caracteristica">
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica1"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica2"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica3"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica4"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica5"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica6"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica7"></textarea>
+                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica8"></textarea>
             </ul>
         </div>
         <div class="text-center precio-suscripcion">
             <input [(ngModel)]="suscripciones[2].precio">
         </div>
-
     </div>
 </div>
 

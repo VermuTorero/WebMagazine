@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.mail.MessagingException;
@@ -88,28 +89,66 @@ public class UsuariosController {
 	@PostMapping(path = "nuevoUsuario")
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuario) throws MessagingException {
-		
-		logger.info("Salvando nuevo Usuario: " + usuario);
-		logger.info("Password recibida: " + usuario.getPassword());
-		logger.info("Email recibido: " + usuario.getEmail());
-		logger.info("Password codificada: " + getPasswordEncoder().encode(usuario.getPassword()));
-		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
+		logger.info("Salvando nuevo Usuario pendiente de confirmar email: " + usuario);
+		//Se crea una secuencia de numeros aleatorios de 8 cifras añadiendo @@%. Se agregará al password codificado para inutilizarlo
+		Random random = new Random();
+		int codigoDesactivado = random.nextInt(90000000) + 10000000;
+		String desactivado = String.valueOf(codigoDesactivado) + "@@%";
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), desactivado + getPasswordEncoder().encode(usuario.getPassword()));
+		usuarioNuevo.setIsConfirmadoEmail(false);
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
 		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
+		usuarioNuevo.setRolSeleccionado(rol);
+		Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
 		Set<Rol> roles = new HashSet<>();
-		roles.add(rol);
+		roles.add(rolDefault);
 		usuarioNuevo.setRoles(roles);
 		getUsuarioDAO().save(usuarioNuevo);
 		logger.info("Usuario creado");
-		logger.info("Se va a enviar un correo a: " + usuario.getEmail() );
-		EmailSender.createEmail(usuario.getEmail(), correoAdmin ,"Usuario creado", "Se ha creado el usuario: " + usuario.getEmail());
-		logger.info("Enviado un correo a: " + usuario.getEmail() );
+		enviarCorreo(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
+	
+	private boolean enviarCorreo(Usuario usuario) {
+		logger.info("Se va a enviar un correo a: " + usuario.getEmail() );
+		Random random = new Random();
+		try {
+			int codigoActivacion = random.nextInt(90000000) + 10000000;
+			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
+			getUsuarioDAO().save(usuario);
+			EmailSender emailSender = new EmailSender();
+			emailSender.sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://localhost:8080/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
+			logger.info("Enviado un correo a: " + usuario.getEmail() );
+			return true;
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			return false;
+		}
+			
+		
+	}
+	
+	@GetMapping(path = "confirmarEmail/{codigoActivacion}")
+	@ResponseBody
+	public String confirmarEmail(PersistentEntityResourceAssembler assembler, @PathVariable("codigoActivacion") String codigoActivacion) {
+		Usuario usuario = usuarioDAO.findByClaveActivacion(codigoActivacion);
+		if(usuario.getEmail()!=null) {
+			usuario.setIsConfirmadoEmail(true);
+			//Se elimina la secuencia de numeros aleatorios que invalidaban el password codificado. El usuario ya puede loggearse.
+			usuario.setPassword(usuario.getPassword().split("@@%")[1]);
+			usuario.setRoles(new HashSet<>());
+			usuario.getRoles().add(usuario.getRolSeleccionado());
+			usuarioDAO.save(usuario);
+			return "Se ha verificado tu email en VERMUTORERO.ES.";
+		}else {
+			return "Ha habido un error en la verificacion de tu correo";
+		}
+	}
+		
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")

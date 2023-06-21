@@ -65,6 +65,7 @@ export class EditorComponent implements OnInit {
     }
   }
   postPaginaEditable(){
+    this.paginaEditable.id = undefined;
     this.paginaEditable.html = this.texto;
     this.paginaEditable.nombrePagina = this.nombrePagina.replaceAll("-", " ");
     this.paginaEditableService.postPaginaEditable(this.paginaEditable).subscribe(paginaEditable=>{

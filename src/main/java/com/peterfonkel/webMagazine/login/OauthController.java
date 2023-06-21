@@ -79,7 +79,8 @@ public class OauthController {
 			try {
 	            Usuario usuario = usuarioService.getByEmail(request.getUser()).get();
 	            System.out.println("Encontrado usuario: " + usuario);
-	            Authentication authentication = authenticationManager
+	            if(usuario.getIsConfirmadoEmail()) {
+	            	Authentication authentication = authenticationManager
 	        				.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
 	            System.out.println("Usuario autenicado: " + authentication);	
 	            SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -87,6 +88,11 @@ public class OauthController {
 	            	
 		            // Retornar el token en la respuesta
 		            return ResponseEntity.ok(new AuthenticationResponse(token));
+	            }else {
+	            	logger.warn("email no verificado");
+	            	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	            }
+	            
 			
 	            
 	        } catch (AuthenticationException e) {

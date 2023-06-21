@@ -14,7 +14,7 @@ export class TipoSuscripcionService {
   constructor(private http: HttpClient) { }
 
   getTiposSuscripcion(): Observable<TipoSuscripcion[]>{
-    return this.http.get<any>(this.endpoint + "/tipoSuscripcions").pipe(map(response=>response._embedded.tipoSuscripcions))
+    return this.http.get<any>(this.endpoint + "/tipoSuscripcions/search/suscripciones").pipe(map(response=>response._embedded.tipoSuscripcions))
   }
   getId(p: any): string {
     let url = p._links.self.href;
@@ -26,7 +26,7 @@ export class TipoSuscripcionService {
   }
 
   patchTipoSuscripcion(tipoSuscripcion: TipoSuscripcion): Observable<TipoSuscripcion>{
-    return this.http.patch<any>(this.endpoint + "/tipoSuscripcions/search/patchSuscripciones", tipoSuscripcion);
+    return this.http.patch<any>(this.endpoint + "/tipoSuscripcions/" + tipoSuscripcion.id, tipoSuscripcion);
   }
   deleteTipoSuscripcion(tipoSuscripcion: any): Observable<any>{
     return this.http.delete<any>(this.endpoint + "/tipoSuscripcions/"+ tipoSuscripcion.id);

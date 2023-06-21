@@ -37,3 +37,5 @@
 .precio-suscripcion{
     font-weight: bold;
 }
+li {list-style-type: none;}
+li:before{content: "-"} 

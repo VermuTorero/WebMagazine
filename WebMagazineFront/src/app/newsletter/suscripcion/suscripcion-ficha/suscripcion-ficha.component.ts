@@ -24,12 +24,6 @@ export class SuscripcionFichaComponent implements OnInit {
       this.suscripciones = tipos;
       this.suscripciones.forEach(suscripcion => {
         suscripcion.id =  this.tiposSuscripcionService.getId(suscripcion);
-        this.tiposSuscripcionService.getCaracteristicasFromSuscripcion(suscripcion).subscribe(caracteristicas=>{
-          suscripcion.caracteristicas = caracteristicas;
-          caracteristicas.forEach(caracteristica => {
-            caracteristica.id = this.tiposSuscripcionService.getId(caracteristica);
-          });
-        })
       });
     })
   }

@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine;
 
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 
 
@@ -29,7 +30,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.peterfonkel.webMagazine.entities.CaracteristicaSuscripcion;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
@@ -41,7 +41,6 @@ import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
-import com.peterfonkel.webMagazine.repositories.CaracteristicasSuscripcionDAO;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
 import com.peterfonkel.webMagazine.repositories.LateralDAO;
@@ -90,9 +89,6 @@ public class ClaseConfiguracionJava {
 	
 	@Autowired
 	TipoSuscripcionDAO tipoSuscripcionDAO;
-	
-	@Autowired
-	CaracteristicasSuscripcionDAO caracteristicaSuscripcionDAO;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -189,31 +185,63 @@ public class ClaseConfiguracionJava {
 			usuarioDAO.save(usuarioAdmin);
 		}
 	
-		if (categoriaDAO.findAll().size()<1) {
+		if (categoriaDAO.findAll().size()<3) {
 			Categoria categoria = new Categoria();
-			categoria.setCategoriaNombre("Gastrosofia");
+			categoria.setCategoriaNombre("Patata Santa");
 			categoriaDAO.save(categoria);
+			
+			Categoria categoria2 = new Categoria();
+			categoria.setCategoriaNombre("Restaurantes");
+			categoriaDAO.save(categoria2);
+			
+			Categoria categoria3 = new Categoria();
+			categoria.setCategoriaNombre("Bares");
+			categoriaDAO.save(categoria3);
+			
+			Categoria categoria4 = new Categoria();
+			categoria.setCategoriaNombre("Mercados");
+			categoriaDAO.save(categoria4);
+			
+			Categoria categoria5 = new Categoria();
+			categoria.setCategoriaNombre("Entrevidas");
+			categoriaDAO.save(categoria5);
+			
+			Categoria categoria6 = new Categoria();
+			categoria.setCategoriaNombre("Viajar a solas");
+			categoriaDAO.save(categoria6);
+			
+			Categoria categoria7 = new Categoria();
+			categoria.setCategoriaNombre("Beber bien");
+			categoriaDAO.save(categoria7);
+			
+			Categoria categoria8 = new Categoria();
+			categoria.setCategoriaNombre("Culturoides");
+			categoriaDAO.save(categoria8);
+			
+			Categoria categoria9 = new Categoria();
+			categoria.setCategoriaNombre("Entrevidas");
+			categoriaDAO.save(categoria9);
+			
+			Categoria categoria10 = new Categoria();
+			categoria.setCategoriaNombre("Relaciones");
+			categoriaDAO.save(categoria10);
+			
+			Categoria categoria11 = new Categoria();
+			categoria.setCategoriaNombre("Autocuidado");
+			categoriaDAO.save(categoria11);
 		}
 		
 		if(tipoSuscripcionDAO.findAll().size()<1) {
-			CaracteristicaSuscripcion caracteristicaSuscripcion1 = new CaracteristicaSuscripcion();
-			caracteristicaSuscripcion1.setCaracteristica("caracteristica1");
-			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion1);
-			CaracteristicaSuscripcion caracteristicaSuscripcion2 = new CaracteristicaSuscripcion();
-			caracteristicaSuscripcion2.setCaracteristica("caracteristica2");
-			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion2);
-			CaracteristicaSuscripcion caracteristicaSuscripcion3 = new CaracteristicaSuscripcion();
-			caracteristicaSuscripcion3.setCaracteristica("caracteristica3");
-			caracteristicaSuscripcionDAO.save(caracteristicaSuscripcion3);
+			
 			TipoSuscripcion tipoSuscripcion1 = new TipoSuscripcion();
 			TipoSuscripcion tipoSuscripcion2 = new TipoSuscripcion();
 			TipoSuscripcion tipoSuscripcion3 = new TipoSuscripcion();
 			tipoSuscripcion1.setNombre("Nombre1");
 			tipoSuscripcion2.setNombre("Nombre2");
 			tipoSuscripcion3.setNombre("Nombre3");
-			tipoSuscripcion1.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
-			tipoSuscripcion2.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
-			tipoSuscripcion3.setCaracteristicas(caracteristicaSuscripcionDAO.findAll());
+			tipoSuscripcion1.setCaracteristica1("caracteristica_1");
+			tipoSuscripcion2.setCaracteristica1("caracteristica_1");
+			tipoSuscripcion3.setCaracteristica1("caracteristica_1");
 			tipoSuscripcionDAO.save(tipoSuscripcion1);
 			tipoSuscripcionDAO.save(tipoSuscripcion2);
 			tipoSuscripcionDAO.save(tipoSuscripcion3);

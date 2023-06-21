@@ -19,103 +19,67 @@ public interface PaginaEditableDAO extends JpaRepository<PaginaEditable, Long>{
 	List<PaginaEditable> findAll();
 	PaginaEditable findByNombrePagina(String nombrePagina);
 	@Override
-	default Page<PaginaEditable> findAll(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	Page<PaginaEditable> findAll(Pageable pageable);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default <S extends PaginaEditable> S save(S entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> S save(S entity);
+	
 	@Override
-	default Optional<PaginaEditable> findById(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+	Optional<PaginaEditable> findById(Long id);
+	
 	@Override
-	default boolean existsById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	boolean existsById(Long id);
+	
 	@Override
-	default long count() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	long count();
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteById(Long id) {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteById(Long id);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void delete(PaginaEditable entity) {
-		// TODO Auto-generated method stub
-		
-	}
+	void delete(PaginaEditable entity);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteAllById(Iterable<? extends Long> ids) {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAllById(Iterable<? extends Long> ids);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteAll(Iterable<? extends PaginaEditable> entities) {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAll(Iterable<? extends PaginaEditable> entities);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteAll() {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAll();
+	
 	@Override
-	default <S extends PaginaEditable> Optional<S> findOne(Example<S> example) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+	<S extends PaginaEditable> Optional<S> findOne(Example<S> example);
+	
 	@Override
-	default <S extends PaginaEditable> Page<S> findAll(Example<S> example, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> Page<S> findAll(Example<S> example, Pageable pageable);
+	
 	@Override
-	default <S extends PaginaEditable> long count(Example<S> example) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	<S extends PaginaEditable> long count(Example<S> example);
+	
 	@Override
-	default <S extends PaginaEditable> boolean exists(Example<S> example) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	<S extends PaginaEditable> boolean exists(Example<S> example);
+	
 	@Override
-	default List<PaginaEditable> findAll(Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	List<PaginaEditable> findAll(Sort sort);
+	
 	@Override
-	default List<PaginaEditable> findAllById(Iterable<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	List<PaginaEditable> findAllById(Iterable<Long> ids);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default <S extends PaginaEditable> List<S> saveAll(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> List<S> saveAll(Iterable<S> entities);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void flush() {
-		// TODO Auto-generated method stub
-		
-	}
+	void flush();
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	default <S extends PaginaEditable> S saveAndFlush(S entity) {
@@ -124,47 +88,30 @@ public interface PaginaEditableDAO extends JpaRepository<PaginaEditable, Long>{
 	}
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default <S extends PaginaEditable> List<S> saveAllAndFlush(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> List<S> saveAllAndFlush(Iterable<S> entities);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteAllInBatch(Iterable<PaginaEditable> entities) {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAllInBatch(Iterable<PaginaEditable> entities);
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	default void deleteAllByIdInBatch(Iterable<Long> ids) {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAllByIdInBatch(Iterable<Long> ids);
+	
 	@Override
-	default void deleteAllInBatch() {
-		// TODO Auto-generated method stub
-		
-	}
+	void deleteAllInBatch();
+	
 	@Override
-	default PaginaEditable getOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	PaginaEditable getOne(Long id);
+	
 	@Override
-	default PaginaEditable getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	PaginaEditable getById(Long id);
+	
 	@Override
-	default <S extends PaginaEditable> List<S> findAll(Example<S> example) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> List<S> findAll(Example<S> example);
+	
 	@Override
-	default <S extends PaginaEditable> List<S> findAll(Example<S> example, Sort sort) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	<S extends PaginaEditable> List<S> findAll(Example<S> example, Sort sort);
 	
 
 }

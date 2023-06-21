@@ -37,3 +37,6 @@
 .precio-suscripcion{
     font-weight: bold;
 }
+textarea{
+    width: 100%;
+}

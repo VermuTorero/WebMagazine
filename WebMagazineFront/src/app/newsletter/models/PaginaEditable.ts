@@ -1,5 +1,5 @@
 export class PaginaEditable {
-    id: string = "";
+    id: string | undefined = "";
     html: string = "";
     nombrePagina: string = "";
 }

@@ -21,6 +21,7 @@ export class PaginaEditableService {
     let trozos = url.split("/");
     return trozos[trozos.length - 1];
   }
+  
   postPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
     return this.http.post<any>(this.endpoint + "/paginaEditables", paginaEditable);
   }
