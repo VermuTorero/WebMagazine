@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  
   login() {
     this.loginService.login(this.email, this.password).subscribe(tokenDTO => {
       console.log("TOKEN RECIBIDO", tokenDTO.token);
