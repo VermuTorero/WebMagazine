@@ -185,6 +185,7 @@ public class ClaseConfiguracionJava {
 			usuarioAdmin.setNombre("Elisabeth");
 			usuarioAdmin.setApellido1("G.");
 			usuarioAdmin.setApellido2("Iborra");
+			usuarioAdmin.setIsConfirmadoEmail(true);
 			Rol rolAdmin = rolDAO.findByRolNombre(RolNombre.ROLE_ADMIN).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolAdmin);
