@@ -12,7 +12,8 @@ export class Usuario {
     email!: string;
     password!: string; 
     roles: Rol[] = [];
-    urlImagen: string =""
+    urlImagen: string ="";
+    isConfirmadoEmail: boolean = false;
     constructor(){
 
     }

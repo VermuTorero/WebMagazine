@@ -23,6 +23,8 @@ import { EditorLateralComponent } from './editor-lateral/editor-lateral.componen
 import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
 import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
+import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 
 
@@ -46,14 +48,16 @@ import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscr
     EditorLateralComponent,
     PublicacionesBuscadorComponent,
     SuscripcionComponent,
-    SuscripcionFichaComponent
+    SuscripcionFichaComponent,
+    VerificacionPagoComponent
   ],
   imports: [
     CommonModule,
     NewsletterRoutingModule,
     FormsModule,
     QuillModule,
-    AngularCropperjsModule
+    AngularCropperjsModule,
+    NgxPayPalModule
   ]
 })
 export class NewsletterModule { }

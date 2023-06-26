@@ -131,7 +131,7 @@ public class UsuariosController {
 			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
 			getUsuarioDAO().save(usuario);
 			
-			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://localhost:8080/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
+			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
 			logger.info("Enviado un correo a: " + usuario.getEmail() );
 			return true;
 		} catch (Exception e) {
@@ -262,11 +262,24 @@ public class UsuariosController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
+	
+	
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
 		Usuario usuario = usuarioDAO.findById(idUsuario);
 		Set<Rol> roles = usuario.getRoles();
 		return assembler.toCollectionModel(roles);
+	}
+	
+
+	@GetMapping(path = "isConfirmed/{email}")
+	@ResponseBody
+	public PersistentEntityResource getConfirmedByEmail(PersistentEntityResourceAssembler assembler,
+			@PathVariable("email") String email) {
+		Usuario usuario = usuarioDAO.findByEmail(email).get();
+		System.out.println(usuario.getEmail());
+		usuario.setPassword("password");
+		return assembler.toModel(usuario);
 	}
 
 }

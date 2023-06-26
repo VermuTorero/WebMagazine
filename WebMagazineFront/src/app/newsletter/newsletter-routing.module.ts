@@ -15,6 +15,7 @@ import { EditorLateralComponent } from './editor-lateral/editor-lateral.componen
 import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-buscador/publicaciones-buscador.component';
 import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
+import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
 
 
 const routes: Routes = [
@@ -143,6 +144,15 @@ const routes: Routes = [
       {
         path: `suscripcion-ficha`,
         component: SuscripcionFichaComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `verificacion-pago`,
+        component: VerificacionPagoComponent,
       }
     ],
   }
