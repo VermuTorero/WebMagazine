@@ -279,6 +279,7 @@ public class UsuariosController {
 		Usuario usuario = usuarioDAO.findByEmail(email).get();
 		System.out.println(usuario.getEmail());
 		usuario.setPassword("password");
+		usuario.setClaveActivacion("12345678");
 		return assembler.toModel(usuario);
 	}
 
