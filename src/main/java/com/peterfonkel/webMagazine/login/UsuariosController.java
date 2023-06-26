@@ -282,5 +282,11 @@ public class UsuariosController {
 		usuario.setClaveActivacion("12345678");
 		return assembler.toModel(usuario);
 	}
+	
+	@GetMapping(path = "roles")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
+		return assembler.toCollectionModel(getRolDAO().findAll());
+	}
 
 }

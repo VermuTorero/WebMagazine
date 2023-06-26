@@ -64,25 +64,31 @@ export class SuscripcionComponent implements OnInit {
   }
 
   postUsuario(precio: string) {
-    window.open('/verificacion-pago', '_blank', 'width=600,height=400');
+    const verificationWindow = window.open('/verificacion-pago', '_blank', 'width=600,height=400');
     this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario => {
       this.usuarioConfirmando.id = this.usuariosService.getId(usuario);
       this.usuarioConfirmando = usuario;
-    })
+    });
+  
     const interval = setInterval(() => {
       if (!this.usuarioConfirmando.isConfirmadoEmail) {
         this.usuariosService.getIsConfirmed(this.usuarioNuevo.email).subscribe(UsuarioIsConfirmed => {
           this.usuarioConfirmando.isConfirmadoEmail = UsuarioIsConfirmed.isConfirmadoEmail;
-          console.log("ESPERANDO A CONFIRMACION DE EMAIL")
-        })
+          console.log("ESPERANDO A CONFIRMACION DE EMAIL");
+        });
       } else {
         console.log("ABRIENDO PASARELA DE PAGO");
         clearInterval(interval);
-        this.pagar("modalPaypal")
-        this.initConfig(precio); 
+        this.pagar("modalPaypal");
+        this.initConfig(precio);
+        if(verificationWindow){
+          verificationWindow.close(); // Cerrar la ventana de verificación
+        }
+        
       }
-    }, 6000)
+    }, 6000);
   }
+  
 
 
   pagar(modal: any): void {
