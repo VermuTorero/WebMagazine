@@ -1,6 +1,7 @@
 package com.peterfonkel.webMagazine;
 
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 
@@ -186,6 +187,7 @@ public class ClaseConfiguracionJava {
 			usuarioAdmin.setApellido1("G.");
 			usuarioAdmin.setApellido2("Iborra");
 			usuarioAdmin.setIsConfirmadoEmail(true);
+			usuarioAdmin.setFechaFinSuscripcion(Instant.now().plusMillis(864000000));
 			Rol rolAdmin = rolDAO.findByRolNombre(RolNombre.ROLE_ADMIN).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolAdmin);
