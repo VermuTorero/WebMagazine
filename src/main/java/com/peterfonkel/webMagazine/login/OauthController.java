@@ -79,7 +79,7 @@ public class OauthController {
 	            Usuario usuario = usuarioService.getByEmail(request.getUser()).get();
 	            System.out.println("Encontrado usuario: " + usuario);
 	            if(usuario.getIsConfirmadoEmail()) {
-	            	if (usuario.getFechaFinSuscripcion().compareTo(Instant.now())<0
+	            	if (usuario.getFechaFinSuscripcion().compareTo(Instant.now())>0
 	            			|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_ADMIN")
 	            			|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_REGISTERED")) {
 	            		Authentication authentication = authenticationManager
