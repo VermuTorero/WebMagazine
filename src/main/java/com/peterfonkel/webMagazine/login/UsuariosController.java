@@ -100,7 +100,7 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuario) throws MessagingException {
 		logger.info("Salvando nuevo Usuario pendiente de confirmar email: " + usuario);
-		//Se crea una secuencia de numeros aleatorios de 8 cifras añadiendo @@%. Se agregará al password codificado para inutilizarlo
+		//Se crea una secuencia de numeros aleatorios de 8 cifras aï¿½adiendo @@%. Se agregarï¿½ al password codificado para inutilizarlo
 		Random random = new Random();
 		int codigoDesactivado = random.nextInt(90000000) + 10000000;
 		String desactivado = String.valueOf(codigoDesactivado) + "@@%";
@@ -109,6 +109,8 @@ public class UsuariosController {
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
+		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plusMillis(120000));
+		//2592000000 30 dias en milis
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
 		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
@@ -137,9 +139,7 @@ public class UsuariosController {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			return false;
-		}
-			
-		
+		}	
 	}
 	
 	@GetMapping(path = "confirmarEmail/{codigoActivacion}")
@@ -262,8 +262,6 @@ public class UsuariosController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
-	
-	
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
 		Usuario usuario = usuarioDAO.findById(idUsuario);

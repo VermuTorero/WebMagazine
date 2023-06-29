@@ -1,218 +1,223 @@
 <div class="row descripcion-pagina text-center">
-    <h3 class="col-11 m-4 texto-descripcion">Suscribete a nuestra web y disfruta de los mejores contenidos premium.</h3>
+  <h3 class="col-11 m-4 texto-descripcion">Suscribete a nuestra web y disfruta de los mejores contenidos premium.</h3>
 </div>
 <div class="row mb-4 suscripciones">
-    <div class="col-1"></div>
-    <div class="col-3 tipo-suscripcion tipo-suscripcion-1">
-        <div class="text-center titulo-suscripcion">
-            <h4 class="texto-titulo">{{suscripciones[0].nombre}}</h4>
-        </div>
-        <div class="caracteristicas-suscripcion mt-3">
-            <ul>
-                <li  *ngIf="suscripciones[0].caracteristica1" class="row my-2">{{suscripciones[0].caracteristica1}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica2" class="row my-2">{{suscripciones[0].caracteristica2}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica3" class="row my-2">{{suscripciones[0].caracteristica3}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica4" class="row my-2">{{suscripciones[0].caracteristica4}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica5" class="row my-2">{{suscripciones[0].caracteristica5}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica6" class="row my-2">{{suscripciones[0].caracteristica6}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica7" class="row my-2">{{suscripciones[0].caracteristica7}}</li>
-                <li  *ngIf="suscripciones[0].caracteristica8" class="row my-2">{{suscripciones[0].caracteristica8}}</li>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p *ngIf="suscripciones[0].precio">{{suscripciones[0].precio}}</p>
-            <p *ngIf="!suscripciones[0].precio">GRATIS</p>
-        </div>
-        <div class="text-center">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo1">Suscribirme</button>
-        </div>
+  <div class="col-1"></div>
+  <div class="col-3 tipo-suscripcion tipo-suscripcion-1">
+    <div class="text-center titulo-suscripcion">
+      <h4 class="texto-titulo">{{suscripciones[0].nombre}}</h4>
     </div>
+    <div class="caracteristicas-suscripcion mt-3">
+      <ul>
+        <li *ngIf="suscripciones[0].caracteristica1" class="row my-2">- {{suscripciones[0].caracteristica1}}</li>
+        <li *ngIf="suscripciones[0].caracteristica2" class="row my-2">- {{suscripciones[0].caracteristica2}}</li>
+        <li *ngIf="suscripciones[0].caracteristica3" class="row my-2">- {{suscripciones[0].caracteristica3}}</li>
+        <li *ngIf="suscripciones[0].caracteristica4" class="row my-2">- {{suscripciones[0].caracteristica4}}</li>
+        <li *ngIf="suscripciones[0].caracteristica5" class="row my-2">- {{suscripciones[0].caracteristica5}}</li>
+        <li *ngIf="suscripciones[0].caracteristica6" class="row my-2">- {{suscripciones[0].caracteristica6}}</li>
+        <li *ngIf="suscripciones[0].caracteristica7" class="row my-2">- {{suscripciones[0].caracteristica7}}</li>
+        <li *ngIf="suscripciones[0].caracteristica8" class="row my-2">- {{suscripciones[0].caracteristica8}}</li>
+      </ul>
+    </div>
+    <div class="text-center precio-suscripcion">
+      <p *ngIf="suscripciones[0].precio">{{suscripciones[0].precio}}</p>
+      <p *ngIf="!suscripciones[0].precio">GRATIS</p>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo1">Suscribirme</button>
+    </div>
+  </div>
 
-    <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
-        <div class="text-center titulo-suscripcion">
-            <h4 class="texto-titulo">{{suscripciones[1].nombre}}</h4>
-        </div>
-        <div class="caracteristicas-suscripcion mt-3">
-            <ul>
-                <li  *ngIf="suscripciones[1].caracteristica1" class="row my-2">{{suscripciones[1].caracteristica1}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica2" class="row my-2">{{suscripciones[1].caracteristica2}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica3" class="row my-2">{{suscripciones[1].caracteristica3}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica4" class="row my-2">{{suscripciones[1].caracteristica4}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica5" class="row my-2">{{suscripciones[1].caracteristica5}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica6" class="row my-2">{{suscripciones[1].caracteristica6}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica7" class="row my-2">{{suscripciones[1].caracteristica7}}</li>
-                <li  *ngIf="suscripciones[1].caracteristica8" class="row my-2">{{suscripciones[1].caracteristica8}}</li>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p>{{suscripciones[1].precio}}</p>
-        </div>
-        <div class="text-center">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo2">Suscribirme</button>
-        </div>
+  <div class="col-3 tipo-suscripcion tipo-suscripcion-2">
+    <div class="text-center titulo-suscripcion">
+      <h4 class="texto-titulo">{{suscripciones[1].nombre}}</h4>
     </div>
+    <div class="caracteristicas-suscripcion mt-3">
+      <ul>
+        <li *ngIf="suscripciones[1].caracteristica1" class="row my-2">- {{suscripciones[1].caracteristica1}}</li>
+        <li *ngIf="suscripciones[1].caracteristica2" class="row my-2">- {{suscripciones[1].caracteristica2}}</li>
+        <li *ngIf="suscripciones[1].caracteristica3" class="row my-2">- {{suscripciones[1].caracteristica3}}</li>
+        <li *ngIf="suscripciones[1].caracteristica4" class="row my-2">- {{suscripciones[1].caracteristica4}}</li>
+        <li *ngIf="suscripciones[1].caracteristica5" class="row my-2">- {{suscripciones[1].caracteristica5}}</li>
+        <li *ngIf="suscripciones[1].caracteristica6" class="row my-2">- {{suscripciones[1].caracteristica6}}</li>
+        <li *ngIf="suscripciones[1].caracteristica7" class="row my-2">- {{suscripciones[1].caracteristica7}}</li>
+        <li *ngIf="suscripciones[1].caracteristica8" class="row my-2">- {{suscripciones[1].caracteristica8}}</li>
+      </ul>
+    </div>
+    <div class="text-center precio-suscripcion">
+      <p *ngIf="suscripciones[1].precio">{{suscripciones[1].precio}} EUROS / MES</p>
+      <p *ngIf="!suscripciones[1].precio">GRATIS</p>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo2">Suscribirme</button>
+    </div>
+  </div>
 
-    <div class="col-3 tipo-suscripcion tipo-suscripcion-3">
-        <div class="text-center titulo-suscripcion">
-            <h4 class="texto-titulo">{{suscripciones[2].nombre}}</h4>
-        </div>
-        <div class="caracteristicas-suscripcion">
-            <ul>
-                <li *ngIf="suscripciones[2].caracteristica1" class="row my-2">{{suscripciones[2].caracteristica1}}</li>
-                <li *ngIf="suscripciones[2].caracteristica2" class="row my-2">{{suscripciones[2].caracteristica2}}</li>
-                <li *ngIf="suscripciones[2].caracteristica3" class="row my-2">{{suscripciones[2].caracteristica3}}</li>
-                <li *ngIf="suscripciones[2].caracteristica4" class="row my-2">{{suscripciones[2].caracteristica4}}</li>
-                <li *ngIf="suscripciones[2].caracteristica5" class="row my-2">{{suscripciones[2].caracteristica5}}</li>
-                <li *ngIf="suscripciones[2].caracteristica6" class="row my-2">{{suscripciones[2].caracteristica6}}</li>
-                <li *ngIf="suscripciones[2].caracteristica7" class="row my-2">{{suscripciones[2].caracteristica7}}</li>
-                <li *ngIf="suscripciones[2].caracteristica8" class="row my-2">{{suscripciones[2].caracteristica8}}</li>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p>{{suscripciones[2].precio}}</p>
-        </div>
-        <div class="text-center">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo3">Suscribirme</button>
-        </div>
+  <div class="col-3 tipo-suscripcion tipo-suscripcion-3">
+    <div class="text-center titulo-suscripcion">
+      <h4 class="texto-titulo">{{suscripciones[2].nombre}}</h4>
     </div>
+    <div class="caracteristicas-suscripcion">
+      <ul>
+        <li *ngIf="suscripciones[2].caracteristica1" class="row my-2">- {{suscripciones[2].caracteristica1}}</li>
+        <li *ngIf="suscripciones[2].caracteristica2" class="row my-2">- {{suscripciones[2].caracteristica2}}</li>
+        <li *ngIf="suscripciones[2].caracteristica3" class="row my-2">- {{suscripciones[2].caracteristica3}}</li>
+        <li *ngIf="suscripciones[2].caracteristica4" class="row my-2">- {{suscripciones[2].caracteristica4}}</li>
+        <li *ngIf="suscripciones[2].caracteristica5" class="row my-2">- {{suscripciones[2].caracteristica5}}</li>
+        <li *ngIf="suscripciones[2].caracteristica6" class="row my-2">- {{suscripciones[2].caracteristica6}}</li>
+        <li *ngIf="suscripciones[2].caracteristica7" class="row my-2">- {{suscripciones[2].caracteristica7}}</li>
+        <li *ngIf="suscripciones[2].caracteristica8" class="row my-2">- {{suscripciones[2].caracteristica8}}</li>
+      </ul>
+    </div>
+    <div class="text-center precio-suscripcion">
+      <p *ngIf="suscripciones[2].precio">{{suscripciones[2].precio}} EUROS / MES</p>
+      <p *ngIf="!suscripciones[2].precio">GRATIS</p>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signInModalTipo3">Suscribirme</button>
+    </div>
+  </div>
 </div>
 
 
 <!-- Modal Signin Tipo1-->
 <div class="modal fade" id="signInModalTipo1" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="email-input m-2">
+          <label for="email" class="col-5">Email</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
         </div>
-        <div class="modal-body">
-          <div class="email-input m-2">
-            <label for="email" class="col-5">Email</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
-          </div>
-          <div class="email-input m-2">
-            <label for="password" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
-          </div>
-          <div class="email-input m-2">
-            <label for="password2" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
-          </div>
+        <div class="email-input m-2">
+          <label for="password" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="postUsuarioTipo1()" data-bs-dismiss="modal">Aceptar</button>
+        <div class="email-input m-2">
+          <label for="password2" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="postUsuarioTipo1()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
+</div>
 
 <!-- Modal Signin Tipo2-->
 <div class="modal fade" id="signInModalTipo2" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="email-input m-2">
+          <label for="nombre" class="col-5">Nombre</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
         </div>
-        <div class="modal-body">
-          <div class="email-input m-2">
-            <label for="nombre" class="col-5">Nombre</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
-          </div>
-          <div class="email-input m-2">
-            <label for="apellido1"class="col-5">Primer apellido</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
-          </div>
-          <div class="email-input m-2">
-            <label for="apellido2" class="col-5">Segundo apellido</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
-          </div>
-          <div class="email-input m-2">
-            <label for="dirección"class="col-5">Dirección</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-          </div>
-          <div class="email-input m-2">
-            <label for="email" class="col-5">Email</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
-          </div>
-          <div class="email-input m-2">
-            <label for="password" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
-          </div>
-          <div class="email-input m-2">
-            <label for="password2" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
-          </div>
+        <div class="email-input m-2">
+          <label for="apellido1" class="col-5">Primer apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="postUsuarioTipo2()" data-bs-dismiss="modal">Aceptar</button>
+        <div class="email-input m-2">
+          <label for="apellido2" class="col-5">Segundo apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
+        <div class="email-input m-2">
+          <label for="dirección" class="col-5">Dirección</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
+        </div>
+        <div class="email-input m-2">
+          <label for="email" class="col-5">Email</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
+        </div>
+        <div class="email-input m-2">
+          <label for="password" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
+        </div>
+        <div class="email-input m-2">
+          <label for="password2" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="postUsuarioTipo2()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal Signin Tipo3-->
+<!-- Modal Signin Tipo3-->
 <div class="modal fade" id="signInModalTipo3" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="email-input m-2">
+          <label for="nombre" class="col-5">Nombre</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
         </div>
-        <div class="modal-body">
-          <div class="email-input m-2">
-            <label for="nombre" class="col-5">Nombre</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
-          </div>
-          <div class="email-input m-2">
-            <label for="apellido1"class="col-5">Primer apellido</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
-          </div>
-          <div class="email-input m-2">
-            <label for="apellido2" class="col-5">Segundo apellido</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
-          </div>
-          <div class="email-input m-2">
-            <label for="dirección"class="col-5">Dirección</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-          </div>
-          <div class="email-input m-2">
-            <label for="email" class="col-5">Email</label>
-            <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
-          </div>
-          <div class="email-input m-2">
-            <label for="password" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
-          </div>
-          <div class="email-input m-2">
-            <label for="password2" class="col-5">Password</label>
-            <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
-          </div>
+        <div class="email-input m-2">
+          <label for="apellido1" class="col-5">Primer apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="postUsuarioTipo3()" data-bs-dismiss="modal">Aceptar</button>
+        <div class="email-input m-2">
+          <label for="apellido2" class="col-5">Segundo apellido</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
+        <div class="email-input m-2">
+          <label for="dirección" class="col-5">Dirección</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
+        </div>
+        <div class="email-input m-2">
+          <label for="email" class="col-5">Email</label>
+          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
+        </div>
+        <div class="email-input m-2">
+          <label for="password" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
+        </div>
+        <div class="email-input m-2">
+          <label for="password2" class="col-5">Password</label>
+          <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="postUsuarioTipo3()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal de pago de paypal-->
+<!-- Modal de pago de paypal-->
 <ng-template #modalPaypal let-modal>
 
   <div class="modal-header">
-      <h1 class="modal-title fs-5" id="exampleModalLabel">Realizar Pago</h1>
-      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Realizar Pago</h1>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-      
-      <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
   </div>
   <div class="modal-footer">
-      <button type="button" ngbAutofocus class="btn btn-secondary" (click)="modal.close('Save click')">Cerrar</button>
+    <button type="button" ngbAutofocus class="btn btn-secondary" (click)="modal.close('Save click')">Cerrar</button>
   </div>
 
 </ng-template>

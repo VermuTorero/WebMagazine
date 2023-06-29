@@ -9,6 +9,7 @@ import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.sun.istack.NotNull;
 import javax.persistence.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,8 @@ public class Usuario {
 	private String edad;
 	
 	private String urlImagen;
+	
+	private Instant fechaFinSuscripcion;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
@@ -217,6 +220,14 @@ public class Usuario {
 
 	public void setRolSeleccionado(Rol rolSeleccionado) {
 		this.rolSeleccionado = rolSeleccionado;
+	}
+
+	public Instant getFechaFinSuscripcion() {
+		return fechaFinSuscripcion;
+	}
+
+	public void setFechaFinSuscripcion(Instant fechaFinSuscripcion) {
+		this.fechaFinSuscripcion = fechaFinSuscripcion;
 	}
 
 	@Override

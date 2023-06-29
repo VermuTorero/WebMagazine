@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TipoSuscripcion } from '../models/TipoSuscripcion';
 import { TipoSuscripcionService } from '../service/tiposSuscripcion.service';
 import { Usuario } from 'src/app/security/models/usuario';
@@ -17,6 +17,7 @@ import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receip
 })
 export class SuscripcionComponent implements OnInit {
 
+  @ViewChild('modalPaypal') modalPaypal: any;
   suscripciones: TipoSuscripcion[] = [];
   usuarioNuevo: Usuario = new Usuario();
   usuarioConfirmando: Usuario = new Usuario();
@@ -79,7 +80,7 @@ export class SuscripcionComponent implements OnInit {
       } else {
         console.log("ABRIENDO PASARELA DE PAGO");
         clearInterval(interval);
-        this.pagar("modalPaypal");
+        this.pagar(precio);
         this.initConfig(precio);
         if(verificationWindow){
           verificationWindow.close(); // Cerrar la ventana de verificación
@@ -88,15 +89,13 @@ export class SuscripcionComponent implements OnInit {
       }
     }, 6000);
   }
-  
 
-
-  pagar(modal: any): void {
-    this.modalService.open(modal, {
+  pagar(precio: string): void {
+    /* this.modalService.open(this.modalPaypal, {
       size: 'm',
       windowClass: 'modalPaypal'
-    });
-   
+    }); */
+   this.initConfig(precio);
   }
 
   // metodo paypal
@@ -124,7 +123,7 @@ export class SuscripcionComponent implements OnInit {
                 },
               },
               // colocamos los items del carrito con el metodo getItemsList
-              items: [{name: "suscripcion", quantity: "1"}],
+              items: [{name: "suscripcion", quantity: "1", unit_amount: {value: precio, currency_code: 'EUR'}}],
             },
           ],
         },
@@ -137,7 +136,7 @@ export class SuscripcionComponent implements OnInit {
       },
       onApprove: (data, actions) => {
         //mostramos un spinner mientras se procesa el pago
-        this.spinner.show();
+        /* this.spinner.show(); */
         console.log(
           'onApprove - transaction was approved, but not authorized',
           data,
@@ -177,5 +176,5 @@ export class SuscripcionComponent implements OnInit {
     modalRef.componentInstance.items = items;
     modalRef.componentInstance.amount = amount
   }
-
+  
 }

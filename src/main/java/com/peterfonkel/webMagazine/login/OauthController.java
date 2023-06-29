@@ -8,6 +8,8 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
+import java.time.Instant;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -33,7 +35,6 @@ import com.peterfonkel.webMagazine.login.dto.AuthenticationResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
 
 
 @RestController
@@ -65,10 +66,8 @@ public class OauthController {
 	@Autowired
 	RolService rolService;
 
-
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-	
 	@PostMapping("/authenticate")
 	private ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
 		System.out.println(usuarioService.getByEmail(request.getPassword()));
@@ -80,21 +79,26 @@ public class OauthController {
 	            Usuario usuario = usuarioService.getByEmail(request.getUser()).get();
 	            System.out.println("Encontrado usuario: " + usuario);
 	            if(usuario.getIsConfirmadoEmail()) {
-	            	Authentication authentication = authenticationManager
-	        				.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
-	            System.out.println("Usuario autenicado: " + authentication);	
-	            SecurityContextHolder.getContext().setAuthentication(authentication);
-	            String token = jwtProvider.generateToken(authentication);
+	            	if (usuario.getFechaFinSuscripcion().compareTo(Instant.now())<0
+	            			|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_ADMIN")
+	            			|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_REGISTERED")) {
+	            		Authentication authentication = authenticationManager
+		        				.authenticate(new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
+		            System.out.println("Usuario autenicado: " + authentication);	
+		            SecurityContextHolder.getContext().setAuthentication(authentication);
+		            String token = jwtProvider.generateToken(authentication);
+		            	
+			            // Retornar el token en la respuesta
+			            return ResponseEntity.ok(new AuthenticationResponse(token));
+					}else {
+						logger.warn("suscripcion caducada");
+		            	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+					}
 	            	
-		            // Retornar el token en la respuesta
-		            return ResponseEntity.ok(new AuthenticationResponse(token));
 	            }else {
 	            	logger.warn("email no verificado");
 	            	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	            }
-	            
-			
-	            
+	            }     
 	        } catch (AuthenticationException e) {
 	        	logger.warn("fallo al autenticar");
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -115,7 +119,6 @@ public class OauthController {
 	        
 	        if (userDetails != null) {
 	            String nuevoToken = jwtProvider.generateTokenFromUserDetails(userDetails);
-	            
 	            // Devuelve el nuevo token en la respuesta
 	            return ResponseEntity.ok(new AuthenticationResponse(nuevoToken));
 	        }
@@ -127,11 +130,9 @@ public class OauthController {
 
 	private String getTokenFromRequest(HttpServletRequest request) {
 	    String bearerToken = request.getHeader("Authorization");
-	    
 	    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 	        return bearerToken.substring(7); // Elimina el prefijo "Bearer " para obtener solo el token
 	    }
-	    
 	    return null;
 	}
 }
