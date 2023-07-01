@@ -169,7 +169,7 @@ public class UsuariosController {
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
 		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
 		if (usuario.getEmail() != null) {
-			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
+			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(31)));
 			getUsuarioDAO().save(usuario);
 		}
 	}

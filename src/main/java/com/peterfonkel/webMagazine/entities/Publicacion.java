@@ -44,7 +44,7 @@ public class Publicacion {
 	
 	private boolean carousel;
 
-	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval = false)
 	private Usuario autor;
 	
 	private Instant fechaPublicacion;

@@ -290,6 +290,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.lugares.forEach(lugar => {
         lugar.id = this.lugaresService.getId(lugar);
       });
+      console.log("LUGARES RECIBIDOS: ", this.lugares);
     })
   }
 
