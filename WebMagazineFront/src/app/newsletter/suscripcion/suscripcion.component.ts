@@ -56,12 +56,12 @@ export class SuscripcionComponent implements OnInit {
 
   postUsuarioTipo2() {
     this.usuarioNuevo.roles[0].rolNombre = "ROLE_USER_SUBSCRIBED";
-    this.postUsuario(this.suscripciones[0].precio);
+    this.postUsuario(this.suscripciones[1].precio);
   }
 
   postUsuarioTipo3() {
     this.usuarioNuevo.roles[0].rolNombre = "ROLE_USER_MEMBER";
-    this.postUsuario(this.suscripciones[0].precio);
+    this.postUsuario(this.suscripciones[2].precio);
   }
 
   postUsuario(precio: string) {
@@ -91,10 +91,10 @@ export class SuscripcionComponent implements OnInit {
   }
 
   pagar(precio: string): void {
-    /* this.modalService.open(this.modalPaypal, {
+    this.modalService.open(this.modalPaypal, {
       size: 'm',
       windowClass: 'modalPaypal'
-    }); */
+    });
    this.initConfig(precio);
   }
 

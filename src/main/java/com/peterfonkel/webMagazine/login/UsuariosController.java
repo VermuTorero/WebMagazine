@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.login;
 
+import java.time.Duration;
 import java.time.Instant;
 
 
@@ -109,8 +110,7 @@ public class UsuariosController {
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
-		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plusMillis(120000));
-		//2592000000 30 dias en milis
+		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
 		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();

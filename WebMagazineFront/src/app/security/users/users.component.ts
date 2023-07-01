@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
   users: Usuario[] = [];
   usuarioNuevo: Usuario = new Usuario();
   usuarioModificar: Usuario = new Usuario();
+  usuarioBorrar: Usuario = new Usuario();
   password2: string = "";
   roles: Rol[] = [];
 
@@ -59,19 +60,23 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  deleteUsuario(user: any){
-    this.usuariosService.deleteUsuario(user).subscribe(response=>{
-      this.usuariosService.deleteUsuario(user).subscribe(user=>{
-        document.location.reload();
-      })
-      
+  deleteUsuario(user:any){
+    this.usuarioBorrar = user;
+    $('#confirmarDeleteModal').modal('show');
+  }
+
+  deleteUsuarioConfirmado(){
+    this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(response=>{
+      this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(user=>{
+       document.location.reload()
+      }, err=>{document.location.reload()},()=>{document.location.reload()})
     })
   }
   postUsuario(){
     this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario=>{
       console.log("USUARIO CREADO: " + usuario)
      /* document.location.reload(); */
-    })
+    },err=>{},()=>{document.location.reload()})
   }
   
 }

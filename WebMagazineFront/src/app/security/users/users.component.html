@@ -30,10 +30,6 @@
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
         <div class="email-input m-2">
-          <label for="dirección"class="col-5">Dirección</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-        </div>
-        <div class="email-input m-2">
           <label for="rol" class="col-5">Rol</label>
           <select class="m-2 col-5" [(ngModel)]="usuarioNuevo.roles[0].rolNombre">
             <option *ngFor="let rol of roles" name="roles" id="roles" value="{{rol.rolNombre}}">{{rol.rolNombre}}</option>
@@ -95,6 +91,25 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" (click)="patchUsuario()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmar delete user -->
+<div class="modal fade" id="confirmarDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>¿Estas seguro de que quieres eliminar {{usuarioBorrar.email}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="deleteUsuarioConfirmado()" data-bs-dismiss="modal">Eliminar</button>
       </div>
     </div>
   </div>
