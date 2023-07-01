@@ -251,6 +251,7 @@ public class UsuariosController {
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
 		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
+		usuarioAntiguo.setFechaFinSuscripcion(usuarioModificado.getFechaFinSuscripcion());
 		Set<Rol> roles = usuarioModificado.getRoles();
 		Rol rol = roles.iterator().next();
 		roles = new HashSet<>();

@@ -14,6 +14,7 @@ export class Usuario {
     roles: Rol[] = [];
     urlImagen: string ="";
     isConfirmadoEmail: boolean = false;
+    fechaFinSuscripcion: string = "";
     constructor(){
 
     }

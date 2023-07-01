@@ -87,6 +87,10 @@
             <option *ngFor="let rol of roles" name="roles" id="roles" value="{{rol.rolNombre}}">{{rol.rolNombre}}</option>
           </select>
         </div>
+        <div class="row my-1">
+          <div class="col-5">Fecha Fin</div>
+          <input class="col-5" [(ngModel)]="usuarioModificar.fechaFinSuscripcion">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
