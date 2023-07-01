@@ -11,7 +11,7 @@ import java.util.Set;
 
 @RepositoryRestResource(path = "usuarios", 
 						itemResourceRel = "usuario", 
-						collectionResourceRel = "usuarios", exported = false)
+						collectionResourceRel = "usuarios")
 public interface UsuarioDAO extends JpaRepository<Usuario, Integer> {
 	
     Optional<Usuario> findByEmail(@RequestParam String email);
