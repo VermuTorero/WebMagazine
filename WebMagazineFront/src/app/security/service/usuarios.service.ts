@@ -19,7 +19,7 @@ export class UsuariosService {
   endpointBack: string = environment.urlBack;
 
   getUsuarios(): Observable<Usuario[]> {   
-    return this.http.get<any>(this.endpoint + "/usuarios").pipe(map(response=>response._embedded.usuarios));
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuarios").pipe(map(response=>response._embedded.usuarios));
   }
 
   getUsuariosFromUrls(urls: string[]): Observable<Usuario[]> {   

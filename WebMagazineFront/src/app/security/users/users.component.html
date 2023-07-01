@@ -2,6 +2,15 @@
   <button class="btn btn-outline-primary my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
     usuario</button>
 </div>
+<div class="row m-2 titulo-columna">
+  <div class="col-1">NOMBRE</div>
+  <div class="col-1">1º_APELLIDO</div>
+  <div class="col-1">2º_APELLIDO</div>
+  <div class="col-2">EMAIL</div>
+  <div class="col-2">ROL</div>
+  <div class="col-2">FECHA FIN SUSCRIPCIÓN</div>
+  <div class="col-2">ACCIONES</div>
+</div>
 
 <div *ngFor="let user of users">
   <app-user [user]="user" (modificarUserEvent)="abrirModificarModal($event)"

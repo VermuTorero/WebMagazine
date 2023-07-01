@@ -201,6 +201,15 @@ public class UsuariosController {
 
 	}
 
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuarios")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = usuarioDAO.findAll();
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosPremium")
 	@ResponseBody
