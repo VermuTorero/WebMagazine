@@ -1,5 +1,7 @@
 package com.peterfonkel.webMagazine.login.usuarios.entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import com.peterfonkel.webMagazine.entities.Direccion;
 import com.peterfonkel.webMagazine.entities.Invitacion;
@@ -27,6 +29,7 @@ public class Usuario {
 	@Column(unique = true)
 	private String email;
 
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@NotNull
 	private String password;
 
