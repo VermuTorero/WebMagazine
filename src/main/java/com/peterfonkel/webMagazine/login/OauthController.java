@@ -92,7 +92,7 @@ public class OauthController {
 			            return ResponseEntity.ok(new AuthenticationResponse(token));
 					}else {
 						logger.warn("suscripcion caducada");
-		            	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		            	return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
 					}
 	            	
 	            }else {
