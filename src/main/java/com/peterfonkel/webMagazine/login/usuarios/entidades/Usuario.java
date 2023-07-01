@@ -64,6 +64,7 @@ public class Usuario {
 	@OneToOne(fetch = FetchType.LAZY)
 	private Suscripcion suscripcion;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String claveActivacion;
 	
 	private Boolean isConfirmadoEmail;

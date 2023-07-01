@@ -161,7 +161,6 @@ public class ClaseConfiguracionJava {
 	@Bean
 	public ObjectMapper getObjectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
-//		mapper.addMixIn(Usuario.class, Mixins.Usuario.class);
 		return mapper;
 	}
 	
