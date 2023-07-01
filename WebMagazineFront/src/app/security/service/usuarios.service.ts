@@ -88,7 +88,7 @@ export class UsuariosService {
   getIsConfirmed(email: string): Observable<Usuario>{
     return this.http.get<any>(this.endpointBack + "/usuarios/search/isConfirmed/" + email)
   }
-  setIsPaid(email: string): void {
-    this.http.get<any>(this.endpointBack + "/usuarios/search/confirmarPago/" + email)
+  setIsPaid(email: string): Observable<void> {
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/confirmarPago/" + email);
   }
 }
