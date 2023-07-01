@@ -155,7 +155,7 @@ export class SuscripcionComponent implements OnInit {
           data
         );
 
-        //validar suscripcion
+        this.usuariosService.setIsPaid(this.usuarioNuevo.email);
        
 
       },

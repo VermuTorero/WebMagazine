@@ -110,7 +110,8 @@ public class UsuariosController {
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
-		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
+//		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
+		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
 		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
@@ -133,7 +134,7 @@ public class UsuariosController {
 			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
 			getUsuarioDAO().save(usuario);
 			
-			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
+			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
 			logger.info("Enviado un correo a: " + usuario.getEmail() );
 			return true;
 		} catch (Exception e) {
@@ -158,7 +159,16 @@ public class UsuariosController {
 			return "Ha habido un error en la verificacion de tu correo";
 		}
 	}
-		
+	
+	@GetMapping(path = "confirmarPago/{email}")
+	@ResponseBody
+	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
+		Usuario usuario = usuarioDAO.findByEmail(email).get();
+		if(usuario.getEmail()!=null) {
+			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
+			usuarioDAO.save(usuario);
+		}
+	}
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")
