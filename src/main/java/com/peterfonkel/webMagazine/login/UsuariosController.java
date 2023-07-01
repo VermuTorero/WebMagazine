@@ -3,7 +3,6 @@ package com.peterfonkel.webMagazine.login;
 import java.time.Duration;
 import java.time.Instant;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +46,7 @@ public class UsuariosController {
 
 	@Value("${correoAdmin}")
 	private String correoAdmin;
-	
+
 	@Value("${secretPsw}")
 	private String secretPsw;
 
@@ -65,13 +64,12 @@ public class UsuariosController {
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
-	
+
 	@Autowired
 	private EmailSender emailSender;
 
-
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
-	
+
 	public PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}
@@ -79,11 +77,11 @@ public class UsuariosController {
 	public RolDAO getRolDAO() {
 		return rolDAO;
 	}
-	
+
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
 	}
-	
+
 	public String getSecretPsw() {
 		return secretPsw;
 	}
@@ -91,7 +89,7 @@ public class UsuariosController {
 	public UsuarioService getUsuarioService() {
 		return usuarioService;
 	}
-	
+
 	public EmailSender getEmailSender() {
 		return emailSender;
 	}
@@ -101,11 +99,13 @@ public class UsuariosController {
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuario) throws MessagingException {
 		logger.info("Salvando nuevo Usuario pendiente de confirmar email: " + usuario);
-		//Se crea una secuencia de numeros aleatorios de 8 cifras a�adiendo @@%. Se agregar� al password codificado para inutilizarlo
+		// Se crea una secuencia de numeros aleatorios de 8 cifras a�adiendo @@%. Se
+		// agregar� al password codificado para inutilizarlo
 		Random random = new Random();
 		int codigoDesactivado = random.nextInt(90000000) + 10000000;
 		String desactivado = String.valueOf(codigoDesactivado) + "@@%";
-		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), desactivado + getPasswordEncoder().encode(usuario.getPassword()));
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(),
+				desactivado + getPasswordEncoder().encode(usuario.getPassword()));
 		usuarioNuevo.setIsConfirmadoEmail(false);
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
@@ -125,48 +125,52 @@ public class UsuariosController {
 		enviarCorreo(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
-	
+
 	private boolean enviarCorreo(Usuario usuario) {
-		logger.info("Se va a enviar un correo a: " + usuario.getEmail() );
+		logger.info("Se va a enviar un correo a: " + usuario.getEmail());
 		Random random = new Random();
 		try {
 			int codigoActivacion = random.nextInt(90000000) + 10000000;
 			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
 			getUsuarioDAO().save(usuario);
-			
-			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion", "Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion));
-			logger.info("Enviado un correo a: " + usuario.getEmail() );
+
+			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion",
+					"Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/"
+							+ String.valueOf(codigoActivacion));
+			logger.info("Enviado un correo a: " + usuario.getEmail());
 			return true;
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			return false;
-		}	
+		}
 	}
-	
+
 	@GetMapping(path = "confirmarEmail/{codigoActivacion}")
 	@ResponseBody
-	public String confirmarEmail(PersistentEntityResourceAssembler assembler, @PathVariable("codigoActivacion") String codigoActivacion) {
-		Usuario usuario = usuarioDAO.findByClaveActivacion(codigoActivacion);
-		if(usuario.getEmail()!=null) {
+	public String confirmarEmail(PersistentEntityResourceAssembler assembler,
+			@PathVariable("codigoActivacion") String codigoActivacion) {
+		Usuario usuario = getUsuarioDAO().findByClaveActivacion(codigoActivacion);
+		if (usuario.getEmail() != null) {
 			usuario.setIsConfirmadoEmail(true);
-			//Se elimina la secuencia de numeros aleatorios que invalidaban el password codificado. El usuario ya puede loggearse.
+			// Se elimina la secuencia de numeros aleatorios que invalidaban el password
+			// codificado. El usuario ya puede loggearse.
 			usuario.setPassword(usuario.getPassword().split("@@%")[1]);
 			usuario.setRoles(new HashSet<>());
 			usuario.getRoles().add(usuario.getRolSeleccionado());
-			usuarioDAO.save(usuario);
+			getUsuarioDAO().save(usuario);
 			return "Se ha verificado tu email en VERMUTORERO.ES.";
-		}else {
+		} else {
 			return "Ha habido un error en la verificacion de tu correo";
 		}
 	}
-	
+
 	@GetMapping(path = "confirmarPago/{email}")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
-		Usuario usuario = usuarioDAO.findByEmail(email).get();
-		if(usuario.getEmail()!=null) {
+		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
+		if (usuario.getEmail() != null) {
 			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
-			usuarioDAO.save(usuario);
+			getUsuarioDAO().save(usuario);
 		}
 	}
 
@@ -182,12 +186,12 @@ public class UsuariosController {
 			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 			logger.info("BODY TOKEN: " + bodyToken);
 			String email = "";
-			if((String) bodyToken.get("sub")!=null) {
+			if ((String) bodyToken.get("sub") != null) {
 				email = (String) bodyToken.get("sub");
-			}else {
+			} else {
 				email = (String) bodyToken.get("username");
 			}
-			
+
 			logger.info("USERNAME: " + email);
 			Usuario usuario = getUsuarioService().getByEmail(email).get();
 			logger.info("USUARIO: " + usuario);
@@ -201,7 +205,6 @@ public class UsuariosController {
 
 	}
 
-	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuarios")
 	@ResponseBody
@@ -209,43 +212,17 @@ public class UsuariosController {
 		List<Usuario> listadoUsuarios = usuarioDAO.findAll();
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(path = "usuariosPremium")
-	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getUsuariosPremium(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = usuarioDAO.findAll();
-		List<Usuario> listadoUsuariosPremium = new ArrayList<Usuario>();
-		for (Usuario usuario : listadoUsuarios) {
-			if (usuario.getSuscripcion().equals("premium")) {
-				listadoUsuariosPremium.add(usuario);
-			}
-		}
-		return assembler.toCollectionModel(listadoUsuariosPremium);
-	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(path = "usuariosFree")
-	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getUsuariosFree(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = usuarioDAO.findAll();
-		List<Usuario> listadoUsuariosFree = new ArrayList<Usuario>();
-		for (Usuario usuario : listadoUsuarios) {
-			if (usuario.getSuscripcion().equals("free")) {
-				listadoUsuariosFree.add(usuario);
-			}
-		}
-		return assembler.toCollectionModel(listadoUsuariosFree);
-	}
+	
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "autores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getAutores(PersistentEntityResourceAssembler assembler) {
 		Set<RolNombre> roles = new HashSet<>();
-	    roles.add(RolNombre.ROLE_WRITER);
-	    roles.add(RolNombre.ROLE_ADMIN);
-	    return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombreIn(roles));
+		roles.add(RolNombre.ROLE_WRITER);
+		roles.add(RolNombre.ROLE_ADMIN);
+		return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombreIn(roles));
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -269,7 +246,7 @@ public class UsuariosController {
 		usuarioDAO.save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
@@ -278,29 +255,28 @@ public class UsuariosController {
 		Usuario usuario = getUsuarioDAO().findById(id);
 		getUsuarioDAO().delete(usuario);
 	}
-	
+
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
-		Usuario usuario = usuarioDAO.findById(idUsuario);
+		Usuario usuario = getUsuarioDAO().findById(idUsuario);
 		Set<Rol> roles = usuario.getRoles();
 		return assembler.toCollectionModel(roles);
 	}
-	
 
 	@GetMapping(path = "isConfirmed/{email}")
 	@ResponseBody
 	public PersistentEntityResource getConfirmedByEmail(PersistentEntityResourceAssembler assembler,
 			@PathVariable("email") String email) {
-		Usuario usuario = usuarioDAO.findByEmail(email).get();
+		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
 		System.out.println(usuario.getEmail());
 		usuario.setPassword("password");
 		usuario.setClaveActivacion("12345678");
 		return assembler.toModel(usuario);
 	}
-	
+
 	@GetMapping(path = "roles")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
