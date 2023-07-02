@@ -4,6 +4,7 @@ import { TokenService } from '../service/token.service';
 import { UsuariosService } from '../service/usuarios.service';
 import { Usuario } from '../models/usuario';
 import { RolesService } from '../service/roles.service';
+import { TipoSuscripcionService } from 'src/app/newsletter/service/tiposSuscripcion.service';
 const ROLE_KEY = "rol";
 declare var $: any;
 
@@ -23,18 +24,20 @@ export class LoginComponent implements OnInit {
   usuarioNuevo: Usuario = new Usuario();
   password2: string = "";
   rolNombreSeleccionado: string = "";
+  precioSuscripcion: string = "";
 
   constructor(private loginService: LoginService,
     private tokenService: TokenService,
     private usuariosService: UsuariosService,
-    private rolesService: RolesService) {
+    private rolesService: RolesService,
+    private tipoSuscripcionesService: TipoSuscripcionService) {
   }
 
   ngOnInit(): void {
 
     this.getUsuario();
     this.getFlags();
-    
+
   }
 
   getFlags() {
@@ -51,16 +54,16 @@ export class LoginComponent implements OnInit {
     if (token !== null) {
       this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
         usuario.id = this.usuariosService.getId(usuario);
-        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
+        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles => {
           usuario.roles = roles;
           this.usuario = usuario;
         })
-        
+
       })
     }
   }
 
-  
+
   login() {
     this.loginService.login(this.email, this.password).subscribe(tokenDTO => {
       console.log("TOKEN RECIBIDO", tokenDTO.token);
@@ -68,19 +71,22 @@ export class LoginComponent implements OnInit {
       this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
         console.log("USUARIO FROM TOKEN:", usuario)
         usuario.id = this.usuariosService.getId(usuario);
-        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles=>{
+        this.rolesService.getRolesFromUsuario(usuario).subscribe(roles => {
           usuario.roles = roles;
           this.usuariosService.setUser(this.email);
-        this.usuariosService.setRol(usuario.roles[0].rolNombre);
-        this.loginService.setIsLoggedFlagObs(true);
-        if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
-          this.loginService.setIAdminFlagObs(true);
-        }
-        this.usuario = usuario;
-        console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
-       document.location.reload();
+          this.usuariosService.setRol(usuario.roles[0].rolNombre);
+          this.loginService.setIsLoggedFlagObs(true);
+          if (usuario.roles[0].rolNombre == "ROLE_ADMIN") {
+            this.loginService.setIAdminFlagObs(true);
+          }
+          this.usuario = usuario;
+          if (this.usuario.roles[0].rolNombre=="ROLE_USER_REGISTERED") {
+            $('#renovarModal').modal('show');
+          }else{
+            console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
+            document.location.reload();
+          }
         });
-        
       })
     })
 
@@ -101,4 +107,6 @@ export class LoginComponent implements OnInit {
     sessionStorage.removeItem("email");
     document.location.reload();
   }
+
+
 }

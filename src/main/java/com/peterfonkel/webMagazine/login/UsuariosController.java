@@ -265,6 +265,15 @@ public class UsuariosController {
 		Set<Rol> roles = usuario.getRoles();
 		return assembler.toCollectionModel(roles);
 	}
+	
+	@GetMapping(path = "getRolesFromEmail/{email}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getRolesFromEmail(PersistentEntityResourceAssembler assembler,
+			@PathVariable("email") String email) {
+		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
+		Set<Rol> roles = usuario.getRoles();
+		return assembler.toCollectionModel(roles);
+	}
 
 	@GetMapping(path = "isConfirmed/{email}")
 	@ResponseBody

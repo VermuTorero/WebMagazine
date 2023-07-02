@@ -28,7 +28,6 @@ import { NgxPayPalModule } from 'ngx-paypal';
 
 
 
-
 @NgModule({
   declarations: [
     PublicacionesComponent,

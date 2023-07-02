@@ -5,6 +5,7 @@ import { Direccion } from 'src/app/ecommerce/models/direccion';
 import { EmailDTO } from 'src/app/security/models/email-dto';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario';
+import { Rol } from 'src/app/newsletter/models/Rol';
 const EMAIL = 'email';
 const ROL = 'rol';
 
@@ -25,6 +26,10 @@ export class UsuariosService {
   getUsuariosFromUrls(urls: string[]): Observable<Usuario[]> {   
     const requests = urls.map(url => this.http.get<Usuario>(url));
     return forkJoin(requests);
+  }
+
+  getRolesFromEmail(email: string): Observable<Rol[]>{
+    return this.http.get<any>(this.endpoint + "usuarios/search/getRolesFromEmail/" + email).pipe(map(response=>response._embedded.roles));
   }
 
   getDireccionPorUrl(url: string): Observable<Direccion>{
