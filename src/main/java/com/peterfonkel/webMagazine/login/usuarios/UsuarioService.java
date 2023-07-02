@@ -26,7 +26,6 @@ public class UsuarioService {
         return usuarioDAO.existsByEmail(email);
     }
     
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Usuario save(Usuario usuario){
         return usuarioDAO.save(usuario);
     }
