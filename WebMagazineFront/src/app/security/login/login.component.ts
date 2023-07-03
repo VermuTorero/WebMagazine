@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
             this.loginService.setIAdminFlagObs(true);
           }
           this.usuario = usuario;
-          if (this.usuario.roles[0].rolNombre=="ROLE_USER_REGISTERED") {
+          if (this.usuario.roles[0].rolNombre=="ROLE_USER_SUBSCRIBED_EXPIRED" || this.usuario.roles[0].rolNombre=="ROLE_USER_MEMBER_EXPIRED") {
             $('#renovarModal').modal('show');
           }else{
             console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
