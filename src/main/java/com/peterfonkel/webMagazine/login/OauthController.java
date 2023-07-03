@@ -76,27 +76,42 @@ public class OauthController {
 		System.out.println(usuarioService.getByEmail(request.getPassword()));
 		if (usuarioService.existsEmail(request.getUser())) {
 			try {
+				// El usuario existe
 				Usuario usuario = usuarioService.getByEmail(request.getUser()).get();
+				// El usuario ha confirmado su email
 				if (usuario.getIsConfirmadoEmail()) {
+					// Se comprueba la validez usuario-contrase�a
 					Authentication authentication = authenticationManager.authenticate(
 							new UsernamePasswordAuthenticationToken(request.getUser(), request.getPassword()));
 					SecurityContextHolder.getContext().setAuthentication(authentication);
 					String token = jwtProvider.generateToken(authentication);
+					// En caso de poseer un rol de pago, comprobar si la suscripcion esta en fecha.
+					// En caso negativo se cambia por EXPIRED
 					if (usuario.getFechaFinSuscripcion().compareTo(Instant.now()) > 0
 							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_ADMIN")
 							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_REGISTERED")) {
-						// Autenticacion correcta, retornar el token en la respuesta
-						return ResponseEntity.ok(new AuthenticationResponse(token));
 					} else {
 						// Si la autenticacion es correcta pero esta caducada
-						Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_REGISTERED).get();
+						logger.warn("Suscripcion caducada");
 						Set<Rol> roles = new HashSet<>();
-						roles.add(rolcaducado);
+						if (usuario.getRoles().iterator().next().getRolNombre()
+								.equals("ROLE_USER_SUBSCRIBED_EXPIRED")) {
+							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED).get();
+							roles.add(rolcaducado);
+						} else if (usuario.getRoles().iterator().next().getRolNombre()
+								.equals("ROLE_USER_MEMBER_EXPIRED")) {
+							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_MEMBER_EXPIRED).get();
+							roles.add(rolcaducado);
+						} else {
+							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_REGISTERED).get();
+							roles.add(rolcaducado);
+						}
 						usuario.setRoles(roles);
 						usuarioService.save(usuario);
-						logger.warn("Suscripcion caducada");
-						return ResponseEntity.ok(new AuthenticationResponse(token));
 					}
+					// Autenticacion correcta, retornar el token en la respuesta
+					return ResponseEntity.ok(new AuthenticationResponse(token));
+
 				} else {
 					// Autenticacion fallida. El email existe pero no fue verificado
 					logger.warn("Email no verificado");
@@ -104,12 +119,12 @@ public class OauthController {
 				}
 			} catch (AuthenticationException e) {
 				// Contraseña incorrecta
-				logger.warn("Contraseña incorrecta");
+				logger.warn("Contrasena incorrecta");
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 			}
 		} else {
 			// Autenticacion fallida porque no existe el email
-			logger.warn("El usuario: ", request.getUser(), "usuario no válido");
+			logger.warn("El usuario: ", request.getUser(), "usuario no valido");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 	}
