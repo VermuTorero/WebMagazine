@@ -102,10 +102,7 @@ public class OauthController {
 								.equals(RolNombre.ROLE_USER_MEMBER)) {
 							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_MEMBER_EXPIRED).get();
 							roles.add(rolcaducado);
-						} else {
-							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_REGISTERED).get();
-							roles.add(rolcaducado);
-						}
+						} 
 						usuario.setRoles(roles);
 						usuarioService.save(usuario);
 					}
