@@ -95,11 +95,11 @@ public class OauthController {
 						logger.warn("Suscripcion caducada");
 						Set<Rol> roles = new HashSet<>();
 						if (usuario.getRoles().iterator().next().getRolNombre()
-								.equals("ROLE_USER_SUBSCRIBED")) {
+								.equals(RolNombre.ROLE_USER_SUBSCRIBED)) {
 							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED).get();
 							roles.add(rolcaducado);
 						} else if (usuario.getRoles().iterator().next().getRolNombre()
-								.equals("ROLE_USER_MEMBER")) {
+								.equals(RolNombre.ROLE_USER_MEMBER)) {
 							Rol rolcaducado = rolService.getByRolNombre(RolNombre.ROLE_USER_MEMBER_EXPIRED).get();
 							roles.add(rolcaducado);
 						} else {
