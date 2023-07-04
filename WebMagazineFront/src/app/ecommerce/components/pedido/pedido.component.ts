@@ -46,9 +46,9 @@ export class PedidoComponent implements OnInit {
 
   ngOnInit(): void {
     //1º traemos el usuario con sus datos de la API, posteriormente lo leera de la sesión
-    this.UsuariosService.getUsuarios().subscribe((res) =>{
-      this.usuario = res[0]; // usamos el primer usuario del array hasta que esté implementada la función de usuarios
-      this.usuario.id = this.UsuariosService.getId(this.usuario);
+    this.UsuariosService.getUsuarioFromToken().subscribe((usuario) =>{
+      usuario.id = this.UsuariosService.getId(usuario);
+      this.usuario = usuario;
       //2º sacamos la direccion de envio del usuario
       const url = this.UsuariosService.extraerUrlDireccionUsuario(this.usuario);
       this.UsuariosService.getDireccionPorUrl(url).subscribe((res2) =>{

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, finalize, switchMap, take, tap } from 'rxjs/operators';
 import { LoginService } from '../service/login.service';
 
+//Este interceptor analiza en cada llamada HTTP el token que se esta empleando (validez de  90 min). Cuando quedan menos de 30 min para su expiracion, lo renueva.
 @Injectable()
 export class TokenRefreshInterceptor implements HttpInterceptor {
 
@@ -19,11 +20,7 @@ export class TokenRefreshInterceptor implements HttpInterceptor {
         tap(() => {
           const expirationTime = this.loginService.getExpirationTime(); // Tiempo de expiración del token desde tu servicio de login
           const currentTime = new Date().getTime() / 1000; // Tiempo actual en segundos
-          const refreshThreshold = 300; // Umbral de tiempo en segundos antes de que expire el token para solicitar la renovación
-          /* console.log("EXPIRATION TIME", expirationTime);
-          console.log("CURRENT TIME", currentTime);
-          console.log("TIEMPO REFRENCO", refreshThreshold)
-          console.log("RESTA TIEMPO: ", expirationTime - currentTime) */
+          const refreshThreshold = 1800; // Umbral de tiempo en segundos antes de que expire el token para solicitar la renovación
           if (expirationTime!=0 && expirationTime - currentTime < refreshThreshold) {
             this.loginService.refreshToken().subscribe(tokenDTO => {
               console.log('Solicitando refresco de token');
