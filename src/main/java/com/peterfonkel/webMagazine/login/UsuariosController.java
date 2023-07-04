@@ -209,7 +209,7 @@ public class UsuariosController {
 	@GetMapping(path = "usuarios")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = usuarioDAO.findAll();
+		List<Usuario> listadoUsuarios = getUsuarioDAO().findAll();
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
@@ -241,7 +241,7 @@ public class UsuariosController {
 		roles = new HashSet<>();
 		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
-		usuarioDAO.save(usuarioAntiguo);
+		getUsuarioDAO().save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
 	}
 
@@ -265,9 +265,8 @@ public class UsuariosController {
 		logger.info("USERNAME: " + email);
 		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
 		logger.info("USUARIO: " + usuarioAntiguo);
-		usuarioAntiguo.setPassword("password");
-		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
 		
+		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
 		
 		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
@@ -279,7 +278,8 @@ public class UsuariosController {
 		roles = new HashSet<>();
 		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
-		usuarioDAO.save(usuarioAntiguo);
+		getUsuarioDAO().save(usuarioAntiguo);
+		usuarioAntiguo.setPassword("password");
 		return assembler.toModel(usuarioAntiguo);
 	}
 
