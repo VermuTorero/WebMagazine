@@ -88,10 +88,10 @@ public class OauthController {
 					// En caso de poseer un rol de pago, comprobar si la suscripcion esta en fecha.
 					// En caso negativo se cambia por EXPIRED
 					if (usuario.getFechaFinSuscripcion().compareTo(Instant.now()) > 0
-							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_ADMIN")
-							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_REGISTERED")
-							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_SUBSCRIBED_EXPIRED")
-							|| usuario.getRoles().iterator().next().getRolNombre().equals("ROLE_USER_MEMBER_EXPIRED")) {
+							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_ADMIN)
+							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_REGISTERED)
+							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED)
+							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER_EXPIRED)) {
 					} else {
 						// Si la autenticacion es correcta pero esta caducada
 						logger.warn("Suscripcion caducada");
