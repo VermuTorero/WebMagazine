@@ -16,6 +16,7 @@ import { PublicacionesBuscadorComponent } from './publicaciones/publicaciones-bu
 import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
 import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
+import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/renovar-suscripcion.component';
 
 
 const routes: Routes = [
@@ -153,6 +154,15 @@ const routes: Routes = [
       {
         path: `verificacion-pago`,
         component: VerificacionPagoComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `renovar-suscripcion`,
+        component: RenovarSuscripcionComponent,
       }
     ],
   }

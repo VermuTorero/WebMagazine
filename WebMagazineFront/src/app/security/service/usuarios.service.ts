@@ -96,4 +96,7 @@ export class UsuariosService {
   setIsPaid(email: string): Observable<void> {
     return this.http.get<any>(this.endpointBack + "/usuarios/search/confirmarPago/" + email);
   }
+  patchUsuarioRenovado(user: Usuario): Observable<Usuario>{
+    return this.http.patch<any>(this.endpointBack + "/usuarios/search/renovarUsuario" , user);
+  }
 }

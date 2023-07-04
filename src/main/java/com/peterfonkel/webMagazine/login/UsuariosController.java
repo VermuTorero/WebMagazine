@@ -213,8 +213,6 @@ public class UsuariosController {
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
-	
-
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "autores")
 	@ResponseBody
@@ -247,6 +245,44 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
+	@PreAuthorize("isAuthenticated()")
+	@PatchMapping(path = "renovarUsuario")
+	@ResponseBody
+	public PersistentEntityResource renovarUsuario(PersistentEntityResourceAssembler assembler,
+			@RequestBody Usuario usuarioModificado, HttpServletRequest request) {
+		//Obtener el usuario a partir del token
+		String header = request.getHeader("Authorization");
+		String token = header.substring(7);
+		logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+		Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		logger.info("BODY TOKEN: " + bodyToken);
+		String email = "";
+		if ((String) bodyToken.get("sub") != null) {
+			email = (String) bodyToken.get("sub");
+		} else {
+			email = (String) bodyToken.get("username");
+		}
+		logger.info("USERNAME: " + email);
+		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
+		logger.info("USUARIO: " + usuarioAntiguo);
+		usuarioAntiguo.setPassword("password");
+		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
+		
+		
+		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
+		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
+		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
+		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
+		usuarioAntiguo.setEmail(usuarioModificado.getEmail());
+		Set<Rol> roles = usuarioModificado.getRoles();
+		Rol rol = roles.iterator().next();
+		roles = new HashSet<>();
+		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
+		usuarioAntiguo.setRoles(roles);
+		usuarioDAO.save(usuarioAntiguo);
+		return assembler.toModel(usuarioAntiguo);
+	}
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
@@ -268,7 +304,7 @@ public class UsuariosController {
 		logger.info("Roles del usuario: " + roles);
 		return assembler.toCollectionModel(roles);
 	}
-	
+
 	@GetMapping(path = "getRolesFromEmail/{email}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromEmail(PersistentEntityResourceAssembler assembler,
