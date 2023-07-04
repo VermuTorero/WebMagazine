@@ -261,8 +261,11 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
+		logger.info("Recibidi id: " + idUsuario);
 		Usuario usuario = getUsuarioDAO().findById(idUsuario);
+		logger.info("Encontrado usuario: " + usuario);
 		Set<Rol> roles = usuario.getRoles();
+		logger.info("Roles del usuario: " + roles);
 		return assembler.toCollectionModel(roles);
 	}
 	
