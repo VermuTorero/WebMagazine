@@ -108,6 +108,7 @@ public class OauthController {
 						usuario.setRoles(roles);
 						usuarioService.save(usuario);
 					}
+					
 					// Autenticacion correcta, retornar el token en la respuesta
 					return ResponseEntity.ok(new AuthenticationResponse(token));
 
