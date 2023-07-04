@@ -37,36 +37,52 @@ public class PedidosController {
     @Autowired
     PedidoProductoDAO pedidoProductoDAO;
 
+    public PedidoDAO getPedidoDAO() {
+		return pedidoDAO;
+	}
+    
+
+    public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
+
+	public DireccionDAO getDireccionDAO() {
+		return direccionDAO;
+	}
 
 
-    @PostMapping(path = "crearPedido")
+	public PedidoProductoDAO getPedidoProductoDAO() {
+		return pedidoProductoDAO;
+	}
+
+	@PostMapping(path = "crearPedido")
     @ResponseBody
     public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler, @RequestBody Pedido pedido){
-        Usuario usuario = usuarioDAO.findById(pedido.getUsuario().getId());
-        Direccion direccion = direccionDAO.getById(pedido.getDireccionEntrega().getIdDireccion()); //cambiar cuando esté implementeda las direcciones
+        Usuario usuario = getUsuarioDAO().findById(pedido.getUsuario().getId());
+        Direccion direccion = getDireccionDAO().getById(pedido.getDireccionEntrega().getIdDireccion()); //cambiar cuando esté implementeda las direcciones
         List<PedidoProducto> productos = new ArrayList<>();
         for (PedidoProducto pedidoProducto:
             pedido.getProductos() ) {
-            productos.add(pedidoProductoDAO.getById(pedidoProducto.getId()));
+            productos.add(getPedidoProductoDAO().getById(pedidoProducto.getId()));
         }
         pedido.setProductos(productos);
         pedido.setDireccionEntrega(direccion);
         pedido.setUsuario(usuario);
-        pedidoDAO.save(pedido);
+        getPedidoDAO().save(pedido);
         return assembler.toModel(pedido);
     }
 
     @GetMapping(path = "pedidos-abiertos")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPedidosAbiertos(PersistentEntityResourceAssembler assembler) {
-		List<Pedido> pedidosAbiertos = pedidoDAO.findByIsCerradoIsFalse();
+		List<Pedido> pedidosAbiertos = getPedidoDAO().findByIsCerradoIsFalse();
 		return assembler.toCollectionModel(pedidosAbiertos);
 	}
 
     @GetMapping(path = "pedidos-cerrados")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPedidosCerrados(PersistentEntityResourceAssembler assembler) {
-		List<Pedido> pedidosCerrados = pedidoDAO.findByIsCerradoIsTrue();
+		List<Pedido> pedidosCerrados = getPedidoDAO().findByIsCerradoIsTrue();
 		return assembler.toCollectionModel(pedidosCerrados);
 	}
 

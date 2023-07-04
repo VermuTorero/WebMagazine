@@ -94,13 +94,13 @@ public class UsuariosController {
 		return emailSender;
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuario")
+	@ResponseBody
 	private PersistentEntityResource saveNuevoUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuario) throws MessagingException {
 		logger.info("Salvando nuevo Usuario pendiente de confirmar email: " + usuario);
-		// Se crea una secuencia de numeros aleatorios de 8 cifras a�adiendo @@%. Se
-		// agregar� al password codificado para inutilizarlo
+		// Se crea una secuencia de numeros aleatorios de 8 cifras anadiendo @@%. Se
+		// agregaran al password codificado para inutilizarlo
 		Random random = new Random();
 		int codigoDesactivado = random.nextInt(90000000) + 10000000;
 		String desactivado = String.valueOf(codigoDesactivado) + "@@%";
@@ -110,7 +110,6 @@ public class UsuariosController {
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
-//		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(30)));
 		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
@@ -126,6 +125,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioNuevo);
 	}
 
+	//Enviar un correo con un link de verificacion de email
 	private boolean enviarCorreo(Usuario usuario) {
 		logger.info("Se va a enviar un correo a: " + usuario.getEmail());
 		Random random = new Random();
@@ -144,7 +144,8 @@ public class UsuariosController {
 			return false;
 		}
 	}
-
+	
+	//Endpoint para verificar el email con un codigo recibido por mail.
 	@GetMapping(path = "confirmarEmail/{codigoActivacion}")
 	@ResponseBody
 	public String confirmarEmail(PersistentEntityResourceAssembler assembler,
@@ -163,7 +164,8 @@ public class UsuariosController {
 			return "Ha habido un error en la verificacion de tu correo";
 		}
 	}
-
+	
+	//Endpoint para confirmar que se ha realizado el pago de la suscripcion y aumentar 31 dias la fecha fin de suscripcion.
 	@GetMapping(path = "confirmarPago/{email}")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
@@ -173,7 +175,8 @@ public class UsuariosController {
 			getUsuarioDAO().save(usuario);
 		}
 	}
-
+	
+	//Obtener el usuario a partir de un token
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")
 	@ResponseBody
@@ -205,6 +208,7 @@ public class UsuariosController {
 
 	}
 
+	//Obtener todos los usuarios
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuarios")
 	@ResponseBody
@@ -213,6 +217,7 @@ public class UsuariosController {
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
+	//Obtener los usuarios con permiso de crear y modificar una publicacion
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "autores")
 	@ResponseBody
@@ -223,6 +228,7 @@ public class UsuariosController {
 		return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombreIn(roles));
 	}
 
+	//Modificar un usuario
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PatchMapping(path = "modificarUsuario")
 	@ResponseBody
@@ -245,6 +251,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
+	//Renovar la suscripcion de un usuario ampliandola 31 dias
 	@PreAuthorize("isAuthenticated()")
 	@PatchMapping(path = "renovarUsuario")
 	@ResponseBody
@@ -283,6 +290,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
+	//Eliminar un usuario
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
@@ -292,6 +300,7 @@ public class UsuariosController {
 		getUsuarioDAO().delete(usuario);
 	}
 
+	//Obtener los roles a partir del id de un usuario
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
@@ -304,7 +313,8 @@ public class UsuariosController {
 		logger.info("Roles del usuario: " + roles);
 		return assembler.toCollectionModel(roles);
 	}
-
+	
+	//Obtener los roles a partir del email del usario
 	@GetMapping(path = "getRolesFromEmail/{email}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromEmail(PersistentEntityResourceAssembler assembler,

@@ -80,8 +80,11 @@ export class RenovarSuscripcionComponent {
     this.usuariosService.patchUsuarioRenovado(this.usuarioNuevo).subscribe(usuario => {
       this.usuarioConfirmando.id = this.usuariosService.getId(usuario);
       this.usuarioConfirmando = usuario;
-      this.pagar(precio);
-      this.initConfig(precio);
+      if (precio!="0") {
+        this.pagar(precio);
+        this.initConfig(precio);
+      }
+     
     });
   
   }
