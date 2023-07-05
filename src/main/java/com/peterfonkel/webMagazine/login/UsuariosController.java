@@ -401,8 +401,9 @@ public class UsuariosController {
 			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
 			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar/";
 
-		    getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " 
-		    + endpoint + "?" + "claveRecuperacion=" + usuario.getClaveRecuperacion() + "&email=" + usuario.getEmail() );
+			getEmailSender().sendEmail(email, "cambio de password",
+					"Haz click en el siguiente enlace para cambiar tu password: " + endpoint + "?"
+							+ "claveRecuperacion=" + usuario.getClaveRecuperacion() + "&email=" + usuario.getEmail());
 			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
@@ -410,10 +411,11 @@ public class UsuariosController {
 			return false;
 		}
 	}
-	
-	@GetMapping(path="getTokenFromClaveRecuperacion/{claveRecuperacion}/{email}")
+
+	@GetMapping(path = "getTokenFromClaveRecuperacion/{claveRecuperacion}/{email}")
 	@ResponseBody
-	public String getTokenFromClaveRecuperacion(@PathVariable("claveRecuperacion") String claveRecuperacion, @PathVariable("email") String email) {
+	public String getTokenFromClaveRecuperacion(@PathVariable("claveRecuperacion") String claveRecuperacion,
+			@PathVariable("email") String email) {
 		String token = "";
 		Usuario usuario = getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
 		if (usuario.getEmail().equals(email)) {
@@ -453,4 +455,29 @@ public class UsuariosController {
 		return assembler.toModel(usuarioModificado);
 	}
 
+	@GetMapping(path="getDireccionesFromUsuario/{id}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(PersistentEntityResourceAssembler assembler,
+			HttpServletRequest request) {
+		Usuario usuario = new Usuario();
+		String header = request.getHeader("Authorization");
+		if (header != null && header.startsWith("Bearer ")) {
+			String token = header.substring(7);
+			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+			logger.info("BODY TOKEN: " + bodyToken);
+			String email = "";
+			if ((String) bodyToken.get("sub") != null) {
+				email = (String) bodyToken.get("sub");
+			} else {
+				email = (String) bodyToken.get("username");
+			}
+
+			logger.info("USERNAME: " + email);
+			usuario = getUsuarioService().getByEmail(email).get();
+			logger.info("USUARIO: " + usuario);
+			
+		}
+		return assembler.toCollectionModel(usuario.getDirecciones());
+	}
 }
