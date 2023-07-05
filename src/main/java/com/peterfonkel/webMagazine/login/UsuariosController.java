@@ -394,8 +394,9 @@ public class UsuariosController {
 	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email, HttpServletRequest request) {
 		try {
 			UserDetails userDetails = getUserDetailsService().loadUserByUsername(email);
+			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
-			
+			logger.info("TOKENDE RECUPERACION GENERADO: " + token);
 			String endpoint ="https://webmagazine-3758a.web.app/security/usuario-editar";
 			
 			CloseableHttpClient httpClient = HttpClients.createDefault();
