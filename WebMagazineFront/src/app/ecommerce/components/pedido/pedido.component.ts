@@ -15,6 +15,7 @@ import { Observable, forkJoin, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -28,10 +29,17 @@ export class PedidoComponent implements OnInit {
 
   usuario = new Usuario();
   direccionEnvio!: Direccion;
+  direccionesUsuario: Direccion[] = [];
   productosCarrito: CartItemModel[] = [];
   precioTotal: number = 0;
    //variable paypal
    public payPalConfig?: IPayPalConfig;
+
+   /* controladores del formulario */
+  formularioDireccion: FormGroup;
+  submit: boolean = false;
+  esNuevoProducto = true;
+  /*-----------------------*/
   
 
   constructor(
@@ -40,8 +48,21 @@ export class PedidoComponent implements OnInit {
     private modalService:  NgbModal,
     private spinner: NgxSpinnerService,
     private pedidoService: PedidosService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+ /* control de errores del formulario */
+ this.formularioDireccion = this.fb.group({
+  calle: ['', [Validators.required, Validators.maxLength(50)]],
+  ciudad: ['', [Validators.required, Validators.maxLength(50)]],
+  numero: ['', [Validators.required, Validators.min(0)]],
+  piso: ['', [Validators.min(0)]],
+  puerta: ['', Validators.maxLength(10)],
+  codigo: ['', [Validators.required, Validators.min(0)]]
+});
+/*-----------------------------------*/
+
+  }
 
 
   ngOnInit(): void {
@@ -49,12 +70,14 @@ export class PedidoComponent implements OnInit {
     this.UsuariosService.getUsuarioFromToken().subscribe((usuario) =>{
       usuario.id = this.UsuariosService.getId(usuario);
       this.usuario = usuario;
+      console.log(this.usuario);
       //2º sacamos la direccion de envio del usuario
       const url = this.UsuariosService.extraerUrlDireccionUsuario(this.usuario);
-      this.UsuariosService.getDireccionPorUrl(url).subscribe((res2) =>{
-        this.direccionEnvio = res2;
-        this.direccionEnvio.idDireccion = this.UsuariosService.getId(this.direccionEnvio);
-      });
+      this.UsuariosService.getDirecciones().subscribe((res2) =>{
+        this.direccionesUsuario = res2;
+        console.log(res2);
+      }
+      );
     });
     //3º leemos los productos del carrito
     this.productosCarrito = this.storageService.getCart();
@@ -220,4 +243,12 @@ openModal(items: any, amount: any): void{
   modalRef.componentInstance.items = items;
   modalRef.componentInstance.amount = amount
 }
+
+submitDireccion() {
+  this.submit = true;
+  if (this.formularioDireccion.invalid) {
+    return;
+  }
+}
+
 }

@@ -26,8 +26,101 @@
   </div>
 </Div>
 
-<h4 class="ms-2">DIRECCION DE ENVIO</h4>
+<h4 class="ms-1">DIRECCION DE ENVIO</h4>
+<div *ngIf="!direccionEnvio"> 
+<form [formGroup]="formularioDireccion" (ngSubmit)="submitDireccion()" class="m-3">
+  <div class="form-row">
+    <div class="form-group col-md-6 m-1">
+      <label for="calle">Calle</label>
+      <input type="text"  class="form-control"  id="calle" formControlName="calle">
+      <div *ngIf="formularioDireccion.invalid && submit">
+        <small *ngIf="formularioDireccion.controls['calle'].errors?.['required']" class="text-danger">
+          El campo calle es requerido
+        </small>
+      </div>
+      <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+        <small *ngIf="formularioDireccion.controls['calle'].hasError('maxlength')" class="text-danger">
+          El campo calle no puede tener más de 50 caracteres
+        </small>
+      </div>
+    </div>
+    <div class="form-group col-md-6 m-1">
+      <label for="ciudad">Ciudad</label>
+      <input type="text" class="form-control" id="ciudad" formControlName="ciudad">
+      <div *ngIf="formularioDireccion.invalid && submit">
 
+        <small *ngIf="formularioDireccion.controls['ciudad'].errors?.['required']" class="text-danger">
+          El campo ciudad es requerido
+        </small>
+      </div>
+        <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+        <small *ngIf="formularioDireccion.controls['ciudad'].hasError('maxlength')" class="text-danger">
+          El campo ciudad no puede tener más de 50 caracteres
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-2 m-1">
+      <label for="numero">Número</label>
+      <input type="number"  class="form-control" id="numero" formControlName="numero">
+      <div *ngIf="formularioDireccion.invalid && submit">
+        <small *ngIf="formularioDireccion.controls['numero'].errors?.['required']" class="text-danger">
+          El campo número es requerido
+        </small>
+        <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+          <small *ngIf="formularioDireccion.controls['numero'].hasError('min')" class="text-danger">
+            El número no puede ser negativo
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-2 m-1">
+      <label for="piso">Piso</label>
+      <input type="number"  class="form-control" id="piso" formControlName="piso">
+      <div *ngIf="formularioDireccion.invalid && submit">
+        <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+          <small *ngIf="formularioDireccion.controls['piso'].hasError('min')" class="text-danger">
+            El piso no puede ser negativo
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-2 m-1">
+      <label for="puerta">Puerta</label>
+      <input type="text"  class="form-control" id="puerta" formControlName="puerta">
+      <div *ngIf="formularioDireccion.invalid && submit">
+        <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+          <small *ngIf="formularioDireccion.controls['puerta'].hasError('maxlength')" class="text-danger">
+            La puerta no puede tener más de 10 caracteres
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-md-2 m-1">
+      <label for="codigo">Código postal</label>
+      <input type="number"  class="form-control" id="codigo" formControlName="codigo">
+      <div *ngIf="formularioDireccion.invalid && submit">
+        <small *ngIf="formularioDireccion.controls['codigo'].errors?.['required']" class="text-danger">
+          El campo código postal es requerido
+        </small>
+        <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+          <small *ngIf="formularioDireccion.controls['codigo'].hasError('min')" class="text-danger">
+            El código postal no puede ser negativo
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Botones -->
+  <div class="row  mt-3 mb-3 justify-content-around">
+    <DIV class="col"><button type="submit" class=" btn btn-success">CREAR NUEVA DIRECCION</button>
+  </DIV>
+  </div>
+</form>
+</div>
+
+<!-- Direccion de envío una vez marcada -->
 <Div *ngIf="direccionEnvio">
   <div class="row ms-2 me-1">
     <div class="col-md-4">
@@ -75,15 +168,15 @@
   </div>
 </Div>
 
-<h4 class="ms-2">PRODUCTOS DEL PEDIDO</h4>
+<h4 class="ms-2"> PRODUCTOS DEL PEDIDO</h4>
 <ul class="list-group m-2">
     <div *ngFor="let producto of productosCarrito">
     <li class="list-group-item d-flex justify-content-between align-items-center" >
         <div class="col-md-6">
-            {{ producto.productName }} x {{producto.qty}} 
+            {{producto.productName }} x {{producto.qty}} 
         </div>
         <div class="col-md-6">
-        <strong>Total:</strong> {{producto.productPrice * producto.qty}} € 
+        <strong>Total:</strong> {{ producto.productPrice *  producto.qty}} € 
         </div>
     </li>
     </div>

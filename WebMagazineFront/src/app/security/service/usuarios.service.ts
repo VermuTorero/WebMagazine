@@ -37,6 +37,10 @@ export class UsuariosService {
     return this.http.get<any>(url).pipe(map(response=>response._embedded.direcciones[0]));
   }
 
+  getDirecciones(): Observable<Direccion[]>{
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/getDireccionesFromUsuario");
+  }
+
   extraerUrlDireccionUsuario(usuario: any): string{
     return usuario._links.direcciones.href
   }
