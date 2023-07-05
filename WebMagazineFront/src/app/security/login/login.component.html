@@ -10,7 +10,7 @@
   <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}} {{usuario.apellido1}} {{usuario.apellido2}}</a>
 </div>
 <div class="col-12">
-  <a href="security/login/pass-recovery" class="olvidado">¿Has olvidado tu contraseña?</a>
+  <a *ngIf="!usuario.nombre" href="security/login/pass-recovery" class="olvidado">¿Has olvidado tu contraseña?</a>
 </div>
 
 

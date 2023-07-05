@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.getUsuario();
     this.getFlags();
 
