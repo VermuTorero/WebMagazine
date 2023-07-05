@@ -400,7 +400,7 @@ public class UsuariosController {
 			HttpGet HTTPrequest = new HttpGet(endpoint);
 			HTTPrequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
-			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest.toString());
+			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest.getURI());
 			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
