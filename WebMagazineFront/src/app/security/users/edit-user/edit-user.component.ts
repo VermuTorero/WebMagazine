@@ -46,6 +46,7 @@ export class EditUserComponent implements OnInit {
   getUsuarioFromClaveRecuperacion(){
     this.loginService.getTokenFromClaveRecuperacion(this.claveRecuperacion, this.email).subscribe(token=>{
       this.tokenService.setToken(token);
+      this.getUsuarioFromToken();
     })
   }
 
