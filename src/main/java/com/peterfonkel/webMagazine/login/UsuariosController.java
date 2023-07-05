@@ -391,32 +391,42 @@ public class UsuariosController {
 	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler,
 			@PathVariable("email") String email, HttpServletRequest request) {
 		try {
+			Random random = new Random();
+			int claveRecuperacion = random.nextInt(90000000) + 10000000;
+			Usuario usuario = getUsuarioService().getByEmail(email).get();
+			usuario.setClaveRecuperacion(String.valueOf(claveRecuperacion));
 			UserDetails userDetails = getUserDetailsService().loadUserByUsername(email);
 			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
 			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
-			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar";
+			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar/";
 
-			URL url = new URL(endpoint);
-			 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		        connection.setRequestMethod("GET");
-		        connection.setRequestProperty("Authorization", "Bearer " + token);
-		        connection.setRequestProperty("Content-Type", "application/json");
-		        connection.setRequestProperty("Accept", "application/json");
-		        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-		        
-		        getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + url);
-		        // Cerrar la conexión
-		        connection.disconnect();
-
-			
+			getEmailSender().sendEmail(email, "cambio de password",
+					"Haz click en el siguiente enlace para cambiar tu password: " + endpoint + "?"
+							+ "claveRecuperacion=" + usuario.getClaveRecuperacion() + "&email=" + usuario.getEmail());
 			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
 			logger.info("ERROR ENVIANDO EMAIL DE CAMBIO DE PASSWORD");
 			return false;
 		}
+	}
 
+	@GetMapping(path = "getTokenFromClaveRecuperacion/{claveRecuperacion}/{email}")
+	@ResponseBody
+	public String getTokenFromClaveRecuperacion(@PathVariable("claveRecuperacion") String claveRecuperacion,
+			@PathVariable("email") String email) {
+		String token = "";
+		Usuario usuario = getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
+		if (usuario.getEmail().equals(email)) {
+			UserDetails userDetails = getUserDetailsService().loadUserByUsername(usuario.getEmail());
+			logger.info("USER DETAILS: " + userDetails);
+			token = getJwtProvider().generateTokenFromUserDetails(userDetails);
+		}
+		Random random = new Random();
+		int claveRecuperacionNueva = random.nextInt(90000000) + 10000000;
+		usuario.setClaveRecuperacion(String.valueOf("48934392" + claveRecuperacionNueva + "34J59875"));
+		return token;
 	}
 
 	@PreAuthorize("isAuthenticated()")
@@ -445,4 +455,29 @@ public class UsuariosController {
 		return assembler.toModel(usuarioModificado);
 	}
 
+	@GetMapping(path="getDireccionesFromUsuario")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(PersistentEntityResourceAssembler assembler,
+			HttpServletRequest request) {
+		Usuario usuario = new Usuario();
+		String header = request.getHeader("Authorization");
+		if (header != null && header.startsWith("Bearer ")) {
+			String token = header.substring(7);
+			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+			logger.info("BODY TOKEN: " + bodyToken);
+			String email = "";
+			if ((String) bodyToken.get("sub") != null) {
+				email = (String) bodyToken.get("sub");
+			} else {
+				email = (String) bodyToken.get("username");
+			}
+
+			logger.info("USERNAME: " + email);
+			usuario = getUsuarioService().getByEmail(email).get();
+			logger.info("USUARIO: " + usuario);
+			
+		}
+		return assembler.toCollectionModel(usuario.getDirecciones());
+	}
 }

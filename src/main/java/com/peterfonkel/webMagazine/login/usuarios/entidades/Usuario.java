@@ -67,6 +67,10 @@ public class Usuario {
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String claveActivacion;
 	
+	@Column(unique = true)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private String claveRecuperacion;
+	
 	private Boolean isConfirmadoEmail;
 	
 	@ManyToOne
@@ -232,6 +236,15 @@ public class Usuario {
 
 	public void setFechaFinSuscripcion(Instant fechaFinSuscripcion) {
 		this.fechaFinSuscripcion = fechaFinSuscripcion;
+	}
+	
+
+	public String getClaveRecuperacion() {
+		return claveRecuperacion;
+	}
+
+	public void setClaveRecuperacion(String claveRecuperacion) {
+		this.claveRecuperacion = claveRecuperacion;
 	}
 
 	@Override

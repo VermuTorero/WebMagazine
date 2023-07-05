@@ -19,11 +19,15 @@ label {
     color: white;
     font-weight: bold;
 }
-
-a {
+a{
     text-decoration: none !important;
 }
 
-a:hover {
-    opacity: 0.5;
+a.olvidado{
+    color: orange;
+}
+
+.olvidado:hover{ 
+    opacity: 0.7;
+    color: white;
 }

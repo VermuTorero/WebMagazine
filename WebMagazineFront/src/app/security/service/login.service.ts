@@ -70,5 +70,8 @@ export class LoginService {
   passwordRecovery(email: string): Observable<any>{
     return this.http.get<any>(this.endpoint + "/usuarios/search/enviarCorreoOlvidoPassword/" + email );
   }
+  getTokenFromClaveRecuperacion(claveRecuperacion: string, email: string ): Observable<string>{
+    return this.http.get<any>(this.endpoint + "/usuarios/search/getTokenFromClaveRecuperacion/?claveRecuperacion=" + claveRecuperacion + "&email=" + email);
+  }
 
 }

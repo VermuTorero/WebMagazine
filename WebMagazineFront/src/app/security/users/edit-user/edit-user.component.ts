@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 import { UsuariosService } from '../../service/usuarios.service';
 import { RolesService } from '../../service/roles.service';
+import { ActivatedRoute } from '@angular/router';
+import { LoginService } from '../../service/login.service';
+import { TokenService } from '../../service/token.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -13,13 +16,22 @@ export class EditUserComponent implements OnInit {
   usuario: Usuario = new Usuario();
   rolNombreSeleccionado: string = "";
   password2: string = "";
+  claveRecuperacion: string = "";
+  email: string ="";
 
-  constructor(private usuariosService: UsuariosService, private rolesService: RolesService) {
-
+  constructor(private usuariosService: UsuariosService, private loginService: LoginService, private tokenService: TokenService,private rolesService: RolesService, private activatedRoute: ActivatedRoute) {
   }
-
   ngOnInit(): void {
-    this.getUsuarioFromToken();
+    this.activatedRoute.params.subscribe(params => {
+      this.claveRecuperacion = params['claveRecuperacion'];
+      this.email = params['email'];
+    })
+    if (this.claveRecuperacion!="" && this.claveRecuperacion!= undefined && this.claveRecuperacion!= null) {
+      this.getUsuarioFromClaveRecuperacion();
+    }else{
+      this.getUsuarioFromToken();
+    }
+    
   }
   getUsuarioFromToken() {
     this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
@@ -29,6 +41,12 @@ export class EditUserComponent implements OnInit {
         this.usuario.roles = roles;
         console.log("USUARIO: " + this.usuario.roles[0].rolNombre)
       })
+    })
+  }
+  getUsuarioFromClaveRecuperacion(){
+    this.loginService.getTokenFromClaveRecuperacion(this.claveRecuperacion, this.email).subscribe(token=>{
+      this.tokenService.setToken(token);
+      this.getUsuarioFromToken();
     })
   }
 
