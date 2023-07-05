@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.login;
 
 import java.time.Duration;
 
+
 import java.time.Instant;
 
 import java.util.ArrayList;
@@ -32,15 +33,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpMessage;
-import org.apache.http.HttpResponse;
+
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
+import org.springframework.web.util.UriComponentsBuilder;
 import com.peterfonkel.webMagazine.ClaseConfiguracionJava;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.login.email.EmailSender;
@@ -394,13 +392,15 @@ public class UsuariosController {
 			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
 			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
-			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar";
+			String endpoint = "https://webmagazine-3758a.web.app/security";
 
-			CloseableHttpClient httpClient = HttpClients.createDefault();
-			HttpGet HTTPrequest = new HttpGet(endpoint);
-			HTTPrequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-
-			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest.getURI().toURL());
+			String authorizationUrl = UriComponentsBuilder.fromHttpUrl(endpoint)
+	                .path("/usuario-editar")
+	                .queryParam("token", token)
+	                .build()
+	                .toUriString();
+			
+			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + authorizationUrl);
 			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
