@@ -34,7 +34,7 @@ export class EditUserComponent implements OnInit {
 
   patchUsuario() {
     if(this.usuario.password == this.password2 && this.usuario.password != null && this.usuario.password != undefined && this.usuario.password != ""){
-      
+      this.usuariosService.cambiarPassword(this.usuario).subscribe();
     }
     this.usuariosService.patchUsuarioRenovado(this.usuario).subscribe(usuario => {
       usuario.id = this.usuariosService.getId(usuario);
