@@ -2,7 +2,6 @@ package com.peterfonkel.webMagazine.login;
 
 import java.time.Duration;
 
-
 import java.time.Instant;
 
 import java.util.ArrayList;
@@ -51,6 +50,10 @@ import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @RepositoryRestController
 @RequestMapping(path = "/usuarios/search")
@@ -392,15 +395,21 @@ public class UsuariosController {
 			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
 			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
-			String endpoint = "https://webmagazine-3758a.web.app/security";
+			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar";
 
-			String authorizationUrl = UriComponentsBuilder.fromHttpUrl(endpoint)
-	                .path("/usuario-editar")
-	                .queryParam("token", token)
-	                .build()
-	                .toUriString();
+			URL url = new URL(endpoint);
+			 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		        connection.setRequestMethod("GET");
+		        connection.setRequestProperty("Authorization", "Bearer " + token);
+		        connection.setRequestProperty("Content-Type", "application/json");
+		        connection.setRequestProperty("Accept", "application/json");
+		        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+		        
+		        getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + url);
+		        // Cerrar la conexión
+		        connection.disconnect();
+
 			
-			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + authorizationUrl);
 			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
