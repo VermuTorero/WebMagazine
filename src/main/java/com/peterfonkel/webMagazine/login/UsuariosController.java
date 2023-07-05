@@ -401,7 +401,6 @@ public class UsuariosController {
 			
 			CloseableHttpClient httpClient = HttpClients.createDefault();
 	        HttpGet HTTPrequest = new HttpGet(endpoint);
-	        ((HttpMessage) request).setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
 			
 			getEmailSender().sendEmail(email, "cambio de password",
