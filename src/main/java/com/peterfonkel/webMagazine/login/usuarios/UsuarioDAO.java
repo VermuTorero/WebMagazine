@@ -21,5 +21,6 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Integer> {
     List<Usuario> findAll();
     List<Usuario> findByRoles_RolNombreIn(Set<RolNombre> roles);
     Usuario findByClaveActivacion(String clave);
+    Usuario findByClaveRecuperacion(String claveRecuperacion);
    
 }
