@@ -143,7 +143,7 @@ export class PublicacionesComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
     twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
+    
   }
 
   showHtmlTwitter2() {
@@ -152,7 +152,7 @@ export class PublicacionesComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter2;
     twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
+   
   }
 
   showHtmlTwitter3() {

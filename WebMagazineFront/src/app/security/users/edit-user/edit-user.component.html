@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div>
+            <h4 class="my-3">DATOS DEL USUARIO</h4>
+        </div>
+        <hr>
+        <div class="email-input m-2">
+            <label for="email" class="col-5">Nombre</label>
+            <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.nombre">
+          </div>
+          <div class="email-input m-2">
+            <label for="email" class="col-5">Primer apellido</label>
+            <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.apellido1">
+          </div>
+          <div class="email-input m-2">
+            <label for="email" class="col-5">Segundo apellido</label>
+            <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.apellido2">
+          </div>
+          <div class="email-input m-2">
+            <label for="email" class="col-5">Dirección</label>
+            <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.direccion">
+          </div>
+          <div class="email-input m-2">
+            <label for="email" class="col-5">Email</label>
+            <span type="text" class="col-6 mx-2">{{usuario.email}}</span>
+          </div>
+          <div class="email-input m-2">
+            <label for="email" class="col-5">Rol</label>
+            <span type="text" class="col-6 mx-2">{{usuario.roles[0].rolNombre}}</span>
+          </div>
+          <hr>
+          <div>
+            <h5>Cambiar password</h5>
+          </div>
+          <div class="email-input m-2">
+            <label for="password" class="col-5">Nueva password</label>
+            <input type="password" class="col-6 mx-2" [(ngModel)]="usuario.password">
+          </div>
+          <div class="email-input m-2">
+            <label for="password" class="col-5">Repite password</label>
+            <input type="password" class="col-6 mx-2" [(ngModel)]="password2">
+          </div>
+          <hr>
+          <div class="botones my-2 text-center">
+            <button class="btn btn-success mx-2" (click)="patchUsuario()">Cambiar</button>
+            <button class="btn btn-secondary mx-2">Cancelar</button>
+          </div>
+    </div>
+    <div class="col-2"></div>
+</div>

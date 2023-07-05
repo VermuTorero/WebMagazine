@@ -126,14 +126,14 @@ export class EditorLateralComponent implements OnInit{
     var tweet = document.createElement('div');
     tweet.innerHTML = this.htmlTwitterSeleccionado;
     twitterContainer?.appendChild(tweet);
-    twttr.widgets.load()
+   
   }
   showHtmlTwitter2() {
     var twitterContainer = document.querySelector("#twitter2");
     var tweet = document.createElement('div');
     tweet.innerHTML = this.htmlTwitter2Seleccionado;
     twitterContainer?.appendChild(tweet);
-    twttr.widgets.load()
+    
   }
   showHtmlTwitter3() {
     var twitterContainer = document.querySelector("#twitter3");

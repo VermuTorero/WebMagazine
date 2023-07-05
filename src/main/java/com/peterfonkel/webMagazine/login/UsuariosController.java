@@ -251,7 +251,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
-	//Renovar la suscripcion de un usuario ampliandola 31 dias
+	//Modificar los datos del usuario por si mismo con un token
 	@PreAuthorize("isAuthenticated()")
 	@PatchMapping(path = "renovarUsuario")
 	@ResponseBody
@@ -339,6 +339,32 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
 		return assembler.toCollectionModel(getRolDAO().findAll());
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(path="cambiarPassword")
+	@ResponseBody
+	public PersistentEntityResource cambiarPassword(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado, 
+			HttpServletRequest request) {
+		//Obtener el usuario a partir del token
+				String header = request.getHeader("Authorization");
+				String token = header.substring(7);
+				logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+				Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+				logger.info("BODY TOKEN: " + bodyToken);
+				String email = "";
+				if ((String) bodyToken.get("sub") != null) {
+					email = (String) bodyToken.get("sub");
+				} else {
+					email = (String) bodyToken.get("username");
+				}
+				logger.info("USERNAME: " + email);
+				Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
+				if(usuarioAntiguo.getEmail().equals(usuarioModificado.getEmail())) {
+					usuarioAntiguo.setPassword(getPasswordEncoder().encode(usuarioModificado.getPassword()));
+					getUsuarioDAO().save(usuarioAntiguo);
+				}
+		return assembler.toModel(usuarioModificado);
 	}
 
 }

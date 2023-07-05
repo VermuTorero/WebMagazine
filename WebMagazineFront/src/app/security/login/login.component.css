@@ -1,17 +1,29 @@
-.usuarioLoggeado{
+.usuarioLoggeado {
     color: white;
     margin-top: 5%;
 }
-.modal-body{
+
+.modal-body {
     text-align: left !important;
 }
-label{
+
+label {
     width: 30%;
 }
-.modal-header{
-    background-color: rgb(255,109,0,255)
+
+.modal-header {
+    background-color: rgb(255, 109, 0, 255)
 }
-.modal-title{
+
+.modal-title {
     color: white;
     font-weight: bold;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    opacity: 0.5;
 }

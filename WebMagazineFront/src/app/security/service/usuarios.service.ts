@@ -29,7 +29,7 @@ export class UsuariosService {
   }
 
   getRolesFromEmail(email: string): Observable<Rol[]>{
-    return this.http.get<any>(this.endpoint + "usuarios/search/getRolesFromEmail/" + email).pipe(map(response=>response._embedded.roles));
+    return this.http.get<any>(this.endpoint + "/usuarios/search/getRolesFromEmail/" + email).pipe(map(response=>response._embedded.roles));
   }
 
   getDireccionPorUrl(url: string): Observable<Direccion>{
@@ -98,5 +98,8 @@ export class UsuariosService {
   }
   patchUsuarioRenovado(user: Usuario): Observable<Usuario>{
     return this.http.patch<any>(this.endpointBack + "/usuarios/search/renovarUsuario" , user);
+  }
+  cambiarPassword(user: Usuario): Observable<Usuario>{
+    return this.http.post<any>(this.endpointBack + "/usuarios/search/cambiarPasword" , user );
   }
 }
