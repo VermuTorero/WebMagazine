@@ -70,7 +70,7 @@ public class UsuariosController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	AuthenticationManager authenticationManager;
 
@@ -85,13 +85,13 @@ public class UsuariosController {
 
 	@Autowired
 	private EmailSender emailSender;
-	
-	@Autowired 
-	OauthController oauthController; 
-	
+
+	@Autowired
+	OauthController oauthController;
+
 	@Autowired
 	UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	JwtProvider jwtProvider;
 
@@ -120,18 +120,14 @@ public class UsuariosController {
 	public EmailSender getEmailSender() {
 		return emailSender;
 	}
-	
 
 	public OauthController getOauthController() {
 		return oauthController;
 	}
 
-	
-	
 	public AuthenticationManager getAuthenticationManager() {
 		return authenticationManager;
 	}
-	
 
 	public UserDetailsService getUserDetailsService() {
 		return userDetailsService;
@@ -172,7 +168,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioNuevo);
 	}
 
-	//Enviar un correo con un link de verificacion de email
+	// Enviar un correo con un link de verificacion de email
 	private boolean enviarCorreo(Usuario usuario) {
 		logger.info("Se va a enviar un correo a: " + usuario.getEmail());
 		Random random = new Random();
@@ -191,8 +187,8 @@ public class UsuariosController {
 			return false;
 		}
 	}
-	
-	//Endpoint para verificar el email con un codigo recibido por mail.
+
+	// Endpoint para verificar el email con un codigo recibido por mail.
 	@GetMapping(path = "confirmarEmail/{codigoActivacion}")
 	@ResponseBody
 	public String confirmarEmail(PersistentEntityResourceAssembler assembler,
@@ -211,8 +207,9 @@ public class UsuariosController {
 			return "Ha habido un error en la verificacion de tu correo";
 		}
 	}
-	
-	//Endpoint para confirmar que se ha realizado el pago de la suscripcion y aumentar 31 dias la fecha fin de suscripcion.
+
+	// Endpoint para confirmar que se ha realizado el pago de la suscripcion y
+	// aumentar 31 dias la fecha fin de suscripcion.
 	@GetMapping(path = "confirmarPago/{email}")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
@@ -222,8 +219,8 @@ public class UsuariosController {
 			getUsuarioDAO().save(usuario);
 		}
 	}
-	
-	//Obtener el usuario a partir de un token
+
+	// Obtener el usuario a partir de un token
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "usuarioFromToken")
 	@ResponseBody
@@ -255,7 +252,7 @@ public class UsuariosController {
 
 	}
 
-	//Obtener todos los usuarios
+	// Obtener todos los usuarios
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuarios")
 	@ResponseBody
@@ -264,7 +261,7 @@ public class UsuariosController {
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
-	//Obtener los usuarios con permiso de crear y modificar una publicacion
+	// Obtener los usuarios con permiso de crear y modificar una publicacion
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "autores")
 	@ResponseBody
@@ -275,7 +272,7 @@ public class UsuariosController {
 		return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombreIn(roles));
 	}
 
-	//Modificar un usuario
+	// Modificar un usuario
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PatchMapping(path = "modificarUsuario")
 	@ResponseBody
@@ -298,13 +295,13 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
-	//Modificar los datos del usuario por si mismo con un token
+	// Modificar los datos del usuario por si mismo con un token
 	@PreAuthorize("isAuthenticated()")
 	@PatchMapping(path = "renovarUsuario")
 	@ResponseBody
 	public PersistentEntityResource renovarUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado, HttpServletRequest request) {
-		//Obtener el usuario a partir del token
+		// Obtener el usuario a partir del token
 		String header = request.getHeader("Authorization");
 		String token = header.substring(7);
 		logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
@@ -319,9 +316,9 @@ public class UsuariosController {
 		logger.info("USERNAME: " + email);
 		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
 		logger.info("USUARIO: " + usuarioAntiguo);
-		
+
 		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
-		
+
 		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
@@ -337,7 +334,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
-	//Eliminar un usuario
+	// Eliminar un usuario
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
@@ -347,7 +344,7 @@ public class UsuariosController {
 		getUsuarioDAO().delete(usuario);
 	}
 
-	//Obtener los roles a partir del id de un usuario
+	// Obtener los roles a partir del id de un usuario
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "getRolesFromUsuario/{idUsuario}")
 	@ResponseBody
@@ -360,8 +357,8 @@ public class UsuariosController {
 		logger.info("Roles del usuario: " + roles);
 		return assembler.toCollectionModel(roles);
 	}
-	
-	//Obtener los roles a partir del email del usario
+
+	// Obtener los roles a partir del email del usario
 	@GetMapping(path = "getRolesFromEmail/{email}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromEmail(PersistentEntityResourceAssembler assembler,
@@ -387,56 +384,55 @@ public class UsuariosController {
 	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
 		return assembler.toCollectionModel(getRolDAO().findAll());
 	}
-	
-	
-	@GetMapping(path="enviarCorreoOlvidoPassword/{email}")
+
+	@GetMapping(path = "enviarCorreoOlvidoPassword/{email}")
 	@ResponseBody
-	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email, HttpServletRequest request) {
+	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler,
+			@PathVariable("email") String email, HttpServletRequest request) {
 		try {
 			UserDetails userDetails = getUserDetailsService().loadUserByUsername(email);
 			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
-			logger.info("TOKENDE RECUPERACION GENERADO: " + token);
-			String endpoint ="https://webmagazine-3758a.web.app/security/usuario-editar";
-			
-			CloseableHttpClient httpClient = HttpClients.createDefault();
-	        HttpGet HTTPrequest = new HttpGet(endpoint);
+			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
+			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar";
 
-			
-			getEmailSender().sendEmail(email, "cambio de password",
-					"Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest
-							);
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+			HttpGet HTTPrequest = new HttpGet(endpoint);
+			HTTPrequest.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+			getEmailSender().sendEmail(email, "cambio de password", "Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest);
+			logger.info("EMAIL DE RECUPERACION ENVIADO");
 			return true;
 		} catch (Exception e) {
 			logger.info("ERROR ENVIANDO EMAIL DE CAMBIO DE PASSWORD");
 			return false;
 		}
-		
+
 	}
-	
+
 	@PreAuthorize("isAuthenticated()")
-	@PostMapping(path="cambiarPassword")
+	@PostMapping(path = "cambiarPassword")
 	@ResponseBody
-	public PersistentEntityResource cambiarPassword(PersistentEntityResourceAssembler assembler, @RequestBody Usuario usuarioModificado, 
-			HttpServletRequest request) {
-		//Obtener el usuario a partir del token
-				String header = request.getHeader("Authorization");
-				String token = header.substring(7);
-				logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
-				Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-				logger.info("BODY TOKEN: " + bodyToken);
-				String email = "";
-				if ((String) bodyToken.get("sub") != null) {
-					email = (String) bodyToken.get("sub");
-				} else {
-					email = (String) bodyToken.get("username");
-				}
-				logger.info("USERNAME: " + email);
-				Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
-				if(usuarioAntiguo.getEmail().equals(usuarioModificado.getEmail())) {
-					usuarioAntiguo.setPassword(getPasswordEncoder().encode(usuarioModificado.getPassword()));
-					getUsuarioDAO().save(usuarioAntiguo);
-				}
+	public PersistentEntityResource cambiarPassword(PersistentEntityResourceAssembler assembler,
+			@RequestBody Usuario usuarioModificado, HttpServletRequest request) {
+		// Obtener el usuario a partir del token
+		String header = request.getHeader("Authorization");
+		String token = header.substring(7);
+		logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+		Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+		logger.info("BODY TOKEN: " + bodyToken);
+		String email = "";
+		if ((String) bodyToken.get("sub") != null) {
+			email = (String) bodyToken.get("sub");
+		} else {
+			email = (String) bodyToken.get("username");
+		}
+		logger.info("USERNAME: " + email);
+		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
+		if (usuarioAntiguo.getEmail().equals(usuarioModificado.getEmail())) {
+			usuarioAntiguo.setPassword(getPasswordEncoder().encode(usuarioModificado.getPassword()));
+			getUsuarioDAO().save(usuarioAntiguo);
+		}
 		return assembler.toModel(usuarioModificado);
 	}
 
