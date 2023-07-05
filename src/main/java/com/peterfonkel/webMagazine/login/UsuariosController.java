@@ -455,7 +455,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioModificado);
 	}
 
-	@GetMapping(path="getDireccionesFromUsuario/{id}")
+	@GetMapping(path="getDireccionesFromUsuario")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(PersistentEntityResourceAssembler assembler,
 			HttpServletRequest request) {
