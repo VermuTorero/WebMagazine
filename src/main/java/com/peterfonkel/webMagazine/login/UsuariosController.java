@@ -131,6 +131,15 @@ public class UsuariosController {
 	public AuthenticationManager getAuthenticationManager() {
 		return authenticationManager;
 	}
+	
+
+	public UserDetailsService getUserDetailsService() {
+		return userDetailsService;
+	}
+
+	public JwtProvider getJwtProvider() {
+		return jwtProvider;
+	}
 
 	@PostMapping(path = "nuevoUsuario")
 	@ResponseBody
@@ -384,8 +393,8 @@ public class UsuariosController {
 	@ResponseBody
 	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email, HttpServletRequest request) {
 		try {
-			UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-			String token = jwtProvider.generateTokenFromUserDetails(userDetails);
+			UserDetails userDetails = getUserDetailsService().loadUserByUsername(email);
+			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
 			
 			String endpoint ="https://webmagazine-3758a.web.app/security/usuario-editar";
 			
