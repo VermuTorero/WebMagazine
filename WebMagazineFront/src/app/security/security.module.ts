@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
+import { PassRecoveryComponent } from './login/pass-recovery/pass-recovery.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { EditUserComponent } from './users/edit-user/edit-user.component';
     LoginComponent,
     UsersComponent,
     UserComponent,
-    EditUserComponent
+    EditUserComponent,
+    PassRecoveryComponent
   ],
   imports: [
     CommonModule,

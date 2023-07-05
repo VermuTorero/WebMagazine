@@ -1,6 +1,7 @@
 package com.peterfonkel.webMagazine.login;
 
 import java.time.Duration;
+
 import java.time.Instant;
 
 import java.util.ArrayList;
@@ -25,6 +26,14 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpMessage;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import com.peterfonkel.webMagazine.ClaseConfiguracionJava;
 import com.peterfonkel.webMagazine.entities.Publicacion;
@@ -67,6 +76,8 @@ public class UsuariosController {
 
 	@Autowired
 	private EmailSender emailSender;
+	
+	@Autowired OauthController oauthController; 
 
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
@@ -92,6 +103,11 @@ public class UsuariosController {
 
 	public EmailSender getEmailSender() {
 		return emailSender;
+	}
+	
+
+	public OauthController getOauthController() {
+		return oauthController;
 	}
 
 	@PostMapping(path = "nuevoUsuario")
@@ -339,6 +355,30 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
 		return assembler.toCollectionModel(getRolDAO().findAll());
+	}
+	
+	
+	@GetMapping(path="enviarCorreoOlvidoPassword/{email}")
+	@ResponseBody
+	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email, HttpServletRequest request) {
+		try {
+			String token = getOauthController().getTokenFromRequest(request);
+			String endpoint ="https://webmagazine-3758a.web.app/security/usuario-editar";
+			
+			CloseableHttpClient httpClient = HttpClients.createDefault();
+	        HttpGet HTTPrequest = new HttpGet(endpoint);
+	        ((HttpMessage) request).setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+			
+			getEmailSender().sendEmail(email, "cambio de password",
+					"Haz click en el siguiente enlace para cambiar tu password: " + HTTPrequest
+							);
+			return true;
+		} catch (Exception e) {
+			logger.info("ERROR ENVIANDO EMAIL DE CAMBIO DE PASSWORD");
+			return false;
+		}
+		
 	}
 	
 	@PreAuthorize("isAuthenticated()")

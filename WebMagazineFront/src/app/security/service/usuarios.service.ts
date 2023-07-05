@@ -100,6 +100,6 @@ export class UsuariosService {
     return this.http.patch<any>(this.endpointBack + "/usuarios/search/renovarUsuario" , user);
   }
   cambiarPassword(user: Usuario): Observable<Usuario>{
-    return this.http.post<any>(this.endpointBack + "/usuarios/search/cambiarPasword" , user );
+    return this.http.post<any>(this.endpointBack + "/usuarios/search/cambiarPassword" , user );
   }
 }
