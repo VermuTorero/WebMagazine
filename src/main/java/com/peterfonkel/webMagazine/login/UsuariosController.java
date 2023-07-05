@@ -24,6 +24,12 @@ import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.apache.http.HttpEntity;
@@ -64,6 +70,9 @@ public class UsuariosController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
 
 	@Autowired
 	private UsuarioService usuarioService;
@@ -77,7 +86,14 @@ public class UsuariosController {
 	@Autowired
 	private EmailSender emailSender;
 	
-	@Autowired OauthController oauthController; 
+	@Autowired 
+	OauthController oauthController; 
+	
+	@Autowired
+	UserDetailsService userDetailsService;
+	
+	@Autowired
+	JwtProvider jwtProvider;
 
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
@@ -108,6 +124,12 @@ public class UsuariosController {
 
 	public OauthController getOauthController() {
 		return oauthController;
+	}
+
+	
+	
+	public AuthenticationManager getAuthenticationManager() {
+		return authenticationManager;
 	}
 
 	@PostMapping(path = "nuevoUsuario")
@@ -362,7 +384,9 @@ public class UsuariosController {
 	@ResponseBody
 	public boolean enviarCorreoCambioPassword(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email, HttpServletRequest request) {
 		try {
-			String token = getOauthController().getTokenFromRequest(request);
+			UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+			String token = jwtProvider.generateTokenFromUserDetails(userDetails);
+			
 			String endpoint ="https://webmagazine-3758a.web.app/security/usuario-editar";
 			
 			CloseableHttpClient httpClient = HttpClients.createDefault();

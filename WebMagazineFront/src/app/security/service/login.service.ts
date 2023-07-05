@@ -68,7 +68,7 @@ export class LoginService {
     return 0;
   }
   passwordRecovery(email: string): Observable<any>{
-    return this.http.get<any>(this.endpoint + "usuarios/search/enviarCorreoOlvidoPassword/" + email );
+    return this.http.get<any>(this.endpoint + "/usuarios/search/enviarCorreoOlvidoPassword/" + email );
   }
 
 }
