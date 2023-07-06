@@ -9,20 +9,33 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@RepositoryRestResource(path = "usuarios", 
-						itemResourceRel = "usuario", 
-						collectionResourceRel = "usuarios")
+@RepositoryRestResource(path = "usuarios", itemResourceRel = "usuario", collectionResourceRel = "usuarios")
 public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
+
+	Optional<Usuario> findByEmail(@RequestParam String email);
+
+	boolean existsByEmail(String email);
+
+	Optional<Usuario> findById(Long id);
+
+	List<Usuario> findByRoles_RolNombre(String rol);
+
+	List<Usuario> findAll();
+
+	List<Usuario> findByRoles_RolNombreIn(Set<RolNombre> roles);
+
+	Usuario findByClaveActivacion(String clave);
+
+	Usuario findByClaveRecuperacion(String claveRecuperacion);
+
+	@Override
+	void delete(Usuario entity);
+
 	
-    Optional<Usuario> findByEmail(@RequestParam String email);
-    boolean existsByEmail(String email);
-    Optional<Usuario> findById(Long id);
-    List<Usuario> findByRoles_RolNombre(String rol);
-    List<Usuario> findAll();
-    List<Usuario> findByRoles_RolNombreIn(Set<RolNombre> roles);
-    Usuario findByClaveActivacion(String clave);
-    Usuario findByClaveRecuperacion(String claveRecuperacion);
-    void deleteById(Long id);
-    
-   
+	default boolean deleteByIdCustom(Long id) {
+		Usuario usuario = findById(id).get();
+		delete(usuario);
+		return true;
+	}
+
 }

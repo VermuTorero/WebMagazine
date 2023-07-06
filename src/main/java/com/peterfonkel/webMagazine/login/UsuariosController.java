@@ -332,7 +332,7 @@ public class UsuariosController {
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
 		try {
-			getUsuarioDAO().deleteById(id);
+			getUsuarioDAO().deleteByIdCustom(id);
 			logger.info("Usuario eliminado con id: " + id);
 			return ResponseEntity.ok("Usuario eliminado");
 		} catch (Exception e) {
