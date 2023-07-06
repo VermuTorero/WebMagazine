@@ -228,6 +228,12 @@ app-publicacion {
   .boton-buscador{
     width: 20%;
   }
+  .inicio-container {
+    margin-top: 0%;
+    /* background-color: rgb(255, 109, 0, 255); */
+  }
+ 
+  
 }
 
 
