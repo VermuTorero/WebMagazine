@@ -40,4 +40,8 @@
 li{
     margin-top: 4%;
 }
+.modal-header{
+    background-color: rgb(255, 109, 0, 255);
+    color: white;
+}
 

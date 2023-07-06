@@ -88,7 +88,7 @@ export class RenovarSuscripcionComponent {
     });
   
   }
-
+//
   pagar(precio: string): void {
     this.modalService.open(this.modalRenovarPaypal, {
       size: 'm',

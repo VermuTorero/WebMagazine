@@ -210,7 +210,7 @@ public class PublicacionesController {
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId()).get();
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
@@ -226,7 +226,7 @@ public class PublicacionesController {
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId());
+		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId()).get();
 		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {

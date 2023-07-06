@@ -66,7 +66,8 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/oauth/**", "/api/publicaciones/search/**" , "/api/publicaciones/**", 
                 		"/api/paginaEditables/**", "/api/imagenInicios/**", "/api/lugares/**", 
-                		"/api/categorias/**", "/api/tags/**", "/api/laterales/**", "/usuarios/**", "/usuarios/search/**", "/api/tipoSuscripcions/**").permitAll()
+                		"/api/categorias/**", "/api/tags/**", "/api/laterales/**", "/usuarios/**", 
+                		"/usuarios/search/**", "/api/tipoSuscripcions/**", "/api/landindpages/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)

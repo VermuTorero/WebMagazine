@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 import { UsuariosService } from '../../service/usuarios.service';
 import { RolesService } from '../../service/roles.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { TokenService } from '../../service/token.service';
+import { Rol } from 'src/app/newsletter/models/Rol';
+declare var $: any;
 
 @Component({
   selector: 'app-edit-user',
@@ -14,22 +16,26 @@ import { TokenService } from '../../service/token.service';
 export class EditUserComponent implements OnInit {
 
   usuario: Usuario = new Usuario();
+  rol: Rol = new Rol();
+  roles: Rol[] = [this.rol];
   rolNombreSeleccionado: string = "";
   password2: string = "";
-  claveRecuperacion: string = "";
-  email: string ="";
+  claveRecuperacion: string | null = "";
+  email: string | null="";
 
-  constructor(private usuariosService: UsuariosService, private loginService: LoginService, private tokenService: TokenService,private rolesService: RolesService, private activatedRoute: ActivatedRoute) {
+  constructor(private usuariosService: UsuariosService, private loginService: LoginService,
+     private tokenService: TokenService,private rolesService: RolesService, 
+     private activatedRoute: ActivatedRoute, private router: Router) {
   }
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.claveRecuperacion = params['claveRecuperacion'];
-      this.email = params['email'];
-    })
-    if (this.claveRecuperacion!="" && this.claveRecuperacion!= undefined && this.claveRecuperacion!= null) {
-      this.getUsuarioFromClaveRecuperacion();
-    }else{
+    this.usuario.roles = this.roles;
+    var params = new URLSearchParams(window.location.search);
+    this.claveRecuperacion = params.get('claveRecuperacion');
+    this.email = params.get('email');
+    if (this.claveRecuperacion == undefined) {
       this.getUsuarioFromToken();
+    }else{
+      this.getUsuarioFromClaveRecuperacion();
     }
     
   }
@@ -57,6 +63,7 @@ export class EditUserComponent implements OnInit {
     this.usuariosService.patchUsuarioRenovado(this.usuario).subscribe(usuario => {
       usuario.id = this.usuariosService.getId(usuario);
       this.usuario = usuario;
+      $('#modificadoModal').modal('show');
     })
   }
 }
