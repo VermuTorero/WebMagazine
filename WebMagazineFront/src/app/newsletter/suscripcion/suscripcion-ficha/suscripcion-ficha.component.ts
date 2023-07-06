@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TipoSuscripcionService } from '../../service/tiposSuscripcion.service';
 import { TipoSuscripcion } from '../../models/TipoSuscripcion';
+declare var $: any;
 
 @Component({
   selector: 'app-suscripcion-ficha',
@@ -30,7 +31,11 @@ export class SuscripcionFichaComponent implements OnInit {
 
   patchTipoSuscripcions() {
     this.suscripciones.forEach(tipoSuscripcion => {
-      this.tiposSuscripcionService.patchTipoSuscripcion(tipoSuscripcion).subscribe();
+      this.tiposSuscripcionService.patchTipoSuscripcion(tipoSuscripcion).subscribe(response=>{
+        $('#modificadaSuscripcionModal').modal('show');
+      }, err=>{
+        $('#errorModificarSuscripcionModal').modal('show');
+      });
     });
   }
 }

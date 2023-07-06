@@ -127,3 +127,75 @@
     </div>
   </div>
 </div>
+
+<!-- Modal confirmado delete user -->
+<div class="modal fade" id="confirmadoDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario eliminado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>El usuario {{usuarioBorrar.email}} ha sido eliminado.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"  (click)="recargarPagina()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error delete user -->
+<div class="modal fade" id="errorDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">UError al eliminar</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>El usuario {{usuarioBorrar.email}} NO ha sido eliminado debido a un error.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"  (click)="recargarPagina()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal modificado user -->
+<div class="modal fade" id="modificadoUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modificación de usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>Modificado usuario:  {{usuarioModificar.email}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="recargarPagina()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal error al modificar user -->
+<div class="modal fade" id="errorModificarUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modificación de usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>Error al modificar usuario:  {{usuarioModificar.email}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="recargarPagina()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

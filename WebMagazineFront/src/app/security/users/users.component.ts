@@ -36,47 +36,54 @@ export class UsersComponent implements OnInit {
       this.users = users;
       this.users.forEach(user => {
         user.id = this.usuariosService.getId(user);
-        this.rolesService.getRolesFromUsuario(user).subscribe(roles=>{
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
           user.roles = roles;
         })
       });
     })
   }
 
-  getRoles(){
-    this.rolesService.getRoles().subscribe(roles=>{
+  getRoles() {
+    this.rolesService.getRoles().subscribe(roles => {
       this.roles = roles;
     })
   }
 
-  abrirModificarModal(user: any){
+  abrirModificarModal(user: any) {
     this.usuarioModificar = user;
     $('#modificarModal').modal('show');
   }
 
-  patchUsuario(){
-    this.usuariosService.patchUsuario(this.usuarioModificar).subscribe(usuario=>{
-      document.location.reload();
+  patchUsuario() {
+    this.usuariosService.patchUsuario(this.usuarioModificar).subscribe(usuario => {
+      $('#modificadoUserModal').modal('show');
+    }, err => {
+      $('#errorModificarUserModal').modal('show');
     })
   }
 
-  deleteUsuario(user:any){
+  deleteUsuario(user: any) {
     this.usuarioBorrar = user;
     $('#confirmarDeleteModal').modal('show');
   }
 
-  deleteUsuarioConfirmado(){
-    this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(response=>{
-      this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(user=>{
-       document.location.reload()
-      }, err=>{document.location.reload()},()=>{document.location.reload()})
+  deleteUsuarioConfirmado() {
+    this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(response => {
+      this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(user => {
+        $('#confirmadoDeleteModal').modal('show');
+      }, err => { 
+        $('#errorDeleteModal').modal('show');
+       })
     })
   }
-  postUsuario(){
-    this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario=>{
+  postUsuario() {
+    this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario => {
       console.log("USUARIO CREADO: " + usuario)
-     /* document.location.reload(); */
-    },err=>{},()=>{document.location.reload()})
+
+    }, err => { }, () => { document.location.reload() })
   }
-  
+  recargarPagina(){
+    document.location.reload();
+  }
+
 }

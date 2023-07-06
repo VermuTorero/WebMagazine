@@ -23,6 +23,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,6 +55,7 @@ import io.jsonwebtoken.Jwts;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.http.HttpResponse;
 
 @RepositoryRestController
 @RequestMapping(path = "/usuarios/search")
@@ -339,10 +341,11 @@ public class UsuariosController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
-	public void eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
+	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
 		Usuario usuario = getUsuarioDAO().findById(id);
 		getUsuarioDAO().delete(usuario);
+		return ResponseEntity.ok("Usuario eliminado");
 	}
 
 	// Obtener los roles a partir del id de un usuario
