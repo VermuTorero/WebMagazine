@@ -46,7 +46,7 @@ public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
 @PostMapping(path = "crearDireccion")
     @ResponseBody
     public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler, @RequestBody Direccion direccion){
-        Usuario usuario = getUsuarioDAO().findById(direccion.getUsuario().getId());
+        Usuario usuario = getUsuarioDAO().findById(direccion.getUsuario().getId()).get();
         direccion.setUsuario(usuario);
         getDireccionDAO().save(direccion);
         return assembler.toModel(direccion);
