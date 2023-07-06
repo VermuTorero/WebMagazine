@@ -330,24 +330,9 @@ public class UsuariosController {
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
-			@PathVariable("id") Long id) {
-		boolean success = false;
-		try {
+			@PathVariable("id") Long id) {		
 			getUsuarioService().deleteUsuarioById(id);
-			logger.info("Usuario eliminado con id: " + id);
-			success = true;
-		} catch (Exception e) {
-			logger.error("Error al intentar eliminar usuario con id: " + id);
-			success=false;
-			
-		}
-		ResponseEntity<String> responseEntity = new ResponseEntity<String>("", HttpStatus.NOT_ACCEPTABLE);
-		if (success) {
-			responseEntity = new ResponseEntity<String>("Usuario eliminado", HttpStatus.OK);
-		}else {
-			responseEntity = new ResponseEntity<String>("Usuario NO elimado", HttpStatus.BAD_REQUEST);
-		}
-		return responseEntity;
+		return new ResponseEntity<String>("Usuario eliminado", HttpStatus.OK);;
 	}
 
 	// Obtener los roles a partir del id de un usuario
