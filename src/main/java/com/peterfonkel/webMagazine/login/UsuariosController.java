@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.login;
 
 import java.time.Duration;
 
+
 import java.time.Instant;
 
 import java.util.ArrayList;
@@ -53,10 +54,6 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.http.HttpResponse;
 
 @RepositoryRestController
 @RequestMapping(path = "/usuarios/search")
