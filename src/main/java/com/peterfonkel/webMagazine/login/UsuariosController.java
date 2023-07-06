@@ -331,14 +331,11 @@ public class UsuariosController {
 	@ResponseBody
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
-		try {
-			getUsuarioDAO().deleteByIdCustom(id);
+	
+			getUsuarioDAO().deleteById(id);
 			logger.info("Usuario eliminado con id: " + id);
 			return ResponseEntity.ok("Usuario eliminado");
-		} catch (Exception e) {
-			logger.error("Error al intentar eliminar usuario con id: " + id);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
-		}
+		
 		
 	}
 

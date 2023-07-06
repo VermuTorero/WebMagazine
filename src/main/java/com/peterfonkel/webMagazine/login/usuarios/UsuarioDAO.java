@@ -27,15 +27,7 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 	Usuario findByClaveActivacion(String clave);
 
 	Usuario findByClaveRecuperacion(String claveRecuperacion);
-
-	@Override
-	void delete(Usuario entity);
-
 	
-	default boolean deleteByIdCustom(Long id) {
-		Usuario usuario = findById(id).get();
-		delete(usuario);
-		return true;
-	}
+	void deleteById(Long id);
 
 }
