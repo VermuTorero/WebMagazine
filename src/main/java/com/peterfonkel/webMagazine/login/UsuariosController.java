@@ -334,7 +334,7 @@ public class UsuariosController {
 		try {
 			getUsuarioService().deleteUsuarioById(id);
 			logger.info("Usuario eliminado con id: " + id);
-			return ResponseEntity.ok("Usuario eliminado");
+			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
 		} catch (Exception e) {
 			logger.error("Error al intentar eliminar usuario con id: " + id);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
