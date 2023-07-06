@@ -28,21 +28,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.springframework.web.util.UriComponentsBuilder;
-import com.peterfonkel.webMagazine.ClaseConfiguracionJava;
-import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.login.email.EmailSender;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
@@ -279,7 +269,7 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado) {
-		Usuario usuarioAntiguo = usuarioDAO.findById(usuarioModificado.getId());
+		Usuario usuarioAntiguo = getUsuarioDAO().findById(usuarioModificado.getId()).get();
 		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
 		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
@@ -359,7 +349,7 @@ public class UsuariosController {
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
 		logger.info("Recibidi id: " + idUsuario);
-		Usuario usuario = getUsuarioDAO().findById(idUsuario);
+		Usuario usuario = getUsuarioDAO().findById(idUsuario).get();
 		logger.info("Encontrado usuario: " + usuario);
 		Set<Rol> roles = usuario.getRoles();
 		logger.info("Roles del usuario: " + roles);
