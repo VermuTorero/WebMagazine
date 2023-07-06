@@ -332,7 +332,7 @@ public class UsuariosController {
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {		
 			getUsuarioService().deleteUsuarioById(id);
-		return new ResponseEntity<String>("Usuario eliminado", HttpStatus.OK);;
+		return new ResponseEntity<String>("Usuario eliminado", HttpStatus.OK);
 	}
 
 	// Obtener los roles a partir del id de un usuario
