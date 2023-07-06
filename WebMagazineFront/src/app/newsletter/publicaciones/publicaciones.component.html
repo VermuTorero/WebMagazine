@@ -105,17 +105,17 @@
 </section>
 
 <div class="col-12 d-md-none row podcastSM m-1 mt-3" id="podcastSM">
-  <h5 class="row titulo-podcast">Podcast</h5>
+  <h5 class="row titulo-podcast justify-content-center">Podcast</h5>
 </div>
 
 <section class="zona-articulos row">
   <div class="col-12 col-md-8 col-lg-9">
     <!-- Seccion articulos recientes-->
-    <section class="py-1 mx-4">
+    <section class="py-1 mx-2 mx-md-4">
       <h3 class="row mx-2 my-2"><b>Ultimos artículos</b></h3>
       <hr>
       <div class="recientes row align-items-start">
-        <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-lg-3 col-xxl-3">
+        <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-lg-3 col-xxl-3 mb-4">
           <app-publicacion [publicacion]="publicacion"></app-publicacion>
         </div>
         <div id="editor" hidden></div>
@@ -123,12 +123,12 @@
     </section>
 
     <!-- Seccion articulos destacados -->
-    <section class="my-1 py-4 mx-4">
+    <section class="my-1 py-4  mx-2 mx-md-4">
       <h3 class="row mx-2 my-1"><b>Destacados</b></h3>
       <hr>
       <div class="destacados row align-items-start">
         <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
-          class="card col-12 col-sm-6 col-lg-3 col-xxl-3">
+          class="card col-12 col-sm-6 col-lg-3 col-xxl-3 mb-4">
           <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
         </div>
       </div>

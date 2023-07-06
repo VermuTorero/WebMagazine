@@ -5,13 +5,13 @@
     <img *ngIf="!this.categoria.urlImagen || this.categoria.urlImagen == '' " class="img-fluid mt-4 pt-4"
       src="../../../../assets/no-imagen.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
   </div>
-  <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
-    <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
+  <div *ngIf="!edicion" class="col-12 col-lg-6 p-0">
+    <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-1 mt-lg-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
   </div>
-  <div *ngIf="!edicion" class="col-12 col-lg-6 p-3">
+  <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3">
     <h3 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h3>
     <h4 class="row mx-2 my-4 text-center">
-      <p>{{categoria.categoriaDescripcion}}</p>
+      <p class="categoria-descripcion">{{categoria.categoriaDescripcion}}</p>
     </h4>
     <div class="text-center">
       <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>

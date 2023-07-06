@@ -478,4 +478,30 @@ public class UsuariosController {
 		}
 		return assembler.toCollectionModel(usuario.getDirecciones());
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping(path = "deleteUsuarioFromToken")
+	@ResponseBody
+	public void deleteUsuarioFromToken(PersistentEntityResourceAssembler assembler,
+			HttpServletRequest request) {
+		String header = request.getHeader("Authorization");
+		if (header != null && header.startsWith("Bearer ")) {
+			String token = header.substring(7);
+			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
+			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+			logger.info("BODY TOKEN: " + bodyToken);
+			String email = "";
+			if ((String) bodyToken.get("sub") != null) {
+				email = (String) bodyToken.get("sub");
+			} else {
+				email = (String) bodyToken.get("username");
+			}
+
+			logger.info("USERNAME: " + email);
+			Usuario usuario = getUsuarioService().getByEmail(email).get();
+			logger.info("USUARIO: " + usuario);
+			getUsuarioDAO().delete(usuario);
+		}
+
+	}
 }

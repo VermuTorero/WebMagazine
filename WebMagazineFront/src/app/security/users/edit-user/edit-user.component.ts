@@ -66,4 +66,16 @@ export class EditUserComponent implements OnInit {
       $('#modificadoModal').modal('show');
     })
   }
+
+  eliminarUsuario(){
+    this.usuariosService.deleteUsuarioFromToken().subscribe(response=>{
+      $('#confirmadoEliminarUsuarioPropioModal').modal('show');
+      setTimeout(()=>{
+        $('#confirmadoEliminarUsuarioPropioModal').modal('hide');
+        this.router.navigate([''])
+      }, 3000)
+    }, err=>{
+      $('#errorEliminarUsuarioPropioModal').modal('show');
+    })
+  }
 }
