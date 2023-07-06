@@ -38,7 +38,8 @@ export class PedidoComponent implements OnInit {
    /* controladores del formulario */
   formularioDireccion: FormGroup;
   submit: boolean = false;
-  esNuevoProducto = true;
+  esNuevaDireccion = true;
+  direccionNueva!: Direccion;
   /*-----------------------*/
   
 
@@ -58,7 +59,7 @@ export class PedidoComponent implements OnInit {
   numero: ['', [Validators.required, Validators.min(0)]],
   piso: ['', [Validators.min(0)]],
   puerta: ['', Validators.maxLength(10)],
-  codigo: ['', [Validators.required, Validators.min(0)]]
+  codigoPostal: ['', [Validators.required, Validators.min(0)]]
 });
 /*-----------------------------------*/
 
@@ -66,6 +67,7 @@ export class PedidoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.esNuevaDireccion = true;
     //1º traemos el usuario con sus datos de la API, posteriormente lo leera de la sesión
     this.UsuariosService.getUsuarioFromToken().subscribe((usuario) =>{
       usuario.id = this.UsuariosService.getId(usuario);
@@ -248,6 +250,12 @@ submitDireccion() {
   this.submit = true;
   if (this.formularioDireccion.invalid) {
     return;
+  }else{
+    this.direccionNueva = this.formularioDireccion.value;
+    this.direccionNueva.usuario = this.usuario;
+    this.UsuariosService.postDireccion(this.direccionNueva).subscribe((res) =>{
+      this.esNuevaDireccion = false;
+    });
   }
 }
 
