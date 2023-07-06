@@ -23,6 +23,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -343,9 +344,15 @@ public class UsuariosController {
 	@ResponseBody
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
-		Usuario usuario = getUsuarioDAO().findById(id);
-		getUsuarioDAO().delete(usuario);
-		return ResponseEntity.ok("Usuario eliminado");
+		try {
+			getUsuarioDAO().deleteById(id);
+			logger.info("Usuario eliminado con id: " + id);
+			return ResponseEntity.ok("Usuario eliminado");
+		} catch (Exception e) {
+			logger.error("Error al intentar eliminar usuario con id: " + id);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
+		}
+		
 	}
 
 	// Obtener los roles a partir del id de un usuario
