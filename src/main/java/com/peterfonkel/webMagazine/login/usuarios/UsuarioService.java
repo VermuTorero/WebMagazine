@@ -29,4 +29,8 @@ public class UsuarioService {
     public Usuario save(Usuario usuario){
         return usuarioDAO.save(usuario);
     }
+    
+    public void deleteUsuarioById(Long id) {
+    	usuarioDAO.deleteById(id);
+    }
 }
