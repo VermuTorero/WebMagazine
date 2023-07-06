@@ -188,6 +188,7 @@ this.initConfig();
       );
 
       //creamos el pedido
+      this.direccionEnvio.idDireccion = this.pedidoService.getIdDireccion(this.direccionEnvio);
       let nuevoPedido = new Pedido(this.direccionEnvio, this.getTotal());
 
       //agregamos el usuario al pedido

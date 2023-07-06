@@ -59,7 +59,7 @@ public class PedidosController {
     @ResponseBody
     public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler, @RequestBody Pedido pedido){
         Usuario usuario = getUsuarioDAO().findById(pedido.getUsuario().getId()).get();
-        Direccion direccion = getDireccionDAO().getById(pedido.getDireccionEntrega().getIdDireccion()); //cambiar cuando esté implementeda las direcciones
+        Direccion direccion = getDireccionDAO().findById(pedido.getDireccionEntrega().getIdDireccion()).get(); //cambiar cuando esté implementeda las direcciones
         List<PedidoProducto> productos = new ArrayList<>();
         for (PedidoProducto pedidoProducto:
             pedido.getProductos() ) {

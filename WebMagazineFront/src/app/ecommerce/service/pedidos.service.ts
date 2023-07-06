@@ -71,6 +71,12 @@ export class PedidosService {
     return trozos[trozos.length - 1];
   }
 
+  getIdDireccion(p: any): string {
+    let url = p._links.self.href;
+    let trozos = url.split("/");
+    return trozos[trozos.length - 1];
+  }
+
   getDireccionEntrega(url: string): Observable<Direccion>{
     return this.http.get<any>(url);
   }
