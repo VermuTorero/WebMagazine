@@ -45,23 +45,23 @@ public class Usuario {
 	
 	private Instant fechaFinSuscripcion;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Like> likes = new ArrayList<Like>();
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Invitacion> invitaciones = new ArrayList<Invitacion>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
 	private List<Direccion> direcciones = new ArrayList<Direccion>();
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Set<Rol> roles = new HashSet<Rol>();
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Suscripcion suscripcion;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
