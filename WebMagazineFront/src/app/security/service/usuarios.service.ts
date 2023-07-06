@@ -106,4 +106,7 @@ export class UsuariosService {
   cambiarPassword(user: Usuario): Observable<Usuario>{
     return this.http.post<any>(this.endpointBack + "/usuarios/search/cambiarPassword" , user );
   }
+  deleteUsuarioFromToken(): Observable<void>{
+    return this.http.delete<any>(this.endpointBack + "/usuarios/search/deleteUsuarioFromToken");
+  }
 }
