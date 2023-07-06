@@ -27,7 +27,7 @@
 </Div>
 
 <h4 class="ms-1">DIRECCION DE ENVIO</h4>
-<div *ngIf="!direccionEnvio"> 
+<div *ngIf="esNuevaDireccion"> 
 <form [formGroup]="formularioDireccion" (ngSubmit)="submitDireccion()" class="m-3">
   <div class="form-row">
     <div class="form-group col-md-6 m-1">
@@ -98,14 +98,14 @@
       </div>
     </div>
     <div class="form-group col-md-2 m-1">
-      <label for="codigo">Código postal</label>
-      <input type="number"  class="form-control" id="codigo" formControlName="codigo">
+      <label for="codigoPostal">Código postal</label>
+      <input type="number"  class="form-control" id="codigoPostal" formControlName="codigoPostal">
       <div *ngIf="formularioDireccion.invalid && submit">
-        <small *ngIf="formularioDireccion.controls['codigo'].errors?.['required']" class="text-danger">
+        <small *ngIf="formularioDireccion.controls['codigoPostal'].errors?.['required']" class="text-danger">
           El campo código postal es requerido
         </small>
         <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
-          <small *ngIf="formularioDireccion.controls['codigo'].hasError('min')" class="text-danger">
+          <small *ngIf="formularioDireccion.controls['codigoPostal'].hasError('min')" class="text-danger">
             El código postal no puede ser negativo
           </small>
         </div>
@@ -121,7 +121,7 @@
 </div>
 
 <!-- Direccion de envío una vez marcada -->
-<Div *ngIf="direccionEnvio">
+<Div *ngIf="!esNuevaDireccion">
   <div class="row ms-2 me-1">
     <div class="col-md-4">
       <div><strong>Ciudad</strong></div>

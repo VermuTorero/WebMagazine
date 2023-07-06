@@ -1,7 +1,7 @@
+import { Direccion } from './../../ecommerce/models/direccion';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
-import { Direccion } from 'src/app/ecommerce/models/direccion';
 import { EmailDTO } from 'src/app/security/models/email-dto';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario';
@@ -39,6 +39,10 @@ export class UsuariosService {
 
   getDirecciones(): Observable<Direccion[]>{
     return this.http.get<any>(this.endpointBack + "/usuarios/search/getDireccionesFromUsuario");
+  }
+
+  postDireccion(direccion: Direccion): Observable <Direccion>{
+    return this.http.post<any>(this.endpoint + "/direcciones/search/crearDireccion", direccion);
   }
 
   extraerUrlDireccionUsuario(usuario: any): string{
