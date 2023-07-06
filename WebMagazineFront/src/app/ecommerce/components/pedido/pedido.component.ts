@@ -40,6 +40,7 @@ export class PedidoComponent implements OnInit {
   submit: boolean = false;
   esNuevaDireccion = true;
   direccionNueva!: Direccion;
+  direccionSeleccionada!: Direccion;
   /*-----------------------*/
   
 
@@ -78,6 +79,10 @@ export class PedidoComponent implements OnInit {
       this.UsuariosService.getDirecciones().subscribe((res2) =>{
         this.direccionesUsuario = res2;
         console.log(res2);
+        if(this.direccionesUsuario.length > 0){
+          this.esNuevaDireccion = false;
+          this.direccionEnvio = this.direccionesUsuario[0];
+        }
       }
       );
     });
@@ -255,8 +260,22 @@ submitDireccion() {
     this.direccionNueva.usuario = this.usuario;
     this.UsuariosService.postDireccion(this.direccionNueva).subscribe((res) =>{
       this.esNuevaDireccion = false;
+      this.direccionEnvio = res;
+      this.direccionesUsuario.push(res);
     });
   }
 }
+
+nuevaDireccion() {
+  this.esNuevaDireccion = true;
+}
+
+actualizarDireccionEnvio(){
+  if (this.direccionEnvio) {
+    this.direccionSeleccionada = this.direccionEnvio;
+    this.esNuevaDireccion = false;
+  }
+}
+
 
 }

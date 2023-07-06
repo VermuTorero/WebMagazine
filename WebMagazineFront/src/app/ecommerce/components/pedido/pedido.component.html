@@ -27,6 +27,18 @@
 </Div>
 
 <h4 class="ms-1">DIRECCION DE ENVIO</h4>
+
+<div *ngIf="direccionesUsuario.length > 0">
+<div class="row ms-2">
+<div class="col-6">
+    <select [(ngModel)]="direccionEnvio" (change)="actualizarDireccionEnvio()" (click)="esNuevaDireccion = false">
+      <option value="" disabled selected>Selecciona una direccion...</option>
+    <option  *ngFor="let direccion of direccionesUsuario" [ngValue]="direccion">{{direccion.calle}}</option>
+  </select>
+</div>
+</div>
+</div>
+
 <div *ngIf="esNuevaDireccion"> 
 <form [formGroup]="formularioDireccion" (ngSubmit)="submitDireccion()" class="m-3">
   <div class="form-row">
@@ -114,7 +126,7 @@
   </div>
   <!-- Botones -->
   <div class="row  mt-3 mb-3 justify-content-around">
-    <DIV class="col"><button type="submit" class=" btn btn-success">CREAR NUEVA DIRECCION</button>
+    <DIV class="col"><button type="submit" class="btn btn-success">AGREGAR NUEVA DIRECCION</button>
   </DIV>
   </div>
 </form>
@@ -164,6 +176,10 @@
         {{ direccionEnvio.codigoPostal }}
         <hr class="mt-0" />
       </div>
+    </div>
+  </div>
+  <div class="row ms-2 mt-3 mb-3 justify-content-around">
+    <div class="col"><button class=" btn btn-success" (click)="esNuevaDireccion = true"  *ngIf="!esNuevaDireccion">CREAR NUEVA DIRECCION</button>
     </div>
   </div>
 </Div>
