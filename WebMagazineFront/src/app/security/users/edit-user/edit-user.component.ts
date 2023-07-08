@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import { TokenService } from '../../service/token.service';
 import { Rol } from 'src/app/newsletter/models/Rol';
+import { Direccion } from 'src/app/ecommerce/models/direccion';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -22,10 +24,30 @@ export class EditUserComponent implements OnInit {
   password2: string = "";
   claveRecuperacion: string | null = "";
   email: string | null="";
+  direccionesUsuario: Direccion[] = [];
+  direccionSeleccionada!: Direccion;
+
+  /* controladores del formulario */
+  formularioDireccion: FormGroup;
+  submit: boolean = false;
+  esNuevaDireccion = true;
+  direccionNueva!: Direccion;
+  /*-----------------------*/
 
   constructor(private usuariosService: UsuariosService, private loginService: LoginService,
      private tokenService: TokenService,private rolesService: RolesService, 
-     private activatedRoute: ActivatedRoute, private router: Router) {
+     private activatedRoute: ActivatedRoute, private router: Router, private fb: FormBuilder) {
+
+      /* control de errores del formulario */
+ this.formularioDireccion = this.fb.group({
+  calle: ['', [Validators.required, Validators.maxLength(50)]],
+  ciudad: ['', [Validators.required, Validators.maxLength(50)]],
+  numero: ['', [Validators.required, Validators.min(0)]],
+  piso: ['', [Validators.min(0)]],
+  puerta: ['', Validators.maxLength(10)],
+  codigoPostal: ['', [Validators.required, Validators.min(0)]]
+});
+/*-----------------------------------*/
   }
   ngOnInit(): void {
     this.usuario.roles = this.roles;
@@ -37,6 +59,10 @@ export class EditUserComponent implements OnInit {
     }else{
       this.getUsuarioFromClaveRecuperacion();
     }
+    this.usuariosService.getDirecciones().subscribe((res2) =>{
+      this.direccionesUsuario = res2;
+    }
+    );
     
   }
   getUsuarioFromToken() {
@@ -78,4 +104,25 @@ export class EditUserComponent implements OnInit {
       $('#errorEliminarUsuarioPropioModal').modal('show');
     })
   }
+
+  eliminarDireccion(): void{
+    this.usuariosService.deleteDireccion(this.usuariosService.extraerUrlDireccion(this.direccionSeleccionada)).subscribe(() =>{
+      this.router.navigate(['']);
+    });
+  }
+
+  submitDireccion() {
+    this.submit = true;
+    if (this.formularioDireccion.invalid) {
+      return;
+    }else{
+      this.direccionNueva = this.formularioDireccion.value;
+      this.direccionNueva.usuario = this.usuario;
+      this.usuariosService.postDireccion(this.direccionNueva).subscribe((res) =>{
+        this.esNuevaDireccion = false;
+        this.direccionesUsuario.push(res);
+      });
+    }
+  }
+
 }
