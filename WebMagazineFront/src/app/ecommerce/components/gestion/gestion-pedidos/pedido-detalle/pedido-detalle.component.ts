@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { forkJoin, map, switchMap } from 'rxjs';
 import { Pedido } from 'src/app/ecommerce/models/pedido';
@@ -24,7 +24,8 @@ export class PedidoDetalleComponent implements OnInit {
     private route: ActivatedRoute,
     private pedidoService: PedidosService,
     private usuariosService: UsuariosService,
-    private productoService: ProductService
+    private productoService: ProductService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -128,6 +129,12 @@ export class PedidoDetalleComponent implements OnInit {
     }else{
       alert("Debe tener fecha de envío y de entrega para poder cerrar el pedido");
     }  
+  }
+
+  eliminarPedido(): void{
+
+    this.pedidoService.deletePedido(this.pedidoService.extraerUrlPedido(this.pedido)).subscribe(() => this.router.navigate(['/ecommerce/gestion']));
+
   }
 
   }

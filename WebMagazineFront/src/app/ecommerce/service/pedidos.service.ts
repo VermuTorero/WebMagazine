@@ -27,6 +27,10 @@ export class PedidosService {
     return this.http.post<any>(this.endpoint + "/pedidoProductos", pedidoProducto);
   }
 
+  deletePedido(urlPedido: string): Observable<any>{
+    return this.http.delete<any>(urlPedido);
+  }
+
   extraerUrlPedidoProducto(pedidoProducto: any): string {
     return pedidoProducto._links.self.href;
   }
