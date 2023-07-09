@@ -20,10 +20,6 @@ export class PublicacionesServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getPublicaciones(): Observable<Publicacion[]>{
-    return this.http.get<any>(this.endpoint + "/publicaciones").pipe(map(response=>response._embedded.publicaciones))
-  }
-
   getPublicacionesRecientes(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes").pipe(map(response=>response._embedded.publicaciones))
   }
@@ -64,10 +60,10 @@ export class PublicacionesServiceService {
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTituloFree/" + titulo)
   }
   getPublicacionById(id: string): Observable<Publicacion>{
-    return this.http.get<any>(this.endpoint + "/publicaciones/" + id)
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionById/" + id)
   }
   deletePublicacion(id: string): Observable<any>{
-    return this.http.delete(this.endpoint + "/publicaciones/" + id);
+    return this.http.delete(this.endpoint + "/publicaciones/search/deletePublicacion/" + id);
   }
   patchPublicacion(publicacion: Publicacion): Observable<Publicacion>{
     return this.http.patch<any>(this.endpoint + "/publicaciones/search/patchPublicacion", publicacion);

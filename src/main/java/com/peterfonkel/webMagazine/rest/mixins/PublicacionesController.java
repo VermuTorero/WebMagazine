@@ -64,6 +64,32 @@ public class PublicacionesController {
 		this.publicacionDAO = publicacionDAO;
 	}
 	
+	
+	
+	public PublicacionDAO getPublicacionDAO() {
+		return publicacionDAO;
+	}
+
+
+
+	public TagDAO getTagDAO() {
+		return tagDAO;
+	}
+
+
+
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
+
+
+
+	public CategoriaDAO getCategoriaDAO() {
+		return categoriaDAO;
+	}
+
+
+
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUSCRIBED')")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
@@ -192,6 +218,14 @@ public class PublicacionesController {
 	    return conjunto;
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
+	@GetMapping(path = "publicacionById/{id}")
+	@ResponseBody
+	public PersistentEntityResource getPublicacionById(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		return assembler.toModel(publicacion);
+	}
+	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
@@ -254,6 +288,14 @@ public class PublicacionesController {
 			}
 	    }
 	    return assembler.toCollectionModel(publicacionesEncontradas);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "deletePublicacion/{id}")
+	@ResponseBody
+	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		getCategoriaDAO().deleteById(publicacion.getId());
 	}
 
 }
