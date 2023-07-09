@@ -102,7 +102,10 @@ public class PublicacionesController {
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
 		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
-		publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
+		if (publicacion.isPremium()) {
+			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
+			
+		}
 		return assembler.toModel(publicacion);
 	}
 	
@@ -127,7 +130,6 @@ public class PublicacionesController {
 			if (publicacion.isPremium()) {
 				publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
 			}
-			
 		}
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
