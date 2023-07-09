@@ -6,6 +6,7 @@ import { Categoria } from '../../models/Categoria';
 import { CategoriasServiceService } from '../../service/categorias.service';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
+import { LoginService } from 'src/app/security/service/login.service';
 
 @Component({
   selector: 'app-publicaciones-categoria',
@@ -13,6 +14,9 @@ import { ImagenesService } from '../../service/imagenes.service';
   styleUrls: ['./publicaciones-categoria.component.css']
 })
 export class PublicacionesCategoriaComponent implements OnInit{
+  userLogged$: any;
+  isLoggedUser: any;
+  isLoggedAdmin: any;
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   categoria: Categoria = new Categoria();
   id: string = "";
@@ -28,9 +32,16 @@ export class PublicacionesCategoriaComponent implements OnInit{
     private publicacionesService: PublicacionesServiceService,
     private categoriaService: CategoriasServiceService,
     private activatedRoute: ActivatedRoute,
-    private imagenesService: ImagenesService) { }
+    private imagenesService: ImagenesService,
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.loginService.getIsLoggedFlagObs().subscribe((flag) => {
+      this.isLoggedUser = flag;
+    });
+     this.loginService.getIsAdminFlagObs().subscribe((flag) => {
+      this.isLoggedAdmin = flag;
+    });
     this.activatedRoute.params.subscribe((params) => {
       this.categoria.categoriaNombre = params['categoria']
       this.getCategoria();

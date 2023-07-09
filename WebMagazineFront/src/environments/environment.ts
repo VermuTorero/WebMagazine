@@ -10,9 +10,7 @@ export const environment = {
     /* urlBack: `http://localhost:8080`, */
    urlBack: `https://vermutoreroapp.herokuapp.com`,
     provincias: provincias,
-
-
-        
+  
   // firebase
   apiKey: firebaseConfig.apiKey,
   authDomain: firebaseConfig.authDomain,

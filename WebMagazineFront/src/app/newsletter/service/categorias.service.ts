@@ -32,7 +32,7 @@ export class CategoriasServiceService {
   }
 
   patchCategoria(categoria: Categoria): Observable<Categoria>{
-    return this.http.patch<any>(this.endpoint + "/categorias/"+ categoria.id, categoria);
+    return this.http.patch<any>(this.endpoint + "/categorias/search/patchCategoria/"+ categoria.id, categoria);
   }
   deleteCategoria(categoria: any): Observable<any>{
     return this.http.delete<any>(this.endpoint + "/categorias/"+ categoria.id);

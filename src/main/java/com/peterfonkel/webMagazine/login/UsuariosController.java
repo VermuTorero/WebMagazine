@@ -331,7 +331,6 @@ public class UsuariosController {
 	@ResponseBody
 	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
-		boolean success = false;
 		try {
 			getUsuarioService().deleteUsuarioById(id);
 			logger.info("Usuario eliminado con id: " + id);

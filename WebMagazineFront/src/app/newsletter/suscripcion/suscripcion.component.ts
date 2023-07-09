@@ -9,6 +9,8 @@ import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
+import { environment } from 'src/environments/environment';
+import { paypalConfig } from 'src/environments/paypalConfig';
 
 @Component({
   selector: 'app-suscripcion',
@@ -25,6 +27,7 @@ export class SuscripcionComponent implements OnInit {
   //variable paypal
   public payPalConfig?: IPayPalConfig;
   suscripcion: any[] = [];
+  clientId: string = paypalConfig.clientId;
 
 
   constructor(private tiposSuscripcionService: TipoSuscripcionService, private usuariosService: UsuariosService,
@@ -103,8 +106,7 @@ export class SuscripcionComponent implements OnInit {
     this.payPalConfig = {
       currency: 'EUR',
       //colocar id de la pagina paypal developer, en proyecto meter variable en enviroment
-      clientId:
-        'AQ4kV3ijEVIItPbgLJtApqQdCEfaNV-xFShpVgdS8lmlI-J_L7U1-UPdiuXVbsivQfZyVQ43csdQJXCT',
+      clientId: this.clientId,
       createOrderOnClient: (data) =>
         <ICreateOrderRequest>{
           intent: 'CAPTURE',

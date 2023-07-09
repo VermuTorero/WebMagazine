@@ -3,8 +3,16 @@
     border-radius: 0px;
     border-style: none;
 }
-.descripcion{
+.container-texto{
+    display: flex;
+    align-items: center;
+}
+
+.nombre-categoria{
+}
+.descripcion-categoria{
     font-size:x-large;
+
 }
 .imagen-edicion:hover{
     opacity: 0.5;
@@ -16,7 +24,7 @@
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
-    .categoria-descripcion{
+    .descripcion-categoria{
         font-size: medium;
     }
 }

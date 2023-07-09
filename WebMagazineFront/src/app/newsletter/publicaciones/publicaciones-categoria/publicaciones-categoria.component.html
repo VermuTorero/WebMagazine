@@ -8,14 +8,17 @@
   <div *ngIf="!edicion" class="col-12 col-lg-6 p-0">
     <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-1 mt-lg-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
   </div>
-  <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3">
-    <h3 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h3>
-    <h4 class="row mx-2 my-4 text-center">
-      <p class="categoria-descripcion">{{categoria.categoriaDescripcion}}</p>
-    </h4>
-    <div class="text-center">
-      <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
+  <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3 container-texto">
+    <div class="container-bloques">
+      <h3 class="row mx-2 my-4 nombre-categoria text-center"><b>{{categoria.categoriaNombre}}</b></h3>
+      <h4 class="row mx-2 my-4 container-descripcion text-center">
+        <p class="descripcion-categoria">{{categoria.categoriaDescripcion}}</p>
+      </h4>
+      <div *ngIf="isLoggedAdmin" class="text-center">
+        <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
+      </div>
     </div>
+    
   </div>
   <div *ngIf="edicion" class="col-12 col-lg-6 p-3">
     <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
