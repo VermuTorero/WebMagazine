@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.j2objc.annotations.AutoreleasePool;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
@@ -312,5 +314,29 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion.getCategoria());
 	}
 
+	@GetMapping(path = "getTagsFromPublicacion/{id}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource>getTagsFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		return assembler.toCollectionModel(publicacion.getTags());
+	}
+	
+	@GetMapping(path = "getLugarFromPublicacion/{id}")
+	@ResponseBody
+	public PersistentEntityResource getLugarFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		return assembler.toModel(publicacion.getLugar());
+	}
+	
+	@GetMapping(path = "getAutorFromPublicacion/{id}")
+	@ResponseBody
+	public PersistentEntityResource getAutorFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Usuario autorPublico = publicacion.getAutor();
+		autorPublico.setEmail("");
+		autorPublico.setPassword("");
+		autorPublico.setClaveRecuperacion("12345678");
+		return assembler.toModel(autorPublico);
+	}
 
 }

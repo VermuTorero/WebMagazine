@@ -41,17 +41,17 @@ export class PublicacionesServiceService {
     return trozos[trozos.length - 1];
   }
   getAutorFromPublicacion(publicacion: any): Observable<Usuario> {
-    return this.http.get<any>(publicacion._links.autor.href);
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/getAutorFromPublicacion/" + publicacion.id);
   }
   getTagsFromPublicacion(publicacion: any): Observable<Tag[]> {
-    return this.http.get<any>(publicacion._links.tags.href).pipe(map(response=>response._embedded.tags))
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/getTagsFromPublicacion/" + publicacion.id).pipe(map(response=>response._embedded.tags))
     ;
   }
   getCategoriaFromPublicacion(publicacion: any): Observable<Categoria> {
-    return this.http.get<any>("/publicaciones/search/getCategoriaFromPublicacion/" + publicacion.id);
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/getCategoriaFromPublicacion/" + publicacion.id);
   }
   getLugarFromPublicacion(publicacion: any): Observable<Lugar> {
-    return this.http.get<any>(publicacion._links.lugar.href);
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/getLugarFromPublicacion/" + publicacion.id);
   } 
   getPublicacion(titulo: string): Observable<Publicacion>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionByTitulo/" + titulo)
