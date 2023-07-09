@@ -16,6 +16,7 @@ export class PaginaEditableService {
   getPaginaEditable(nombrePagina : string): Observable<PaginaEditable>{
     return this.http.get<any>(this.endpoint + "/paginaEditables/search/paginaEditableByNombrePagina/" + nombrePagina );
   }
+  
   getId(p: any): string {
     let url = p._links.self.href;
     let trozos = url.split("/");
@@ -23,7 +24,7 @@ export class PaginaEditableService {
   }
   
   postPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
-    return this.http.post<any>(this.endpoint + "/paginaEditables", paginaEditable);
+    return this.http.post<any>(this.endpoint + "/paginaEditables/search/postPaginaEditable", paginaEditable);
   }
 
   patchPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
@@ -31,6 +32,6 @@ export class PaginaEditableService {
   }
 
   deletePaginaEditable(paginaEditable: any): Observable<any>{
-    return this.http.delete<any>(this.endpoint + "/paginaEditables/"+ paginaEditable.id);
+    return this.http.delete<any>(this.endpoint + "/paginaEditables/search/deletePagina/"+ paginaEditable.id);
   }
 }
