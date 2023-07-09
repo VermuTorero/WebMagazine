@@ -22,6 +22,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -296,11 +297,20 @@ public class PublicacionesController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(path = "deletePublicacion/{id}")
+	@DeleteMapping(path = "deletePublicacion/{id}")
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
 		Publicacion publicacion = getPublicacionDAO().findById(id).get();
 		getCategoriaDAO().deleteById(publicacion.getId());
 	}
+	
+	
+	@GetMapping(path = "getCategoriaFromPublicacion/{id}")
+	@ResponseBody
+	public PersistentEntityResource getCategoriaFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		return assembler.toModel(publicacion.getCategoria());
+	}
+
 
 }

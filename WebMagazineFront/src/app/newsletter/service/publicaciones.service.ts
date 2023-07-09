@@ -48,7 +48,7 @@ export class PublicacionesServiceService {
     ;
   }
   getCategoriaFromPublicacion(publicacion: any): Observable<Categoria> {
-    return this.http.get<any>(publicacion._links.categoria.href);
+    return this.http.get<any>("/publicaciones/search/getCategoriaFromPublicacion/" + publicacion.id);
   }
   getLugarFromPublicacion(publicacion: any): Observable<Lugar> {
     return this.http.get<any>(publicacion._links.lugar.href);
