@@ -124,7 +124,10 @@ public class PublicacionesController {
 		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		for (Publicacion publicacion : publicacionesRecientes) {
-			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
+			if (publicacion.isPremium()) {
+				publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
+			}
+			
 		}
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
