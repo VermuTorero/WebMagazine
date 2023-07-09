@@ -64,10 +64,10 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/oauth/**", "/api/publicaciones/search/**" , 
-                		"/api/paginaEditables/**", "/api/imagenInicios/**", "/api/lugares/**", 
+                .antMatchers("/oauth/**", "/api/publicaciones/search/**", "/usuarios/search/**",
+                		"/api/paginaEditables/search/**", "/api/imagenInicios/**", "/api/lugares/**", 
                 		"/api/categorias/search/**", "/api/tags/**", "/api/laterales/**", "/usuarios/**", 
-                		"/usuarios/search/**", "/api/tipoSuscripcions/**", "/api/landindpages/**").permitAll()
+                		 "/api/tipoSuscripcions/**", "/api/landindpages/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)

@@ -27,7 +27,7 @@ export class PaginaEditableService {
   }
 
   patchPaginaEditable(paginaEditable: PaginaEditable): Observable<PaginaEditable>{
-    return this.http.patch<any>(this.endpoint + "/paginaEditables/" + paginaEditable.id, paginaEditable);
+    return this.http.patch<any>(this.endpoint + "/paginaEditables/search/patchPaginaEditable/" + paginaEditable.id, paginaEditable);
   }
 
   deletePaginaEditable(paginaEditable: any): Observable<any>{

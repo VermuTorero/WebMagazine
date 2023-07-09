@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,10 +38,26 @@ public class PaginaEditableController {
 		this.paginaEditableDAO = paginaEditableDAO;
 	}
 	
+	
+	public PaginaEditableDAO getPaginaEditableDAO() {
+		return paginaEditableDAO;
+	}
+
+
 	@GetMapping(path = "paginaEditableByNombrePagina/{nombrePagina}")
 	@ResponseBody
 	public PersistentEntityResource getPaginaByNombrePagina(PersistentEntityResourceAssembler assembler,@PathVariable("nombrePagina") String nombrePagina) {
 		PaginaEditable paginaEditable = paginaEditableDAO.findByNombrePagina(nombrePagina);
+		return assembler.toModel(paginaEditable);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PatchMapping(path = "patchPaginaEditable/{id}")
+	@ResponseBody
+	public PersistentEntityResource getPaginaByNombrePagina(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id, @RequestBody PaginaEditable paginaNueva ) {
+		PaginaEditable paginaEditable = getPaginaEditableDAO().findById(id).get();
+		paginaEditable.setHtml(paginaNueva.getHtml());
+		getPaginaEditableDAO().save(paginaEditable);
 		return assembler.toModel(paginaEditable);
 	}
 	

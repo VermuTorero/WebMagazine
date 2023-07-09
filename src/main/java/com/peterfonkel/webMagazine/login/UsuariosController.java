@@ -201,7 +201,7 @@ public class UsuariosController {
 
 	// Endpoint para confirmar que se ha realizado el pago de la suscripcion y
 	// aumentar 31 dias la fecha fin de suscripcion.
-	@GetMapping(path = "confirmarPago/{email}")
+	@GetMapping(path = "confirmarPago/{email}	")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
 		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
@@ -452,6 +452,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioModificado);
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path="getDireccionesFromUsuario")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(PersistentEntityResourceAssembler assembler,
