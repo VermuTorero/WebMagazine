@@ -41,6 +41,8 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
+import com.peterfonkel.webMagazine.services.PublicacionesService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class PublicacionesController {
 	
 	@Autowired
-	PublicacionDAO publicacionDAO;
+	PublicacionesService publicacionesService;
 	
 	@Autowired
 	TagDAO tagDAO;
@@ -63,29 +65,21 @@ public class PublicacionesController {
 	
 	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
-	public PublicacionesController(PublicacionDAO publicacionDAO){
-		this.publicacionDAO = publicacionDAO;
+	public PublicacionesController(){
+		
 	}
 	
-	
-	
-	public PublicacionDAO getPublicacionDAO() {
-		return publicacionDAO;
+	public PublicacionesService getPublicacionesService() {
+		return publicacionesService;
 	}
-
-
 
 	public TagDAO getTagDAO() {
 		return tagDAO;
 	}
 
-
-
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
 	}
-
-
 
 	public CategoriaDAO getCategoriaDAO() {
 		return categoriaDAO;
@@ -97,14 +91,14 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
-		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
+		Publicacion publicacion = getPublicacionesService().findByTitulo(titulo);
 		return assembler.toModel(publicacion);
 	}
 	
 	@GetMapping(path = "publicacionByTituloFree/{titulo}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
-		Publicacion publicacion = publicacionDAO.findByTitulo(titulo);
+		Publicacion publicacion = getPublicacionesService().findByTitulo(titulo);
 		if (publicacion.isPremium()) {
 			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
 			
@@ -116,7 +110,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones = publicacionDAO.findAll();
+		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		return assembler.toCollectionModel(publicacionesRecientes);
@@ -126,7 +120,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRecientesFree")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones= publicacionDAO.findAll();
+		List<Publicacion> publicaciones= getPublicacionesService().findAll();
 		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
 		for (Publicacion publicacion : publicacionesRecientes) {
@@ -141,7 +135,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesDestacadas")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesDestacadas = publicacionDAO.findByDestacadoIsTrue();
+		List<Publicacion> listadoPublicacionesDestacadas = getPublicacionesService().findByDestacadoIsTrue();
 		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
 	}
 	
@@ -149,7 +143,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCarousel(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesCarousel = publicacionDAO.findByCarouselIsTrue();
+		List<Publicacion> listadoPublicacionesCarousel = getPublicacionesService().findByCarouselIsTrue();
 		return assembler.toCollectionModel(listadoPublicacionesCarousel);
 	}
 	
@@ -158,7 +152,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesNoCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesNoCarousel(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesNoCarousel = publicacionDAO.findByCarouselIsFalse();
+		List<Publicacion> listadoPublicacionesNoCarousel = getPublicacionesService().findByCarouselIsFalse();
 		Collections.sort(listadoPublicacionesNoCarousel, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
 		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
@@ -169,7 +163,7 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
 			@PathVariable("lugarNombre") String lugarNombre, @PathVariable("idPublicacion") Long idPublicacion) {
 		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
-		listadoPublicacionesCerca = publicacionDAO.findByLugar_LugarNombreAndIdNot(lugarNombre,idPublicacion);
+		listadoPublicacionesCerca = getPublicacionesService().findByLugar_LugarNombreAndIdNot(lugarNombre,idPublicacion);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
 	
@@ -178,7 +172,7 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoria(PersistentEntityResourceAssembler assembler,
 			@PathVariable("categoriaNombre") String lugarNombre, @PathVariable("categoriaNombre") String categoriaNombre) {
 		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
-		listadoPublicacionesCerca = publicacionDAO.findByCategoria_categoriaNombre(categoriaNombre);
+		listadoPublicacionesCerca = getPublicacionesService().findByCategoria_categoriaNombre(categoriaNombre);
 		return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
 
@@ -186,10 +180,10 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
-		Publicacion publicacionRelacionada = publicacionDAO.getById(idPublicacion);
+		Publicacion publicacionRelacionada = getPublicacionesService().findById(idPublicacion).get();
 		Set<Publicacion> publicacionesCoincidentesTag = new HashSet();
 		for (Tag tag : publicacionRelacionada.getTags()) {
-			List<Publicacion> publicacionesTag = publicacionDAO.findByTags_TagNombreAndIdNot(tag.getTagNombre(), idPublicacion);
+			List<Publicacion> publicacionesTag = getPublicacionesService().findByTags_TagNombreAndIdNot(tag.getTagNombre(), idPublicacion);
 			publicacionesCoincidentesTag.addAll(publicacionesTag);
 		}
 		this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada);
@@ -230,21 +224,21 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionById/{id}")
 	@ResponseBody
 	public PersistentEntityResource getPublicacionById(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		return assembler.toModel(publicacion);
 	}
 	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
-		List<Publicacion> listadoPublicacionesTag = publicacionDAO.findByTags_TagNombre(tagNombre);
+		List<Publicacion> listadoPublicacionesTag = getPublicacionesService().findByTags_TagNombre(tagNombre);
 		return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
 	
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
-		List<Publicacion> listadoPublicacionesLugar = publicacionDAO.findByLugar_LugarNombre(lugarNombre);
+		List<Publicacion> listadoPublicacionesLugar = getPublicacionesService().findByLugar_LugarNombre(lugarNombre);
 		return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
 	
@@ -260,7 +254,7 @@ public class PublicacionesController {
 		}
 		publicacion.setTags(tagsRecibidas);
 		publicacion.setFechaPublicacion(Instant.now());
-		publicacionDAO.save(publicacion);
+		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
 	}
 	
@@ -277,7 +271,7 @@ public class PublicacionesController {
 		publicacion.setCategoria(categoria);
 		publicacion.setTags(tagsRecibidas);
 		publicacion.setAutor(autor);
-		publicacionDAO.save(publicacion);
+		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
 	}
 	
@@ -291,7 +285,7 @@ public class PublicacionesController {
 	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
 	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
 	    		            .toLowerCase(); // Convertimos a min�sculas
-	    		List<Publicacion> publicacionesPorPalabra = this.publicacionDAO.findByTituloContainingIgnoreCase(palabraNormalizada);
+	    		List<Publicacion> publicacionesPorPalabra = getPublicacionesService().findByTituloContainingIgnoreCase(palabraNormalizada);
 		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
 			}
 	    }
@@ -302,7 +296,7 @@ public class PublicacionesController {
 	@DeleteMapping(path = "deletePublicacion/{id}")
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		getCategoriaDAO().deleteById(publicacion.getId());
 	}
 	
@@ -310,28 +304,28 @@ public class PublicacionesController {
 	@GetMapping(path = "getCategoriaFromPublicacion/{id}")
 	@ResponseBody
 	public PersistentEntityResource getCategoriaFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		return assembler.toModel(publicacion.getCategoria());
 	}
 
 	@GetMapping(path = "getTagsFromPublicacion/{id}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource>getTagsFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		return assembler.toCollectionModel(publicacion.getTags());
 	}
 	
 	@GetMapping(path = "getLugarFromPublicacion/{id}")
 	@ResponseBody
 	public PersistentEntityResource getLugarFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		return assembler.toModel(publicacion.getLugar());
 	}
 	
 	@GetMapping(path = "getAutorFromPublicacion/{id}")
 	@ResponseBody
 	public PersistentEntityResource getAutorFromPublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionDAO().findById(id).get();
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
 		Usuario autorPublico = publicacion.getAutor();
 		autorPublico.setEmail("");
 		autorPublico.setPassword("");
