@@ -17,10 +17,35 @@
             <label for="email" class="col-5">Segundo apellido</label>
             <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.apellido2">
           </div>
-          <div class="email-input m-2">
-            <label for="email" class="col-5">Dirección</label>
-            <input type="text" class="col-6 mx-2" [(ngModel)]="usuario.direccion">
+          <!-- Direcciones -->
+          <div class="row ms-2">
+            <div class="col-5 p-0">
+              Direcciones
+            </div>
+            
+            <div class="col-2 p-0" *ngIf="direccionesUsuario.length > 0">  
+                <div>
+                  <select [(ngModel)]="direccionSeleccionada">
+                    <option value="" disabled selected>Selecciona una direccion...</option>
+                  <option  *ngFor="let direccion of direccionesUsuario" [ngValue]="direccion">{{direccion.calle}}</option>
+                </select>
+              </div>
+            </div>
           </div>
+
+                <!-- Botones direcciones -->
+                <div class="row mt-1">
+                  <div class="col-5">
+
+                  </div>
+                <div class="col-4">
+                  <button type="button" class="btn btn-success btn-sm"  data-bs-toggle="modal" data-bs-target="#modalDirecciones">Agregar dirección</button>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-danger btn-sm" (click)="eliminarDireccion()">Eliminar</button>
+                </div>
+              </div>
+
           <div class="email-input m-2">
             <label for="email" class="col-5">Email</label>
             <span type="text" class="col-6 mx-2">{{usuario.email}}</span>
@@ -119,6 +144,108 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal formulario de direcciones -->
+<div class="modal fade" id="modalDirecciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Usuario eliminado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <form [formGroup]="formularioDireccion" (ngSubmit)="submitDireccion()" class="m-3">
+          <div class="form-row">
+            <div class="form-group col-md-6 m-1">
+              <label for="calle">Calle</label>
+              <input type="text"  class="form-control"  id="calle" formControlName="calle">
+              <div *ngIf="formularioDireccion.invalid && submit">
+                <small *ngIf="formularioDireccion.controls['calle'].errors?.['required']" class="text-danger">
+                  El campo calle es requerido
+                </small>
+              </div>
+              <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                <small *ngIf="formularioDireccion.controls['calle'].hasError('maxlength')" class="text-danger">
+                  El campo calle no puede tener más de 50 caracteres
+                </small>
+              </div>
+            </div>
+            <div class="form-group col-md-6 m-1">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" class="form-control" id="ciudad" formControlName="ciudad">
+              <div *ngIf="formularioDireccion.invalid && submit">
+        
+                <small *ngIf="formularioDireccion.controls['ciudad'].errors?.['required']" class="text-danger">
+                  El campo ciudad es requerido
+                </small>
+              </div>
+                <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                <small *ngIf="formularioDireccion.controls['ciudad'].hasError('maxlength')" class="text-danger">
+                  El campo ciudad no puede tener más de 50 caracteres
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-2 m-1">
+              <label for="numero">Número</label>
+              <input type="number"  class="form-control" id="numero" formControlName="numero">
+              <div *ngIf="formularioDireccion.invalid && submit">
+                <small *ngIf="formularioDireccion.controls['numero'].errors?.['required']" class="text-danger">
+                  El campo número es requerido
+                </small>
+                <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                  <small *ngIf="formularioDireccion.controls['numero'].hasError('min')" class="text-danger">
+                    El número no puede ser negativo
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-2 m-1">
+              <label for="piso">Piso</label>
+              <input type="number"  class="form-control" id="piso" formControlName="piso">
+              <div *ngIf="formularioDireccion.invalid && submit">
+                <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                  <small *ngIf="formularioDireccion.controls['piso'].hasError('min')" class="text-danger">
+                    El piso no puede ser negativo
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-2 m-1">
+              <label for="puerta">Puerta</label>
+              <input type="text"  class="form-control" id="puerta" formControlName="puerta">
+              <div *ngIf="formularioDireccion.invalid && submit">
+                <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                  <small *ngIf="formularioDireccion.controls['puerta'].hasError('maxlength')" class="text-danger">
+                    La puerta no puede tener más de 10 caracteres
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-2 m-1">
+              <label for="codigoPostal">Código postal</label>
+              <input type="number"  class="form-control" id="codigoPostal" formControlName="codigoPostal">
+              <div *ngIf="formularioDireccion.invalid && submit">
+                <small *ngIf="formularioDireccion.controls['codigoPostal'].errors?.['required']" class="text-danger">
+                  El campo código postal es requerido
+                </small>
+                <div *ngIf="formularioDireccion.invalid && (formularioDireccion.dirty || formularioDireccion.touched)">
+                  <small *ngIf="formularioDireccion.controls['codigoPostal'].hasError('min')" class="text-danger">
+                    El código postal no puede ser negativo
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>

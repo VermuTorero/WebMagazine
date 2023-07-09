@@ -113,4 +113,8 @@ export class UsuariosService {
   deleteUsuarioFromToken(): Observable<void>{
     return this.http.delete<any>(this.endpointBack + "/usuarios/search/deleteUsuarioFromToken");
   }
+
+  deleteDireccion(url: string): Observable<void>{
+    return this.http.delete<any>(url);
+  }
 }
