@@ -65,8 +65,8 @@ public class PublicacionesController {
 	
 	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
-	public PublicacionesController(){
-		
+	public PublicacionesController(PublicacionesService publicacionesService){
+		this.publicacionesService = publicacionesService;
 	}
 	
 	public PublicacionesService getPublicacionesService() {
