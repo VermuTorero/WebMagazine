@@ -7,8 +7,11 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse mx-1 row" id="navbarSupportedContent">
+
       <ul class="nav navbar-nav me-auto mb-2 mb-lg-0 col-12 justify-content-center">
+        <!-- Desplegable gastrosofía -->
         <li class="nav-item dropdown">
           <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
@@ -21,42 +24,44 @@
             <li><a class="dropdown-item" href="publicaciones-categoria/Mercados">Mercados</a></li>
           </ul>
         </li>
-        <!--      <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Gastrosofía">Gastrosofía</a>
-          </li> -->
+
         <li class="nav-item">
           <a class="nav-link active" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Viajar-a-solas">Viajar a
             solas</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Beber-bien">Beber bien</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Culturoides">Culturoides</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Entrevidas">Entrevidas</a>
         </li>
-        <!--  <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="publicaciones-categoria/Culturoides">Autoamor</a>
-          </li> -->
+
         <li class="nav-item dropdown">
           <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Autoamor
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="publicaciones-categoria/Relaciones">Relaciones</a></li>
+            <li>
+              <a class="dropdown-item" href="publicaciones-categoria/Relaciones">Relaciones</a>
+            </li>
             <li><a class="dropdown-item" href="publicaciones-categoria/Autocuidado">Autocuidado</a></li>
           </ul>
         </li>
 
-        <!--   <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="sobre-nosotros">Sobre nosotros</a>
-          </li> -->
+        <li *ngIf="isLoggedWriter">
+          <a class="nav-link active" aria-current="page" href="formulario">Añadir publicación</a>
+        </li>
 
         <li *ngIf="isLoggedAdmin" class="nav-item dropdown">
           <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -76,7 +81,6 @@
             <li><a class="dropdown-item" href="/descubriendo-vermutorero">Editar página libre</a></li>
             <li><a class="dropdown-item" href="editor-inicio">Editar carrusel</a></li>
             <li><a class="dropdown-item" href="editor-lateral">Editar barra lateral</a></li>
-            
             <hr>
             <li class="text-center"><b>Informacion general</b></li>
             <li><a class="dropdown-item" href="acerca-de/editor/sobre-nosotros">Sobre nosotros</a></li>
@@ -91,7 +95,9 @@
             <li><a class="dropdown-item" href="ecommerce/gestion">Gestión de tienda</a></li>
           </ul>
         </li>
+
         <app-login></app-login>
+
       </ul>
     </div>
   </div>

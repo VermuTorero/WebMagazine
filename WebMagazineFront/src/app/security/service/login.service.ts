@@ -18,6 +18,7 @@ export class LoginService {
   endpoint: string = environment.urlBack;
   isLoggedFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isAdminFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isWriterFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient,
     private tokenService: TokenService) { }
@@ -51,6 +52,17 @@ export class LoginService {
 
   setIAdminFlagObs(isAdmin: boolean) {
     this.isAdminFlag$.next(isAdmin);
+  }
+
+  getIsWriterFlagObs(): Observable<boolean> {
+    if (this.getRol() == "ROLE_WRITER") {
+      this.setIsWriterFlagObs(true);
+    }
+    return this.isWriterFlag$.asObservable();
+  }
+
+  setIsWriterFlagObs(isWriter: boolean) {
+    this.isWriterFlag$.next(isWriter);
   }
 
   getRol(): string | null{
