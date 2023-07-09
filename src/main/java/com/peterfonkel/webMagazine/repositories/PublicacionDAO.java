@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.peterfonkel.webMagazine.entities.Publicacion;
 
-@RepositoryRestResource(path = "publicaciones", itemResourceRel = "publicacion", collectionResourceRel = "publicaciones")
+@RepositoryRestResource(path = "publicaciones", itemResourceRel = "publicacion", collectionResourceRel = "publicaciones", exported = false)
 public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	@Override
 	List<Publicacion> findAll();
