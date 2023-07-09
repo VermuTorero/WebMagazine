@@ -47,7 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RepositoryRestController
-@RequestMapping(path = "/publicaciones/search")
+@RequestMapping(path = "/api/publicaciones/search")
 @CrossOrigin
 public class PublicacionesController {
 	
