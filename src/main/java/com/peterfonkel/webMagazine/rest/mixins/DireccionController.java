@@ -1,6 +1,5 @@
 package com.peterfonkel.webMagazine.rest.mixins;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -21,37 +20,36 @@ import com.peterfonkel.webMagazine.repositories.DireccionDAO;
 @CrossOrigin
 public class DireccionController {
 
-@Autowired    
-DireccionDAO direccionDAO;
+	@Autowired
+	DireccionDAO direccionDAO;
 
-@Autowired
-UsuarioDAO usuarioDAO;
+	@Autowired
+	UsuarioDAO usuarioDAO;
 
-public DireccionDAO getDireccionDAO() {
-    return direccionDAO;
-}
+	public DireccionDAO getDireccionDAO() {
+		return direccionDAO;
+	}
 
-public void setDireccionDAO(DireccionDAO direccionDAO) {
-    this.direccionDAO = direccionDAO;
-}
+	public void setDireccionDAO(DireccionDAO direccionDAO) {
+		this.direccionDAO = direccionDAO;
+	}
 
-public UsuarioDAO getUsuarioDAO() {
-    return usuarioDAO;
-}
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
 
-public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
-    this.usuarioDAO = usuarioDAO;
-}
+	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
+		this.usuarioDAO = usuarioDAO;
+	}
 
-@PostMapping(path = "crearDireccion")
-    @ResponseBody
-    public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler, @RequestBody Direccion direccion){
-        Usuario usuario = getUsuarioDAO().findById(direccion.getUsuario().getId()).get();
-        direccion.setUsuario(usuario);
-        getDireccionDAO().save(direccion);
-        return assembler.toModel(direccion);
-    }
-
-
+	@PostMapping(path = "crearDireccion")
+	@ResponseBody
+	public PersistentEntityResource postPedido(PersistentEntityResourceAssembler assembler,
+			@RequestBody Direccion direccion) {
+		Usuario usuario = getUsuarioDAO().findById(direccion.getUsuario().getId()).get();
+		direccion.setUsuario(usuario);
+		getDireccionDAO().save(direccion);
+		return assembler.toModel(direccion);
+	}
 
 }

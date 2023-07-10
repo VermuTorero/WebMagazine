@@ -7,6 +7,7 @@ import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
 import { Lugar } from '../models/Lugar';
 import { Usuario } from 'src/app/security/models/usuario';
+import { Like } from '../models/like';
 
 const cabecera = {
   headers: new HttpHeaders({ "Content-Type": "application/json"})
@@ -92,5 +93,9 @@ export class PublicacionesServiceService {
   getPublicacionesBuscador(palbrasClave: string[]): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint +  "/publicaciones/search/buscar-publicaciones?palabrasClave=" + palbrasClave[0] + "," + palbrasClave[1]
      + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5]).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getLikesFromPublicacion(publicacion: any): Observable<Like[]> {
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/getLikesFromPublicacion/" + publicacion.id).pipe(map(response=>response._embedded.likes))
+    ;
   }
 }

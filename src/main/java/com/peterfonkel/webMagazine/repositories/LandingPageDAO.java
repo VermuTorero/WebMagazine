@@ -9,8 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.peterfonkel.webMagazine.entities.LandingPage;
-import com.peterfonkel.webMagazine.entities.Lugar;
-import com.peterfonkel.webMagazine.entities.Tag;
 
 @RepositoryRestResource(path = "landingpages", itemResourceRel = "landingpage", collectionResourceRel = "landingpages")
 public interface LandingPageDAO extends JpaRepository<LandingPage, Long> {

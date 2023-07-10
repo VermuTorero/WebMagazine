@@ -50,7 +50,6 @@ public class PedidosController {
 		return direccionDAO;
 	}
 
-
 	public PedidoProductoDAO getPedidoProductoDAO() {
 		return pedidoProductoDAO;
 	}
@@ -85,8 +84,5 @@ public class PedidosController {
 		List<Pedido> pedidosCerrados = getPedidoDAO().findByIsCerradoIsTrue();
 		return assembler.toCollectionModel(pedidosCerrados);
 	}
-
-
-
 
 }

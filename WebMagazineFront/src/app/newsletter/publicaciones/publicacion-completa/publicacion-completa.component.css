@@ -44,10 +44,16 @@
 .tag {
     background-color: orange;
     border-radius: 15px;
-    height: 1.3rem;
+    height: 1rem;
     width: auto;
     cursor: pointer;
-    cursor: hand
+    cursor: hand;
+    justify-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1.2%;
+    padding-right: 1.2%;
 }
 
 .tag:hover {
@@ -55,16 +61,20 @@
 }
 
 .tagNombre {
-    font-size: small
+    font-size: small;
+    margin: 0;
 }
 
 
 .lugar {
     background-color: rgb(162, 235, 222);
     border-radius: 15px;
-    height: 1.3rem;
+    height: 1rem;
     width: fit-content;
     margin: 0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lugar:hover {
@@ -72,7 +82,9 @@
 }
 
 .lugarNombre {
-    font-size: small
+    font-size: small;
+    margin: 0;
+
 }
 
 .foto-autor {
@@ -93,7 +105,7 @@
 }
 
 .icono-like {
-    width: 2em;
+    width: 1.5em;
     cursor: pointer;
     cursor: hand
 }
@@ -110,11 +122,6 @@
 
 .icono-vino:hover {
     opacity: 0.5;
-}
-
-.likes {
-    display: flex;
-    align-items: center;
 }
 
 .numero {
@@ -147,9 +154,10 @@
     border-width: 1px;
     box-shadow: 2px 2px 10px #666;
 }
-.titulo-buscador{
+
+.titulo-buscador {
     color: white;
-  }
+}
 
 .twitter {
     margin-top: 5%;
@@ -172,9 +180,10 @@
 .input-buscador {
     width: 80%;
 }
-.titulo-publicaciones-lateral{
+
+.titulo-publicaciones-lateral {
     color: rgb(255, 109, 0, 255);
-  }
+}
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
@@ -268,7 +277,7 @@
     }
 
     .icono-rrss {
-        width: 2.2vw;
+        width: 2vw;
     }
 
     .autor {
@@ -321,4 +330,14 @@ a:active {
 
 ::ng-deep a {
     color: rgb(209, 113, 3);
+}
+
+.likes-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likes {
+    margin: 0;
 }

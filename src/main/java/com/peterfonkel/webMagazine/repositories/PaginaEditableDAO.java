@@ -99,6 +99,7 @@ public interface PaginaEditableDAO extends JpaRepository<PaginaEditable, Long>{
 	void deleteAllByIdInBatch(Iterable<Long> ids);
 	
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	void deleteAllInBatch();
 	
 	@Override

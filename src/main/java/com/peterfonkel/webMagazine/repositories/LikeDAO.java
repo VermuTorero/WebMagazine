@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.peterfonkel.webMagazine.entities.Like;
 
-@RepositoryRestResource(path = "likes", itemResourceRel = "like", collectionResourceRel = "likes")
+@RepositoryRestResource(path = "likes", itemResourceRel = "like", collectionResourceRel = "likes", exported = false)
 public interface LikeDAO extends JpaRepository<Like, Long>{
 	@Override
 	List<Like> findAll();

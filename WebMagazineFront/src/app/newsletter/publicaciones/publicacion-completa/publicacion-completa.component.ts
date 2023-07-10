@@ -7,6 +7,9 @@ import { TagsServiceService } from '../../service/tags.service';
 import { CategoriasServiceService } from '../../service/categorias.service';
 import { Lateral } from '../../models/lateral';
 import { LateralServiceService } from '../../service/lateral.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
+import { LikesService } from '../../service/likes.service';
+import { Like } from '../../models/like';
 declare const twttr: any;
 
 @Component({
@@ -25,6 +28,7 @@ export class PublicacionCompletaComponent implements OnInit {
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
   rol : string | null= "";
+  numeroLikes: number = 0;
   
 
   constructor(
@@ -34,7 +38,9 @@ export class PublicacionCompletaComponent implements OnInit {
     private tagService: TagsServiceService,
     private categoriaService: CategoriasServiceService,
     private router: Router,
-    private lateralService: LateralServiceService) { }
+    private lateralService: LateralServiceService,
+    private usuarioService: UsuariosService,
+    private likeService: LikesService) { }
 
   ngOnInit(): void {
     this.getTitulo();
@@ -55,7 +61,6 @@ export class PublicacionCompletaComponent implements OnInit {
   }
 
   getPublicacion(): void {
-
     this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.getFechaPublicacion();
@@ -78,6 +83,14 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
         this.publicacion.categoria = categoria;
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
+      })
+
+      this.publicacionesService.getLikesFromPublicacion(publicacion).subscribe(likes=>{
+        this.publicacion.likesRecibidos = likes;
+        this.publicacion.likesRecibidos.forEach(like=> {
+          like.id = this.tagService.getId(like);
+        });
+        this.numeroLikes = likes.length;
       })
       
       /*Formato de los videos de Youtube*/
@@ -241,5 +254,14 @@ export class PublicacionCompletaComponent implements OnInit {
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
+  }
+  like(){
+    this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+      usuario.id = this.usuarioService.getId(usuario);
+      let like = new Like();
+      like.usuario = usuario;
+      this.likeService.postLike(this.publicacion.id, usuario).subscribe(like=>{
+      });
+    })
   }
 }
