@@ -25,7 +25,7 @@ import com.peterfonkel.webMagazine.services.PublicacionesService;
 
 
 @RepositoryRestController
-@RequestMapping(path = "/likes/search")
+@RequestMapping(path = "/api/likes/search")
 @CrossOrigin
 public class LikesController {
 	@Autowired
