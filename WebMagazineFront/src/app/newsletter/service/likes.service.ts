@@ -12,8 +12,8 @@ export class LikesService {
 
   constructor(private http: HttpClient) { }
 
-  getLikes(idPublicacion: string): Observable<Like[]>{
-    return this.http.get<any>(this.endpoint + "/likes/search/likesFromPublicacion/" + idPublicacion).pipe(map(response=>response._embedded.likes))
+  getNumberLikes(idPublicacion: string): Observable<string>{
+    return this.http.get<any>(this.endpoint + "/likes/search/numberLikesFromPublicacion/" + idPublicacion);
   }
   getId(p: any): string {
     let url = p._links.self.href;

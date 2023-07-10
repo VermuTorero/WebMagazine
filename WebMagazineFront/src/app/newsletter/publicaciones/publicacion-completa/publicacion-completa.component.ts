@@ -28,7 +28,7 @@ export class PublicacionCompletaComponent implements OnInit {
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
   rol : string | null= "";
-  numeroLikes: number = 0;
+  numeroLikes: string = "";
   
 
   constructor(
@@ -85,12 +85,8 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
 
-      this.publicacionesService.getLikesFromPublicacion(publicacion).subscribe(likes=>{
-        this.publicacion.likesRecibidos = likes;
-        this.publicacion.likesRecibidos.forEach(like=> {
-          like.id = this.tagService.getId(like);
-        });
-        this.numeroLikes = likes.length;
+      this.likeService.getNumberLikes(publicacion.id).subscribe(numberLikes=>{
+        this.numeroLikes = numberLikes;
       })
       
       /*Formato de los videos de Youtube*/

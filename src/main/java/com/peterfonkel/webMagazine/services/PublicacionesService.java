@@ -69,6 +69,8 @@ public class PublicacionesService {
 		return publicacionDAO.save(publicacion);
 	}
 	
-	
+	public int countLikes(Long idPublicacion) {
+		return findById(idPublicacion).get().getLikesRecibidos().size();
+	}
 
 }

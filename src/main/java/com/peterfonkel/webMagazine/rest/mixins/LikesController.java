@@ -10,6 +10,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -63,5 +64,12 @@ public class LikesController {
 		publicacion.setLikesRecibidos(likes);
 		publicacionesService.save(publicacion);
 		return assembler.toModel(like);
+	}
+	
+	@GetMapping(path = "getNumberLikesFromPublicacion/{idPublicacion}")
+	@ResponseBody
+	public int getLikesFromPublicacion(PersistentEntityResourceAssembler assembler, @PathVariable("idPublicacion") Long idPublicacion) {
+		getPublicacionesService().countLikes(idPublicacion);
+		return getPublicacionesService().countLikes(idPublicacion);
 	}
 }
