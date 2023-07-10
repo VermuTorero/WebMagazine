@@ -47,10 +47,6 @@ public class Usuario {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id")
-	private List<Like> likes = new ArrayList<Like>();
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "usuario_id")
 	private List<Invitacion> invitaciones = new ArrayList<Invitacion>();
 
 	@OneToMany(fetch = FetchType.LAZY)
@@ -169,14 +165,6 @@ public class Usuario {
 
 	public void setSuscripcion(Suscripcion suscripcion) {
 		this.suscripcion = suscripcion;
-	}
-
-	public List<Like> getLikes() {
-		return likes;
-	}
-
-	public void setLikes(List<Like> likes) {
-		this.likes = likes;
 	}
 
 	public List<Direccion> getDirecciones() {
