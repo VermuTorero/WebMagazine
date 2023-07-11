@@ -355,7 +355,7 @@ public class UsuariosController {
 
 	// Eliminar un usuario
 	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(path = "eliminarUsuario/{id}")
+	@DeleteMapping(path = "eliminarUsuario")
 	@ResponseBody
 	public ResponseEntity<String> eliminarUsuarioAdmin(PersistentEntityResourceAssembler assembler,
 			HttpServletRequest request) {
