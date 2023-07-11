@@ -68,12 +68,13 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUsuarioConfirmado() {
-      this.usuariosService.deleteUsuario(this.usuarioBorrar).subscribe(user => {
+      this.usuariosService.deleteUsuarioAdmin(this.usuarioBorrar).subscribe(user => {
         $('#confirmadoDeleteModal').modal('show');
       }, err => { 
         $('#errorDeleteModal').modal('show');
        })
   }
+  
   postUsuario() {
     this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario => {
       console.log("USUARIO CREADO: " + usuario)

@@ -34,6 +34,10 @@ public class UsuarioService {
 	public Optional<Usuario> getByEmail(String email) {
 		return usuarioDAO.findByEmail(email);
 	}
+	
+	public Optional<Usuario> getById(Long id) {
+		return usuarioDAO.findById(id);
+	}
 
 	public boolean existsEmail(String email) {
 		return usuarioDAO.existsByEmail(email);

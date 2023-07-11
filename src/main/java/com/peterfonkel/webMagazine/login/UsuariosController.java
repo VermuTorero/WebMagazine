@@ -354,14 +354,52 @@ public class UsuariosController {
 	}
 
 	// Eliminar un usuario
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(path = "eliminarUsuario/{id}")
 	@ResponseBody
-	public ResponseEntity<String> eliminarUsuarioEntityResource(PersistentEntityResourceAssembler assembler,
+	public ResponseEntity<String> eliminarUsuarioAdmin(PersistentEntityResourceAssembler assembler,
+			HttpServletRequest request) {
+		try {
+			Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+			usuario.setNombre(usuario.getNombre().substring(0));
+			usuario.setApellido1(usuario.getApellido1().substring(0));
+			usuario.setApellido2(usuario.getApellido2().substring(0));
+			usuario.setEmail(usuario.getEmail() + "/deleted");
+			usuario.setPassword("password");
+			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
+			Set<Rol> roles = new HashSet<>();
+			roles.add(rolDefault);
+			usuario.setRoles(roles);
+			getUsuarioService().save(usuario);
+			logger.info("Usuario eliminado con id: " + usuario.getId());
+			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
+		} catch (Exception e) {
+			logger.error("Error al intentar eliminar usuario con token...");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
+		}
+		
+	}
+	
+	
+	// Eliminar un usuario por parte de un admin
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@DeleteMapping(path = "eliminarUsuarioAdmin/{id}")
+	@ResponseBody
+	public ResponseEntity<String> eliminarUsuario(PersistentEntityResourceAssembler assembler,
 			@PathVariable("id") Long id) {
 		try {
-			getUsuarioService().deleteUsuarioById(id);
-			logger.info("Usuario eliminado con id: " + id);
+			Usuario usuario = getUsuarioService().getById(id).get();
+			usuario.setNombre(usuario.getNombre().substring(0));
+			usuario.setApellido1(usuario.getApellido1().substring(0));
+			usuario.setApellido2(usuario.getApellido2().substring(0));
+			usuario.setEmail(usuario.getEmail() + "/deleted");
+			usuario.setPassword("password");
+			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
+			Set<Rol> roles = new HashSet<>();
+			roles.add(rolDefault);
+			usuario.setRoles(roles);
+			getUsuarioService().save(usuario);
+			logger.info("Usuario eliminado con id: " + usuario.getId());
 			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
 		} catch (Exception e) {
 			logger.error("Error al intentar eliminar usuario con id: " + id);
@@ -369,6 +407,7 @@ public class UsuariosController {
 		}
 		
 	}
+	
 
 	// Obtener los roles a partir del id de un usuario
 	@PreAuthorize("isAuthenticated()")

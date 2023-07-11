@@ -64,7 +64,7 @@
                             </a>
                         </div>
                         <div class="col-1 my-1 ml-1 likes-container text-center">
-                            <div class="likes col-12 text-center d-flex" data-bs-toggle="modal" data-bs-target="#likeModal">
+                            <div class="likes col-12 text-center d-flex" data-bs-toggle="modal" data-bs-target="#likeModal" (click)="like()">
                                 <img class="icono-like" src="../../../../assets/like.png" alt="like">
                                 <p class="numero"><b>{{numeroLikes}}</b></p>
                             </div>
@@ -165,7 +165,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" data-bs-dismiss="modal" (click)="like()">Invitar</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal">Invitar</button>
             </div>
         </div>
     </div>
