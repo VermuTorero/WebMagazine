@@ -159,7 +159,7 @@ public class UsuariosController {
 		return assembler.toModel(usuarioNuevo);
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuarioAdmin")
 	@ResponseBody
 	private PersistentEntityResource saveNuevoUsuarioAdmin(PersistentEntityResourceAssembler assembler,

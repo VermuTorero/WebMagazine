@@ -80,6 +80,13 @@ export class UsersComponent implements OnInit {
 
     }, err => { }, () => { document.location.reload() })
   }
+
+  postUsuarioAdmin(){
+    this.usuariosService.postUsuarioAdmin(this.usuarioNuevo).subscribe(usuario => {
+      console.log("USUARIO CREADO: " + usuario)
+
+    }, err => { }, () => { document.location.reload() })
+  }
   recargarPagina(){
     document.location.reload();
   }

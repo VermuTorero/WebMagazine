@@ -98,6 +98,10 @@ export class UsuariosService {
     user.id = undefined;
     return this.http.post<any>(this.endpointBack + "/usuarios/search/nuevoUsuario", user);
   }
+  postUsuarioAdmin(user: Usuario): Observable<Usuario>{
+    user.id = undefined;
+    return this.http.post<any>(this.endpointBack + "/usuarios/search/nuevoUsuarioAdmin", user);
+  }
   getIsConfirmed(email: string): Observable<Usuario>{
     return this.http.get<any>(this.endpointBack + "/usuarios/search/isConfirmed/" + email)
   }
