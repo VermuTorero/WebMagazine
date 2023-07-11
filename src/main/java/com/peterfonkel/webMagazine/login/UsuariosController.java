@@ -169,11 +169,11 @@ public class UsuariosController {
 		// agregaran al password codificado para inutilizarlo
 		Random random = new Random();
 		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
-		usuarioNuevo.setIsConfirmadoEmail(false);
+		usuarioNuevo.setIsConfirmadoEmail(true);
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
-		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
+		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(31)));
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
 		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
