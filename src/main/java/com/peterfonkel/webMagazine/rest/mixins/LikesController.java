@@ -58,7 +58,7 @@ public class LikesController {
 		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
 		like.setUsuario(usuario);
 		like.setFechaLike(Instant.now());
-		like = likesService.save(like);
+		like = getLikesService().save(like);
 		Publicacion publicacion = getPublicacionesService().findById(idPublicacion).get();
 		List<Like> likes =  publicacion.getLikesRecibidos();
 		likes.add(like);

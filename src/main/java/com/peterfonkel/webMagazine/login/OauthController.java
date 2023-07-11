@@ -73,11 +73,13 @@ public class OauthController {
 
 	@PostMapping("/authenticate")
 	private ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-		System.out.println(usuarioService.getByEmail(request.getPassword()));
+		logger.info("Solicitando autenticacion: - Usuario: " + request.getUser() + "Password: " + request.getPassword());
+		
 		if (usuarioService.existsEmail(request.getUser())) {
 			try {
 				// El usuario existe
 				Usuario usuario = usuarioService.getByEmail(request.getUser()).get();
+				logger.info("User corresponde con usuario: " + usuario);
 				// El usuario ha confirmado su email
 				if (usuario.getIsConfirmadoEmail()) {
 					// Se comprueba la validez usuario-contraseña
@@ -92,6 +94,7 @@ public class OauthController {
 							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_REGISTERED)
 							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED)
 							|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER_EXPIRED)) {
+						logger.warn("Suscripcion activa");
 					} else {
 						// Si la autenticacion es correcta pero esta caducada
 						logger.warn("Suscripcion caducada");
