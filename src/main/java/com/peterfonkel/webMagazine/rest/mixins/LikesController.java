@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ import com.peterfonkel.webMagazine.services.PublicacionesService;
 
 
 @RepositoryRestController
-@RequestMapping(path = "/api/likes/search")
+@RequestMapping(path = "/likes/search")
 @CrossOrigin
 public class LikesController {
 	@Autowired
@@ -66,10 +67,16 @@ public class LikesController {
 		return assembler.toModel(like);
 	}
 	
-	@GetMapping(path = "getNumberLikesFromPublicacion/{idPublicacion}")
+	@GetMapping(path = "likesFromPublicacion/{idPublicacion}")
 	@ResponseBody
-	public int getLikesFromPublicacion(PersistentEntityResourceAssembler assembler, @PathVariable("idPublicacion") Long idPublicacion) {
-		getPublicacionesService().countLikes(idPublicacion);
-		return getPublicacionesService().countLikes(idPublicacion);
+	public CollectionModel<PersistentEntityResource> getLikesFromPublicacion(PersistentEntityResourceAssembler assembler, @PathVariable("idPublicacion") Long idPublicacion) {
+		Publicacion publicacion = getPublicacionesService().findById(idPublicacion).get();
+		List<Like> likesPublicacion = publicacion.getLikesRecibidos();
+		for (Like like : likesPublicacion) {
+			like.getUsuario().setPassword("");
+			like.getUsuario().setClaveRecuperacion("");
+			like.getUsuario().setClaveRecuperacion("");
+		}
+		return assembler.toCollectionModel(likesPublicacion);
 	}
 }

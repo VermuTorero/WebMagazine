@@ -85,8 +85,8 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
 
-      this.likeService.getNumberLikes(publicacion.id).subscribe(numberLikes=>{
-        this.numeroLikes = numberLikes;
+      this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+        this.numeroLikes = likes.length.toString();
       })
       
       /*Formato de los videos de Youtube*/

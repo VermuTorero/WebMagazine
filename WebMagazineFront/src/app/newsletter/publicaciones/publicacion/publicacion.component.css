@@ -17,6 +17,7 @@
 .card-title {
     height: fit-content !important;
     text-align:left;
+    padding-top: 2%;
 }
 .card-text{
     text-align:left;
