@@ -20,12 +20,16 @@ public class LikesService {
 	@Autowired
 	LikeDAO likeDAO;
 	
+	public LikeDAO getLikeDAO() {
+		return likeDAO;
+	}
+
 	public List<Like> findAll(){
-		return likeDAO.findAll();
+		return getLikeDAO().findAll();
 	}
 	
 	public Like save(Like like) {
-		return likeDAO.save(like);
+		return getLikeDAO().save(like);
 	}
 	
 	

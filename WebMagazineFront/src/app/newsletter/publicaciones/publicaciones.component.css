@@ -53,7 +53,6 @@
 }
 
 hr {
-  
   color: rgb(255, 109, 0, 255);
   border-width: 2px;
 }
@@ -65,11 +64,13 @@ hr {
 .recientes {
   height: auto;
   display: inline-block;
+  width: 100%;
 }
 
 .destacados {
   height: auto;
   display: inline-block;
+  width: 100%;
 }
 
 .publicacion {
