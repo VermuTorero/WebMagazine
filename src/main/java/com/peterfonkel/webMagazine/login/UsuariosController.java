@@ -2,7 +2,6 @@ package com.peterfonkel.webMagazine.login;
 
 import java.time.Duration;
 
-
 import java.time.Instant;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-
 
 @RepositoryRestController
 @RequestMapping(path = "/usuarios/search")
@@ -158,7 +156,7 @@ public class UsuariosController {
 		enviarCorreo(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(path = "nuevoUsuarioAdmin")
 	@ResponseBody
@@ -185,7 +183,6 @@ public class UsuariosController {
 		logger.info("Usuario creado por admin: " + usuarioNuevo.getEmail());
 		return assembler.toModel(usuarioNuevo);
 	}
-	
 
 	// Enviar un correo con un link de verificacion de email
 	private boolean enviarCorreo(Usuario usuario) {
@@ -377,10 +374,9 @@ public class UsuariosController {
 			logger.error("Error al intentar eliminar usuario con token...");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
 		}
-		
+
 	}
-	
-	
+
 	// Eliminar un usuario por parte de un admin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "eliminarUsuarioAdmin/{id}")
@@ -389,9 +385,9 @@ public class UsuariosController {
 			@PathVariable("id") Long id) {
 		try {
 			Usuario usuario = getUsuarioService().getById(id).get();
-			usuario.setNombre(usuario.getNombre().substring(0));
-			usuario.setApellido1(usuario.getApellido1().substring(0));
-			usuario.setApellido2(usuario.getApellido2().substring(0));
+			usuario.setNombre("" + usuario.getNombre().charAt(0));
+			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
+			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
 			usuario.setEmail(usuario.getEmail() + "/deleted");
 			usuario.setPassword("password");
 			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
@@ -405,9 +401,8 @@ public class UsuariosController {
 			logger.error("Error al intentar eliminar usuario con id: " + id);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
 		}
-		
+
 	}
-	
 
 	// Obtener los roles a partir del id de un usuario
 	@PreAuthorize("isAuthenticated()")
@@ -520,10 +515,10 @@ public class UsuariosController {
 	}
 
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping(path="getDireccionesFromUsuario")
+	@GetMapping(path = "getDireccionesFromUsuario")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(PersistentEntityResourceAssembler assembler,
-			HttpServletRequest request) {
+	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(
+			PersistentEntityResourceAssembler assembler, HttpServletRequest request) {
 		Usuario usuario = new Usuario();
 		String header = request.getHeader("Authorization");
 		if (header != null && header.startsWith("Bearer ")) {
@@ -541,34 +536,34 @@ public class UsuariosController {
 			logger.info("USERNAME: " + email);
 			usuario = getUsuarioService().getByEmail(email).get();
 			logger.info("USUARIO: " + usuario);
-			
+
 		}
 		return assembler.toCollectionModel(usuario.getDirecciones());
 	}
-	
+
 	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(path = "deleteUsuarioFromToken")
 	@ResponseBody
-	public void deleteUsuarioFromToken(PersistentEntityResourceAssembler assembler,
+	public ResponseEntity<String> deleteUsuarioFromToken(PersistentEntityResourceAssembler assembler,
 			HttpServletRequest request) {
-		String header = request.getHeader("Authorization");
-		if (header != null && header.startsWith("Bearer ")) {
-			String token = header.substring(7);
-			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
-			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-			logger.info("BODY TOKEN: " + bodyToken);
-			String email = "";
-			if ((String) bodyToken.get("sub") != null) {
-				email = (String) bodyToken.get("sub");
-			} else {
-				email = (String) bodyToken.get("username");
-			}
-
-			logger.info("USERNAME: " + email);
-			Usuario usuario = getUsuarioService().getByEmail(email).get();
-			logger.info("USUARIO: " + usuario);
-			getUsuarioDAO().delete(usuario);
+		try {
+			Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+			usuario.setNombre("" + usuario.getNombre().charAt(0));
+			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
+			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
+			usuario.setEmail(usuario.getEmail() + "/deleted");
+			usuario.setPassword("password");
+			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
+			Set<Rol> roles = new HashSet<>();
+			roles.add(rolDefault);
+			usuario.setRoles(roles);
+			getUsuarioService().save(usuario);
+			logger.info("Usuario eliminado con id: " + usuario.getId());
+			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
+		} catch (Exception e) {
+			logger.error("Error al intentar eliminar usuario con token...");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
 		}
-
 	}
+
 }
