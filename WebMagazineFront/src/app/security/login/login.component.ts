@@ -106,6 +106,12 @@ export class LoginComponent implements OnInit {
     sessionStorage.removeItem("email");
     document.location.reload();
   }
+  onKeyUp(event: KeyboardEvent) {
+    if (event.keyCode === 13) {
+      this.login();
+    }
+  }
+  
 
 
 }

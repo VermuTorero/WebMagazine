@@ -26,16 +26,16 @@
       <div class="modal-body">
         <div class="email-input m-2">
           <label for="email">Email</label>
-          <input type="text" class="mx-2" [(ngModel)]="email">
+          <input type="text" class="mx-2" [(ngModel)]="email" (keyup)="onKeyUp($event)">
         </div>
         <div class="email-input m-2">
           <label for="password">Password</label>
-          <input type="password" class="mx-2" [(ngModel)]="password">
+          <input type="password" class="mx-2" [(ngModel)]="password" (keyup)="onKeyUp($event)">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="login()" data-bs-dismiss="modal">Aceptar</button>
+        <button type="submit" value="Aceptar" class="btn btn-primary" (click)="login()" data-bs-dismiss="modal" >Aceptar</button>
       </div>
     </div>
   </div>
@@ -105,8 +105,8 @@
        <p>La suscripcion ha caducado. Puedes suscribire por 31 dias más.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a type="button" class="btn btn-primary" href="renovar-suscripcion">Renovar suscripcion</a>
+        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a  class="btn btn-primary" href="renovar-suscripcion">Renovar suscripcion</a>
       </div>
     </div>
   </div>

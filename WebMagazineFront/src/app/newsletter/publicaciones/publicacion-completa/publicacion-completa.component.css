@@ -95,7 +95,9 @@
 .foto-autor:hover {
     opacity: 0.5;
 }
-
+.icono-rrss-container{
+    margin: auto;
+}
 .icono-rrss:hover {
     opacity: 0.5;
 }

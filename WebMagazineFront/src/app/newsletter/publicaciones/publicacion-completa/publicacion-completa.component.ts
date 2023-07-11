@@ -140,6 +140,9 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.categoria = categoria;
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
+      this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+        this.numeroLikes = likes.length.toString();
+      })
       
       this.showPublicacion();     
     })
