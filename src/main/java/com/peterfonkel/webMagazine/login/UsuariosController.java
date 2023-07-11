@@ -158,6 +158,34 @@ public class UsuariosController {
 		enviarCorreo(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
 	}
+	
+	
+	@PostMapping(path = "nuevoUsuarioAdmin")
+	@ResponseBody
+	private PersistentEntityResource saveNuevoUsuarioAdmin(PersistentEntityResourceAssembler assembler,
+			@RequestBody Usuario usuario) throws MessagingException {
+		logger.info("Salvando nuevo Usuario creado por admin: " + usuario);
+		// Se crea una secuencia de numeros aleatorios de 8 cifras anadiendo @@%. Se
+		// agregaran al password codificado para inutilizarlo
+		Random random = new Random();
+		Usuario usuarioNuevo = new Usuario(usuario.getEmail(), getPasswordEncoder().encode(usuario.getPassword()));
+		usuarioNuevo.setIsConfirmadoEmail(false);
+		usuarioNuevo.setNombre(usuario.getNombre());
+		usuarioNuevo.setApellido1(usuario.getApellido1());
+		usuarioNuevo.setApellido2(usuario.getApellido2());
+		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
+		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
+		logger.info("RolNombre : " + rolNombre);
+		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
+		usuarioNuevo.setRolSeleccionado(rol);
+		Set<Rol> roles = new HashSet<>();
+		roles.add(rol);
+		usuarioNuevo.setRoles(roles);
+		getUsuarioDAO().save(usuarioNuevo);
+		logger.info("Usuario creado por admin: " + usuarioNuevo.getEmail());
+		return assembler.toModel(usuarioNuevo);
+	}
+	
 
 	// Enviar un correo con un link de verificacion de email
 	private boolean enviarCorreo(Usuario usuario) {
@@ -321,7 +349,7 @@ public class UsuariosController {
 		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
 		getUsuarioDAO().save(usuarioAntiguo);
-		usuarioAntiguo.setPassword("password");
+		usuarioAntiguo.setPassword("pass");
 		return assembler.toModel(usuarioAntiguo);
 	}
 
@@ -372,7 +400,7 @@ public class UsuariosController {
 			@PathVariable("email") String email) {
 		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
 		System.out.println(usuario.getEmail());
-		usuario.setPassword("password");
+		usuario.setPassword("passwor");
 		usuario.setClaveActivacion("12345678");
 		return assembler.toModel(usuario);
 	}
