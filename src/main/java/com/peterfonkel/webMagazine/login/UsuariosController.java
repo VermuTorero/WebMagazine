@@ -274,6 +274,11 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
 		List<Usuario> listadoUsuarios = getUsuarioDAO().findAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
+				listadoUsuarios.remove(usuario);
+			}
+		}
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
@@ -350,32 +355,6 @@ public class UsuariosController {
 		return assembler.toModel(usuarioAntiguo);
 	}
 
-	// Eliminar un usuario
-	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(path = "eliminarUsuario")
-	@ResponseBody
-	public ResponseEntity<String> eliminarUsuarioAdmin(PersistentEntityResourceAssembler assembler,
-			HttpServletRequest request) {
-		try {
-			Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
-			usuario.setNombre(usuario.getNombre().substring(0));
-			usuario.setApellido1(usuario.getApellido1().substring(0));
-			usuario.setApellido2(usuario.getApellido2().substring(0));
-			usuario.setEmail(usuario.getEmail() + "/deleted");
-			usuario.setPassword("password");
-			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
-			Set<Rol> roles = new HashSet<>();
-			roles.add(rolDefault);
-			usuario.setRoles(roles);
-			getUsuarioService().save(usuario);
-			logger.info("Usuario eliminado con id: " + usuario.getId());
-			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
-		} catch (Exception e) {
-			logger.error("Error al intentar eliminar usuario con token...");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
-		}
-
-	}
 
 	// Eliminar un usuario por parte de un admin
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -390,7 +369,7 @@ public class UsuariosController {
 			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
 			usuario.setEmail(usuario.getEmail() + "/deleted");
 			usuario.setPassword("password");
-			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
+			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_DELETED).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolDefault);
 			usuario.setRoles(roles);
@@ -401,7 +380,32 @@ public class UsuariosController {
 			logger.error("Error al intentar eliminar usuario con id: " + id);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
 		}
-
+	}
+	
+	//Eliminar un usuario por parte del mismo usuario
+	@PreAuthorize("isAuthenticated()")
+	@DeleteMapping(path = "deleteUsuarioFromToken")
+	@ResponseBody
+	public ResponseEntity<String> deleteUsuarioFromToken(PersistentEntityResourceAssembler assembler,
+			HttpServletRequest request) {
+		try {
+			Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+			usuario.setNombre("" + usuario.getNombre().charAt(0));
+			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
+			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
+			usuario.setEmail(usuario.getEmail() + "/deleted");
+			usuario.setPassword("password");
+			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_DELETED).get();
+			Set<Rol> roles = new HashSet<>();
+			roles.add(rolDefault);
+			usuario.setRoles(roles);
+			getUsuarioService().save(usuario);
+			logger.info("Usuario eliminado con id: " + usuario.getId());
+			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
+		} catch (Exception e) {
+			logger.error("Error al intentar eliminar usuario con token...");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
+		}
 	}
 
 	// Obtener los roles a partir del id de un usuario
@@ -541,29 +545,6 @@ public class UsuariosController {
 		return assembler.toCollectionModel(usuario.getDirecciones());
 	}
 
-	@PreAuthorize("isAuthenticated()")
-	@DeleteMapping(path = "deleteUsuarioFromToken")
-	@ResponseBody
-	public ResponseEntity<String> deleteUsuarioFromToken(PersistentEntityResourceAssembler assembler,
-			HttpServletRequest request) {
-		try {
-			Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
-			usuario.setNombre("" + usuario.getNombre().charAt(0));
-			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
-			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
-			usuario.setEmail(usuario.getEmail() + "/deleted");
-			usuario.setPassword("password");
-			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
-			Set<Rol> roles = new HashSet<>();
-			roles.add(rolDefault);
-			usuario.setRoles(roles);
-			getUsuarioService().save(usuario);
-			logger.info("Usuario eliminado con id: " + usuario.getId());
-			return ResponseEntity.status(HttpStatus.OK).body("Usuario eliminado");
-		} catch (Exception e) {
-			logger.error("Error al intentar eliminar usuario con token...");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario no encontrado");
-		}
-	}
+
 
 }

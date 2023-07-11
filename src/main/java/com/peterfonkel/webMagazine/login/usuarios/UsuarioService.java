@@ -69,7 +69,6 @@ public class UsuarioService {
 			logger.info("USERNAME: " + email);
 			usuario = getByEmail(email).get();
 			logger.info("USUARIO: " + usuario);
-			usuario.setPassword("password");
 			return usuario;
 		}else {
 			return usuario;
