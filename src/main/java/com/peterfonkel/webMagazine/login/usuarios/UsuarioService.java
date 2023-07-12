@@ -37,6 +37,10 @@ public class UsuarioService {
 		return usuarioDAO.findAll();
 	}
 	
+	public List<Usuario> getAdmins(){
+		return usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN");
+	}
+	
 	public Optional<Usuario> getByEmail(String email) {
 		return usuarioDAO.findByEmail(email);
 	}

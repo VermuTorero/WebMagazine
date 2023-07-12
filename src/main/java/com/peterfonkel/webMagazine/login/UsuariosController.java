@@ -332,7 +332,7 @@ public class UsuariosController {
 	@GetMapping(path = "usuariosMiembros")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosMiembros(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		List<Usuario> listadoUsuarios = getUsuarioService().getAdmins();
 		for (Usuario usuario : listadoUsuarios) {
 			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER)) {
 				
