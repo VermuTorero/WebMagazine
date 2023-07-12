@@ -226,7 +226,7 @@ public class UsuariosController {
 
 	// Endpoint para confirmar que se ha realizado el pago de la suscripcion y
 	// aumentar 31 dias la fecha fin de suscripcion.
-	@GetMapping(path = "confirmarPago/{email}	")
+	@GetMapping(path = "confirmarPago/{email}")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
 		Usuario usuario = getUsuarioService().getByEmail(email).get();
