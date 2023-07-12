@@ -1,6 +1,7 @@
 package com.peterfonkel.webMagazine.login.usuarios;
 
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,36 +31,32 @@ public class UsuarioService {
 
 	@Autowired
 	UsuarioDAO usuarioDAO;
-	
-	
 
-	public UsuarioDAO getUsuarioDAO() {
-		return usuarioDAO;
-	}
+
 	public List<Usuario> getAll(){
-		return getUsuarioDAO().findAll();
+		return usuarioDAO.findAll();
 	}
 	
 	public Optional<Usuario> getByEmail(String email) {
-		return getUsuarioDAO().findByEmail(email);
+		return usuarioDAO.findByEmail(email);
 	}
 	
 	public Optional<Usuario> getById(Long id) {
-		return getUsuarioDAO().findById(id);
+		return usuarioDAO.findById(id);
 	}
 
 	public boolean existsEmail(String email) {
-		return getUsuarioDAO().existsByEmail(email);
+		return usuarioDAO.existsByEmail(email);
 	}
 
 	public Usuario save(Usuario usuario) {
-		return getUsuarioDAO().save(usuario);
+		return usuarioDAO.save(usuario);
 	}
 	
 	
 
 	public void deleteUsuarioById(Long id) {
-		getUsuarioDAO().deleteById(id);
+		usuarioDAO.deleteById(id);
 	}
 
 	public Usuario getUsuarioFromToken(HttpServletRequest request) {
