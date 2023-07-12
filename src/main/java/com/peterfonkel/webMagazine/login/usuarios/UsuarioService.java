@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
+import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
 import io.jsonwebtoken.Claims;
@@ -32,13 +33,18 @@ public class UsuarioService {
 	@Autowired
 	UsuarioDAO usuarioDAO;
 
+	
+	
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
 
 	public List<Usuario> getAll(){
 		return usuarioDAO.findAll();
 	}
 	
 	public List<Usuario> getAdmins(){
-		return usuarioDAO.findByRoles_RolNombre("ROLE_ADMIN");
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_ADMIN);
 	}
 	
 	public Optional<Usuario> getByEmail(String email) {
