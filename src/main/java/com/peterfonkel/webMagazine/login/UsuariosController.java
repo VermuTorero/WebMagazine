@@ -276,11 +276,11 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
 		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		for (Usuario usuario : listadoUsuarios) {
-			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
-				listadoUsuarios.remove(usuario);
-			}
-		}
+//		for (Usuario usuario : listadoUsuarios) {
+//			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
+//				listadoUsuarios.remove(usuario);
+//			}
+//		}
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
 
