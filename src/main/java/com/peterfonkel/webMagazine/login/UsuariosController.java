@@ -461,7 +461,7 @@ public class UsuariosController {
 		Set<Rol> roles = usuarioModificado.getRoles();
 		Rol rol = roles.iterator().next();
 		roles = new HashSet<>();
-		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
+		roles.add(usuarioService.getRolByRolNombre(usuarioModificado.getRoles().iterator().next().getRolNombre().toString()));
 		usuarioAntiguo.setRoles(roles);
 		getUsuarioDAO().save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);

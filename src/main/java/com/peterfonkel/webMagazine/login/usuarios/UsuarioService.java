@@ -1,5 +1,6 @@
 package com.peterfonkel.webMagazine.login.usuarios;
 
+import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
+import com.peterfonkel.webMagazine.login.roles.Rol;
+import com.peterfonkel.webMagazine.login.roles.RolDAO;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
@@ -33,11 +36,21 @@ public class UsuarioService {
 	@Autowired
 	UsuarioDAO usuarioDAO;
 
+	@Autowired
+	RolDAO rolDAO;
 	
 	
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
 	}
+	
+	
+
+	public RolDAO getRolDAO() {
+		return rolDAO;
+	}
+
+
 
 	public List<Usuario> getAll(){
 		return usuarioDAO.findAll();
@@ -61,6 +74,17 @@ public class UsuarioService {
 
 	public Usuario save(Usuario usuario) {
 		return usuarioDAO.save(usuario);
+	}
+	
+	public Rol getRolByRolNombre(String rolNombre) {
+		Rol rolEncontrado = new Rol();
+		List<Rol> rolesList = rolDAO.findAll();
+		for (Rol rol : rolesList) {
+			if (rol.getRolNombre().toString().equals(rolNombre)) {
+				rolEncontrado = rol;
+			}
+		}
+		return rolEncontrado;
 	}
 	
 	
