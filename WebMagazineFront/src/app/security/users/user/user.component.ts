@@ -11,11 +11,13 @@ export class UserComponent implements OnInit{
   @Input() user: Usuario = new Usuario();
   @Output() eliminarUserEvent = new EventEmitter<Usuario>();
   @Output() modificarUserEvent = new EventEmitter<Usuario>();
+  fechaFormateada: string = "";
 
   ngOnInit(): void {
-    this.user.fechaFinSuscripcion = this.user.fechaFinSuscripcion.split("T")[0];
+    this.fechaFormateada = this.user.fechaFinSuscripcion.split("T")[0];
   }
   modificarUsuario(){
+    this.user.fechaFinSuscripcion = this.fechaFormateada + "T" + this.user.fechaFinSuscripcion.split("T")[1];
     this.modificarUserEvent.emit(this.user);
   }
 
