@@ -368,7 +368,9 @@ public class UsuariosController {
 			usuario.setNombre("" + usuario.getNombre().charAt(0));
 			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
 			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
-			usuario.setEmail(usuario.getEmail() + "/deleted");
+			Random random = new Random();
+			int numero =  random.nextInt(900) + 100;
+			usuario.setEmail(usuario.getEmail() + "/deleted/" + numero);
 			usuario.setPassword("password");
 			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_DELETED).get();
 			Set<Rol> roles = new HashSet<>();

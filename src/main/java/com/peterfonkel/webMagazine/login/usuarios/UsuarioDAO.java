@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@RepositoryRestResource(path = "usuarios", itemResourceRel = "usuario", collectionResourceRel = "usuarios", exported = false)
+@RepositoryRestResource(path = "usuarios", itemResourceRel = "usuario", collectionResourceRel = "usuarios")
 public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 	
 	Optional<Usuario> findByEmail(@RequestParam String email);
