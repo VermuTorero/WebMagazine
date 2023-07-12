@@ -230,6 +230,7 @@ public class UsuariosController {
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
 		Usuario usuario = getUsuarioService().getByEmail(email).get();
+		logger.info("Obteniendo usuario para confirmar pago: " + email);
 		if (usuario.getEmail() != null) {
 			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(31)));
 			getUsuarioService().save(usuario);
@@ -274,7 +275,7 @@ public class UsuariosController {
 	@GetMapping(path = "usuarios")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = getUsuarioDAO().findAll();
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
 		for (Usuario usuario : listadoUsuarios) {
 			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
 				listadoUsuarios.remove(usuario);

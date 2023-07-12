@@ -36,7 +36,10 @@ public class UsuarioService {
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
 	}
-
+	public List<Usuario> getAll(){
+		return getUsuarioDAO().findAll();
+	}
+	
 	public Optional<Usuario> getByEmail(String email) {
 		return getUsuarioDAO().findByEmail(email);
 	}
