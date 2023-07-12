@@ -6,11 +6,12 @@ import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Rol } from '../models/Rol';
 import { clear } from 'console';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 import { environment } from 'src/environments/environment';
 import { paypalConfig } from 'src/environments/paypalConfig';
+declare var $: any;
 
 @Component({
   selector: 'app-suscripcion',
@@ -30,7 +31,9 @@ export class SuscripcionComponent implements OnInit {
   clientId: string = paypalConfig.clientId;
 
 
-  constructor(private tiposSuscripcionService: TipoSuscripcionService, private usuariosService: UsuariosService,
+
+  constructor(private tiposSuscripcionService: TipoSuscripcionService,
+    private usuariosService: UsuariosService,
     private modalService:  NgbModal,
     private spinner: NgxSpinnerService) {
 
@@ -90,7 +93,7 @@ export class SuscripcionComponent implements OnInit {
         }
         
       }
-    }, 6000);
+    }, 3000);
   }
 
   pagar(precio: string): void {
@@ -156,8 +159,10 @@ export class SuscripcionComponent implements OnInit {
           'onClientAuthorization - you should probably inform your server about completed transaction at this point',
           data
         );
-
-        this.usuariosService.setIsPaid(this.usuarioNuevo.email).subscribe();
+        this.usuariosService.setIsPaid(this.usuarioNuevo.email).subscribe(response=>{
+          this.modalService.dismissAll();
+          $('#pagadoModal').modal('show');
+        });
        
 
       },

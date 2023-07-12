@@ -195,7 +195,21 @@ public class UsuariosController {
 
 			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion",
 					"Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/"
-							+ String.valueOf(codigoActivacion));
+							+ String.valueOf(codigoActivacion) + "\r\n" + "\"Al registrarte en nuestra aplicación, debes aceptar los siguientes términos y condiciones:\r\n"
+									+ "\r\n"
+									+ "Términos y condiciones de uso: Aceptas cumplir con los términos y condiciones establecidos para el uso de nuestra aplicación. Esto incluye el compromiso de utilizar la aplicación de manera ética y respetar los derechos de propiedad intelectual.\r\n"
+									+ "\r\n"
+									+ "Política de privacidad: Reconoces y aceptas nuestra política de privacidad, que describe cómo recopilamos, utilizamos, almacenamos y protegemos tu información personal. Esta información incluye tu nombre y correo electrónico, que utilizamos para proporcionarte acceso a la aplicación y comunicarnos contigo de manera efectiva.\r\n"
+									+ "\r\n"
+									+ "Consentimiento para el procesamiento de datos: Al registrarte, otorgas tu consentimiento para que procesemos tus datos personales de acuerdo con nuestra política de privacidad. Esto implica que almacenaremos y utilizaremos tu información personal para los fines establecidos en nuestra política de privacidad.\r\n"
+									+ "\r\n"
+									+ "Comunicaciones adicionales: Si optas por recibir comunicaciones adicionales, como boletines informativos o promociones, nos das permiso para enviártelas a la dirección de correo electrónico proporcionada. Si en algún momento deseas dejar de recibir estas comunicaciones, podrás darte de baja siguiendo las instrucciones proporcionadas en cada mensaje.\r\n"
+									+ "\r\n"
+									+ "Al hacer clic en el botón de registro, confirmas que has leído y aceptado los términos y condiciones, así como nuestra política de privacidad. Asimismo, garantizas que proporcionas información veraz y te comprometes a utilizar la aplicación de manera responsable.\r\n"
+									+ "\r\n"
+									+ "Si tienes alguna pregunta o inquietud sobre nuestros términos y condiciones o nuestra política de privacidad, no dudes en contactarnos.\"\r\n"
+									+ "\r\n"
+									+ "Recuerda adaptar el texto a las necesidades específicas de tu aplicación y a las leyes y regulaciones aplicables en tu jurisdicción. Además, se recomienda consultar con un asesor legal para asegurarse de que el texto cumpla con todos los requisitos legales pertinentes.");
 			logger.info("Enviado un correo a: " + usuario.getEmail());
 			return true;
 		} catch (Exception e) {
