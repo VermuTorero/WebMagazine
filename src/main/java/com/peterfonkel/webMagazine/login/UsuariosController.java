@@ -297,6 +297,97 @@ public class UsuariosController {
 //		}
 		return assembler.toCollectionModel(listadoUsuarios);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosSuscritos")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosSuscritos(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosMiembros")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosMiembros(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosEscritores")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosEscritores(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_WRITER)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosRegistrados")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosRegistrados(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_REGISTERED)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosRegistradosNoConfirmados")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosRegistardosNoConfirmados(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_NOT_REGISTERED)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosExpirados")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuarioExpirados(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER_EXPIRED ) 
+					|| usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED )) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
 
 	// Obtener los usuarios con permiso de crear y modificar una publicacion
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
