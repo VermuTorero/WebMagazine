@@ -299,6 +299,21 @@ public class UsuariosController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosAdmin")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosAdmin(PersistentEntityResourceAssembler assembler) {
+		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
+		for (Usuario usuario : listadoUsuarios) {
+			if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_ADMIN)) {
+				
+			}else {
+				listadoUsuarios.remove(usuario);
+			}
+		}
+		return assembler.toCollectionModel(listadoUsuarios);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosSuscritos")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosSuscritos(PersistentEntityResourceAssembler assembler) {

@@ -43,6 +43,90 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  getUsuariosAdmin() {
+    this.usuariosService.getUsuariosAdmin().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosWriter() {
+    this.usuariosService.getUsuariosWriter().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosMember() {
+    this.usuariosService.getUsuariosMember().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosSubscribed() {
+    this.usuariosService.getUsuariosSuscritos().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosRegistered() {
+    this.usuariosService.getUsuariosRegistrados().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosNotRegistered() {
+    this.usuariosService.getUsuariosNotRegistered().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
+  getUsuariosExpired() {
+    this.usuariosService.getUsuariosExpired().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    })
+  }
+
   getRoles() {
     this.rolesService.getRoles().subscribe(roles => {
       this.roles = roles;
