@@ -229,10 +229,10 @@ public class UsuariosController {
 	@GetMapping(path = "confirmarPago/{email}	")
 	@ResponseBody
 	public void confirmarPago(PersistentEntityResourceAssembler assembler, @PathVariable("email") String email) {
-		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
+		Usuario usuario = getUsuarioService().getByEmail(email).get();
 		if (usuario.getEmail() != null) {
 			usuario.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(31)));
-			getUsuarioDAO().save(usuario);
+			getUsuarioService().save(usuario);
 		}
 	}
 
@@ -268,7 +268,8 @@ public class UsuariosController {
 
 	}
 
-	// Obtener todos los usuarios
+	// Obtener todos los usuarios exceptuando los eliminados
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuarios")
 	@ResponseBody

@@ -199,10 +199,10 @@ export class PublicacionCompletaComponent implements OnInit {
   getLateral(){
     this.lateralService.getLateral().subscribe(lateral=>{
       this.lateral = lateral;
+      this.showHtmlPodcast();
       this.showHtmlTwitter();
       this.showHtmlTwitter2();
       this.showHtmlTwitter3();
-      this.showHtmlPodcast();
       this.showHtmlPodcastSM();
     })
   }
