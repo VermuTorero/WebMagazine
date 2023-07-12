@@ -30,25 +30,33 @@ public class UsuarioService {
 
 	@Autowired
 	UsuarioDAO usuarioDAO;
+	
+	
+
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
 
 	public Optional<Usuario> getByEmail(String email) {
-		return usuarioDAO.findByEmail(email);
+		return getUsuarioDAO().findByEmail(email);
 	}
 	
 	public Optional<Usuario> getById(Long id) {
-		return usuarioDAO.findById(id);
+		return getUsuarioDAO().findById(id);
 	}
 
 	public boolean existsEmail(String email) {
-		return usuarioDAO.existsByEmail(email);
+		return getUsuarioDAO().existsByEmail(email);
 	}
 
 	public Usuario save(Usuario usuario) {
-		return usuarioDAO.save(usuario);
+		return getUsuarioDAO().save(usuario);
 	}
+	
+	
 
 	public void deleteUsuarioById(Long id) {
-		usuarioDAO.deleteById(id);
+		getUsuarioDAO().deleteById(id);
 	}
 
 	public Usuario getUsuarioFromToken(HttpServletRequest request) {
