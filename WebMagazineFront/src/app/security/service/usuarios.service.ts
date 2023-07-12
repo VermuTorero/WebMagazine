@@ -36,7 +36,7 @@ export class UsuariosService {
   }
 
   getUsuariosSuscritos(): Observable<Usuario[]> {   
-    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosMiembros").pipe(map(response=>response._embedded.usuarios));
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosSuscritos").pipe(map(response=>response._embedded.usuarios));
   }
   getUsuariosRegistrados(): Observable<Usuario[]> {   
     return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosRegistrados").pipe(map(response=>response._embedded.usuarios));
@@ -49,7 +49,11 @@ export class UsuariosService {
   getUsuariosExpired(): Observable<Usuario[]> {   
     return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosExpirados").pipe(map(response=>response._embedded.usuarios));
   }
-  
+
+  getUsuariosDeleted(): Observable<Usuario[]> {   
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosEliminados").pipe(map(response=>response._embedded.usuarios));
+  }
+
   getUsuariosFromUrls(urls: string[]): Observable<Usuario[]> {   
     const requests = urls.map(url => this.http.get<Usuario>(url));
     return forkJoin(requests);

@@ -360,7 +360,7 @@ public class UsuariosController {
 		    List<Usuario> usuariosWriter = new ArrayList<>();
 
 		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_ADMIN)) {
+		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_WRITER)) {
 		            usuariosWriter.add(usuario);
 		        }
 		    }

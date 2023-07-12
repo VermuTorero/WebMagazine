@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 
 
@@ -7,11 +7,14 @@ import { Usuario } from '../../models/usuario';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent {
+export class UserComponent implements OnInit{
   @Input() user: Usuario = new Usuario();
   @Output() eliminarUserEvent = new EventEmitter<Usuario>();
   @Output() modificarUserEvent = new EventEmitter<Usuario>();
 
+  ngOnInit(): void {
+    this.user.fechaFinSuscripcion = this.user.fechaFinSuscripcion.split("T")[0];
+  }
   modificarUsuario(){
     this.modificarUserEvent.emit(this.user);
   }

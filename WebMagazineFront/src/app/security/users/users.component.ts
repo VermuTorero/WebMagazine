@@ -17,6 +17,7 @@ export class UsersComponent implements OnInit {
   usuarioBorrar: Usuario = new Usuario();
   password2: string = "";
   roles: Rol[] = [];
+  rolSeleccionado: string = "";
 
   constructor(private usuariosService: UsuariosService,
     private rolesService: RolesService) {
@@ -32,6 +33,7 @@ export class UsersComponent implements OnInit {
   }
 
   getUsuarios() {
+    this.rolSeleccionado = "ROLE_ALL";
     this.usuariosService.getUsuarios().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -40,10 +42,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosAdmin() {
+    this.rolSeleccionado = "ROLE_ADMIN";
     this.usuariosService.getUsuariosAdmin().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -52,10 +57,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosWriter() {
+    this.rolSeleccionado = "ROLE_WRITER";
     this.usuariosService.getUsuariosWriter().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -64,10 +72,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosMember() {
+    this.rolSeleccionado = "ROLE_USER_MEMBER";
     this.usuariosService.getUsuariosMember().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -76,10 +87,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosSubscribed() {
+    this.rolSeleccionado = "ROLE_USER_SUBSCRIBED";
     this.usuariosService.getUsuariosSuscritos().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -88,10 +102,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosRegistered() {
+    this.rolSeleccionado = "ROLE_USER_REGISTERED";
     this.usuariosService.getUsuariosRegistrados().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -100,10 +117,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosNotRegistered() {
+    this.rolSeleccionado = "ROLE_USER_NOT_REGISTERED";
     this.usuariosService.getUsuariosNotRegistered().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -112,10 +132,13 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
 
   getUsuariosExpired() {
+    this.rolSeleccionado = "ROLE_EXPIRED";
     this.usuariosService.getUsuariosExpired().subscribe(users => {
       this.users = users;
       this.users.forEach(user => {
@@ -124,8 +147,26 @@ export class UsersComponent implements OnInit {
           user.roles = roles;
         })
       });
+    }, err=>{
+      this.users = [];
     })
   }
+
+  getUsuariosDeleted() {
+    this.rolSeleccionado = "ROLE_DELETED";
+    this.usuariosService.getUsuariosDeleted().subscribe(users => {
+      this.users = users;
+      this.users.forEach(user => {
+        user.id = this.usuariosService.getId(user);
+        this.rolesService.getRolesFromUsuario(user).subscribe(roles => {
+          user.roles = roles;
+        })
+      });
+    }, err=>{
+      this.users = [];
+    })
+  }
+  
 
   getRoles() {
     this.rolesService.getRoles().subscribe(roles => {

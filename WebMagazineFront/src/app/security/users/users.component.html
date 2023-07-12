@@ -1,7 +1,24 @@
 <div class="text-center">
-  <button class="btn btn-outline-primary my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
+  <button class="btn  btn-smbtn-outline-success my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
     usuario</button>
-    <button class="btn btn-outline-primary my-2" (click)="getUsuariosAdmin()">Ver admins</button>
+    <button *ngIf="rolSeleccionado=='ROLE_ALL'" class="btn btn-sm btn-primary my-2 mx-1">Ver todos</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_ALL'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuarios()">Ver todos</button>
+    <button *ngIf="rolSeleccionado=='ROLE_ADMIN'" class="btn btn-sm btn-primary my-2 mx-1">Ver admins</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_ADMIN'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosAdmin()" >Ver admins</button>
+    <button *ngIf="rolSeleccionado=='ROLE_WRITER'" class="btn btn-sm btn-primary my-2 mx-1">Ver escritores</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_WRITER'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosWriter()">Ver escritores</button>
+    <button *ngIf="rolSeleccionado=='ROLE_USER_MEMBER'" class="btn btn-sm btn-primary my-2 mx-1">Ver miembros</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_USER_MEMBER'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosMember()">Ver miembros</button>
+    <button *ngIf="rolSeleccionado=='ROLE_USER_SUBSCRIBED'" class="btn btn-sm btn-primary my-2 mx-1">Ver suscritos</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_USER_SUBSCRIBED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosSubscribed()">Ver suscritos</button>
+    <button *ngIf="rolSeleccionado=='ROLE_USER_REGISTERED'" class="btn btn-sm btn-primary my-2 mx-1">Ver registrados</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_USER_REGISTERED'"class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosRegistered()">Ver registrados</button>
+    <button *ngIf="rolSeleccionado=='ROLE_USER_NOT_REGISTERED'" class="btn btn-sm btn-primary my-2 mx-1">Ver no registrados</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_USER_NOT_REGISTERED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosNotRegistered()">Ver no registrados</button>
+    <button *ngIf="rolSeleccionado=='ROLE_EXPIRED'" class="btn btn-sm btn-primary my-2 mx-1">Ver expirados</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_EXPIRED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosExpired()">Ver expirados</button>
+    <button *ngIf="rolSeleccionado=='ROLE_DELETED'" class="btn btn-sm btn-primary my-2 mx-1">Ver eliminados</button>
+    <button *ngIf="rolSeleccionado!=='ROLE_DELETED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosDeleted()">Ver eliminados</button>
 </div>
 <div class="row m-2 titulo-columna">
   <div class="d-none d-xl-block col-1">NOMBRE</div>
