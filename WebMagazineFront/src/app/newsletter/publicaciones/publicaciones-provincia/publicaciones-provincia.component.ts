@@ -21,8 +21,7 @@ export class PublicacionesProvinciaComponent implements OnInit{
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.provincia = params['provincia']
-      console.log("PROVINCIA RECIBIDA:", this.provincia)
+      this.provincia = params['provincia'];
     })
     this.getPublicacionesByLugar();
   }

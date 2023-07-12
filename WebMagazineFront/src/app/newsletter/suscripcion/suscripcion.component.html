@@ -137,10 +137,10 @@
           <label for="apellido2" class="col-5">Segundo apellido</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
-        <div class="email-input m-2">
+<!--         <div class="email-input m-2">
           <label for="dirección" class="col-5">Dirección</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-        </div>
+        </div> -->
         <div class="email-input m-2">
           <label for="email" class="col-5">Email</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
@@ -184,10 +184,10 @@
           <label for="apellido2" class="col-5">Segundo apellido</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
-        <div class="email-input m-2">
+<!--         <div class="email-input m-2">
           <label for="dirección" class="col-5">Dirección</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-        </div>
+        </div> -->
         <div class="email-input m-2">
           <label for="email" class="col-5">Email</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
@@ -227,52 +227,6 @@
 
 </ng-template>
 
-<!-- Modal Signin Tipo2-->
-<div class="modal fade" id="signInModalTipo2" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Suscribirse a VermuTorero.es</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="email-input m-2">
-          <label for="nombre" class="col-5">Nombre</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.nombre">
-        </div>
-        <div class="email-input m-2">
-          <label for="apellido1" class="col-5">Primer apellido</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido1">
-        </div>
-        <div class="email-input m-2">
-          <label for="apellido2" class="col-5">Segundo apellido</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
-        </div>
-        <div class="email-input m-2">
-          <label for="dirección" class="col-5">Dirección</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
-        </div>
-        <div class="email-input m-2">
-          <label for="email" class="col-5">Email</label>
-          <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.email">
-        </div>
-        <div class="email-input m-2">
-          <label for="password" class="col-5">Password</label>
-          <input type="password" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.password">
-        </div>
-        <div class="email-input m-2">
-          <label for="password2" class="col-5">Password</label>
-          <input type="password" class="mx-2 col-5" [(ngModel)]="password2">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="postUsuarioTipo2()"
-          data-bs-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Modal Pagado-->
 <div class="modal fade" id="pagadoModal" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">

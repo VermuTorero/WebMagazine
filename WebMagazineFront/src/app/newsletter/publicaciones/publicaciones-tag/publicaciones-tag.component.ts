@@ -22,8 +22,7 @@ export class PublicacionesTagComponent implements OnInit{
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      this.tagNombre = params['tagNombre']
-      console.log("TAG RECIBIDA:", this.tagNombre)
+      this.tagNombre = params['tagNombre'];
     })
     this.getPublicacionesByTag();
   }

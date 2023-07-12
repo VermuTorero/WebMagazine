@@ -65,10 +65,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.loginService.login(this.email, this.password).subscribe(tokenDTO => {
-      console.log("TOKEN RECIBIDO", tokenDTO.token);
       this.tokenService.setToken(tokenDTO.token);
       this.usuariosService.getUsuarioFromToken().subscribe(usuario => {
-        console.log("USUARIO FROM TOKEN:", usuario)
         usuario.id = this.usuariosService.getId(usuario);
         this.rolesService.getRolesFromUsuario(usuario).subscribe(roles => {
           usuario.roles = roles;
@@ -82,7 +80,6 @@ export class LoginComponent implements OnInit {
           if (this.usuario.roles[0].rolNombre=="ROLE_USER_SUBSCRIBED_EXPIRED" || this.usuario.roles[0].rolNombre=="ROLE_USER_MEMBER_EXPIRED") {
             $('#renovarModal').modal('show');
           }else{
-            console.log("USUARIO LOGGEADO: ", this.usuario.nombre);
             document.location.reload();
           }
         });

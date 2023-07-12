@@ -45,7 +45,6 @@ export class PublicacionesCategoriaComponent implements OnInit{
     this.activatedRoute.params.subscribe((params) => {
       this.categoria.categoriaNombre = params['categoria']
       this.getCategoria();
-      console.log("PROVINCIA RECIBIDA:", this.categoria)
     })
     this.getPublicacionesByCategoria();
   }
@@ -80,7 +79,6 @@ export class PublicacionesCategoriaComponent implements OnInit{
 
   cerrarEdicion(){
     this.subiendo = true;
-    console.log("URL en categoria: ", this.imageUrl)
     this.categoria.urlImagen = this.imageUrl;
     this.categoriaService.patchCategoria(this.categoria).subscribe(categoria=>{
       this.categoria = categoria;
@@ -102,11 +100,8 @@ export class PublicacionesCategoriaComponent implements OnInit{
       reader.onload = () => {
         this.imageUrl = reader.result as string;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-     
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
   getCroppedImage() {
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
@@ -118,7 +113,6 @@ export class PublicacionesCategoriaComponent implements OnInit{
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.categoria.id, "publicacion").subscribe(url => {
-          console.log("URL IMAGEN SUBIDA: ", url)
           this.imageUrl = url;
           this.categoria.urlImagen = url;
           this.subiendo = false;

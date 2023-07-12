@@ -1,5 +1,5 @@
 <div class="text-center">
-  <button class="btn  btn-smbtn-outline-success my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
+  <button class="btn btn-sm btn-outline-success my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
     usuario</button>
     <button *ngIf="rolSeleccionado=='ROLE_ALL'" class="btn btn-sm btn-primary my-2 mx-1">Ver todos</button>
     <button *ngIf="rolSeleccionado!=='ROLE_ALL'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuarios()">Ver todos</button>

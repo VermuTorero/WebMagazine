@@ -24,12 +24,12 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUsuarios();
     this.getRoles();
     let rol = new Rol();
     rol.rolNombre = "";
     this.usuarioNuevo.roles = [rol];
     this.usuarioModificar.roles = [rol];
+    this.getUsuarios();
   }
 
   getUsuarios() {

@@ -161,7 +161,7 @@ export class PublicacionesComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter3;
     twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
+    /* twttr.widgets.load(); */
   }
 
   showHtmlPodcast() {
@@ -169,17 +169,14 @@ export class PublicacionesComponent implements OnInit {
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
-    console.log(html.innerHTML)
   }
   showHtmlPodcastSM() {
     var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
-    console.log(html.innerHTML)
   }
   buscarPublicacionesPorPalabras() {
-    console.log(this.palabrasClave)
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);

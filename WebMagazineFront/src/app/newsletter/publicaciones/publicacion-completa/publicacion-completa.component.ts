@@ -231,7 +231,7 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter3;
     twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
+    /* twttr.widgets.load(); */
   }
 
   showHtmlPodcast() {

@@ -20,6 +20,8 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 	Optional<Usuario> findById(Long id);
 
 	List<Usuario> findByRoles_RolNombre(RolNombre rolNombre);
+	
+	List<Usuario> findByRoles_RolNombre(String rolNombre);
 
 	List<Usuario> findAll();
 
