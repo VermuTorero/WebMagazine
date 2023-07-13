@@ -11,11 +11,10 @@
 
         <!-- Datos -->
         <div class="row">
-            <div class="col-1"></div>
-            <div class="col-11 col-sm-5 mt-4">
+            <div class="datos col-12 col-sm-5 mt-1">
                 <h3 class="text-center">Datos</h3>
                 <!-- Autor -->
-                <div class="m-4 row row-autor">
+                <div class="m-4 row row-dato">
                     <p class="col-3 m-1">Autor:</p>
                     <div *ngIf="publicacion.autor" class="col-6 m-2">
                         <select name="autorSeleccionado" id="autorSeleccionado" [(ngModel)]="publicacion.autor.id">
@@ -27,7 +26,7 @@
                 </div>
 
                 <!-- Lugar -->
-                <div class="m-4 row">
+                <div class="m-4 row row-dato">
                     <p class="col-3 m-1">Lugar:</p>
                     <div *ngIf="publicacion.lugar" class="col-6 m-2">
                         <select name="lugar" id="lugar" [(ngModel)]="publicacion.lugar.id">
@@ -39,7 +38,7 @@
                 </div>
 
                 <!-- Categoria -->
-                <div class="m-4 row">
+                <div class="m-4 row row-dato">
                     <p class="col-3 m-1">Categoria:</p>
                     <div *ngIf="publicacion.categoria" class="col-6 m-2">
                         <select name="autor" id="categoria" [(ngModel)]="publicacion.categoria.id">
@@ -52,7 +51,7 @@
                     <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
                 </div>
                 <!-- Tags -->
-                <div class="m-4 row">
+                <div class="m-4 row row-dato">
                     <div class="tags-container">
                         <!-- Boton agregar Tag -->
                         <div class="m-4 row justify-content-center">
@@ -98,9 +97,9 @@
             </div>
 
             <!-- Preview -->
-            <div class="col-11 col-sm-6 mt-4">
+            <div class="col-12 col-sm-6 mt-3 preview">
                 <h3 class="text-center">Preview</h3>
-                <div class="row align-items-center justify-content-center my-4">
+                <div class="row align-items-center justify-content-center my-2">
                     <!-- Card publicacion -->
                     <div class="col-12 col-lg-6 publicacion-preview">
                         <div *ngIf="imagePreviewUrl" class="card-image">
@@ -135,24 +134,24 @@
     </form>
 
     <!-- Editor de texto -->
-    <h3 class="text-center">Contenido de la publicación</h3>
-    <div class="mx-3">
+    <h3 class="text-center mt-4">Contenido de la publicación</h3>
+    <div class="editor-container mx-3">
         <form class="m-1 agregar-bloque-texto row form-group text-center">
-            <div class="col-1">
+            <div class="row col-12 col-sm-1">
                 <!-- Boton agregar Imagen -->
-                <div class="row">
+                <div class="col-4 col-sm-12">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#imagenModal">
                         <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Video -->
-                <div class="row">
+                <div class="col-4 col-sm-12">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
                         <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Podcast -->
-                <div class="row">
+                <div class="col-4 col-sm-12">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
@@ -169,11 +168,11 @@
 
     <!-- Boton Publicar -->
     <div class="row text-center m-4">
-        <div class="col-5"></div>
-        <button *ngIf="id" type="button" class="btn btn-warning col-2" (click)="patchPublicacion()">
+        <div class="col-4"></div>
+        <button *ngIf="id" type="button" class="btn btn-warning col-4" (click)="patchPublicacion()">
             Modificar
         </button>
-        <button *ngIf="!id" type="button" class="btn btn-warning col-2" (click)="postPublicacion()">
+        <button *ngIf="!id" type="button" class="btn btn-warning col-4" (click)="postPublicacion()">
             Publicar
         </button>
     </div>

@@ -209,6 +209,46 @@
         width: 100% !important;
         height: 45vw !important;
     }
+    .quill-editor{
+        width: 100%;
+    }
+    .editor-container{
+        margin: 0;
+    }
+    .agregar-bloque-texto{
+        justify-content: center;
+    }
+    .icono-youtube{
+        width: 100%;
+    }
+    .icono-spotify{
+        width: 100%;
+    }
+    .preview{
+        justify-content: center;
+        width: 94%;
+        margin-left: 3%;
+    }
+    .text-titulo{
+        font-size: large;
+        width: 98%;
+        box-shadow: 2px 2px 10px #666;
+        margin: 0;
+    }
+    .recomendacion-titulo{
+        width: 98%;
+    }
+    .row-dato{
+        width: 98%;
+        margin: 0 !important;
+    }
+    .tags-container{
+        width: 95%;
+        border-style: ridge;
+        border-color: black;
+        padding: 0;
+    }
+  
 }
 
 /* Estilos tamaño grande */
@@ -235,5 +275,12 @@
     ::ng-deep iframe[tipo="youtube"]{
         width: 75% !important;
         height: 35vw !important;
+    }
+    .row-dato{
+        width: 98%;
+        margin-right: 10%;
+    }
+    .datos{
+        margin-left: 6%;
     }
 }
