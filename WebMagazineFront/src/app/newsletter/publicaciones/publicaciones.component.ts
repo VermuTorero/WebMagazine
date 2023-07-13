@@ -173,6 +173,8 @@ export class PublicacionesComponent implements OnInit {
   showHtmlPodcastSM() {
     var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
+    html.classList.add("podcastSM-container");
+    html.classList.add("justify-content-center");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
   }

@@ -65,6 +65,10 @@ export class PublicacionFichaComponent implements OnInit {
   lugarSeleccionado: Lugar = new Lugar();
   categoriaSeleccionada: Categoria = new Categoria();
 
+  /* Conteo de palabras */
+  palabrasTitulo: number = 0;
+  palabrasDescripcion: number = 0;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -373,5 +377,15 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
+  }
+
+  contarPalabrasTitulo(){
+    let arrayPalabras = this.publicacion.titulo.split(' ');
+    this.palabrasTitulo = arrayPalabras.length - 1;
+  }
+
+  contarPalabrasDescripcion(){
+    let arrayPalabras = this.publicacion.subtitulo.split(' ');
+    this.palabrasDescripcion = arrayPalabras.length -1 ;
   }
 }

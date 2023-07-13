@@ -5,7 +5,8 @@
         <!-- Titulo -->
         <div class="row m-3 titulo justify-content-center">
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="100"></textarea>
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="100" (keyup)="contarPalabrasTitulo()"></textarea>
+                <p class="row recomendacion-titulo">Recomendado entre 10 y 15 palabras. Llevas: {{palabrasTitulo}}</p>
         </div>
 
         <!-- Datos -->
@@ -118,7 +119,8 @@
                                 <div class="card-text text-center">
                                     <textarea class="row text-descripcion mt-4 mb-2 mx-1" type="text" name="subtitulo"
                                         rows="3" maxlength="210" [(ngModel)]="publicacion.subtitulo"
-                                        placeholder="Descripción de la publicación (para preview)"></textarea>
+                                        placeholder="Descripción de la publicación (para preview)" (keyup)="contarPalabrasDescripcion()"></textarea>
+                                        <p class="row recomendacion-titulo mx-1">Recomendado entre 20 y 30 palabras. Llevas: {{palabrasDescripcion}}</p>
                                 </div>
                                 <div class="color-letra m-2">
                                     <label class="mx-2" for="colorLetra">Letra oscura sobre la imagen</label>
@@ -342,9 +344,7 @@
                         data-bs-dismiss="modal">Crear</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
+
         </div>
     </div>
 </div>

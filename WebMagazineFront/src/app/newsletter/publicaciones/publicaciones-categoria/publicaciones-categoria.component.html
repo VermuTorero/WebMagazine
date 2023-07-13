@@ -18,7 +18,6 @@
         <button class="btn btn-warning mb-2" (click)="abrirEdicion()">MODIFICAR</button>
       </div>
     </div>
-    
   </div>
   <div *ngIf="edicion" class="col-12 col-lg-6 p-3">
     <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
@@ -32,7 +31,7 @@
   </div>
   <hr class="mt-2">
   <div *ngFor="let publicacion of publicaciones"
-    class="card row col-12 col-md-3 col-xxl-2 card">
+    class="card row col-12 col-md-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
 </div>

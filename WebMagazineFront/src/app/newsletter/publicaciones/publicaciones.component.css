@@ -3,7 +3,7 @@
 }
 
 .card {
-  margin: 0 auto;
+
   border-radius: 0px;
   border-style: none;
   display: inline-flex;
@@ -63,13 +63,12 @@ hr {
 
 .recientes {
   height: auto;
-  display: inline-block;
   width: 100%;
+  margin-left: 0;
 }
 
 .destacados {
   height: auto;
-  display: inline-block;
   width: 100%;
 }
 
@@ -234,8 +233,16 @@ app-publicacion {
     margin-top: 0%;
     /* background-color: rgb(255, 109, 0, 255); */
   }
- 
-  
+  .seccion-recientes{
+    margin-top: 0 !important;
+    text-align: center;
+  }
+  .seccion-destacados{
+    text-align: center;
+  }
+  .podcastSM{
+    text-align: center;
+  }
 }
 
 
@@ -258,7 +265,9 @@ app-publicacion {
   .inicio {
     width: 80%;
     margin: auto;
-
+  }
+  .zona-articulos{
+    margin-top: 1% !important;
   }
 }
 

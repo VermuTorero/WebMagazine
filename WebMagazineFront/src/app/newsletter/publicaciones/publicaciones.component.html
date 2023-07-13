@@ -33,10 +33,6 @@
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="3500">
             <img src="{{imagenInicioCentral.url}}" class="d-block w-100 p-0 m-0" alt="...">
-            <!--     <div class="carousel-caption d-none d-md-block">
-            <h5>Vermú torero</h5>
-            <p>Revista digital y podcast del aperitivo a la cena</p>
-          </div> -->
             <section class="carousel-caption rrss">
               <div class="row align-items-center mt-1">
                 <div class="col-1"></div>
@@ -104,17 +100,17 @@
   </section>
 </section>
 
-<div class="col-12 d-md-none row podcastSM m-1 mt-3" id="podcastSM">
-  <h5 class="row titulo-podcast justify-content-center">Podcast</h5>
-</div>
+<section class="col-12 d-md-none row podcastSM mt-2 m-0" id="podcastSM">
+  <h4 class="titulo-podcast justify-content-center"><b>Podcast</b></h4>
+</section>
 
 <section class="zona-articulos row">
-  <div class="col-12 col-md-8 col-lg-9">
+  <div class="col-12 col-md-8 col-lg-9 ">
     <!-- Seccion articulos recientes-->
-    <section class="py-1 mx-2 mx-md-4">
-      <h3 class="row mx-2 my-2"><b>Ultimos artículos</b></h3>
-      <hr>
-      <div class="recientes row align-items-start">
+    <section class="seccion-recientes mx-1 mx-md-4">
+      <h3 class="row mx-2"><b>Ultimos artículos</b></h3>
+      <hr class="my-0">
+      <div class="recientes row mt-2">
         <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-lg-3 col-xxl-3 mb-4">
           <app-publicacion [publicacion]="publicacion"></app-publicacion>
         </div>
@@ -123,10 +119,10 @@
     </section>
 
     <!-- Seccion articulos destacados -->
-    <section class="my-1 py-4  mx-2 mx-md-4">
+    <section class="seccion-destacados my-1 pt-3 mx-1 mx-md-4">
       <h3 class="row mx-2 my-1"><b>Destacados</b></h3>
-      <hr>
-      <div class="destacados row align-items-start">
+      <hr class="my-0">
+      <div class="destacados row align-items-start mt-2">
         <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
           class="card col-12 col-sm-6 col-lg-3 col-xxl-3 mb-4">
           <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>

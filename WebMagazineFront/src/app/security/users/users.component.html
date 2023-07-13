@@ -1,4 +1,4 @@
-<div class="text-center">
+<div class="botones text-center">
   <button class="btn btn-sm btn-outline-success my-2" data-bs-toggle="modal" data-bs-target="#signInAdminModal">Agregar
     usuario</button>
     <button *ngIf="rolSeleccionado=='ROLE_ALL'" class="btn btn-sm btn-primary my-2 mx-1">Ver todos</button>
@@ -19,6 +19,9 @@
     <button *ngIf="rolSeleccionado!=='ROLE_EXPIRED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosExpired()">Ver expirados</button>
     <button *ngIf="rolSeleccionado=='ROLE_DELETED'" class="btn btn-sm btn-primary my-2 mx-1">Ver eliminados</button>
     <button *ngIf="rolSeleccionado!=='ROLE_DELETED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosDeleted()">Ver eliminados</button>
+</div>
+<div class="descripcion"> 
+  <h5><b>Usuarios con rol de administrador</b> </h5>
 </div>
 <div class="row m-2 titulo-columna">
   <div class="d-none d-xl-block col-1">NOMBRE</div>
