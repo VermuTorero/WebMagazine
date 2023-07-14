@@ -25,31 +25,28 @@ import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.PaginaEditable;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PaginaEditableDAO;
+import com.peterfonkel.webMagazine.services.PaginaEditableService;
 
 @RepositoryRestController
-@RequestMapping(path = "/paginaEditables/search")
+@RequestMapping(path = "api/paginaEditables/search")
 @CrossOrigin
 public class PaginaEditableController {
 	
 	
 	@Autowired
-	PaginaEditableDAO paginaEditableDAO;
+	PaginaEditableService paginaEditableService;
 	
-	
-	public PaginaEditableController(PaginaEditableDAO paginaEditableDAO){
-		this.paginaEditableDAO = paginaEditableDAO;
+	public PaginaEditableController(){;
 	}
 	
-	
-	public PaginaEditableDAO getPaginaEditableDAO() {
-		return paginaEditableDAO;
+	public PaginaEditableService getPaginaEditableService() {
+		return paginaEditableService;
 	}
-
 
 	@GetMapping(path = "paginaEditableByNombrePagina/{nombrePagina}")
 	@ResponseBody
 	public PersistentEntityResource getPaginaByNombrePagina(PersistentEntityResourceAssembler assembler,@PathVariable("nombrePagina") String nombrePagina) {
-		PaginaEditable paginaEditable = paginaEditableDAO.findByNombrePagina(nombrePagina);
+		PaginaEditable paginaEditable = getPaginaEditableService().findByNombrePagina(nombrePagina);
 		return assembler.toModel(paginaEditable);
 	}
 	
@@ -57,9 +54,9 @@ public class PaginaEditableController {
 	@PatchMapping(path = "patchPaginaEditable/{id}")
 	@ResponseBody
 	public PersistentEntityResource patchPagina(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id, @RequestBody PaginaEditable paginaNueva ) {
-		PaginaEditable paginaEditable = getPaginaEditableDAO().findById(id).get();
+		PaginaEditable paginaEditable = getPaginaEditableService().findById(id);
 		paginaEditable.setHtml(paginaNueva.getHtml());
-		getPaginaEditableDAO().save(paginaEditable);
+		getPaginaEditableService().save(paginaEditable);
 		return assembler.toModel(paginaEditable);
 	}
 	
@@ -67,8 +64,8 @@ public class PaginaEditableController {
 	@PostMapping(path = "postPaginaEditable")
 	@ResponseBody
 	public PersistentEntityResource postPagina(PersistentEntityResourceAssembler assembler, @RequestBody PaginaEditable paginaNueva ) {
-		getPaginaEditableDAO().save(paginaNueva);
-		PaginaEditable paginaGuardada = getPaginaEditableDAO().findByNombrePagina(paginaNueva.getNombrePagina());
+		getPaginaEditableService().save(paginaNueva);
+		PaginaEditable paginaGuardada = getPaginaEditableService().findByNombrePagina(paginaNueva.getNombrePagina());
 		return assembler.toModel(paginaGuardada);
 	}
 	
@@ -76,7 +73,7 @@ public class PaginaEditableController {
 	@DeleteMapping(path = "deletePagina/{id}")
 	@ResponseBody
 	public void postPagina(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id) {
-		getPaginaEditableDAO().deleteById(id);
+		getPaginaEditableService().deleteById(id);
 	}
 	
 }
