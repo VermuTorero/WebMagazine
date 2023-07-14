@@ -36,6 +36,7 @@ import com.peterfonkel.webMagazine.login.email.EmailSender;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
+import com.peterfonkel.webMagazine.login.roles.RolService;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
@@ -65,9 +66,9 @@ public class UsuariosController {
 
 	@Autowired
 	private UsuarioService usuarioService;
-
+	
 	@Autowired
-	private RolDAO rolDAO;
+	private RolService rolService;
 
 	@Autowired
 	private EmailSender emailSender;
@@ -86,9 +87,9 @@ public class UsuariosController {
 	public PasswordEncoder getPasswordEncoder() {
 		return passwordEncoder;
 	}
-
-	public RolDAO getRolDAO() {
-		return rolDAO;
+	
+	public RolService getRolService() {
+		return rolService;
 	}
 
 	public String getSecretPsw() {
@@ -138,9 +139,9 @@ public class UsuariosController {
 		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
-		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
+		Rol rol = getRolService().getByRolNombre(rolNombre).get();
 		usuarioNuevo.setRolSeleccionado(rol);
-		Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
+		Rol rolDefault = getRolService().getByRolNombre(RolNombre.ROLE_USER_NOT_REGISTERED).get();
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolDefault);
 		usuarioNuevo.setRoles(roles);
@@ -167,7 +168,7 @@ public class UsuariosController {
 		usuarioNuevo.setFechaFinSuscripcion(Instant.now().plus(Duration.ofDays(31)));
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);
-		Rol rol = getRolDAO().findByRolNombre(rolNombre).get();
+		Rol rol = getRolService().getByRolNombre(rolNombre).get();
 		usuarioNuevo.setRolSeleccionado(rol);
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
@@ -334,8 +335,8 @@ public class UsuariosController {
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado) {
 		Usuario usuarioAntiguo = getUsuarioService().findById(usuarioModificado.getId()).get();
-		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
-		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
+		logger.info("MODIFICANDO USUARIO ANTIGUO: " + usuarioAntiguo);
+		logger.info("USUARIO NUEVO: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
@@ -356,25 +357,8 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource renovarUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado, HttpServletRequest request) {
-		// Obtener el usuario a partir del token
-		String header = request.getHeader("Authorization");
-		String token = header.substring(7);
-		logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
-		Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-		logger.info("BODY TOKEN: " + bodyToken);
-		String email = "";
-		if ((String) bodyToken.get("sub") != null) {
-			email = (String) bodyToken.get("sub");
-		} else {
-			email = (String) bodyToken.get("username");
-		}
-		logger.info("USERNAME: " + email);
-		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
-		logger.info("USUARIO: " + usuarioAntiguo);
-
-		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
-
-		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
+		
+		Usuario usuarioAntiguo = getUsuarioService().getUsuarioFromToken(request);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
 		usuarioAntiguo.setApellido1(usuarioModificado.getApellido1());
 		usuarioAntiguo.setApellido2(usuarioModificado.getApellido2());
@@ -382,7 +366,7 @@ public class UsuariosController {
 		Set<Rol> roles = usuarioModificado.getRoles();
 		Rol rol = roles.iterator().next();
 		roles = new HashSet<>();
-		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
+		roles.add(getRolService().getByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
 		getUsuarioService().save(usuarioAntiguo);
 		usuarioAntiguo.setPassword("pass");
@@ -405,7 +389,7 @@ public class UsuariosController {
 			int numero =  random.nextInt(900) + 100;
 			usuario.setEmail(usuario.getEmail() + "/deleted/" + numero);
 			usuario.setPassword("password");
-			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_DELETED).get();
+			Rol rolDefault = getRolService().getByRolNombre(RolNombre.ROLE_DELETED).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolDefault);
 			usuario.setRoles(roles);
@@ -431,7 +415,7 @@ public class UsuariosController {
 			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
 			usuario.setEmail(usuario.getEmail() + "/deleted");
 			usuario.setPassword("password");
-			Rol rolDefault = getRolDAO().findByRolNombre(RolNombre.ROLE_DELETED).get();
+			Rol rolDefault = getRolService().getByRolNombre(RolNombre.ROLE_DELETED).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolDefault);
 			usuario.setRoles(roles);
@@ -450,9 +434,8 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
-		logger.info("Recibidi id: " + idUsuario);
+		logger.info("Consultando roles de usuario con Id: " + idUsuario);
 		Usuario usuario = getUsuarioService().findById(idUsuario).get();
-		logger.info("Encontrado usuario: " + usuario);
 		Set<Rol> roles = usuario.getRoles();
 		logger.info("Roles del usuario: " + roles);
 		return assembler.toCollectionModel(roles);
@@ -473,8 +456,7 @@ public class UsuariosController {
 	public PersistentEntityResource getConfirmedByEmail(PersistentEntityResourceAssembler assembler,
 			@PathVariable("email") String email) {
 		Usuario usuario = getUsuarioService().findByEmail(email).get();
-		System.out.println(usuario.getEmail());
-		usuario.setPassword("passwor");
+		usuario.setPassword("password");
 		usuario.setClaveActivacion("12345678");
 		return assembler.toModel(usuario);
 	}
@@ -482,7 +464,7 @@ public class UsuariosController {
 	@GetMapping(path = "roles")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRoles(PersistentEntityResourceAssembler assembler) {
-		return assembler.toCollectionModel(getRolDAO().findAll());
+		return assembler.toCollectionModel(getRolService().getAll());
 	}
 
 	@GetMapping(path = "enviarCorreoOlvidoPassword/{email}")
@@ -503,10 +485,10 @@ public class UsuariosController {
 			getEmailSender().sendEmail(email, "cambio de password",
 					"Haz click en el siguiente enlace para cambiar tu password: " + endpoint + "?"
 							+ "claveRecuperacion=" + usuario.getClaveRecuperacion() + "&email=" + usuario.getEmail());
-			logger.info("EMAIL DE RECUPERACION ENVIADO");
+			logger.info("EMAIL DE RECUPERACION ENVIADO A: " + usuario.getEmail());
 			return true;
 		} catch (Exception e) {
-			logger.info("ERROR ENVIANDO EMAIL DE CAMBIO DE PASSWORD");
+			logger.info("ERROR ENVIANDO EMAIL DE CAMBIO DE PASSWORD:");
 			return false;
 		}
 	}
@@ -525,6 +507,7 @@ public class UsuariosController {
 		Random random = new Random();
 		int claveRecuperacionNueva = random.nextInt(90000000) + 10000000;
 		usuario.setClaveRecuperacion(String.valueOf("48934392" + claveRecuperacionNueva + "34J59875"));
+		logger.info("GENNERADO TOKEN A PARTIR DE CLAVE DE RECUPERACION PARA: " + usuario.getEmail());
 		return token;
 	}
 
@@ -533,24 +516,12 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource cambiarPassword(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado, HttpServletRequest request) {
-		// Obtener el usuario a partir del token
-		String header = request.getHeader("Authorization");
-		String token = header.substring(7);
-		logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
-		Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-		logger.info("BODY TOKEN: " + bodyToken);
-		String email = "";
-		if ((String) bodyToken.get("sub") != null) {
-			email = (String) bodyToken.get("sub");
-		} else {
-			email = (String) bodyToken.get("username");
-		}
-		logger.info("USERNAME: " + email);
-		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
+		Usuario usuarioAntiguo = getUsuarioService().getUsuarioFromToken(request);
 		if (usuarioAntiguo.getEmail().equals(usuarioModificado.getEmail())) {
 			usuarioAntiguo.setPassword(getPasswordEncoder().encode(usuarioModificado.getPassword()));
 			getUsuarioService().save(usuarioAntiguo);
 		}
+		logger.info("Password cambiada para: " + usuarioAntiguo.getEmail());
 		return assembler.toModel(usuarioModificado);
 	}
 
@@ -559,25 +530,8 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getDireccionesFromToken(
 			PersistentEntityResourceAssembler assembler, HttpServletRequest request) {
-		Usuario usuario = new Usuario();
-		String header = request.getHeader("Authorization");
-		if (header != null && header.startsWith("Bearer ")) {
-			String token = header.substring(7);
-			logger.info("TOKEN RECIBIDO PARA OBTENER USUARIO: " + token);
-			Claims bodyToken = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-			logger.info("BODY TOKEN: " + bodyToken);
-			String email = "";
-			if ((String) bodyToken.get("sub") != null) {
-				email = (String) bodyToken.get("sub");
-			} else {
-				email = (String) bodyToken.get("username");
-			}
-
-			logger.info("USERNAME: " + email);
-			usuario = getUsuarioService().getByEmail(email).get();
-			logger.info("USUARIO: " + usuario);
-
-		}
+		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+		logger.info(usuario.getEmail() + " CONSULTA SUS DIRECCIONES");
 		return assembler.toCollectionModel(usuario.getDirecciones());
 	}
 

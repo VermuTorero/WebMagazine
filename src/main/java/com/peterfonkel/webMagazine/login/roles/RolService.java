@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,19 +27,25 @@ public class RolService {
 	private final static Logger logger = LoggerFactory.getLogger(RolService.class);
 
 	@Autowired
-	RolDAO rolRepository;
+	RolDAO rolDAO;
 
+	public List<Rol> getAll(){
+		return rolDAO.findAll();
+	}
+	
 	public Optional<Rol> getByRolNombre(RolNombre rolNombre) {
 		logger.info("Rol en service: " + rolNombre);
-		return rolRepository.findByRolNombre(rolNombre);
+		return rolDAO.findByRolNombre(rolNombre);
 	}
 
 	public boolean existsRolNombre(RolNombre rolNombre) {
-		return rolRepository.existsByRolNombre(rolNombre);
+		return rolDAO.existsByRolNombre(rolNombre);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void save(Rol rol) {
-		rolRepository.save(rol);
+		rolDAO.save(rol);
 	}
+
 }
+
