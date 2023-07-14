@@ -16,6 +16,7 @@ import { Categoria } from '../../models/Categoria';
 import { LugaresServiceService } from '../../service/lugares.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
+import { LikesService } from '../../service/likes.service';
 
 const quill = new Quill('#editor', {
   theme: 'snow',
@@ -69,6 +70,8 @@ export class PublicacionFichaComponent implements OnInit {
   palabrasTitulo: number = 0;
   palabrasDescripcion: number = 0;
 
+  numeroLikes: string = "";
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -77,7 +80,8 @@ export class PublicacionFichaComponent implements OnInit {
     private usuariosService: UsuariosService,
     private imagenesService: ImagenesService,
     private categoriasService: CategoriasServiceService,
-    private lugaresService: LugaresServiceService
+    private lugaresService: LugaresServiceService,
+    private likeService: LikesService
   ) { }
 
   ngOnInit(): void {
@@ -120,11 +124,14 @@ export class PublicacionFichaComponent implements OnInit {
       this.getCategoriaPublicacion();
       this.getTagsPublicacion();
       this.getFechaPublicacion();
+      this.getLikes(publicacion);
 
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.texto = this.publicacion.htmlPublicacion;
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="560" height="315"', 'width="90%" height="auto"');
       /* quill.insertText(10, this.publicacion.htmlPublicacion); */
+      
     })
   }
 
@@ -387,5 +394,14 @@ export class PublicacionFichaComponent implements OnInit {
   contarPalabrasDescripcion(){
     let arrayPalabras = this.publicacion.subtitulo.split(' ');
     this.palabrasDescripcion = arrayPalabras.length -1 ;
+  }
+  getLikes(publicacion: Publicacion){
+    this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+      likes.forEach(like => {
+        like.id =  this.likeService.getId(like);
+      });
+      this.publicacion.likesRecibidos = likes;
+      this.numeroLikes = likes.length.toString();
+    })
   }
 }

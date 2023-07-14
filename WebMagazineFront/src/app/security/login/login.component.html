@@ -24,13 +24,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="email-input m-2">
-          <label for="email">Email</label>
-          <input type="text" class="mx-2" [(ngModel)]="email" (keyup)="onKeyUp($event)">
+        <div class="row email-input m-1">
+          <label class="col-1" for="email">Email</label>
+          <input class="col-8" type="text" [(ngModel)]="email" (keyup)="onKeyUp($event)">
         </div>
         <div class="email-input m-2">
-          <label for="password">Password</label>
-          <input type="password" class="mx-2" [(ngModel)]="password" (keyup)="onKeyUp($event)">
+          <label class="col-1" for="password">Password</label>
+          <input type="password" class="col-8" [(ngModel)]="password" (keyup)="onKeyUp($event)">
         </div>
       </div>
       <div class="modal-footer">

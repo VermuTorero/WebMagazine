@@ -206,7 +206,7 @@
         height: 28vw !important;
     }
     ::ng-deep iframe[tipo="youtube"]{
-        width: 100% !important;
+        width: 50% !important;
         height: 45vw !important;
     }
     .quill-editor{

@@ -21,7 +21,15 @@
     <button *ngIf="rolSeleccionado!=='ROLE_DELETED'" class="btn btn-sm btn-outline-primary my-2 mx-1" (click)="getUsuariosDeleted()">Ver eliminados</button>
 </div>
 <div class="descripcion"> 
-  <h5><b>Usuarios con rol de administrador</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_ALL'"><b>Usuarios con cualquier rol (excepto eliminados)</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_ADMIN'"><b>Usuarios con rol de administrador</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_WRITER'"><b>Usuarios con rol de escritor</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_USER_MEMBER'"><b>Usuarios con rol de miembro</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_USER_SUBSCRIBED'"><b>Usuarios con rol de suscrito</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_USER_REGISTERED'"><b>Usuarios con rol de registrado. Sin pagos</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_USER_NOT_REGISTERED'"><b>Usuarios con rol de no registrado. Proporcionaron su email pero no lo verificaron.</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_EXPIRED'"><b>Usuarios con rol cualquier rol expirado</b> </h5>
+  <h5 class="explicacion text-center my-2" *ngIf="rolSeleccionado=='ROLE_DELETED'"><b>Usuarios eliminados</b> </h5>
 </div>
 <div class="row m-2 titulo-columna">
   <div class="d-none d-xl-block col-1">NOMBRE</div>
