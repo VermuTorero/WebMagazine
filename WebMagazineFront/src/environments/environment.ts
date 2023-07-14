@@ -11,6 +11,7 @@ export const environment = {
    urlBack: `https://vermutoreroapp.herokuapp.com`,
     provincias: provincias,
   
+  
   // firebase
   apiKey: firebaseConfig.apiKey,
   authDomain: firebaseConfig.authDomain,

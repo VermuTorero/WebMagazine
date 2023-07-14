@@ -58,6 +58,9 @@ export class LoginComponent implements OnInit {
           this.usuario = usuario;
         })
 
+      }, err=>{
+        this.exitLogin();
+        $('#sesionExpiradaModal').modal('show');
       })
     }
   }

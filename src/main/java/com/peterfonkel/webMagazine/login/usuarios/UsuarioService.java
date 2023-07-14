@@ -21,6 +21,7 @@ import io.jsonwebtoken.Jwts;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -115,5 +116,34 @@ public class UsuarioService {
 		}else {
 			return usuario;
 		}
+	}
+
+	public Usuario findByClaveActivacion(String codigoActivacion) {
+		return getUsuarioDAO().findByClaveActivacion(codigoActivacion);
+		
+	}
+
+
+
+	public Iterable<? extends Object> findByRoles_RolNombreIn(Set<RolNombre> roles) {
+		return getUsuarioDAO().findByRoles_RolNombreIn(roles);
+	}
+
+
+
+	public Optional<Usuario> findById(Long id) {
+		return getUsuarioDAO().findById(id);
+	}
+
+
+
+	public Optional<Usuario> findByEmail(String email) {
+		return getUsuarioDAO().findByEmail(email);
+	}
+
+
+
+	public Usuario findByClaveRecuperacion(String claveRecuperacion) {
+		return getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
 	}
 }

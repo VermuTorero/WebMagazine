@@ -65,6 +65,7 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion = publicacion;
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
+      this.getLikes(this.publicacion);
       this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
         this.publicacion.autor = autor;
       })
@@ -85,9 +86,7 @@ export class PublicacionCompletaComponent implements OnInit {
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
 
-      this.likeService.getLikes(publicacion.id).subscribe(likes=>{
-        this.numeroLikes = likes.length.toString();
-      })
+      
       
       /*Formato de los videos de Youtube*/
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video"allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
@@ -260,7 +259,17 @@ export class PublicacionCompletaComponent implements OnInit {
       let like = new Like();
       like.usuario = usuario;
       this.likeService.postLike(this.publicacion.id, usuario).subscribe(like=>{
+        this.getLikes(this.publicacion);
       });
+    })
+  }
+  getLikes(publicacion: Publicacion){
+    this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+      likes.forEach(like => {
+        like.id =  this.likeService.getId(like);
+      });
+      this.publicacion.likesRecibidos = likes;
+      this.numeroLikes = likes.length.toString();
     })
   }
 }

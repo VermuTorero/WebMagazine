@@ -70,9 +70,6 @@ public class UsuariosController {
 	private RolDAO rolDAO;
 
 	@Autowired
-	private UsuarioDAO usuarioDAO;
-
-	@Autowired
 	private EmailSender emailSender;
 
 	@Autowired
@@ -92,10 +89,6 @@ public class UsuariosController {
 
 	public RolDAO getRolDAO() {
 		return rolDAO;
-	}
-
-	public UsuarioDAO getUsuarioDAO() {
-		return usuarioDAO;
 	}
 
 	public String getSecretPsw() {
@@ -151,7 +144,7 @@ public class UsuariosController {
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rolDefault);
 		usuarioNuevo.setRoles(roles);
-		getUsuarioDAO().save(usuarioNuevo);
+		getUsuarioService().save(usuarioNuevo);
 		logger.info("Usuario creado");
 		enviarCorreo(usuarioNuevo);
 		return assembler.toModel(usuarioNuevo);
@@ -179,7 +172,7 @@ public class UsuariosController {
 		Set<Rol> roles = new HashSet<>();
 		roles.add(rol);
 		usuarioNuevo.setRoles(roles);
-		getUsuarioDAO().save(usuarioNuevo);
+		getUsuarioService().save(usuarioNuevo);
 		logger.info("Usuario creado por admin: " + usuarioNuevo.getEmail());
 		return assembler.toModel(usuarioNuevo);
 	}
@@ -191,7 +184,7 @@ public class UsuariosController {
 		try {
 			int codigoActivacion = random.nextInt(90000000) + 10000000;
 			usuario.setClaveActivacion(String.valueOf(codigoActivacion));
-			getUsuarioDAO().save(usuario);
+			getUsuarioService().save(usuario);
 
 			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion",
 					"Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/"
@@ -223,7 +216,7 @@ public class UsuariosController {
 	@ResponseBody
 	public String confirmarEmail(PersistentEntityResourceAssembler assembler,
 			@PathVariable("codigoActivacion") String codigoActivacion) {
-		Usuario usuario = getUsuarioDAO().findByClaveActivacion(codigoActivacion);
+		Usuario usuario = getUsuarioService().findByClaveActivacion(codigoActivacion);
 		if (usuario.getEmail() != null) {
 			usuario.setIsConfirmadoEmail(true);
 			// Se elimina la secuencia de numeros aleatorios que invalidaban el password
@@ -231,7 +224,7 @@ public class UsuariosController {
 			usuario.setPassword(usuario.getPassword().split("@@%")[1]);
 			usuario.setRoles(new HashSet<>());
 			usuario.getRoles().add(usuario.getRolSeleccionado());
-			getUsuarioDAO().save(usuario);
+			getUsuarioService().save(usuario);
 			return "Se ha verificado tu email en VERMUTORERO.ES.";
 		} else {
 			return "Ha habido un error en la verificacion de tu correo";
@@ -441,7 +434,7 @@ public class UsuariosController {
 		Set<RolNombre> roles = new HashSet<>();
 		roles.add(RolNombre.ROLE_WRITER);
 		roles.add(RolNombre.ROLE_ADMIN);
-		return assembler.toCollectionModel(getUsuarioDAO().findByRoles_RolNombreIn(roles));
+		return assembler.toCollectionModel(getUsuarioService().findByRoles_RolNombreIn(roles));
 	}
 
 	// Modificar un usuario
@@ -450,7 +443,7 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource modificarUsuario(PersistentEntityResourceAssembler assembler,
 			@RequestBody Usuario usuarioModificado) {
-		Usuario usuarioAntiguo = getUsuarioDAO().findById(usuarioModificado.getId()).get();
+		Usuario usuarioAntiguo = getUsuarioService().findById(usuarioModificado.getId()).get();
 		logger.info("USUARIO ANTIGUO: " + usuarioAntiguo);
 		logger.info("USUARIO PARA MODIFICAR: " + usuarioModificado);
 		usuarioAntiguo.setNombre(usuarioModificado.getNombre());
@@ -463,7 +456,7 @@ public class UsuariosController {
 		roles = new HashSet<>();
 		roles.add(usuarioService.getRolByRolNombre(usuarioModificado.getRoles().iterator().next().getRolNombre().toString()));
 		usuarioAntiguo.setRoles(roles);
-		getUsuarioDAO().save(usuarioAntiguo);
+		getUsuarioService().save(usuarioAntiguo);
 		return assembler.toModel(usuarioAntiguo);
 	}
 
@@ -501,7 +494,7 @@ public class UsuariosController {
 		roles = new HashSet<>();
 		roles.add(getRolDAO().findByRolNombre(rol.getRolNombre()).get());
 		usuarioAntiguo.setRoles(roles);
-		getUsuarioDAO().save(usuarioAntiguo);
+		getUsuarioService().save(usuarioAntiguo);
 		usuarioAntiguo.setPassword("pass");
 		return assembler.toModel(usuarioAntiguo);
 	}
@@ -568,7 +561,7 @@ public class UsuariosController {
 	public CollectionModel<PersistentEntityResource> getRolesFromUser(PersistentEntityResourceAssembler assembler,
 			@PathVariable("idUsuario") Long idUsuario) {
 		logger.info("Recibidi id: " + idUsuario);
-		Usuario usuario = getUsuarioDAO().findById(idUsuario).get();
+		Usuario usuario = getUsuarioService().findById(idUsuario).get();
 		logger.info("Encontrado usuario: " + usuario);
 		Set<Rol> roles = usuario.getRoles();
 		logger.info("Roles del usuario: " + roles);
@@ -580,7 +573,7 @@ public class UsuariosController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getRolesFromEmail(PersistentEntityResourceAssembler assembler,
 			@PathVariable("email") String email) {
-		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
+		Usuario usuario = getUsuarioService().findByEmail(email).get();
 		Set<Rol> roles = usuario.getRoles();
 		return assembler.toCollectionModel(roles);
 	}
@@ -589,7 +582,7 @@ public class UsuariosController {
 	@ResponseBody
 	public PersistentEntityResource getConfirmedByEmail(PersistentEntityResourceAssembler assembler,
 			@PathVariable("email") String email) {
-		Usuario usuario = getUsuarioDAO().findByEmail(email).get();
+		Usuario usuario = getUsuarioService().findByEmail(email).get();
 		System.out.println(usuario.getEmail());
 		usuario.setPassword("passwor");
 		usuario.setClaveActivacion("12345678");
@@ -633,7 +626,7 @@ public class UsuariosController {
 	public String getTokenFromClaveRecuperacion(@PathVariable("claveRecuperacion") String claveRecuperacion,
 			@PathVariable("email") String email) {
 		String token = "";
-		Usuario usuario = getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
+		Usuario usuario = getUsuarioService().findByClaveRecuperacion(claveRecuperacion);
 		if (usuario.getEmail().equals(email)) {
 			UserDetails userDetails = getUserDetailsService().loadUserByUsername(usuario.getEmail());
 			logger.info("USER DETAILS: " + userDetails);
@@ -666,7 +659,7 @@ public class UsuariosController {
 		Usuario usuarioAntiguo = getUsuarioService().getByEmail(email).get();
 		if (usuarioAntiguo.getEmail().equals(usuarioModificado.getEmail())) {
 			usuarioAntiguo.setPassword(getPasswordEncoder().encode(usuarioModificado.getPassword()));
-			getUsuarioDAO().save(usuarioAntiguo);
+			getUsuarioService().save(usuarioAntiguo);
 		}
 		return assembler.toModel(usuarioModificado);
 	}
