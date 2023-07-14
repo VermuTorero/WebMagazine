@@ -48,7 +48,8 @@ public class CategoriasController {
 	@GetMapping(path = "categorias")
 	@ResponseBody
 	public PersistentEntityResource getCategorias(PersistentEntityResourceAssembler assembler) {
-		return assembler.toModel(getCategoriaService().findAll());
+		List<Categoria> categorias = getCategoriaService().findAll();
+		return assembler.toModel(categorias);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
