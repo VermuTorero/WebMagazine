@@ -46,5 +46,9 @@ public class CategoriaService {
 		getCategoriaDAO().save(categoria);
 	}
 
+	public Object findAll() {
+		return getCategoriaDAO().findAll();
+	}
+
 	
 }

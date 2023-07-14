@@ -14,7 +14,7 @@ export class CategoriasServiceService {
   constructor(private http: HttpClient) { }
 
   getCategorias(): Observable<Categoria[]>{
-    return this.http.get<any>(this.endpoint + "/categorias").pipe(map(response=>response._embedded.categorias))
+    return this.http.get<any>(this.endpoint + "/categorias/search/categorias").pipe(map(response=>response._embedded.categorias))
   }
   getCategoria(idCategoria: string): Observable<Categoria>{
     return this.http.get<any>(this.endpoint + "/categorias/" + idCategoria);

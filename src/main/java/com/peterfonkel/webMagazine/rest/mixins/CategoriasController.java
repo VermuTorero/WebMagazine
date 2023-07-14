@@ -45,6 +45,12 @@ public class CategoriasController {
 		return assembler.toModel(categoria);
 	}
 	
+	@GetMapping(path = "categorias")
+	@ResponseBody
+	public PersistentEntityResource getCategorias(PersistentEntityResourceAssembler assembler) {
+		return assembler.toModel(getCategoriaService().findAll());
+	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@PatchMapping(path = "patchCategoria/{id}")
 	@ResponseBody
