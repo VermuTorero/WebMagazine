@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +48,9 @@ public class CategoriasController {
 	
 	@GetMapping(path = "categorias")
 	@ResponseBody
-	public PersistentEntityResource getCategorias(PersistentEntityResourceAssembler assembler) {
+	public CollectionModel<PersistentEntityResource> getCategorias(PersistentEntityResourceAssembler assembler) {
 		List<Categoria> categorias = getCategoriaService().findAll();
-		return assembler.toModel(categorias);
+		return assembler.toCollectionModel(categorias);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
