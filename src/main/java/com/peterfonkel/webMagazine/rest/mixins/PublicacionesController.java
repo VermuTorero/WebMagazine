@@ -37,10 +37,12 @@ import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
+import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.PublicacionesService;
 
 import org.slf4j.Logger;
@@ -58,10 +60,10 @@ public class PublicacionesController {
 	TagDAO tagDAO;
 	
 	@Autowired
-	UsuarioDAO usuarioDAO;
+	UsuarioService usuarioService;
 	
 	@Autowired
-	CategoriaDAO categoriaDAO;
+	CategoriaService categoriaService;
 	
 	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
@@ -77,15 +79,16 @@ public class PublicacionesController {
 		return tagDAO;
 	}
 
-	public UsuarioDAO getUsuarioDAO() {
-		return usuarioDAO;
+	public UsuarioService getUsuarioService() {
+		return usuarioService;
 	}
 
-	public CategoriaDAO getCategoriaDAO() {
-		return categoriaDAO;
+	
+
+
+	public CategoriaService getCategoriaService() {
+		return categoriaService;
 	}
-
-
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
 	@GetMapping(path = "publicacionByTitulo/{titulo}")
@@ -246,8 +249,8 @@ public class PublicacionesController {
 	@PostMapping(path = "postPublicacion")
 	@ResponseBody
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId()).get();
-		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
+		Usuario autor = getUsuarioService().findById(publicacion.getAutor().getId()).get();
+		Categoria categoria = getCategoriaService().getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
 			tagsRecibidas.add(tagDAO.getById(tag.getId()));
@@ -262,8 +265,8 @@ public class PublicacionesController {
 	@PatchMapping(path = "patchPublicacion")
 	@ResponseBody
 	public PersistentEntityResource patchPublicacion(PersistentEntityResourceAssembler assembler,@RequestBody Publicacion publicacion) {	
-		Usuario autor = usuarioDAO.findById(publicacion.getAutor().getId()).get();
-		Categoria categoria = categoriaDAO.getById(publicacion.getCategoria().getId());
+		Usuario autor = getUsuarioService().findById(publicacion.getAutor().getId()).get();
+		Categoria categoria = getCategoriaService().getById(publicacion.getCategoria().getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
 			tagsRecibidas.add(tagDAO.getById(tag.getId()));
@@ -297,7 +300,7 @@ public class PublicacionesController {
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
 		Publicacion publicacion = getPublicacionesService().findById(id).get();
-		getCategoriaDAO().deleteById(publicacion.getId());
+		getCategoriaService().deleteById(publicacion.getId());
 	}
 	
 	

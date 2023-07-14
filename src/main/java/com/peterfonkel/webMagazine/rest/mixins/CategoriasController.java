@@ -21,29 +21,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
+import com.peterfonkel.webMagazine.services.CategoriaService;
 
 @RepositoryRestController
 @RequestMapping(path = "/categorias/search")
 @CrossOrigin
 public class CategoriasController {
 	
-	
 	@Autowired
-	CategoriaDAO categoriaDAO;
+	CategoriaService categoriaService;
 	
-	
-	public CategoriasController(CategoriaDAO categoriaDAO){
-		this.categoriaDAO = categoriaDAO;
+	public CategoriasController(){
 	}
 	
-	public CategoriaDAO getCategoriaDAO() {
-		return categoriaDAO;
+	public CategoriaService getCategoriaService() {
+		return categoriaService;
 	}
 
 	@GetMapping(path = "categoriaByCategoriaNombre/{categoriaNombre}")
 	@ResponseBody
 	public PersistentEntityResource getCategoriaByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("categoriaNombre") String categoriaNombre) {
-		Categoria categoria = categoriaDAO.findByCategoriaNombre(categoriaNombre);
+		Categoria categoria = getCategoriaService().findByCategoriaNombre(categoriaNombre);
 		return assembler.toModel(categoria);
 	}
 	
@@ -51,9 +49,9 @@ public class CategoriasController {
 	@PatchMapping(path = "patchCategoria/{id}")
 	@ResponseBody
 	public PersistentEntityResource patchCategoriaById(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id, @RequestBody Categoria categoriaNueva) {
-		Categoria categoria = getCategoriaDAO().findById(id).get();
+		Categoria categoria = getCategoriaService().findById(id);
 		categoria = categoriaNueva;
-		getCategoriaDAO().save(categoria);
+		getCategoriaService().save(categoria);
 		return assembler.toModel(categoria);
 	}
 	
