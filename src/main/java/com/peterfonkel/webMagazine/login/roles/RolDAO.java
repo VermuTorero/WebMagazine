@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RepositoryRestResource(path = "roles", 
 						itemResourceRel = "rol", 
-						collectionResourceRel = "roles")
+						collectionResourceRel = "roles", exported = false)
 public interface RolDAO extends JpaRepository<Rol, Integer> {
     	
 	Optional<Rol> findByRolNombre(RolNombre rolNombre);
