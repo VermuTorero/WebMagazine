@@ -40,18 +40,13 @@ public class UsuarioService {
 	@Autowired
 	RolDAO rolDAO;
 	
-	
 	public UsuarioDAO getUsuarioDAO() {
 		return usuarioDAO;
 	}
 	
-	
-
 	public RolDAO getRolDAO() {
 		return rolDAO;
 	}
-
-
 
 	public List<Usuario> getAll(){
 		return usuarioDAO.findAll();

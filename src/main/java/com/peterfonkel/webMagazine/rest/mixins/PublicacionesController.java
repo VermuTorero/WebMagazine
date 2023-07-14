@@ -116,9 +116,6 @@ public class PublicacionesController {
 		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
 		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
-		for (Publicacion publicacion : publicacionesRecientes) {
-			publicacion.setAutor(null);
-		}
 		return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
