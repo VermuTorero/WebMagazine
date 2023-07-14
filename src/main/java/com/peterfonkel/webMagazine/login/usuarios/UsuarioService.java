@@ -67,23 +67,6 @@ public class UsuarioService {
 		return usuarios;
 	}
 	
-	
-	public List<Usuario> getAdmins(){
-		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_ADMIN);
-	}
-	
-	public List<Usuario> getMembers(){
-		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_MEMBER);
-	}
-	
-	public List<Usuario> getSubscribed(){
-		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_SUBSCRIBED);
-	}
-	
-	public List<Usuario> getWriters(){
-		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_WRITER);
-	}
-	
 	public Optional<Usuario> getByEmail(String email) {
 		return usuarioDAO.findByEmail(email);
 	}
@@ -94,6 +77,47 @@ public class UsuarioService {
 
 	public boolean existsEmail(String email) {
 		return usuarioDAO.existsByEmail(email);
+	}
+	public List<Usuario> getAdmins(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_ADMIN);
+	}
+	
+	public List<Usuario> getWriters(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_WRITER);
+	}
+	
+	public List<Usuario> getMembers(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_MEMBER);
+	}
+	
+	public List<Usuario> getSubscribed(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_SUBSCRIBED);
+	}
+	
+	public List<Usuario> getRegistered(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_REGISTERED);
+	}
+	
+	public List<Usuario> getNotRegistered(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_NOT_REGISTERED);
+	}
+	
+	public List<Usuario> getExpired(){
+		List<Usuario> usuariosExpirados = new ArrayList<>();
+		usuariosExpirados.addAll(getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_MEMBER_EXPIRED));
+		usuariosExpirados.addAll(getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED));
+		return usuariosExpirados;
+	}
+	
+	public List<Usuario> getDeleted(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_DELETED);
+	}
+	
+	public List<Usuario> getAutores(){
+		List<Usuario> usuariosAutores = new ArrayList<>();
+		usuariosAutores.addAll(getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_ADMIN));
+		usuariosAutores.addAll(getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_WRITER));
+		return usuariosAutores;
 	}
 
 	public Usuario save(Usuario usuario) {
@@ -110,8 +134,6 @@ public class UsuarioService {
 		}
 		return rolEncontrado;
 	}
-	
-	
 
 	public void deleteUsuarioById(Long id) {
 		usuarioDAO.deleteById(id);
@@ -146,26 +168,16 @@ public class UsuarioService {
 		
 	}
 
-
-
 	public Iterable<? extends Object> findByRoles_RolNombreIn(Set<RolNombre> roles) {
 		return getUsuarioDAO().findByRoles_RolNombreIn(roles);
 	}
 
-
-
 	public Optional<Usuario> findById(Long id) {
 		return getUsuarioDAO().findById(id);
 	}
-
-
-
 	public Optional<Usuario> findByEmail(String email) {
 		return getUsuarioDAO().findByEmail(email);
 	}
-
-
-
 	public Usuario findByClaveRecuperacion(String claveRecuperacion) {
 		return getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
 	}

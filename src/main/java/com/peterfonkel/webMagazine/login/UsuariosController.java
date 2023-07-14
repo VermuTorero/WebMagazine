@@ -251,18 +251,17 @@ public class UsuariosController {
 	public PersistentEntityResource usuarioFromToken(PersistentEntityResourceAssembler assembler,
 			HttpServletRequest request) {
 		return assembler.toModel(getUsuarioService().getUsuarioFromToken(request));
-
 	}
 
-	// Obtener todos los usuarios exceptuando los eliminados
+	// Metodos get de Usuarios
 	
+	// Obtener todos los usuarios exceptuando los eliminados
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuarios")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
 	    return assembler.toCollectionModel(getUsuarioService().getUsuarios());
 	}
-	
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosAdmin")
@@ -296,65 +295,28 @@ public class UsuariosController {
 	@GetMapping(path = "usuariosRegistrados")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosRegistrados(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosRegistered = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_REGISTERED)) {
-		            usuariosRegistered.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosRegistered);
+		return assembler.toCollectionModel(getUsuarioService().getRegistered());
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosRegistradosNoConfirmados")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosRegistardosNoConfirmados(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosNotReg = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_NOT_REGISTERED)) {
-		            usuariosNotReg.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosNotReg);
+		return assembler.toCollectionModel(getUsuarioService().getNotRegistered());
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosExpirados")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarioExpirados(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosExpired = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER_EXPIRED) || 
-		        		usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED_EXPIRED)) {
-		            usuariosExpired.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosExpired);
+		return assembler.toCollectionModel(getUsuarioService().getExpired());
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosEliminados")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosEliminados(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosDeleted = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
-		            usuariosDeleted.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosDeleted);
+		return assembler.toCollectionModel(getUsuarioService().getDeleted());
 	}
 	
 	// Obtener los usuarios con permiso de crear y modificar una publicacion
@@ -362,10 +324,7 @@ public class UsuariosController {
 	@GetMapping(path = "autores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getAutores(PersistentEntityResourceAssembler assembler) {
-		Set<RolNombre> roles = new HashSet<>();
-		roles.add(RolNombre.ROLE_WRITER);
-		roles.add(RolNombre.ROLE_ADMIN);
-		return assembler.toCollectionModel(getUsuarioService().findByRoles_RolNombreIn(roles));
+		return assembler.toCollectionModel(getUsuarioService().getAutores());
 	}
 
 	// Modificar un usuario
