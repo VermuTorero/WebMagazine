@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit {
   password2: string = "";
   roles: Rol[] = [];
   rolSeleccionado: string = "";
+  emailsSeleccionados: string = "";
 
   constructor(private usuariosService: UsuariosService,
     private rolesService: RolesService) {
@@ -215,6 +216,37 @@ export class UsersComponent implements OnInit {
   }
   recargarPagina(){
     document.location.reload();
+  }
+
+  seleccionarEmails(){
+    this.emailsSeleccionados = "";
+    this.users.forEach(user => {
+      if (this.emailsSeleccionados == "") {
+        this.emailsSeleccionados = user.email;
+      }else{
+        this.emailsSeleccionados = this.emailsSeleccionados + ";" + user.email;
+      }
+    
+      this.copiarAlPortapapeles(this.emailsSeleccionados);
+      $('#copiadosModal').modal('show');
+    });
+  }
+  copiarAlPortapapeles(texto: string) {
+    // Crea un elemento de textarea temporal
+    var elementoTemporal = document.createElement('textarea');
+    elementoTemporal.value = texto;
+  
+    // Agrega el elemento temporal al documento
+    document.body.appendChild(elementoTemporal);
+  
+    // Selecciona el texto del elemento temporal
+    elementoTemporal.select();
+  
+    // Copia el texto al portapapeles
+    document.execCommand('copy');
+  
+    // Elimina el elemento temporal
+    document.body.removeChild(elementoTemporal);
   }
 
 }

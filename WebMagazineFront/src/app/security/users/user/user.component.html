@@ -5,8 +5,8 @@
     <div class="col-12 col-md-4 col-xl-2">{{user.email}}</div>
     <div  *ngIf="user.roles" class="col-12 col-md-4 col-xl-2">{{user.roles[0].rolNombre}}</div>
     <div class="col-12 col-md-4 col-xl-2">{{fechaFormateada}}</div>
-    <button  class="btn btn-warning col-5 col-xl-1 mx-1" (click)="modificarUsuario()">Modificar</button>
-    <button  class="btn btn-danger col-5 col-xl-1 mx-1" (click)="eliminarUsuario()">Eliminar</button>
+    <button  class="btn btn-sm btn-warning col-5 col-xl-1 mx-1" (click)="modificarUsuario()">Modificar</button>
+    <button  *ngIf="user.roles[0].rolNombre !=='ROLE_DELETED'" class="btn btn-sm btn-danger col-5 col-xl-1 mx-1" (click)="eliminarUsuario()">Eliminar</button>
     <hr class="my-2 d-xl-none">
 </div>
 
