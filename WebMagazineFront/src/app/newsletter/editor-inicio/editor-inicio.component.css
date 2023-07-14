@@ -48,6 +48,9 @@
   .carousel-item .carousel-caption {
     animation: slide-down 0.8s forwards;
   }
+  .seccion-agregar-carrousel{
+    padding: 3%;
+  }
   
   /* Animación para hacer aparecer el texto */
   @keyframes slide-up {
@@ -85,4 +88,30 @@
       transform: translateY(0);
     }
   }
+
+  /* Estilos tamaño movil */
+@media (max-width: 40em) {
+  .promo{
+    margin: 5% !important;
+  }
+
+  .imagen-promo{
+    width: 90% !important;
+  }
+  .titulo-publicacion{
+    font-size: small;
+  }
+  .publicaciones-agregar{
+    font-size: medium;
+  }
+  .titulo{
+    font-size: medium;
+  }
+  .seccion-agregar-carrousel{
+    padding: 3%;
+  }
+  .boton-agregar{
+    font-size: x-small;
+  }
+}
   

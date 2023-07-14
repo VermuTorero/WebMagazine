@@ -11,6 +11,7 @@ import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +53,7 @@ public class LikesController {
 		return publicacionesService;
 	}
 
-
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(path = "postLike/{idPublicacion}")
 	@ResponseBody
 	public PersistentEntityResource getCategoriaByTitulo(PersistentEntityResourceAssembler assembler,HttpServletRequest request, @PathVariable("idPublicacion") Long idPublicacion, @RequestBody Like like) {
@@ -77,6 +78,7 @@ public class LikesController {
 			like.getUsuario().setPassword("");
 			like.getUsuario().setClaveRecuperacion("");
 			like.getUsuario().setClaveRecuperacion("");
+			like.getUsuario().setEmail("");
 		}
 		return assembler.toCollectionModel(likesPublicacion);
 	}
