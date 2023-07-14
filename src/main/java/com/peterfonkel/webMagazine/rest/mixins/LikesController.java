@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.rest.mixins;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -60,7 +61,7 @@ public class LikesController {
 		like.setFechaLike(Instant.now());
 		like = getLikesService().save(like);
 		Publicacion publicacion = getPublicacionesService().findById(idPublicacion).get();
-		List<Like> likes =  publicacion.getLikesRecibidos();
+		Set<Like> likes =  publicacion.getLikesRecibidos();
 		likes.add(like);
 		publicacion.setLikesRecibidos(likes);
 		publicacionesService.save(publicacion);
@@ -71,7 +72,7 @@ public class LikesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getLikesFromPublicacion(PersistentEntityResourceAssembler assembler, @PathVariable("idPublicacion") Long idPublicacion) {
 		Publicacion publicacion = getPublicacionesService().findById(idPublicacion).get();
-		List<Like> likesPublicacion = publicacion.getLikesRecibidos();
+		Set<Like> likesPublicacion = publicacion.getLikesRecibidos();
 		for (Like like : likesPublicacion) {
 			like.getUsuario().setPassword("");
 			like.getUsuario().setClaveRecuperacion("");

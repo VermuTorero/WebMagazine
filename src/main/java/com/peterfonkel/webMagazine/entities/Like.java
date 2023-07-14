@@ -24,7 +24,6 @@ public class Like {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	
-	@Column(unique = true)
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
 	private Usuario usuario;
 	

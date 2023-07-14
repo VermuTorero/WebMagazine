@@ -5,6 +5,7 @@ import java.time.Instant;
 
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,7 +62,7 @@ public class Publicacion {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
-	private List<Like> likesRecibidos;
+	private Set<Like> likesRecibidos;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -77,7 +78,7 @@ public class Publicacion {
 		super();
 	}
 
-	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Usuario autor, Instant fechaPublicacion, List<Like> likesRecibidos, List<Invitacion> invitaciones, List<Tag> tags ) {
+	public Publicacion(String titulo, String subtitulo, boolean isPremium, boolean isDestacado, Usuario autor, Instant fechaPublicacion, Set<Like> likesRecibidos, List<Invitacion> invitaciones, List<Tag> tags ) {
 		this();
 		this.titulo = titulo;
 		this.subtitulo = subtitulo;
@@ -141,11 +142,11 @@ public class Publicacion {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
-	public List<Like> getLikesRecibidos() {
+	public Set<Like> getLikesRecibidos() {
 		return likesRecibidos;
 	}
 
-	public void setLikesRecibidos(List<Like> likesRecibidos) {
+	public void setLikesRecibidos(Set<Like> likesRecibidos) {
 		this.likesRecibidos = likesRecibidos;
 	}
 
