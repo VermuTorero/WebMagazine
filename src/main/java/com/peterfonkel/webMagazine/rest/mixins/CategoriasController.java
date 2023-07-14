@@ -24,7 +24,7 @@ import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 
 @RepositoryRestController
-@RequestMapping(path = "/categorias/search")
+@RequestMapping(path = "/api/categorias/search")
 @CrossOrigin
 public class CategoriasController {
 	

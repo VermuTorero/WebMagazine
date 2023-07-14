@@ -14,43 +14,18 @@ public interface CategoriaDAO extends JpaRepository<Categoria, Long> {
 	List<Categoria> findAll();
 	
 	Categoria findByCategoriaNombre(String categoriaNombre);
-	@Override
 	<S extends Categoria> S save(S entity);
-	
-	@Override
 	void deleteById(Long id);
-
-	@Override
 	void delete(Categoria entity);
-
-	@Override
 	void deleteAllById(Iterable<? extends Long> ids);
-
-	@Override
 	void deleteAll(Iterable<? extends Categoria> entities);
-	
-	@Override
 	void deleteAll();
-
-	@Override
 	<S extends Categoria> List<S> saveAll(Iterable<S> entities);
-
-	@Override
 	void flush();
-
-	@Override
 	<S extends Categoria> S saveAndFlush(S entity);
-
-	@Override
 	<S extends Categoria> List<S> saveAllAndFlush(Iterable<S> entities);
-
-	@Override
 	void deleteAllInBatch(Iterable<Categoria> entities);
-
-	@Override
 	void deleteAllByIdInBatch(Iterable<Long> ids);
-
-	@Override
 	void deleteAllInBatch();
 	
 	
