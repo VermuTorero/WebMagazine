@@ -2,7 +2,7 @@ package com.peterfonkel.webMagazine.entities;
 
 import java.time.Instant;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,6 +23,8 @@ public class Like {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
+	
+	@Column(unique = true)
 	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
 	private Usuario usuario;
 	
