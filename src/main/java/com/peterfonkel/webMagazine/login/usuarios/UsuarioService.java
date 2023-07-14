@@ -19,6 +19,7 @@ import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -52,8 +53,35 @@ public class UsuarioService {
 		return usuarioDAO.findAll();
 	}
 	
+	public List<Usuario> getUsuarios(){
+		List<Usuario> listadoUsuarios = getUsuarioDAO().findAll();
+		List<Usuario> usuarios = new ArrayList<>();
+
+	    for (Usuario usuario : listadoUsuarios) {
+	        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
+	            
+	        }else{
+	        	usuarios.add(usuario);
+	        }
+	    }
+		return usuarios;
+	}
+	
+	
 	public List<Usuario> getAdmins(){
 		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_ADMIN);
+	}
+	
+	public List<Usuario> getMembers(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_MEMBER);
+	}
+	
+	public List<Usuario> getSubscribed(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_USER_SUBSCRIBED);
+	}
+	
+	public List<Usuario> getWriters(){
+		return getUsuarioDAO().findByRoles_RolNombre(RolNombre.ROLE_WRITER);
 	}
 	
 	public Optional<Usuario> getByEmail(String email) {

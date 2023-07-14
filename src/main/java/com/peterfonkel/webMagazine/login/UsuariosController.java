@@ -260,83 +260,36 @@ public class UsuariosController {
 	@GetMapping(path = "usuarios")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuarios(PersistentEntityResourceAssembler assembler) {
-		List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-	    List<Usuario> usuarios = new ArrayList<>();
-
-	    for (Usuario usuario : listadoUsuarios) {
-	        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_DELETED)) {
-	            
-	        }else{
-	        	usuarios.add(usuario);
-	        }
-	    }
-
-	    return assembler.toCollectionModel(usuarios);
+	    return assembler.toCollectionModel(getUsuarioService().getUsuarios());
 	}
+	
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosAdmin")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosAdmin(PersistentEntityResourceAssembler assembler) {
-	    List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-	    List<Usuario> usuariosAdmin = new ArrayList<>();
-
-	    for (Usuario usuario : listadoUsuarios) {
-	        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_ADMIN)) {
-	            usuariosAdmin.add(usuario);
-	        }
-	    }
-
-	    return assembler.toCollectionModel(usuariosAdmin);
+	    return assembler.toCollectionModel(getUsuarioService().getAdmins());
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(path = "usuariosMiembros")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getUsuariosMiembros(PersistentEntityResourceAssembler assembler) {
+		return assembler.toCollectionModel(getUsuarioService().getMembers());
+	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosSuscritos")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosSuscritos(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosSuscritos = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_SUBSCRIBED)) {
-		            usuariosSuscritos.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosSuscritos);
-	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping(path = "usuariosMiembros")
-	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getUsuariosMiembros(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosMember = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_USER_MEMBER)) {
-		            usuariosMember.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosMember);
+		return assembler.toCollectionModel(getUsuarioService().getSubscribed());
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "usuariosEscritores")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getUsuariosEscritores(PersistentEntityResourceAssembler assembler) {
-		 List<Usuario> listadoUsuarios = getUsuarioService().getAll();
-		    List<Usuario> usuariosWriter = new ArrayList<>();
-
-		    for (Usuario usuario : listadoUsuarios) {
-		        if (usuario.getRoles().iterator().next().getRolNombre().equals(RolNombre.ROLE_WRITER)) {
-		            usuariosWriter.add(usuario);
-		        }
-		    }
-
-		    return assembler.toCollectionModel(usuariosWriter);
+		return assembler.toCollectionModel(getUsuarioService().getWriters());
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
