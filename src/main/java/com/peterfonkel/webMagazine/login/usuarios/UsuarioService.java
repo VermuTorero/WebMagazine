@@ -181,4 +181,14 @@ public class UsuarioService {
 	public Usuario findByClaveRecuperacion(String claveRecuperacion) {
 		return getUsuarioDAO().findByClaveRecuperacion(claveRecuperacion);
 	}
+
+	public Usuario getUsuarioFromId(Long id) {
+		Usuario usuario =  getUsuarioDAO().findById(id).get();
+		Usuario usuarioChat = new Usuario();
+		usuarioChat.setNombre(usuario.getNombre());
+		usuarioChat.setApellido1(usuario.getApellido1().substring(0, 1) + ".");
+		usuarioChat.setApellido2(usuario.getApellido2().substring(0, 1) + ".");
+		usuarioChat.setId(id);
+		return usuarioChat;
+	}
 }

@@ -1,0 +1,19 @@
+.chat-box{
+    border-style: ridge;
+    border-color: black;
+    height: 50%;
+    width: 70%;
+}
+.chat-section{
+    justify-content: center;
+}
+.nuevo-mensaje-form{
+    width: 70%;
+}
+.nuevo-mensaje-section{
+    justify-content: center;
+}
+.mensaje{
+    width: 80%;
+    margin-left: 5%;
+}

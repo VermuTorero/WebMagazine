@@ -26,6 +26,8 @@ import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscr
 import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/renovar-suscripcion.component';
+import { ChatComponent } from './chat/chat.component';
+import { MensajeComponent } from './chat/mensaje/mensaje.component';
 
 
 
@@ -50,7 +52,9 @@ import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/r
     SuscripcionComponent,
     SuscripcionFichaComponent,
     VerificacionPagoComponent,
-    RenovarSuscripcionComponent
+    RenovarSuscripcionComponent,
+    ChatComponent,
+    MensajeComponent
   ],
   imports: [
     CommonModule,

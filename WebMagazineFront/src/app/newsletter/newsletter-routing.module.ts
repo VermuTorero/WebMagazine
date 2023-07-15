@@ -17,6 +17,7 @@ import { SuscripcionComponent } from './suscripcion/suscripcion.component';
 import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscripcion-ficha.component';
 import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
 import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/renovar-suscripcion.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [
@@ -163,6 +164,15 @@ const routes: Routes = [
       {
         path: `renovar-suscripcion`,
         component: RenovarSuscripcionComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `chat`,
+        component: ChatComponent,
       }
     ],
   }

@@ -23,6 +23,10 @@ export class UsuariosService {
     return this.http.get<any>(this.endpointBack + "/usuarios/search/usuarios").pipe(map(response=>response._embedded.usuarios));
   }
 
+  getUsuarioFromId(id: string): Observable<Usuario>{
+    return this.http.get<any>(this.endpointBack + "/usuarios/search/usuarioFromId/" + id)
+  }
+
   getUsuariosAdmin(): Observable<Usuario[]> {   
     return this.http.get<any>(this.endpointBack + "/usuarios/search/usuariosAdmin").pipe(map(response=>response._embedded.usuarios));
   }

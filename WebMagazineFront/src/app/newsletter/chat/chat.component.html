@@ -1,0 +1,16 @@
+<section class="chat-section row my-3">
+    <div class="chat-box">
+        <div *ngFor="let mensaje of mensajes">
+            <app-mensaje [mensaje]="mensaje"></app-mensaje>
+        </div>
+    </div>
+  
+</section>
+
+
+<section class="nuevo-mensaje-section row my-3">
+    <form action="" class="nuevo-mensaje-form">
+        <label for="mensaje">Nuevo mensaje:</label>
+        <input type="text" [(ngModel)]="mensajeNuevo" class="mensaje"  (keyup)="onKeyUp($event)">
+    </form>
+</section>
