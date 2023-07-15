@@ -59,8 +59,27 @@
           </ul>
         </li>
 
-        <li *ngIf="isLoggedWriter">
-          <a class="nav-link active" aria-current="page" href="formulario">Añadir publicación</a>
+        <li *ngIf="isLoggedMember" class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Club
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="chat">Chat miembros</a></li>
+          </ul>
+        </li>
+
+        <li *ngIf="isLoggedWriter" class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Escribir
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" aria-current="page" href="formulario">Añadir publicación</a>
+            </li>
+            <li><a class="dropdown-item" href="chat">Chat miembros</a></li>
+          </ul>
         </li>
 
         <li *ngIf="isLoggedAdmin" class="nav-item dropdown">
@@ -93,6 +112,8 @@
             <hr>
             <li class="text-center"><b>Tienda</b></li>
             <li><a class="dropdown-item" href="ecommerce/gestion">Gestión de tienda</a></li>
+            <li class="text-center"><b>Chat</b></li>
+            <li><a class="dropdown-item" href="chat">Administrar chat</a></li>
           </ul>
         </li>
 

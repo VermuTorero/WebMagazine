@@ -1,0 +1,26 @@
+.autor-mensaje{
+    color: orange;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 3px;
+    
+}
+.texto-mensaje{
+    background-color: aliceblue;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-left: 3px;
+    text-align: start;
+    width: fit-content;
+}
+.imagen-container{
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.imagen{
+    width: 40%;
+}

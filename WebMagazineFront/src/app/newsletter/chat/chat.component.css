@@ -1,11 +1,14 @@
 .chat-box{
     border-style: ridge;
     border-color: black;
-    height: 50%;
+    height: 500px;
     width: 70%;
+    background-color: rgba(0, 0, 0, 0.801);
+    overflow-y: scroll;
 }
 .chat-section{
     justify-content: center;
+    border-radius: 10px;
 }
 .nuevo-mensaje-form{
     width: 70%;
@@ -14,6 +17,8 @@
     justify-content: center;
 }
 .mensaje{
-    width: 80%;
     margin-left: 5%;
+    width: 50%;;
 }
+
+  

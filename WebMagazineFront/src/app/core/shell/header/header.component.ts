@@ -11,6 +11,7 @@ declare var $: any;
 export class HeaderComponent implements OnInit{
   userLogged$: any;
   isLoggedUser: any;
+  isLoggedMember: any;
   isLoggedAdmin: any;
   isLoggedWriter: any;
   public isCollapsed = true;  
@@ -20,6 +21,9 @@ export class HeaderComponent implements OnInit{
   ngOnInit(): void {
     this.loginService.getIsLoggedFlagObs().subscribe((flag) => {
       this.isLoggedUser = flag;
+    });
+    this.loginService.getIsMemberFlagObs().subscribe((flag) => {
+      this.isLoggedMember = flag;
     });
      this.loginService.getIsAdminFlagObs().subscribe((flag) => {
       this.isLoggedAdmin = flag;

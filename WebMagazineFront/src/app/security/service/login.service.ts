@@ -19,6 +19,7 @@ export class LoginService {
   isLoggedFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isAdminFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isWriterFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isMemberFlag$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private http: HttpClient,
     private tokenService: TokenService) { }
@@ -63,6 +64,17 @@ export class LoginService {
 
   setIsWriterFlagObs(isWriter: boolean) {
     this.isWriterFlag$.next(isWriter);
+  }
+
+  getIsMemberFlagObs(): Observable<boolean> {
+    if (this.getRol() == "ROLE_USER_MEMBER") {
+      this.setIsMemberFlagObs(true);
+    }
+    return this.isMemberFlag$.asObservable();
+  }
+
+  setIsMemberFlagObs(isMember: boolean) {
+    this.isMemberFlag$.next(isMember);
   }
 
   getRol(): string | null{

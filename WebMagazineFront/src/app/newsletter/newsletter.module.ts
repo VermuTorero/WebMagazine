@@ -31,6 +31,7 @@ import { MensajeComponent } from './chat/mensaje/mensaje.component';
 
 
 
+
 @NgModule({
   declarations: [
     PublicacionesComponent,

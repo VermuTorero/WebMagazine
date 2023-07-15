@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,7 @@ import { fichaInterceptor } from './security/interceptors/ficha.interceptor';
 import { TokenRefreshInterceptor } from './security/interceptors/token-refresh.interceptor';
 
 
+
 @NgModule({
   declarations: [
     AppComponent
@@ -29,7 +30,7 @@ import { TokenRefreshInterceptor } from './security/interceptors/token-refresh.i
     HttpClientModule,
     QuillModule,
     AngularCropperjsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [fichaInterceptor, {
@@ -39,4 +40,7 @@ import { TokenRefreshInterceptor } from './security/interceptors/token-refresh.i
   }],
   bootstrap: [AppComponent]
 })
+
+
+
 export class AppModule { }

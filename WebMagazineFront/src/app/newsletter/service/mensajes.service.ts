@@ -13,7 +13,7 @@ export class MensajesService {
   constructor(private http: HttpClient) { }
 
   getMensajes(): Observable<Mensaje[]>{
-    return this.http.get<any>(this.endpoint + "/mensajes/search/mensajes").pipe(map(response=>response._embedded.categorias))
+    return this.http.get<any>(this.endpoint + "/mensajes/search/mensajes").pipe(map(response=>response._embedded.mensajes))
   }
 
   getId(p: any): string {
