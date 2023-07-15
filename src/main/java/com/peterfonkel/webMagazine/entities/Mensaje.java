@@ -1,9 +1,11 @@
 package com.peterfonkel.webMagazine.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 
@@ -15,6 +17,7 @@ public class Mensaje {
 	private String texto;
 	private String imagen;
 	private String fecha;
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 	public Long getId() {
 		return id;
