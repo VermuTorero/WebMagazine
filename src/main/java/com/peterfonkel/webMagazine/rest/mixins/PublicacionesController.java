@@ -308,14 +308,15 @@ public class PublicacionesController {
 	@DeleteMapping(path = "deletePublicacion/{id}")
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Publicacion publicacion = getPublicacionesService().findById(id).get();
-		Set<Like> likes = publicacion.getLikesRecibidos();
-		publicacion.setLikesRecibidos(null);
-		getPublicacionesService().save(publicacion);
+//		Publicacion publicacion = getPublicacionesService().findById(id).get();
+//		Set<Like> likes = publicacion.getLikesRecibidos();
+//		publicacion.setLikesRecibidos(null);
+//		getPublicacionesService().save(publicacion);
+//		getPublicacionesService().deleteById(id);
+//		for (Like like : likes) {
+//			getLikesService().deleteById(like.getId());
+//		}
 		getPublicacionesService().deleteById(id);
-		for (Like like : likes) {
-			getLikesService().deleteById(like.getId());
-		}
 	}
 	
 	

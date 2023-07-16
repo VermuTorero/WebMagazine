@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,7 +25,7 @@ public class Like {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	
-	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = false)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Usuario usuario;
 	
 	private Instant fechaLike;
