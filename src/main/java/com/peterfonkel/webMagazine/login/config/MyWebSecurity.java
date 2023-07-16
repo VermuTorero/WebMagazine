@@ -24,56 +24,55 @@ import com.peterfonkel.webMagazine.login.usuarios.UserDetailsServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MyWebSecurity extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
+	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Autowired
-    JwtEntryPoint jwtEntryPoint;
+	@Autowired
+	JwtEntryPoint jwtEntryPoint;
 
-    @Bean
-    JwtTokenFilter jwtTokenFilter(){
-        return new JwtTokenFilter();
-    }
+	@Bean
+	JwtTokenFilter jwtTokenFilter() {
+		return new JwtTokenFilter();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return super.authenticationManager();
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-    }
-    /**
-     * Configuracion del CORS que permite llamadas sin autenticar unicamente al end-point de autenticacion gestionado por el OauthController.
-     * 
-     * @see OauthController
-     */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/oauth/**", "/api/publicaciones/search/**", "/usuarios/search/**",
-                		"/api/paginaEditables/search/**", "/api/imagenInicios/**", "/api/lugares/**", 
-                		"/api/categorias/search/**", "/api/categorias/search/**/**", "/api/tags/**", "/api/laterales/**", 
-                		 "/api/tipoSuscripcions/**", "/api/landindpages/**", "/api/likes/search/**", "api/direcciones/search/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+	}
+
+	/**
+	 * Configuracion del CORS que permite llamadas sin autenticar unicamente al
+	 * end-point de autenticacion gestionado por el OauthController.
+	 * 
+	 * @see OauthController
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().authorizeRequests()
+				.antMatchers("/oauth/**", "/api/publicaciones/search/**", "/usuarios/search/**",
+						"/api/paginaEditables/search/**", "/api/imagenInicios/**", "/api/lugares/**",
+						"/api/categorias/search/**", "/api/categorias/search/**/**", "/api/tags/**",
+						"/api/laterales/**", "/api/tipoSuscripcions/**", "/api/landindpages/**", "/api/likes/search/**",
+						"api/direcciones/search/**", "api/productos/search/**")
+				.permitAll().anyRequest().authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(jwtEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+	}
 }
-
