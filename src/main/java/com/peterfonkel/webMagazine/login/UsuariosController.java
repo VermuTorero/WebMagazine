@@ -41,8 +41,6 @@ import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
-import com.peterfonkel.webMagazine.services.MensajesService;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
@@ -71,13 +69,6 @@ public class UsuariosController {
 	
 	@Autowired
 	private RolService rolService;
-	
-	@Autowired
-	private MensajesService mensajesService;
-
-	public MensajesService getMensajesService() {
-		return mensajesService;
-	}
 
 	@Autowired
 	private EmailSender emailSender;
@@ -279,7 +270,7 @@ public class UsuariosController {
 		@ResponseBody
 		public PersistentEntityResource usuarioFromMensaje(PersistentEntityResourceAssembler assembler,
 				 @PathVariable Long id) {
-			return assembler.toModel(getUsuarioService().getUsuarioFromMensaje_Id(id));
+			return assembler.toModel(getMensajeService().getUsuarioFromMensaje_Id(id));
 		}
 	
 	// Metodos get de Usuarios

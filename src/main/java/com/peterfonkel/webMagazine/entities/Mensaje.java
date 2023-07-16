@@ -19,6 +19,10 @@ public class Mensaje {
 	private String fecha;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
+	
+	public Mensaje() {
+		super();
+	}
 	public Long getId() {
 		return id;
 	}

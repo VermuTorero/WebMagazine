@@ -192,7 +192,4 @@ public class UsuarioService {
 		return usuarioChat;
 	}
 
-	public Usuario getUsuarioFromMensaje_Id(Long id) {
-		return getUsuarioDAO().findByMensaje_Id(id);
-	}
 }
