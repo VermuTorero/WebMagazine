@@ -17,12 +17,8 @@ public class Mensaje {
 	private String texto;
 	private String imagen;
 	private String fecha;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
-	
-	public Mensaje() {
-		super();
-	}
 	public Long getId() {
 		return id;
 	}

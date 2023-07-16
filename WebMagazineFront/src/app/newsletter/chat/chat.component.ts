@@ -36,10 +36,9 @@ export class ChatComponent implements OnInit{
     this.mensajeService.getMensajes().subscribe(mensajes=>{
       this.mensajes = mensajes;
       this.mensajes.forEach(mensaje => {
-        console.log(mensaje)
         mensaje.id = this.mensajeService.getId(mensaje);
         mensaje.usuario.id = this.usuarioService.getId(mensaje.usuario);
-        this.usuarioService.getUsuarioFromMensaje(mensaje).subscribe(usuario=>{
+        this.usuarioService.getUsuarioFromId(mensaje.usuario.id).subscribe(usuario=>{
           usuario.id = this.usuarioService.getId(usuario);
           mensaje.usuario = usuario;
           console.log(this.mensajes)
@@ -47,6 +46,7 @@ export class ChatComponent implements OnInit{
       });
     })
   }
+
   postMensaje(){
     let mensaje = new Mensaje();
     this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
@@ -60,8 +60,8 @@ export class ChatComponent implements OnInit{
         this.bajarScroll();
       })
     });
-
   }
+  
   onKeyUp(event: KeyboardEvent) {
     if (event.keyCode === 13) {
       this.postMensaje();
