@@ -15,7 +15,7 @@
 <section class="nuevo-mensaje-section row my-3">
     <form action="" class="nuevo-mensaje-form">
         <label for="mensaje" class="etiqueta-mensaje"><b>Mensaje:</b></label>
-        <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje" (keyup)="onKeyUp($event)">
+        <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje">
         <div class="botones">
             <button class="btn btm-sm btn-success mx-2 py-0" (click)="postMensaje()">Enviar</button>
             <button class="btn btm-sm btn-primary mx-2 py-0" data-bs-toggle="modal" data-bs-target="#imagenChatModal">Subir
@@ -36,7 +36,7 @@
             <div class="modal-body">
                 <section>
                     <label for="mensaje"><b>Mensaje:</b></label>
-                    <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje" (keyup)="onKeyUp($event)">
+                    <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje">
                 </section>
                 <section class="my-2">
                     <input type="file" accept="images/" (change)="onSelectFile($event)">
@@ -67,7 +67,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="deleteMensajeConfirmado()" data-bs-dismiss="modal">Eliminar</button>
+          <button type="button" class="btn btn-danger" (click)="deleteMensajeConfirmado()" data-bs-dismiss="modal">Eliminar</button>
         </div>
       </div>
     </div>

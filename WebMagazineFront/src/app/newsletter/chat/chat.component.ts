@@ -53,16 +53,14 @@ export class ChatComponent implements OnInit{
         this.getMensajes();
         this.mensajeNuevo = "";
         this.bajarScroll();
+      },err=>{
+
+      }, ()=>{
+        
       })
     });
   }
   
-  onKeyUp(event: KeyboardEvent) {
-    if (event.keyCode === 13) {
-      this.postMensaje();
-    }
-  }
-
   onSelectFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();

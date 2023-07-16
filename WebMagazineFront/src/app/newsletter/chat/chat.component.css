@@ -77,4 +77,8 @@
     .btn {
         margin-top: 5%;
     }
+    .modal-header {
+        background-color: rgb(255, 109, 0, 255);
+        color: white;
+    }
 }
