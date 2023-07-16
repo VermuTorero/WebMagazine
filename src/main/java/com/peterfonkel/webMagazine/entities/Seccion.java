@@ -41,4 +41,13 @@ public class Seccion {
         producto.setSeccion(this);
     }
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
+
 }

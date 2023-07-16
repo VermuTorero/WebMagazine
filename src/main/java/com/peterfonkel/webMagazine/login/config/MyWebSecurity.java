@@ -67,8 +67,9 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers("/oauth/**", "/api/publicaciones/search/**", "/usuarios/search/**",
 						"/api/paginaEditables/search/**", "/api/imagenInicios/**", "/api/lugares/**",
-						"/api/categorias/search/**", "/api/tags/**", "/api/laterales/**", "/api/tipoSuscripcions/**", "/api/productos/search/**",
-						"/api/landindpages/**", "/api/likes/search/**", "api/direcciones/search/**")
+						"/api/categorias/search/**", "/api/tags/**", "/api/laterales/**", "/api/tipoSuscripcions/**",
+						"/api/landindpages/**", "/api/likes/search/**", "api/direcciones/search/**",
+						"/api/productos/search/**", "/api/secciones/search/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(jwtEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

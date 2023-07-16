@@ -14,7 +14,10 @@ export class SeccionService {
   constructor(private http: HttpClient) { }
 
   getSecciones(): Observable<Seccion[]>{
-    return this.http.get<any>(this.endpoint + "/secciones").pipe(map(response=>response._embedded.secciones))
+    return this.http.get<any>(this.endpoint + "/secciones/search/secciones").pipe(map(response=>response._embedded.secciones))
+  }
+  getSeccionById(id: string): Observable<Seccion>{
+    return this.http.get<any>(this.endpoint + "/secciones/search/seccion/" + id);
   }
   getIdSeccion(p: any): string {
     let url = p._links.self.href;
@@ -27,14 +30,14 @@ export class SeccionService {
   }
 
   postSeccion(seccion: Seccion): Observable<Seccion>{
-    return this.http.post<any>(this.endpoint + "/secciones", seccion);
+    return this.http.post<any>(this.endpoint + "/secciones/search/postSeccion", seccion);
   }
 
   patchSeccion(seccion: Seccion): Observable<Seccion>{
-    return this.http.patch<any>(this.endpoint + "/secciones/"+ seccion.idSeccion, seccion);
+    return this.http.patch<any>(this.endpoint + "/secciones/search/patchSeccion", seccion);
   }
   deleteSeccion(seccion: any): Observable<any>{
-    return this.http.delete<any>(this.endpoint + "/secciones/"+ seccion.idSeccion);
+    return this.http.delete<any>(this.endpoint + "/secciones/search/deleteSeccion/"+ seccion.idSeccion);
   }
 
   getSeccion(url: string): Observable<Seccion>{

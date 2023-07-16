@@ -15,6 +15,9 @@ export class ProductService {
   getProducts(): Observable<Product[]> {   
     return this.http.get<any>(this.endpoint + "/productos/search/productos").pipe(map(response=>response._embedded.productos));
   }
+  getProductoById(id: string): Observable<Product>{
+    return this.http.get<any>(this.endpoint + "/productos/search/productoById/" + id);
+  }
   postProducto(producto: Product): Observable <Product>{
     return this.http.post<Product>(this.endpoint + "/productos/search/postProducto", producto);
   }
