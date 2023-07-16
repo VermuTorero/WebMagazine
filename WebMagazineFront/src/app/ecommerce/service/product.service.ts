@@ -13,7 +13,6 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {   
-   
     return this.http.get<any>(this.endpoint + "/productos/search/productos").pipe(map(response=>response._embedded.productos));
   }
   postProducto(producto: Product): Observable <Product>{
