@@ -22,7 +22,7 @@ export class ProductService {
     return this.http.post<Product>(this.endpoint + "/productos/search/postProducto", producto);
   }
 
-  eliminarProducto(id: number): Observable <any>{
+  eliminarProducto(id: string): Observable <any>{
     return this.http.delete(this.endpoint + "/productos/search/deleteProducto/" + id);
   }
 

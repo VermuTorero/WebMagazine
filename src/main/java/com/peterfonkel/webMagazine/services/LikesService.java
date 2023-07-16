@@ -32,5 +32,9 @@ public class LikesService {
 		return getLikeDAO().save(like);
 	}
 	
+	public void deleteById(Long id) {
+		likeDAO.deleteById(id);
+	}
+	
 	
 }

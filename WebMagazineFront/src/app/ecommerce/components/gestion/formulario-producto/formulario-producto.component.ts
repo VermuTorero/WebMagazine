@@ -17,7 +17,7 @@ export class FormularioProductoComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent =
     new CropperComponent();
 
-  nuevoProducto: Product = new Product(0, '', '', '', 0, '', '');
+  nuevoProducto: Product = new Product('', '', '', '', 0, '', '');
   secciones: Seccion[] = [];
 
   /* Recortador de imagenes */

@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.j2objc.annotations.AutoreleasePool;
 import com.peterfonkel.webMagazine.entities.Categoria;
+import com.peterfonkel.webMagazine.entities.Like;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
@@ -43,6 +44,7 @@ import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
+import com.peterfonkel.webMagazine.services.LikesService;
 import com.peterfonkel.webMagazine.services.PublicacionesService;
 
 import org.slf4j.Logger;
@@ -65,6 +67,10 @@ public class PublicacionesController {
 	@Autowired
 	CategoriaService categoriaService;
 	
+	@Autowired
+	LikesService likesService;
+	
+	
 	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 	
 	public PublicacionesController(PublicacionesService publicacionesService){
@@ -83,11 +89,14 @@ public class PublicacionesController {
 		return usuarioService;
 	}
 
-	
-
-
 	public CategoriaService getCategoriaService() {
 		return categoriaService;
+	}
+	
+	
+
+	public LikesService getLikesService() {
+		return likesService;
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
@@ -300,7 +309,13 @@ public class PublicacionesController {
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
 		Publicacion publicacion = getPublicacionesService().findById(id).get();
-		getCategoriaService().deleteById(publicacion.getId());
+		Set<Like> likes = publicacion.getLikesRecibidos();
+		publicacion.setLikesRecibidos(null);
+		getPublicacionesService().save(publicacion);
+		getPublicacionesService().deleteById(id);
+		for (Like like : likes) {
+			getLikesService().deleteById(like.getId());
+		}
 	}
 	
 	

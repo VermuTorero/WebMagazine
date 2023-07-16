@@ -72,5 +72,9 @@ public class PublicacionesService {
 	public int countLikes(Long idPublicacion) {
 		return findById(idPublicacion).get().getLikesRecibidos().size();
 	}
+	
+	public void deleteById(Long id) {
+		publicacionDAO.deleteById(id);
+	}
 
 }

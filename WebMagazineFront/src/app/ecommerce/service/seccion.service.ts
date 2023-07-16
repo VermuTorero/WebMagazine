@@ -40,7 +40,7 @@ export class SeccionService {
     return this.http.delete<any>(this.endpoint + "/secciones/search/deleteSeccion/"+ seccion.idSeccion);
   }
 
-  getSeccion(url: string): Observable<Seccion>{
+/*   getSeccion(url: string): Observable<Seccion>{
     return this.http.get<Seccion>(url);
-  }
+  } */
 }

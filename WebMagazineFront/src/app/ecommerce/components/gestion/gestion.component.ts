@@ -47,7 +47,7 @@ search(text: string, pipe: PipeTransform, productos: Product[]): Product[] {
   });
 }
 
-eliminarProducto(id: number){
+eliminarProducto(id: string){
   this.productoService.eliminarProducto(id).subscribe(() =>{
     console.log("eliminado");
     window.location.reload();

@@ -28,7 +28,8 @@ export class ProductListComponent {
     this.productService.getProducts().subscribe((res) => {
       this.products = res;
       this.products.forEach(producto => {
-        this.seccionesService.getSeccion(this.productService.extraerUrlSeccion(producto)).subscribe((res) =>{
+        producto.id = this.productService.getIdProducto(producto);
+        this.seccionesService.getSeccionById(producto.id).subscribe((res) =>{
           producto.seccion = res.nombreSeccion;
         });
       });
