@@ -1,5 +1,5 @@
 <div class="mensaje-container">
-    <p class="autor-mensaje">{{mensaje.usuario.nombre}} {{mensaje.usuario.apellido1}} {{mensaje.usuario.apellido2}}:</p>
+    <p class="autor-mensaje">{{mensaje.usuario.nombre}} {{mensaje.usuario.apellido1}} {{mensaje.usuario.apellido2}}: <button class="btn btn-sm btn-danger" (click)="eliminarMensaje()">Eliminar</button></p>
     <p class="texto-mensaje">&nbsp;{{mensaje.texto}}</p>
     <div class="imagen-container">
         <img class="imagen" src="{{mensaje.imagen}}" alt="">

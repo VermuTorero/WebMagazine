@@ -41,6 +41,8 @@ import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
+import com.peterfonkel.webMagazine.services.MensajesService;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
@@ -69,6 +71,13 @@ public class UsuariosController {
 	
 	@Autowired
 	private RolService rolService;
+	
+	@Autowired
+	private MensajesService mensajesService;
+
+	public MensajesService getMensajesService() {
+		return mensajesService;
+	}
 
 	@Autowired
 	private EmailSender emailSender;
@@ -260,10 +269,18 @@ public class UsuariosController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER')")
 	@GetMapping(path = "usuarioFromId/{id}")
 	@ResponseBody
-	public PersistentEntityResource usuarioFromId(PersistentEntityResourceAssembler assembler,
-			HttpServletRequest request, @PathVariable Long id) {
+	public PersistentEntityResource usuarioFromId(PersistentEntityResourceAssembler assembler, @PathVariable Long id) {
 		return assembler.toModel(getUsuarioService().getUsuarioFromId(id));
 	}
+	
+	// Obtener el usuario a partir de un token
+		@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER')")
+		@GetMapping(path = "usuarioFromMensaje/{id}")
+		@ResponseBody
+		public PersistentEntityResource usuarioFromMensaje(PersistentEntityResourceAssembler assembler,
+				 @PathVariable Long id) {
+			return assembler.toModel(getUsuarioService().getUsuarioFromMensaje_Id(id));
+		}
 	
 	// Metodos get de Usuarios
 	

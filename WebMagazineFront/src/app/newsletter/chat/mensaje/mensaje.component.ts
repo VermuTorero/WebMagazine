@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Mensaje } from '../../models/mensaje';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Mensaje } from '../../models/Mensaje';
 
 @Component({
   selector: 'app-mensaje',
@@ -8,6 +8,9 @@ import { Mensaje } from '../../models/mensaje';
 })
 export class MensajeComponent {
   @Input() mensaje: Mensaje = new Mensaje();
+  @Output() eliminarMensajeEvent = new EventEmitter<Mensaje>();
 
-
+  eliminarMensaje(){
+    this.eliminarMensajeEvent.emit(this.mensaje);
+  }
 }

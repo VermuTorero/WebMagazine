@@ -191,4 +191,8 @@ public class UsuarioService {
 		usuarioChat.setId(id);
 		return usuarioChat;
 	}
+
+	public Usuario getUsuarioFromMensaje_Id(Long id) {
+		return getUsuarioDAO().findByMensaje_Id(id);
+	}
 }

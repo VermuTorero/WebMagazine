@@ -31,4 +31,6 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 	
 	void deleteById(Long id);
 
+	Usuario findByMensaje_Id(Long id);
+
 }

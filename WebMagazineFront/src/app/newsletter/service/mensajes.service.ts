@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Mensaje } from '../models/mensaje';
+import { Mensaje } from '../models/Mensaje';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,6 @@ export class MensajesService {
   }
 
   deleteMensaje(mensaje: any): Observable<any>{
-    return this.http.delete<any>(this.endpoint + "/mensajes/search/deleteMensaje"+ mensaje);
+    return this.http.delete<any>(this.endpoint + "/mensajes/search/deleteMensaje/"+ mensaje.id);
   }
 }

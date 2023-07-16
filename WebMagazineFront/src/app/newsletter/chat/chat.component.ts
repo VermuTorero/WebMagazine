@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MensajesService } from '../service/mensajes.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
-import { Mensaje } from '../models/mensaje';
+import { Mensaje } from '../models/Mensaje';
 
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../service/imagenes.service';
+declare var $: any;
 
 @Component({
   selector: 'app-chat',
@@ -16,6 +17,7 @@ export class ChatComponent implements OnInit{
   croppedresult = "";
   mensajeNuevo: string = "";
   imagenNueva: string = "";
+  mensajeBorrar: Mensaje = new Mensaje();
 
   constructor(private mensajeService: MensajesService,
     private usuarioService: UsuariosService,
@@ -29,15 +31,18 @@ export class ChatComponent implements OnInit{
    this.getMensajes();
    this.bajarScroll();
   }
+
   getMensajes(){
     this.mensajeService.getMensajes().subscribe(mensajes=>{
       this.mensajes = mensajes;
       this.mensajes.forEach(mensaje => {
+        console.log(mensaje)
         mensaje.id = this.mensajeService.getId(mensaje);
         mensaje.usuario.id = this.usuarioService.getId(mensaje.usuario);
-        this.usuarioService.getUsuarioFromId(mensaje.usuario.id).subscribe(usuario=>{
+        this.usuarioService.getUsuarioFromMensaje(mensaje).subscribe(usuario=>{
           usuario.id = this.usuarioService.getId(usuario);
           mensaje.usuario = usuario;
+          console.log(this.mensajes)
         })
       });
     })
@@ -107,5 +112,20 @@ export class ChatComponent implements OnInit{
     });
     
   }
-  
+
+  deleteMensaje(mensaje: any) {
+    this.mensajeBorrar = mensaje;
+    $('#confirmarDeleteMensajeModal').modal('show');
+  }
+
+  deleteMensajeConfirmado() {
+      this.mensajeService.deleteMensaje(this.mensajeBorrar).subscribe(response => {
+        $('#confirmadoDeleteMensajeModal').modal('show');
+      }, err => { 
+        $('#errorDeleteMensajeModal').modal('show');
+       })
+  }
+  recargarPagina(){
+    document.location.reload();
+  }
 }
