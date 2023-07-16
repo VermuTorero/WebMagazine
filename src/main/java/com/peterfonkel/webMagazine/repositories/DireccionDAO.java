@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.peterfonkel.webMagazine.entities.Direccion;
 
-@RepositoryRestResource(path = "direcciones", itemResourceRel = "direccion", collectionResourceRel = "direcciones")
+@RepositoryRestResource(path = "direcciones", itemResourceRel = "direccion", collectionResourceRel = "direcciones", exported=false)
 public interface DireccionDAO extends JpaRepository<Direccion, Long>{
     
     @Override
