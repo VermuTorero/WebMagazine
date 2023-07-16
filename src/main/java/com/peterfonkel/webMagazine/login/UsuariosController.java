@@ -264,15 +264,6 @@ public class UsuariosController {
 		return assembler.toModel(getUsuarioService().getUsuarioFromId(id));
 	}
 	
-	// Obtener el usuario a partir de un token
-		@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER')")
-		@GetMapping(path = "usuarioFromMensaje/{id}")
-		@ResponseBody
-		public PersistentEntityResource usuarioFromMensaje(PersistentEntityResourceAssembler assembler,
-				 @PathVariable Long id) {
-			return assembler.toModel(getMensajeService().getUsuarioFromMensaje_Id(id));
-		}
-	
 	// Metodos get de Usuarios
 	
 	// Obtener todos los usuarios exceptuando los eliminados
