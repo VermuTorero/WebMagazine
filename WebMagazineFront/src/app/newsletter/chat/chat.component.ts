@@ -37,12 +37,7 @@ export class ChatComponent implements OnInit{
       this.mensajes = mensajes;
       this.mensajes.forEach(mensaje => {
         mensaje.id = this.mensajeService.getId(mensaje);
-        mensaje.usuario.id = this.usuarioService.getId(mensaje.usuario);
-        this.usuarioService.getUsuarioFromId(mensaje.usuario.id).subscribe(usuario=>{
-          usuario.id = this.usuarioService.getId(usuario);
-          mensaje.usuario = usuario;
-          console.log(this.mensajes)
-        })
+        
       });
     })
   }
