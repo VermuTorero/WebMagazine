@@ -19,7 +19,6 @@ public class Mensaje {
 	Long id;
 	private String texto;
 	private String imagen;
-	@OneToOne
 	private Instant fecha;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
