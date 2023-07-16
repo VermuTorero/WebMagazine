@@ -308,15 +308,24 @@ public class PublicacionesController {
 	@DeleteMapping(path = "deletePublicacion/{id}")
 	@ResponseBody
 	public void deletePublicacion(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-//		Publicacion publicacion = getPublicacionesService().findById(id).get();
-//		Set<Like> likes = publicacion.getLikesRecibidos();
-//		publicacion.setLikesRecibidos(null);
-//		getPublicacionesService().save(publicacion);
-//		getPublicacionesService().deleteById(id);
-//		for (Like like : likes) {
-//			getLikesService().deleteById(like.getId());
-//		}
+		Publicacion publicacion = getPublicacionesService().findById(id).get();
+		Set<Like> likes = publicacion.getLikesRecibidos();
+		Set<Like> likesNuevo = new HashSet<>();
+		List<Long> ids = new ArrayList<>();
+		publicacion.setLikesRecibidos(likesNuevo);
+		//Quito los usuarios del like y cojo el id de cada uno
+		for (Like like : likes) {
+			like.setUsuario(null);
+			getLikesService().save(like);
+			ids.add(like.getId());
+		}
+		//Borro los like de la publicacion
+		for (Long idLike : ids) {
+			getLikesService().deleteById(id);
+		}
+		//Borro la publicacion
 		getPublicacionesService().deleteById(id);
+
 	}
 	
 	
