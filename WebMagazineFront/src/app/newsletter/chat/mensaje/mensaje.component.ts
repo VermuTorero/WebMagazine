@@ -13,7 +13,10 @@ export class MensajeComponent implements OnInit{
   fecha: string = "";
 
   ngOnInit(): void {
+    this.fecha = this.mensaje.fecha.split('T')[0];
     this.hora = this.mensaje.fecha.split('T')[1];
+
+    this.hora = this.hora.split(':')[0] + ":" + this.hora.split(':')[0]
   }
   eliminarMensaje(){
     this.eliminarMensajeEvent.emit(this.mensaje);

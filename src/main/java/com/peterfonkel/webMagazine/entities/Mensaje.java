@@ -46,11 +46,12 @@ public class Mensaje {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	public String getFecha() {
+
+	public Instant getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFecha(Instant fecha) {
+		this.fecha = Instant.now();
 	}
 	public Usuario getUsuario() {
 		return usuario;
