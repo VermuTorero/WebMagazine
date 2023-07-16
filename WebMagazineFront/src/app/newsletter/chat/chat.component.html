@@ -16,9 +16,12 @@
     <form action="" class="nuevo-mensaje-form">
         <label for="mensaje" class="etiqueta-mensaje"><b>Mensaje:</b></label>
         <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje" (keyup)="onKeyUp($event)">
-        <button class="btn btm-sm btn-success mx-2 py-0" (click)="postMensaje()">Enviar</button>
-        <button class="btn btm-sm btn-primary mx-2 py-0" data-bs-toggle="modal" data-bs-target="#imagenChatModal">Subir
-            imagen</button>
+        <div class="botones">
+            <button class="btn btm-sm btn-success mx-2 py-0" (click)="postMensaje()">Enviar</button>
+            <button class="btn btm-sm btn-primary mx-2 py-0" data-bs-toggle="modal" data-bs-target="#imagenChatModal">Subir
+                imagen</button>
+        </div>
+        
     </form>
 </section>
 

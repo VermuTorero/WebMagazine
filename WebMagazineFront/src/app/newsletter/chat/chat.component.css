@@ -1,23 +1,30 @@
-
-.chat-section{
+.chat-section {
     justify-content: center;
     border-radius: 10px;
 }
-.nuevo-mensaje-form{
+
+.nuevo-mensaje-form {
     width: 70%;
 }
-.nuevo-mensaje-section{
+
+.nuevo-mensaje-section {
     justify-content: center;
 }
-.mensaje{
+
+.mensaje {
     margin-left: 5%;
-    width: 60%;;
+    width: 60%;
+    ;
 }
+.botones{
+    display: inline-flex;
+}
+
 
 
 /* Estilos tamaño grande */
 @media (min-width: 41em) {
-    .chat-box{
+    .chat-box {
         border-style: ridge;
         border-color: black;
         height: 500px;
@@ -25,10 +32,11 @@
         background-color: rgba(0, 0, 0, 0.801);
         overflow-y: scroll;
     }
-    .etiqueta-mensaje{
-        width:10%;
+
+    .etiqueta-mensaje {
+        width: 10%;
         margin-left: 1%;
-        }
+    }
 
 }
 
@@ -36,31 +44,37 @@
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
 
-    .chat-box{
+    .chat-box {
         border-style: ridge;
         border-color: black;
         height: 500px;
-        width: 95%;
+        width: 80%;
         background-color: rgba(0, 0, 0, 0.801);
         overflow-y: scroll;
     }
-    .nuevo-mensaje-form{
+
+    .nuevo-mensaje-form {
         width: 90%;
         margin-top: 2%;
         margin-bottom: 2%;
     }
-    .mensaje{
+
+    .mensaje {
         margin-left: 5%;
-        width: 60%;;
+        width: 60%;
+        ;
     }
-    .etiqueta-mensaje{
-        width:30%;
+
+    .etiqueta-mensaje {
+        width: 30%;
         margin-left: 1%;
-        }
-        .btn{
-            margin-top: 5%;
-        }
+    }
+    .botones{
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn {
+        margin-top: 5%;
+    }
 }
-
-
-  

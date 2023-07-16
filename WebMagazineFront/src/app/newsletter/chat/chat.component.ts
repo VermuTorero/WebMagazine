@@ -51,6 +51,8 @@ export class ChatComponent implements OnInit{
       mensaje.imagen = this.imagenNueva;
       this.mensajeService.postMensaje(mensaje).subscribe(mensaje=>{
         this.getMensajes();
+        this.mensajeNuevo = "";
+        this.bajarScroll();
       })
     });
 
