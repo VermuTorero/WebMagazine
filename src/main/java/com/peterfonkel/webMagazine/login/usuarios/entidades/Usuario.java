@@ -234,6 +234,11 @@ public class Usuario {
 	public void setClaveRecuperacion(String claveRecuperacion) {
 		this.claveRecuperacion = claveRecuperacion;
 	}
+	
+	public List<Direccion> addDireccion(Direccion direccion){
+		this.direcciones.add(direccion);
+		return this.direcciones;
+	}
 
 	@Override
 	public String toString() {

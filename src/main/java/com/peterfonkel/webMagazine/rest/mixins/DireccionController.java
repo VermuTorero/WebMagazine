@@ -82,7 +82,7 @@ public class DireccionController {
 	public PersistentEntityResource postDireccion(PersistentEntityResourceAssembler assembler, HttpServletRequest request,
 			@RequestBody Direccion direccion) {
 		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
-		direccion.setUsuario(usuario);
+		usuario.addDireccion(direccion);
 		getDireccionService().save(direccion);
 		logger.info(usuario.getEmail() + " CREA DIRECCION: " + direccion);
 		return assembler.toModel(direccion);
@@ -95,7 +95,7 @@ public class DireccionController {
 	public PersistentEntityResource postDireccionAdmin(PersistentEntityResourceAssembler assembler, HttpServletRequest request,
 			@RequestBody Direccion direccion, @PathVariable Long id) {
 		Usuario usuario = getUsuarioService().getUsuarioFromId(id);
-		direccion.setUsuario(usuario);
+		usuario.addDireccion(direccion);
 		getDireccionService().save(direccion);
 		logger.info("ADMIN CREA DIRECCION: " + direccion);
 		return assembler.toModel(direccion);

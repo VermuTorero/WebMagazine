@@ -23,8 +23,8 @@ public class Direccion {
     private String puerta;
     private String codigoPostal;
 
-    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
-    private Usuario usuario;
+//    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true)
+//    private Usuario usuario;
 
     public String getCiudad() {
         return ciudad;
@@ -74,13 +74,13 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
 
     public Direccion() {
     }
