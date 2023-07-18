@@ -1,13 +1,4 @@
-.hoja {
-    background-color: white;
-    margin-left: 14%;
-    margin-right: 11%;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    padding: 8%;
-    box-shadow: 2px 2px 10px #666;
-    /* background-image: url(../../../../assets/fondo_periodico.jpg); */
-}
+
 
 .lateral {
     background-color: white;
@@ -243,11 +234,20 @@
         box-shadow: 2px 2px 10px #666;
         /* background-image: url(../../../../assets/fondo_periodico.jpg); */
     }
+    .titulo-podcast{
+        font-size: medium;
+    }
+    .titulo-buscador{
+        font-size: medium;
+    }
+    .titulo-twitter{
+        font-size: medium;
+    }
 
 }
 
 /* Estilos tamaño grande */
-@media (min-width: 41em) {
+@media (min-width: 40em) and (max-width:80em){
     ::ng-deep img[alt="imagenAlt100"] {
         width: 100% !important;
     }
@@ -293,18 +293,70 @@
 
     .hoja {
         background-color: white;
-        margin-left: 4%;
+        margin-left: 5%;
         margin-right: 2%;
         margin-top: 0%;
         margin-bottom: 0%;
         padding: 8%;
         box-shadow: 2px 2px 10px #666;
+        width: 90%;
         /* background-image: url(../../../../assets/fondo_periodico.jpg); */
     }
+    .titulo-podcast{
+        font-size: medium;
+    }
+    .titulo-buscador{
+        font-size: medium;
+    }
+    .titulo-twitter{
+        font-size: medium;
+    }
+
 }
 
 /* Estilos tamaño muy grande */
-@media (min-width: 81em) {
+@media (min-width: 80em) {
+    ::ng-deep img[alt="imagenAlt100"] {
+        width: 100% !important;
+    }
+
+    ::ng-deep img[alt="imagenAlt75"] {
+        width: 75% !important;
+    }
+
+    ::ng-deep img[alt="imagenAlt50"] {
+        width: 50% !important;
+    }
+
+    ::ng-deep img[alt="imagenAlt35"] {
+        width: 35% !important;
+    }
+
+    ::ng-deep img[alt="imagenAlt20"] {
+        width: 20% !important;
+    }
+
+    ::ng-deep iframe[tipo="podcast"] {
+        width: 75% !important;
+        height: 220px !important;
+    }
+
+    ::ng-deep iframe[tipo="youtube"] {
+        width: 80% !important;
+        height: 28vw !important;
+    }
+    .icono-rrss {
+        width: 2vw;
+    }
+
+    .autor {
+        margin-top: 3%;
+        font-size: medium;
+    }
+
+    .datos {
+        display: flex
+    }
     .lateral {
         padding-left: 5%;
         padding-right: 5%;
@@ -313,12 +365,13 @@
 
     .hoja {
         background-color: white;
-        margin-left: 14%;
+        margin-left: 8%;
         margin-right: 11%;
         margin-top: 0%;
         margin-bottom: 0%;
         padding: 8%;
         box-shadow: 2px 2px 10px #666;
+        width: 85%;
         /* background-image: url(../../../../assets/fondo_periodico.jpg); */
     }
 
@@ -348,4 +401,7 @@ a:active {
 
 .likes {
     margin: 0;
+}
+::ng-deep .twitter-widget-0{
+    width: 80% !important;
 }

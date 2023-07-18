@@ -43,6 +43,7 @@ export class PublicacionCompletaComponent implements OnInit {
     private likeService: LikesService) { }
 
   ngOnInit(): void {
+    this.getLateral();
     this.getTitulo();
     this.rol = sessionStorage.getItem("rol");
     if (this.rol == "ROLE_ADMIN" ||this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
@@ -50,8 +51,7 @@ export class PublicacionCompletaComponent implements OnInit {
     }else{
       this.getPublicacionFree();
     }
-   
-    this.getLateral();
+    
   }
 
   getTitulo(): void {
@@ -212,7 +212,14 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
     twitterContainer?.appendChild(tweetContainer);
- 
+    var style = document.createElement('style');
+  style.innerHTML = `
+    .twitter-widget-0,
+    iframe {
+      width: 100% !important;
+    }
+  `;
+  document.head.appendChild(style);
   }
 
   showHtmlTwitter2() {

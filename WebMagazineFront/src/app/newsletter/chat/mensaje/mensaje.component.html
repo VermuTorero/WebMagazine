@@ -3,7 +3,7 @@
         <button *ngIf="isLoggedAdmin" class="btn btn-sm btn-danger mx-2 py-0" (click)="eliminarMensaje()">Eliminar</button>
     </p>
     <p class="texto-mensaje py-0">&nbsp;{{mensaje.texto}}</p>
-    <div class="imagen-container">
+    <div *ngIf="mensaje.imagen" class="imagen-container">
         <img class="imagen" src="{{mensaje.imagen}}" alt="">
     </div> 
 </div>

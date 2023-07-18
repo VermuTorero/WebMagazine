@@ -10,8 +10,8 @@
   </div>
   <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3 container-texto">
     <div class="container-bloques">
-      <h3 class="row mx-2 mt-2 nombre-categoria text-center"><b>{{categoria.categoriaNombre}}</b></h3>
-      <h4 class="row mx-2  container-descripcion text-center">
+      <h3 class="row mx-2 mt-2 nombre-categoria"><b>{{categoria.categoriaNombre}}</b></h3>
+      <h4 class="row mx-2  container-descripcion">
         <p class="descripcion-categoria">{{categoria.categoriaDescripcion}}</p>
       </h4>
       <div *ngIf="isLoggedAdmin" class="text-center">
@@ -19,9 +19,9 @@
       </div>
     </div>
   </div>
-  <div *ngIf="edicion" class="col-12 col-lg-6 p-3">
+  <div *ngIf="edicion" class="col-12 col-lg-6 p-3 container-texto">
     <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
-    <h2 class="row mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
+    <h2 class="row nombre-categoria mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
     <textarea rows="8" maxlength="1000" class="descripcion row mx-2 my-4 text-center w-100"
       [(ngModel)]="categoria.categoriaDescripcion"></textarea>
     <div class="text-center">

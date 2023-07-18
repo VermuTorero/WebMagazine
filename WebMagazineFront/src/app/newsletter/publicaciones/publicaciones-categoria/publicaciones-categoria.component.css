@@ -7,9 +7,12 @@
 .container-texto{
     display: flex;
     align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 .nombre-categoria{
+
 }
 .descripcion-categoria{
     font-size:x-large;
@@ -21,6 +24,9 @@
 .modal-header{
     background-color: rgb(255,109,0,255);
     color: white;
+}
+.texto-categoria{
+    text-align: center;
 }
 
 /* Estilos tamaño movil */
