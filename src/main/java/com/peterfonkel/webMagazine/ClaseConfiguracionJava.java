@@ -40,8 +40,10 @@ import com.peterfonkel.webMagazine.entities.TipoSuscripcion;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
 import com.peterfonkel.webMagazine.login.roles.RolDAO;
+import com.peterfonkel.webMagazine.login.roles.RolService;
 import com.peterfonkel.webMagazine.login.roles.enums.RolNombre;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.ImagenInicioDAO;
@@ -49,6 +51,7 @@ import com.peterfonkel.webMagazine.repositories.LateralDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
 import com.peterfonkel.webMagazine.repositories.TipoSuscripcionDAO;
 import com.peterfonkel.webMagazine.rest.mixins.Mixins;
+import com.peterfonkel.webMagazine.services.CategoriaService;
 
 
 
@@ -87,14 +90,14 @@ public class ClaseConfiguracionJava {
 	LateralDAO lateralDAO;
 	
 	@Autowired
-	RolDAO rolDAO;
+	RolService rolService;
 
 	@Autowired
-	UsuarioDAO usuarioDAO;
+	UsuarioService usuarioService;
 
 	
 	@Autowired
-	CategoriaDAO categoriaDAO;
+	CategoriaService categoriaService;
 	
 	@Autowired
 	TipoSuscripcionDAO tipoSuscripcionDAO;
@@ -172,72 +175,72 @@ public class ClaseConfiguracionJava {
 		 */
 		for (RolNombre rol : RolNombre.values()) {
 			Rol rolNuevo = new Rol(rol);
-			if (!rolDAO.existsByRolNombre(rol)) {
-				rolDAO.save(rolNuevo);
+			if (!rolService.existsRolNombre(rol)) {
+				rolService.save(rolNuevo);
 			}
 		}
 
 		/*
 		 * cargo el usuario administrador si no existe en la BD
 		 */
-		if (!usuarioDAO.existsByEmail(correoAdmin)) {
+		if (!usuarioService.existsEmail(correoAdmin)) {
 			Usuario usuarioAdmin = new Usuario(correoAdmin, passwordEncoder.encode(secretPsw));
 			usuarioAdmin.setNombre("Elisabeth");
 			usuarioAdmin.setApellido1("G.");
 			usuarioAdmin.setApellido2("Iborra");
 			usuarioAdmin.setIsConfirmadoEmail(true);
 			usuarioAdmin.setFechaFinSuscripcion(Instant.now().plusMillis(864000000));
-			Rol rolAdmin = rolDAO.findByRolNombre(RolNombre.ROLE_ADMIN).get();
+			Rol rolAdmin = rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get();
 			Set<Rol> roles = new HashSet<>();
 			roles.add(rolAdmin);
 			usuarioAdmin.setRoles(roles);
-			usuarioDAO.save(usuarioAdmin);
+			usuarioService.save(usuarioAdmin);
 		}
 	
-		if (categoriaDAO.findAll().size()<3) {
+		if (categoriaService.findAll().size()<3) {
 			Categoria categoria = new Categoria();
 			categoria.setCategoriaNombre("Patata Santa");
-			categoriaDAO.save(categoria);
+			categoriaService.save(categoria);
 			
 			Categoria categoria2 = new Categoria();
 			categoria.setCategoriaNombre("Restaurantes");
-			categoriaDAO.save(categoria2);
+			categoriaService.save(categoria2);
 			
 			Categoria categoria3 = new Categoria();
 			categoria.setCategoriaNombre("Bares");
-			categoriaDAO.save(categoria3);
+			categoriaService.save(categoria3);
 			
 			Categoria categoria4 = new Categoria();
 			categoria.setCategoriaNombre("Mercados");
-			categoriaDAO.save(categoria4);
+			categoriaService.save(categoria4);
 			
 			Categoria categoria5 = new Categoria();
 			categoria.setCategoriaNombre("Entrevidas");
-			categoriaDAO.save(categoria5);
+			categoriaService.save(categoria5);
 			
 			Categoria categoria6 = new Categoria();
 			categoria.setCategoriaNombre("Viajar a solas");
-			categoriaDAO.save(categoria6);
+			categoriaService.save(categoria6);
 			
 			Categoria categoria7 = new Categoria();
 			categoria.setCategoriaNombre("Beber bien");
-			categoriaDAO.save(categoria7);
+			categoriaService.save(categoria7);
 			
 			Categoria categoria8 = new Categoria();
 			categoria.setCategoriaNombre("Culturoides");
-			categoriaDAO.save(categoria8);
+			categoriaService.save(categoria8);
 			
 			Categoria categoria9 = new Categoria();
 			categoria.setCategoriaNombre("Entrevidas");
-			categoriaDAO.save(categoria9);
+			categoriaService.save(categoria9);
 			
 			Categoria categoria10 = new Categoria();
 			categoria.setCategoriaNombre("Relaciones");
-			categoriaDAO.save(categoria10);
+			categoriaService.save(categoria10);
 			
 			Categoria categoria11 = new Categoria();
 			categoria.setCategoriaNombre("Autocuidado");
-			categoriaDAO.save(categoria11);
+			categoriaService.save(categoria11);
 		}
 		
 		if(tipoSuscripcionDAO.findAll().size()<1) {
