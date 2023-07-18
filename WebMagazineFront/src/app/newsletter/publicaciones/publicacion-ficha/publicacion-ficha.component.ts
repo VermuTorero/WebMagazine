@@ -72,6 +72,7 @@ export class PublicacionFichaComponent implements OnInit {
 
   numeroLikes: string = "";
 
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -149,7 +150,9 @@ export class PublicacionFichaComponent implements OnInit {
 
   postPublicacion() {
     if (this.publicacion.titulo == "" || this.publicacion.autor.id == "" 
-      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "") {
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "" 
+      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == "" 
+      || this.texto =="") {
         $('#errorModal').modal('show');
     }
     else{

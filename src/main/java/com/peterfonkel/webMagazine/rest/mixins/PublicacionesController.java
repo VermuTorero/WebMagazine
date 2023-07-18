@@ -113,7 +113,6 @@ public class PublicacionesController {
 		Publicacion publicacion = getPublicacionesService().findByTitulo(titulo);
 		if (publicacion.isPremium()) {
 			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
-			
 		}
 		return assembler.toModel(publicacion);
 	}

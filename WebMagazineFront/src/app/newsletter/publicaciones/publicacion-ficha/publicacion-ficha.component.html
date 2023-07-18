@@ -357,7 +357,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>Error. Hay campos obligatorios sin rellenar</p>
+          <p><b>Error al crear publicación. Revise lo siguiente:</b></p>
+          <p *ngIf="publicacion.titulo ==''">El título no puede estar vacío.</p>
+          <p *ngIf="publicacion.autor.id==''">Debe seleccionar un autor.</p>
+          <p *ngIf="publicacion.imagenPreviewUrl==''">Debe seleccionar una imagen para la preview.</p>
+          <p *ngIf="publicacion.subtitulo==''">El texto de la preview no puede estar vacío.</p>
+          <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
+          <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
+          <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
