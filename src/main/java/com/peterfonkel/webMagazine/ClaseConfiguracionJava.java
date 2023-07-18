@@ -203,43 +203,43 @@ public class ClaseConfiguracionJava {
 			categoriaService.save(categoria);
 			
 			Categoria categoria2 = new Categoria();
-			categoria.setCategoriaNombre("Restaurantes");
+			categoria2.setCategoriaNombre("Restaurantes");
 			categoriaService.save(categoria2);
 			
 			Categoria categoria3 = new Categoria();
-			categoria.setCategoriaNombre("Bares");
+			categoria3.setCategoriaNombre("Bares");
 			categoriaService.save(categoria3);
 			
 			Categoria categoria4 = new Categoria();
-			categoria.setCategoriaNombre("Mercados");
+			categoria4.setCategoriaNombre("Mercados");
 			categoriaService.save(categoria4);
 			
 			Categoria categoria5 = new Categoria();
-			categoria.setCategoriaNombre("Entrevidas");
+			categoria5.setCategoriaNombre("Entrevidas");
 			categoriaService.save(categoria5);
 			
 			Categoria categoria6 = new Categoria();
-			categoria.setCategoriaNombre("Viajar a solas");
+			categoria6.setCategoriaNombre("Viajar a solas");
 			categoriaService.save(categoria6);
 			
 			Categoria categoria7 = new Categoria();
-			categoria.setCategoriaNombre("Beber bien");
+			categoria7.setCategoriaNombre("Beber bien");
 			categoriaService.save(categoria7);
 			
 			Categoria categoria8 = new Categoria();
-			categoria.setCategoriaNombre("Culturoides");
+			categoria8.setCategoriaNombre("Culturoides");
 			categoriaService.save(categoria8);
 			
 			Categoria categoria9 = new Categoria();
-			categoria.setCategoriaNombre("Entrevidas");
+			categoria9.setCategoriaNombre("Entrevidas");
 			categoriaService.save(categoria9);
 			
 			Categoria categoria10 = new Categoria();
-			categoria.setCategoriaNombre("Relaciones");
+			categoria10.setCategoriaNombre("Relaciones");
 			categoriaService.save(categoria10);
 			
 			Categoria categoria11 = new Categoria();
-			categoria.setCategoriaNombre("Autocuidado");
+			categoria11.setCategoriaNombre("Autocuidado");
 			categoriaService.save(categoria11);
 		}
 		
