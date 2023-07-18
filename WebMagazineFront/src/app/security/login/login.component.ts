@@ -87,6 +87,8 @@ export class LoginComponent implements OnInit {
           }
         });
       })
+    },err=>{
+      $('#errorPasswordModal').modal('show');
     })
 
   }
