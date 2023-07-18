@@ -231,16 +231,12 @@ public class ClaseConfiguracionJava {
 			categoriaService.save(categoria8);
 			
 			Categoria categoria9 = new Categoria();
-			categoria9.setCategoriaNombre("Entrevidas");
+			categoria9.setCategoriaNombre("Relaciones");
 			categoriaService.save(categoria9);
 			
 			Categoria categoria10 = new Categoria();
-			categoria10.setCategoriaNombre("Relaciones");
+			categoria10.setCategoriaNombre("Autocuidado");
 			categoriaService.save(categoria10);
-			
-			Categoria categoria11 = new Categoria();
-			categoria11.setCategoriaNombre("Autocuidado");
-			categoriaService.save(categoria11);
 		}
 		
 		if(tipoSuscripcionDAO.findAll().size()<1) {
