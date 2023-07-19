@@ -174,7 +174,7 @@ export class PublicacionFichaComponent implements OnInit {
         this.getPublicacion();
         this.descargarTxt();
         $('#enviadoModal').modal('show');
-        this.router.navigate(["/../../publicaciones/" + this.publicacion.titulo])
+        this.router.navigate(["/../../publicaciones/" + this.publicacion.url])
       });
     }
   }
@@ -426,11 +426,13 @@ export class PublicacionFichaComponent implements OnInit {
   
     return true;
   }
+
   generarUrl(titulo: string): string{
-    titulo = titulo.replaceAll("?", "closeQuestion");
-    titulo = titulo.replaceAll("!", "closeExclamation");
-    titulo = titulo.replaceAll(":", "doubleDot");
-    titulo = titulo.replaceAll("-", "dashSign");
+    titulo = titulo.replaceAll("¿", "-");
+    titulo = titulo.replaceAll("¡", "-");
+    titulo = titulo.replaceAll("?", "-");
+    titulo = titulo.replaceAll("!", "-");
+    titulo = titulo.replaceAll(":", "-");
     titulo = titulo.replaceAll(" ", "-");
     return titulo;
   }
