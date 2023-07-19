@@ -365,6 +365,7 @@
           <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
           <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
           <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
+          <p *ngIf="!tituloValido">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;, =, :, /, ?, #, [, ], %</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

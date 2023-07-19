@@ -21,6 +21,7 @@ export class Publicacion {
     lugar: Lugar = new Lugar();
     categoria: any;
     letraOscura: boolean = false;
+    url: string = "";
 
     constructor(){
 

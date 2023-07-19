@@ -61,8 +61,8 @@
           </div>
           <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
             <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
-              (click)="getPublicacionUrl(publicacionCarousel.titulo)">
-            <div class="carousel-caption" (click)="getPublicacionUrl(publicacionCarousel.titulo)">
+              (click)="irAPublicacion(publicacionCarousel)">
+            <div class="carousel-caption" (click)="irAPublicacion(publicacionCarousel)">
               <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-titulo">
                 <b>{{publicacionCarousel.titulo}}</b>
               </h5>

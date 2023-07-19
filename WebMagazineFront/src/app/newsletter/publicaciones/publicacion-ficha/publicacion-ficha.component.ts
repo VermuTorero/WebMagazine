@@ -71,6 +71,7 @@ export class PublicacionFichaComponent implements OnInit {
   palabrasDescripcion: number = 0;
 
   numeroLikes: string = "";
+  tituloValido: boolean = false; 
 
 
   constructor(
@@ -149,10 +150,15 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   postPublicacion() {
+    if (this.validarURL(this.publicacion.titulo)) {
+      this.tituloValido = true;
+    }else{
+      this.tituloValido = false;
+    }
     if (this.publicacion.titulo == "" || this.publicacion.autor.id == "" 
       || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "" 
       || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == "" 
-      || this.texto =="") {
+      || this.texto =="" || !this.validarURL(this.publicacion.titulo)) {
         $('#errorModal').modal('show');
     }
     else{
@@ -162,13 +168,13 @@ export class PublicacionFichaComponent implements OnInit {
         this.publicacion.tags.push(tag)
       });
       this.descargarTxt();
+      this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+      
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
         this.getPublicacion();
         this.descargarTxt();
         $('#enviadoModal').modal('show');
-        let url = "/../publicaciones/" + publicacion.titulo.replaceAll(" ", "-");
-        console.log("navegando a: " + url)
-        this.router.navigate([url])
+        this.router.navigate(["/../../publicaciones/" + this.publicacion.titulo])
       });
     }
   }
@@ -177,12 +183,11 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
+    this.publicacion.url = this.generarUrl(this.publicacion.titulo);
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.getPublicacion();
       this.descargarTxt();
-      let url = "/../../publicaciones/" + publicacionModicada.titulo.replaceAll(" ", "-");
-      console.log("navegando a: " + url)
-      this.router.navigate([url])
+      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url])
     })
   }
 
@@ -406,5 +411,27 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion.likesRecibidos = likes;
       this.numeroLikes = likes.length.toString();
     })
+  }
+  redireccionar(){
+    this.router.navigate(['/acerca-de/' + this.publicacion.url])
+  }
+  validarURL(titulo: string) {
+    var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
+  
+    for (var i = 0; i < caracteresReservados.length; i++) {
+      if (titulo.includes(caracteresReservados[i])) {
+        return false;
+      }
+    }
+  
+    return true;
+  }
+  generarUrl(titulo: string): string{
+    titulo = titulo.replaceAll("?", "closeQuestion");
+    titulo = titulo.replaceAll("!", "closeExclamation");
+    titulo = titulo.replaceAll(":", "doubleDot");
+    titulo = titulo.replaceAll("-", "dashSign");
+    titulo = titulo.replaceAll(" ", "-");
+    return titulo;
   }
 }

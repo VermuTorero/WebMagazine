@@ -59,6 +59,8 @@ public class Publicacion {
 	@ManyToOne
 	private Categoria categoria;
 	
+	private String url;
+	
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -221,5 +223,14 @@ public class Publicacion {
 	public void setLetraOscura(boolean letraOscura) {
 		this.letraOscura = letraOscura;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	
 }

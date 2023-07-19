@@ -115,3 +115,38 @@
         </div>
     </div>
 </div>
+
+  <!-- Modal Enviado-->
+  <div class="modal fade" id="enviadoPaginaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Publicación enviada.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="redireccionar()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- Modal Error Envio-->
+   <div class="modal fade" id="errorPaginaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Error al enviar</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>No se ha podido enviar. Revise su conexion a internet.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>

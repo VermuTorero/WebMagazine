@@ -100,10 +100,10 @@ public class PublicacionesController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
-	@GetMapping(path = "publicacionByTitulo/{titulo}")
+	@GetMapping(path = "publicacionByUrl/{url}")
 	@ResponseBody
-	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
-		Publicacion publicacion = getPublicacionesService().findByTitulo(titulo);
+	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
+		Publicacion publicacion = getPublicacionesService().findByUrl(url);
 		return assembler.toModel(publicacion);
 	}
 	

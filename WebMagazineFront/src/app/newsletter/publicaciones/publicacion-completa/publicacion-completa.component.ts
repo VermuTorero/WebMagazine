@@ -20,7 +20,7 @@ declare const twttr: any;
 export class PublicacionCompletaComponent implements OnInit {
 
   publicacion: Publicacion = new Publicacion();
-  titulo: string = "";
+  url: string = "";
   id: string = "";
   publicacionesCerca: Publicacion[] = [];
   publicacionesRelacionadas: Publicacion[] = [];
@@ -44,7 +44,7 @@ export class PublicacionCompletaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLateral();
-    this.getTitulo();
+    this.getUrl();
     this.rol = sessionStorage.getItem("rol");
     if (this.rol == "ROLE_ADMIN" ||this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacion();
@@ -54,14 +54,14 @@ export class PublicacionCompletaComponent implements OnInit {
     
   }
 
-  getTitulo(): void {
+  getUrl(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.titulo = params['titulo'].replaceAll("-", " ");
+      this.url = params['titulo'];
     })
   }
 
   getPublicacion(): void {
-    this.publicacionesService.getPublicacion(this.titulo).subscribe(publicacion => {
+    this.publicacionesService.getPublicacion(this.url).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
@@ -116,7 +116,7 @@ export class PublicacionCompletaComponent implements OnInit {
   }
 
   getPublicacionFree(){
-    this.publicacionesService.getPublicacionFree(this.titulo).subscribe(publicacion => {
+    this.publicacionesService.getPublicacionFree(this.url).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);

@@ -11,6 +11,6 @@ export class PublicacionComponent implements OnInit{
   tituloUrl: string = "";
  
   ngOnInit(): void {
-    this.tituloUrl = this.publicacion.titulo.replaceAll(" ", "-")
+
   }
 }

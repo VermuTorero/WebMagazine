@@ -3,7 +3,8 @@ import { CropperComponent } from 'angular-cropperjs';
 import { PaginaEditable } from '../../models/PaginaEditable';
 import { PaginaEditableService } from '../../service/paginaEditable.service';
 import { ImagenesService } from '../../service/imagenes.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router  } from '@angular/router';
+declare var $: any;
 
 @Component({
   selector: 'app-editor',
@@ -30,7 +31,8 @@ export class EditorComponent implements OnInit {
 
   constructor(private paginaEditableService: PaginaEditableService,
     private imagenesService: ImagenesService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -71,6 +73,7 @@ export class EditorComponent implements OnInit {
     this.paginaEditableService.postPaginaEditable(this.paginaEditable).subscribe(paginaEditable=>{
       paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
       this.paginaEditable = paginaEditable;
+      $('#enviadoPaginaModal').modal('show');
     })
   }
 
@@ -80,6 +83,10 @@ export class EditorComponent implements OnInit {
     this.paginaEditableService.patchPaginaEditable(this.paginaEditable).subscribe(paginaEditable=>{
       paginaEditable.id = this.paginaEditableService.getId(paginaEditable);
       this.paginaEditable = paginaEditable;
+      $('#enviadoPaginaModal').modal('show');
+    },
+    err=>{
+      $('#errorPaginaModal').modal('show');
     })
   }
 
@@ -140,5 +147,8 @@ export class EditorComponent implements OnInit {
         .getElementsByClassName('ql-editor')[0];
       quilEditor.setAttribute("style", "height: 700px")
     }, 500);
+  }
+  redireccionar(){
+    this.router.navigate(['/acerca-de/' + this.paginaEditable.nombrePagina.replaceAll(' ', '-')])
   }
 }

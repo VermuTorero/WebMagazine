@@ -77,4 +77,8 @@ public class PublicacionesService {
 		publicacionDAO.deleteById(id);
 	}
 
+	public Publicacion findByUrl(String url) {
+		return publicacionDAO.findByUrl(url);
+	}
+
 }

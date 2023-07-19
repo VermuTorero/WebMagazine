@@ -120,9 +120,8 @@ export class PublicacionesComponent implements OnInit {
     })
   }
 /* routing a una publicacion a partir de su titulo */
-  getPublicacionUrl(titulo: string){
-    let url = "/publicaciones/" + titulo.replaceAll(" ", "-")
-    this.router.navigate([url]);
+  irAPublicacion(publicacion: Publicacion){
+    this.router.navigate(["/publicaciones/"+ publicacion.url]);
   }
 
   getLateral(){
