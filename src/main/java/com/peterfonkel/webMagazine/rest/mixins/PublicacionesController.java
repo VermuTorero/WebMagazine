@@ -107,10 +107,10 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
-	@GetMapping(path = "publicacionByTituloFree/{titulo}")
+	@GetMapping(path = "publicacionByUrlFree/{url}")
 	@ResponseBody
-	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("titulo") String titulo) {
-		Publicacion publicacion = getPublicacionesService().findByTitulo(titulo);
+	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
+		Publicacion publicacion = getPublicacionesService().findByUrl(url);
 		if (publicacion.isPremium()) {
 			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
 		}
