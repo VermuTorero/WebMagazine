@@ -43,22 +43,27 @@ export class ChatComponent implements OnInit{
   }
 
   postMensaje(){
-    let mensaje = new Mensaje();
-    this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
-      usuario.id = this.usuarioService.getId(usuario);
-      mensaje.usuario = usuario;
-      mensaje.texto = this.mensajeNuevo;
-      mensaje.imagen = this.imagenNueva;
-      this.mensajeService.postMensaje(mensaje).subscribe(mensaje=>{
-        this.getMensajes();
-        this.mensajeNuevo = "";
-        this.bajarScroll();
-      },err=>{
-
-      }, ()=>{
-        
-      })
-    });
+    if (this.mensajeNuevo!="") {
+      let mensaje = new Mensaje();
+      this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+        usuario.id = this.usuarioService.getId(usuario);
+        mensaje.usuario = usuario;
+        mensaje.texto = this.mensajeNuevo;
+        mensaje.imagen = this.imagenNueva;
+        this.mensajeService.postMensaje(mensaje).subscribe(mensaje=>{
+          this.getMensajes();
+          this.mensajeNuevo = "";
+          this.bajarScroll();
+        },err=>{
+  
+        }, ()=>{
+          
+        })
+      });
+    }else{
+      
+    }
+   
   }
   
   onSelectFile(event: any) {

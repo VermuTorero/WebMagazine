@@ -47,9 +47,11 @@ public class MensajesController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER')")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getMensajes(PersistentEntityResourceAssembler assembler) {
-		List<Mensaje> mensajes = getMensajeService().findAll();
-		return assembler.toCollectionModel(mensajes);
+	    List<Mensaje> mensajes = getMensajeService().findAll();
+	    mensajes.sort(Comparator.comparing(Mensaje::getFecha)); // Ordenar por fecha de más antiguo a más moderno
+	    return assembler.toCollectionModel(mensajes);
 	}
+
 	
 	@PostMapping(path="postMensaje")
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER')")
