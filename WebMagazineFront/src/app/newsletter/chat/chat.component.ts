@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit{
       this.mensajes = mensajes;
       this.mensajes.forEach(mensaje => {
         mensaje.id = this.mensajeService.getId(mensaje);
-        
+        this.bajarScroll();
       });
     })
   }
@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit{
         this.mensajeService.postMensaje(mensaje).subscribe(mensaje=>{
           this.getMensajes();
           this.mensajeNuevo = "";
-          this.bajarScroll();
+       
         },err=>{
   
         }, ()=>{
@@ -100,16 +100,15 @@ export class ChatComponent implements OnInit{
     }, 'image/jpeg', 0.70)
   }
 
-  bajarScroll(){
-    window.addEventListener("load", function() {
+  bajarScroll() {
+    setTimeout(function() {
       var chatBox = document.querySelector(".chat-box");
       if (chatBox) {
         chatBox.scrollTop = chatBox.scrollHeight;
       }
-      
-    });
-    
+    }, 0);
   }
+  
 
   deleteMensaje(mensaje: any) {
     this.mensajeBorrar = mensaje;
