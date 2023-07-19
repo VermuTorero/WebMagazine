@@ -63,9 +63,17 @@ public class LikesController {
 		like = getLikesService().save(like);
 		Publicacion publicacion = getPublicacionesService().findById(idPublicacion).get();
 		Set<Like> likes =  publicacion.getLikesRecibidos();
-		likes.add(like);
-		publicacion.setLikesRecibidos(likes);
-		publicacionesService.save(publicacion);
+		boolean isRepetido = false;
+		for (Like like2 : likes) {
+			if (like2.getUsuario().getEmail().equals(like.getUsuario().getEmail())) {
+				isRepetido=true;
+			}
+		}
+		if (!isRepetido) {
+			likes.add(like);
+			publicacion.setLikesRecibidos(likes);
+			publicacionesService.save(publicacion);
+		}
 		return assembler.toModel(like);
 	}
 	
