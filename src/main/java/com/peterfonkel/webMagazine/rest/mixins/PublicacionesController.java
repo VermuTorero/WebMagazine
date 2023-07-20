@@ -169,7 +169,7 @@ public class PublicacionesController {
 
 	    // Filtrar las publicaciones con isPublicado en true y isPremium en false
 	    List<Publicacion> publicacionesRecientesFree = publicaciones.stream()
-	            .filter(publicacion -> publicacion.isPublicado() && !publicacion.isPremium())
+	            .filter(publicacion -> publicacion.isPublicado())
 	            .sorted(Comparator.comparing(Publicacion::getFechaPublicacion).reversed())
 	            .limit(12)
 	            .peek(publicacion -> {

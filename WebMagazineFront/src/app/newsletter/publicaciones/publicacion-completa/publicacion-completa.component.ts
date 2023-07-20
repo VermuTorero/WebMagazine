@@ -11,6 +11,7 @@ import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { LikesService } from '../../service/likes.service';
 import { Like } from '../../models/like';
 declare const twttr: any;
+declare var $: any;
 
 @Component({
   selector: 'app-publicacion-completa',
@@ -187,6 +188,10 @@ export class PublicacionCompletaComponent implements OnInit {
   }
 
   eliminarPublicacion(){
+    $('#eliminarPublicacionModal').modal('show');
+  }
+
+  eliminarPublicacionConfirmado(){
     this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response=>{
       this.router.navigate(['#'])
     });

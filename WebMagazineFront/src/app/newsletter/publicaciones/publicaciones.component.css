@@ -209,6 +209,7 @@ app-publicacion {
 @media (max-width: 40em) {
   .letra-blanca {
     font-size: 1em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .letra-negra {
@@ -277,8 +278,14 @@ app-publicacion {
   }
   .texto-titulo{
     font-size: medium;
+    
   }
-
+  .letra-blanca{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .letra-negra{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
   .boton-buscador{
     width: 20%;
   }
