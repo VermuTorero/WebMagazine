@@ -193,6 +193,20 @@ public class PublicacionesController {
 	    List<Publicacion> borradores = getPublicacionesService().findByIsPublicadoFalse();
 	    return assembler.toCollectionModel(borradores);
 	}
+	
+
+	@GetMapping(path = "borradores/{idUsuario}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getBorradores(
+	        PersistentEntityResourceAssembler assembler,
+	        @PathVariable("idUsuario") Long idUsuario) {
+
+	    // Obtener las publicaciones con publicado=false del usuario especificado por idUsuario
+	    List<Publicacion> borradores = getPublicacionesService().findByUsuarioIdAndIsPublicadoFalse(idUsuario);
+
+	    return assembler.toCollectionModel(borradores);
+	}
+
 
 
 //	@GetMapping(path = "publicacionesDestacadas")
@@ -364,7 +378,6 @@ public class PublicacionesController {
 //	    }
 //	    return assembler.toCollectionModel(publicacionesEncontradas);
 //	}
-	
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {

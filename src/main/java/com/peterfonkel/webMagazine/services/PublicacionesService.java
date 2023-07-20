@@ -117,4 +117,8 @@ public class PublicacionesService {
 		return publicacionDAO.findByTituloContainingIgnoreCaseAndPublicadoTrue(palabraNormalizada);
 	}
 
+	public List<Publicacion> findByUsuarioIdAndIsPublicadoFalse(Long idUsuario) {
+		return publicacionDAO.findByUsuarioIdAndIsPublicadoFalse(idUsuario);
+	}
+
 }
