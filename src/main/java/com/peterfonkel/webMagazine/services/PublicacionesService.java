@@ -102,7 +102,7 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion) {
-		return publicacionDAO.indByTags_TagNombreAndIdNotAndIsPublicadoTrue(tagNombre, idPublicacion);
+		return publicacionDAO.findByTags_TagNombreAndIdNotAndIsPublicadoTrue(tagNombre, idPublicacion);
 	}
 
 	public List<Publicacion> findByTags_TagNombreAndIsPublicadoTrue(String tagNombre) {

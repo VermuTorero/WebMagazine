@@ -30,7 +30,7 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByCarouselIsFalseAndIsPublicadoTrue();
 	List<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion);
 	List<Publicacion> findByCategoria_categoriaNombreAndIsPublicadoTrue(String categoriaNombre);
-	List<Publicacion> indByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion);
+	List<Publicacion> findByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion);
 	List<Publicacion> findByTags_TagNombreAndIsPublicadoTrue(String tagNombre);
 	List<Publicacion> findByLugar_LugarNombreAndIsPublicadoTrue(String lugarNombre);
 	List<Publicacion> findByTituloContainingIgnoreCaseAndIsPublicadoTrue(String palabraNormalizada);
