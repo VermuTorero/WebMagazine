@@ -177,18 +177,18 @@
     <div class="row text-center m-4">
         <div class="col-2"></div>
         <div class="col-4 text-center">
-            <button *ngIf="id" type="button" class="btn btn-success" (click)="publicarModificada()">
+            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
                 Publicar
             </button>
-            <button *ngIf="!id" type="button" class="btn btn-success" (click)="publicarNueva()">
+            <button *ngIf="publicacion.fechaPublicacion==''"  type="button" class="btn btn-success" (click)="publicarNueva()">
                 Publicar
             </button>
         </div>
         <div class="col-4 text-center">
-            <button *ngIf="id" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
-                Guardar borrador
+            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
+                Guardar como borrador (no publicado)
             </button>
-            <button *ngIf="!id" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
+            <button *ngIf="publicacion.fechaPublicacion==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
                 Guardar borrador
             </button>
         </div>

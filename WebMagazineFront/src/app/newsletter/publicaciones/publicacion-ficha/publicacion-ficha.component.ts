@@ -103,7 +103,11 @@ export class PublicacionFichaComponent implements OnInit {
       }
       this.ajustarEditor();
     })
-   
+   setInterval(()=>{
+    if (!this.publicacion.publicado) {
+      this.autoGuardado();
+    }
+   }, 300000)
   }
 
   ajustarEditor() {
@@ -153,19 +157,19 @@ export class PublicacionFichaComponent implements OnInit {
     this.htmlVideo = "";
   }
   publicarNueva(){
-    this.publicacion.isPublicado=true;
+    this.publicacion.publicado=true;
     this.postPublicacion();
   }
   publicarModificada(){
-    this.publicacion.isPublicado=true;
+    this.publicacion.publicado=true;
     this.patchPublicacion();
   }
   guardarBorradorNuevo(){
-    this.publicacion.isPublicado=false;
+    this.publicacion.publicado=false;
     this.postPublicacion();
   }
   guardarBorradorModificado(){
-    this.publicacion.isPublicado=false;
+    this.publicacion.publicado=false;
     this.patchPublicacion();
   }
 
@@ -199,6 +203,29 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
+  postPublicacionAutoguardado() {
+    if (this.validarURL(this.publicacion.titulo)) {
+      this.tituloValido = true;
+    } else {
+      this.tituloValido = false;
+    }
+    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
+      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
+      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
+    }
+    else {
+      this.publicacion.htmlPublicacion = this.texto;
+      this.publicacion.tags = [];
+      this.tagsSeleccionadas.forEach(tag => {
+        this.publicacion.tags.push(tag)
+      });
+      this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+      this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
+      });
+    }
+  }
+
   patchPublicacion() {
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
@@ -211,16 +238,19 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
+  patchPublicacionAutoguardado() {
+    this.publicacion.htmlPublicacion = this.texto;
+    this.publicacion.tags = [];
+    this.publicacion.tags = this.tagsSeleccionadas;
+    this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+    this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
+    })
+  }
+
   descargarTxt() {
-    let autores = JSON.stringify(this.autores);
-    let tags = JSON.stringify(this.tags);
     let publicacion = JSON.stringify(this.publicacion);
     var blob = new Blob([publicacion], { type: "text/plain;charset=utf-8" });
-    var blob2 = new Blob([tags], { type: "text/plain;charset=utf-8" });
-    var blob3 = new Blob([autores], { type: "text/plain;charset=utf-8" });
     saveAs(blob, this.publicacion.titulo + ".txt");
-    saveAs(blob2, "tags.txt");
-    saveAs(blob3, "autores.txt");
   }
 
   getTags(): void {
@@ -503,6 +533,13 @@ export class PublicacionFichaComponent implements OnInit {
       console.log(contador)
       const palabrasRepetidas = Object.keys(contador).filter((palabra) => contador[palabra] >= 3);
       this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
+    }
+  }
+  autoGuardado(){
+    if (this.publicacion.fechaPublicacion="") {
+      this.postPublicacionAutoguardado();
+    }else{
+      this.patchPublicacionAutoguardado();
     }
   }
 }
