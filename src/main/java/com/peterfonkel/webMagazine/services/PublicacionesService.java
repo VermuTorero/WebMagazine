@@ -90,7 +90,7 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findByCarouselIsFalseAndIsPublicadoTrue() {
-		return publicacionDAO.indByCarouselIsFalseAndIsPublicadoTrue();
+		return publicacionDAO.findByCarouselIsFalseAndIsPublicadoTrue();
 	}
 
 	public List<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion) {
