@@ -25,15 +25,15 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	Publicacion findByTitulo(String titulo);
 	List<Publicacion> findByTituloContainingIgnoreCase(String palabra);
 	Publicacion findByUrl(String url);
-	List<Publicacion> findByIsPublicadoFalse();
-	List<Publicacion> findByIsPublicadoTrue();
-	List<Publicacion> findByCarouselIsFalseAndIsPublicadoTrue();
-	List<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion);
-	List<Publicacion> findByCategoria_categoriaNombreAndIsPublicadoTrue(String categoriaNombre);
-	List<Publicacion> findByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion);
-	List<Publicacion> findByTags_TagNombreAndIsPublicadoTrue(String tagNombre);
-	List<Publicacion> findByLugar_LugarNombreAndIsPublicadoTrue(String lugarNombre);
-	List<Publicacion> findByTituloContainingIgnoreCaseAndIsPublicadoTrue(String palabraNormalizada);
+	List<Publicacion> findByPublicadoFalse();
+	List<Publicacion> findByPublicadoTrue();
+	List<Publicacion> findByCarouselIsFalseAndPublicadoTrue();
+	List<Publicacion> findByLugar_LugarNombreAndIdNotAndPublicadoTrue(String lugarNombre, Long idPublicacion);
+	List<Publicacion> findByCategoria_categoriaNombreAndPublicadoTrue(String categoriaNombre);
+	List<Publicacion> findByTags_TagNombreAndIdNotAndPublicadoTrue(String tagNombre, Long idPublicacion);
+	List<Publicacion> findByTags_TagNombreAndPublicadoTrue(String tagNombre);
+	List<Publicacion> findByLugar_LugarNombreAndPublicadoTrue(String lugarNombre);
+	List<Publicacion> findByTituloContainingIgnoreCaseAndPublicadoTrue(String palabraNormalizada);
 
 
 }

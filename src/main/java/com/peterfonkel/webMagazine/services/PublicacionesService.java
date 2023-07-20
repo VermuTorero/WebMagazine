@@ -82,39 +82,39 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findByIsPublicadoFalse() {
-		return publicacionDAO.findByIsPublicadoFalse();
+		return publicacionDAO.findByPublicadoFalse();
 	}
 
 	public List<Publicacion> findByIsPublicadoTrue() {
-		return publicacionDAO.findByIsPublicadoTrue();
+		return publicacionDAO.findByPublicadoTrue();
 	}
 
 	public List<Publicacion> findByCarouselIsFalseAndIsPublicadoTrue() {
-		return publicacionDAO.findByCarouselIsFalseAndIsPublicadoTrue();
+		return publicacionDAO.findByCarouselIsFalseAndPublicadoTrue();
 	}
 
 	public List<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion) {
-		return publicacionDAO.findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(lugarNombre, idPublicacion);
+		return publicacionDAO.findByLugar_LugarNombreAndIdNotAndPublicadoTrue(lugarNombre, idPublicacion);
 	}
 
 	public List<Publicacion> findByCategoria_categoriaNombreAndIsPublicadoTrue(String categoriaNombre) {
-		return publicacionDAO.findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
+		return publicacionDAO.findByCategoria_categoriaNombreAndPublicadoTrue(categoriaNombre);
 	}
 
 	public List<Publicacion> findByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion) {
-		return publicacionDAO.findByTags_TagNombreAndIdNotAndIsPublicadoTrue(tagNombre, idPublicacion);
+		return publicacionDAO.findByTags_TagNombreAndIdNotAndPublicadoTrue(tagNombre, idPublicacion);
 	}
 
 	public List<Publicacion> findByTags_TagNombreAndIsPublicadoTrue(String tagNombre) {
-		return publicacionDAO.findByTags_TagNombreAndIsPublicadoTrue(tagNombre);
+		return publicacionDAO.findByTags_TagNombreAndPublicadoTrue(tagNombre);
 	}
 
 	public List<Publicacion> findByLugar_LugarNombreAndIsPublicadoTrue(String lugarNombre) {
-		return publicacionDAO.findByLugar_LugarNombreAndIsPublicadoTrue(lugarNombre);
+		return publicacionDAO.findByLugar_LugarNombreAndPublicadoTrue(lugarNombre);
 	}
 
 	public List<Publicacion> findByTituloContainingIgnoreCaseAndIsPublicadoTrue(String palabraNormalizada) {
-		return publicacionDAO.findByTituloContainingIgnoreCaseAndIsPublicadoTrue(palabraNormalizada);
+		return publicacionDAO.findByTituloContainingIgnoreCaseAndPublicadoTrue(palabraNormalizada);
 	}
 
 }
