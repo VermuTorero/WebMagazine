@@ -118,7 +118,7 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findByUsuarioIdAndIsPublicadoFalse(Long idUsuario) {
-		return publicacionDAO.findByUsuarioIdAndIsPublicadoFalse(idUsuario);
+		return publicacionDAO.findByUsuarioIdAndPublicadoFalse(idUsuario);
 	}
 
 }

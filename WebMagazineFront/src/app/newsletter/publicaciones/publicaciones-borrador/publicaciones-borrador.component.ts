@@ -3,32 +3,35 @@ import { PublicacionesServiceService } from '../../service/publicaciones.service
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriasServiceService } from '../../service/categorias.service';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
 
 @Component({
-  selector: 'app-publicaciones-provincia',
-  templateUrl: './publicaciones-provincia.component.html',
-  styleUrls: ['./publicaciones-provincia.component.css']
+  selector: 'app-publicaciones-borrador',
+  templateUrl: './publicaciones-borrador.component.html',
+  styleUrls: ['./publicaciones-borrador.component.css']
 })
-export class PublicacionesProvinciaComponent implements OnInit{
+export class PublicacionesBorradorComponent implements OnInit{
   provincia: string = "";
   id: string = "";
   publicaciones: Publicacion[] = [];
+  idUsuario: string = "";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
     private activatedRoute: ActivatedRoute,
-    private categoriaService: CategoriasServiceService) { }
+    private categoriaService: CategoriasServiceService,
+    private usuarioService: UsuariosService) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      this.provincia = params['provincia'];
+    this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+      this.idUsuario = this.usuarioService.getId(usuario);
+      this.getBorradoresByUsuario();
     })
-    this.getPublicacionesByLugar();
   }
 
   getBorradoresByUsuario(){
-    this.publicacionesService.getPublicacionesByLugar(this.provincia).subscribe(publicacionesProvincia=>{
-      this.publicaciones = publicacionesProvincia;
+    this.publicacionesService.getBorradores(this.idUsuario).subscribe(borradores=>{
+      this.publicaciones = borradores;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
         this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
