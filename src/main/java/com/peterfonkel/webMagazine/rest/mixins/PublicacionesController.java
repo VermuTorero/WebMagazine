@@ -202,7 +202,7 @@ public class PublicacionesController {
 	        @PathVariable("idUsuario") Long idUsuario) {
 
 	    // Obtener las publicaciones con publicado=false del usuario especificado por idUsuario
-	    List<Publicacion> borradores = getPublicacionesService().findByUsuarioIdAndIsPublicadoFalse(idUsuario);
+	    List<Publicacion> borradores = getPublicacionesService().findByAutorIdAndIsPublicadoFalse(idUsuario);
 
 	    return assembler.toCollectionModel(borradores);
 	}
