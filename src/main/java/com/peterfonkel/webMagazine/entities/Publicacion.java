@@ -237,9 +237,6 @@ public class Publicacion {
 		return publicado;
 	}
 	
-	public boolean getPublicado() {
-		return publicado;
-	}
 
 	public void setPublicado(boolean publicado) {
 		this.publicado = publicado;
