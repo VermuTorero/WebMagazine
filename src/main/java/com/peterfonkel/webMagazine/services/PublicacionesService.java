@@ -81,4 +81,40 @@ public class PublicacionesService {
 		return publicacionDAO.findByUrl(url);
 	}
 
+	public List<Publicacion> findByIsPublicadoFalse() {
+		return publicacionDAO.findByIsPublicadoFalse();
+	}
+
+	public List<Publicacion> findByIsPublicadoTrue() {
+		return publicacionDAO.findByIsPublicadoTrue();
+	}
+
+	public List<Publicacion> findByCarouselIsFalseAndIsPublicadoTrue() {
+		return publicacionDAO.indByCarouselIsFalseAndIsPublicadoTrue();
+	}
+
+	public List<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion) {
+		return publicacionDAO.findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(lugarNombre, idPublicacion);
+	}
+
+	public List<Publicacion> findByCategoria_categoriaNombreAndIsPublicadoTrue(String categoriaNombre) {
+		return publicacionDAO.findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
+	}
+
+	public List<Publicacion> findByTags_TagNombreAndIdNotAndIsPublicadoTrue(String tagNombre, Long idPublicacion) {
+		return publicacionDAO.indByTags_TagNombreAndIdNotAndIsPublicadoTrue(tagNombre, idPublicacion);
+	}
+
+	public List<Publicacion> findByTags_TagNombreAndIsPublicadoTrue(String tagNombre) {
+		return publicacionDAO.findByTags_TagNombreAndIsPublicadoTrue(tagNombre);
+	}
+
+	public List<Publicacion> findByLugar_LugarNombreAndIsPublicadoTrue(String lugarNombre) {
+		return publicacionDAO.findByLugar_LugarNombreAndIsPublicadoTrue(lugarNombre);
+	}
+
+	public List<Publicacion> findByTituloContainingIgnoreCaseAndIsPublicadoTrue(String palabraNormalizada) {
+		return publicacionDAO.findByTituloContainingIgnoreCaseAndIsPublicadoTrue(palabraNormalizada);
+	}
+
 }

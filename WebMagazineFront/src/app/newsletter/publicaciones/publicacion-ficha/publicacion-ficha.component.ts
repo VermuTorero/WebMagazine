@@ -71,7 +71,10 @@ export class PublicacionFichaComponent implements OnInit {
   palabrasDescripcion: number = 0;
 
   numeroLikes: string = "";
-  tituloValido: boolean = false; 
+  tituloValido: boolean = false;
+  palabrasRepetidasTitulo: string | null= "";
+
+
 
 
   constructor(
@@ -100,6 +103,7 @@ export class PublicacionFichaComponent implements OnInit {
       }
       this.ajustarEditor();
     })
+   
   }
 
   ajustarEditor() {
@@ -133,7 +137,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.texto = this.publicacion.htmlPublicacion;
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="560" height="315"', 'width="90%" height="auto"');
       /* quill.insertText(10, this.publicacion.htmlPublicacion); */
-      
+      this.analizarTitulo();
     })
   }
 
@@ -148,20 +152,36 @@ export class PublicacionFichaComponent implements OnInit {
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
+  publicarNueva(){
+    this.publicacion.isPublicado=true;
+    this.postPublicacion();
+  }
+  publicarModificada(){
+    this.publicacion.isPublicado=true;
+    this.patchPublicacion();
+  }
+  guardarBorradorNuevo(){
+    this.publicacion.isPublicado=false;
+    this.postPublicacion();
+  }
+  guardarBorradorModificado(){
+    this.publicacion.isPublicado=false;
+    this.patchPublicacion();
+  }
 
   postPublicacion() {
     if (this.validarURL(this.publicacion.titulo)) {
       this.tituloValido = true;
-    }else{
+    } else {
       this.tituloValido = false;
     }
-    if (this.publicacion.titulo == "" || this.publicacion.autor.id == "" 
-      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "" 
-      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == "" 
-      || this.texto =="" || !this.validarURL(this.publicacion.titulo)) {
-        $('#errorModal').modal('show');
+    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
+      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
+      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
+      $('#errorModal').modal('show');
     }
-    else{
+    else {
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -169,7 +189,7 @@ export class PublicacionFichaComponent implements OnInit {
       });
       this.descargarTxt();
       this.publicacion.url = this.generarUrl(this.publicacion.titulo);
-      
+
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
         this.getPublicacion();
         this.descargarTxt();
@@ -187,7 +207,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.getPublicacion();
       this.descargarTxt();
-      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url])
+      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url]);
     })
   }
 
@@ -254,7 +274,6 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
-
   getAutores(): void {
     this.usuariosService.getAutores().subscribe(autores => {
       console.log(autores)
@@ -274,8 +293,6 @@ export class PublicacionFichaComponent implements OnInit {
 
     })
   }
-
-  
 
   getCategorias() {
     this.categoriasService.getCategorias().subscribe(categorias => {
@@ -335,6 +352,7 @@ export class PublicacionFichaComponent implements OnInit {
     }
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
+
   onSelectFilePreview(event: any) {
 
     if (event.target.files && event.target.files[0]) {
@@ -394,46 +412,97 @@ export class PublicacionFichaComponent implements OnInit {
     this.imagePreviewUrl = urlImagen;
   }
 
-  contarPalabrasTitulo(){
+  contarPalabrasTitulo() {
     let arrayPalabras = this.publicacion.titulo.split(' ');
-    this.palabrasTitulo = arrayPalabras.length - 1;
+    this.palabrasTitulo = arrayPalabras.length;
   }
 
-  contarPalabrasDescripcion(){
+  contarPalabrasDescripcion() {
     let arrayPalabras = this.publicacion.subtitulo.split(' ');
-    this.palabrasDescripcion = arrayPalabras.length -1 ;
+    this.palabrasDescripcion = arrayPalabras.length - 1;
   }
-  getLikes(publicacion: Publicacion){
-    this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+  getLikes(publicacion: Publicacion) {
+    this.likeService.getLikes(publicacion.id).subscribe(likes => {
       likes.forEach(like => {
-        like.id =  this.likeService.getId(like);
+        like.id = this.likeService.getId(like);
       });
       this.publicacion.likesRecibidos = likes;
       this.numeroLikes = likes.length.toString();
     })
   }
-  redireccionar(){
+
+  redireccionar() {
     this.router.navigate(['/acerca-de/' + this.publicacion.url])
   }
+  
   validarURL(titulo: string) {
     var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
-  
+
     for (var i = 0; i < caracteresReservados.length; i++) {
       if (titulo.includes(caracteresReservados[i])) {
         return false;
       }
     }
-  
+
     return true;
   }
 
-  generarUrl(titulo: string): string{
-    titulo = titulo.replaceAll("¿", "-");
-    titulo = titulo.replaceAll("¡", "-");
-    titulo = titulo.replaceAll("?", "-");
-    titulo = titulo.replaceAll("!", "-");
-    titulo = titulo.replaceAll(":", "-");
-    titulo = titulo.replaceAll(" ", "-");
-    return titulo;
+  /*   generarUrl(titulo: string): string{
+      titulo = titulo.replaceAll("¿", "-");
+      titulo = titulo.replaceAll("¡", "-");
+      titulo = titulo.replaceAll("?", "-");
+      titulo = titulo.replaceAll("!", "-");
+      titulo = titulo.replaceAll(":", "-");
+      titulo = titulo.replaceAll(" ", "-");
+      return titulo;
+    } */
+
+  generarUrl(titulo: string) {
+   // Lista de stopwords en español (puedes agregar más según tus necesidades)
+  const stopwords = [
+    'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
+    'en', 'entre', 'hacia', 'hasta', 'ni', 'la', 'las', 'lo', 'los',
+    'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
+    'unos', 'y', 'e', 'o', 'u', 'y/o'
+  ];
+
+  // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
+  let urlOptimizada = titulo.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s]/g, '')
+    .replace(/\s+/g, '-');
+
+  // Separamos las palabras del título
+  const palabras = urlOptimizada.split('-');
+
+  // Filtramos las palabras que no son stopwords y eliminamos palabras duplicadas
+  const palabrasFiltradas = palabras.filter((palabra, index) => !stopwords.includes(palabra) && palabras.indexOf(palabra) === index);
+
+  // Unimos las palabras filtradas en un único string separado por guiones
+  urlOptimizada = palabrasFiltradas.join('-');
+
+  return urlOptimizada;
+  }
+
+  analizarTitulo() {
+    this.contarPalabrasTitulo();
+    this.analizarPalabrasRepetidas();
+  }
+
+  analizarPalabrasRepetidas() {
+    const normalizedTitle = this.publicacion.titulo.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const palabras = normalizedTitle.toLowerCase().match(/\b\w+\b/g);
+    const contador: any = {};
+    if (palabras) {
+      palabras.forEach((palabra) => {
+        if (palabra.length > 3) {
+          contador[palabra] = (contador[palabra] || 0) + 1;
+        }
+      });
+      console.log(contador)
+      const palabrasRepetidas = Object.keys(contador).filter((palabra) => contador[palabra] >= 3);
+      this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
+    }
   }
 }

@@ -5,9 +5,16 @@
         <!-- Titulo -->
         <div class="row m-3 titulo justify-content-center">
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="100" (keyup)="contarPalabrasTitulo()"></textarea>
-                <p class="row recomendacion-titulo">Recomendado entre 10 y 15 palabras. Llevas: {{palabrasTitulo}}</p>
-        </div>
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130" (keyup)="analizarTitulo()"></textarea>
+                <div class="recomendaciones">
+                    <p class="titulo-recomendaciones"><b>Recomendaciones en título</b></p>
+                    <p class="recomendacion-titulo">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
+                        <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
+                        <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
+                    </p>
+                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion-titulo">- Las siguientes palabras se repiten mucho: {{palabrasRepetidasTitulo}}  ❓</p>
+                </div>
+      </div>
 
         <!-- Datos -->
         <div class="row">
@@ -168,13 +175,24 @@
 
     <!-- Boton Publicar -->
     <div class="row text-center m-4">
-        <div class="col-4"></div>
-        <button *ngIf="id" type="button" class="btn btn-warning col-4" (click)="patchPublicacion()">
-            Modificar
-        </button>
-        <button *ngIf="!id" type="button" class="btn btn-warning col-4" (click)="postPublicacion()">
-            Publicar
-        </button>
+        <div class="col-2"></div>
+        <div class="col-4 text-center">
+            <button *ngIf="id" type="button" class="btn btn-success" (click)="publicarModificada()">
+                Publicar
+            </button>
+            <button *ngIf="!id" type="button" class="btn btn-success" (click)="publicarNueva()">
+                Publicar
+            </button>
+        </div>
+        <div class="col-4 text-center">
+            <button *ngIf="id" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
+                Guardar borrador
+            </button>
+            <button *ngIf="!id" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
+                Guardar borrador
+            </button>
+        </div>
+     
     </div>
 
 </body>

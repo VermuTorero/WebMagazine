@@ -248,6 +248,14 @@
         border-color: black;
         padding: 0;
     }
+    .recomendaciones{
+        background-color: rgb(229, 225, 225);
+        margin-left: 0%;
+        margin-top: 1%;
+        width: 80%;
+        border-style: solid;
+        border-width: 1px;
+    }
   
 }
 
@@ -283,4 +291,19 @@
     .datos{
         margin-left: 6%;
     }
+    .recomendaciones{
+        background-color: rgb(229, 225, 225);
+        margin-left: 0%;
+        margin-top: 2%;
+        width: 60%;
+        border-style: solid;
+        border-width: 1px;
+    }
+
+}
+.titulo-recomendaciones{
+    margin-bottom: 0%;
+}
+.recomendacion-titulo{
+    margin-bottom: 0%;
 }
