@@ -59,6 +59,7 @@ import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-bo
     MensajeComponent,
     PublicacionesBorradorComponent
   ],
+  
   imports: [
     CommonModule,
     NewsletterRoutingModule,
