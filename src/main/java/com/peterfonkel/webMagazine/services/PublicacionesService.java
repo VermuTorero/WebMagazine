@@ -122,7 +122,7 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findByIsPublicadoTrueAndIsDestacadoTrue() {
-		return publicacionDAO.findByIsPublicadoTrueAndDestacadoTrue();
+		return publicacionDAO.findByPublicadoTrueAndDestacadoTrue();
 	}
 
 }
