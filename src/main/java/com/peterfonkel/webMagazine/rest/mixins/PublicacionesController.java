@@ -117,38 +117,111 @@ public class PublicacionesController {
 		return assembler.toModel(publicacion);
 	}
 	
+//	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
+//	@GetMapping(path = "publicacionesRecientes")
+//	@ResponseBody
+//	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
+//		List<Publicacion> publicaciones = getPublicacionesService().findAll();
+//		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
+//		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+//		return assembler.toCollectionModel(publicacionesRecientes);
+//	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
 	@GetMapping(path = "publicacionesRecientes")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones = getPublicacionesService().findAll();
-		publicaciones.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
-		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
-		return assembler.toCollectionModel(publicacionesRecientes);
+	    List<Publicacion> publicaciones = getPublicacionesService().findAll();
+
+	    // Filtrar las publicaciones con isPublicado en true
+	    List<Publicacion> publicacionesPublicadas = publicaciones.stream()
+	            .filter(Publicacion::isPublicado)
+	            .collect(Collectors.toList());
+
+	    // Ordenar las publicaciones por fecha de publicación de manera descendente
+	    publicacionesPublicadas.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
+
+	    // Obtener las 12 más recientes (o menos si hay menos de 12)
+	    List<Publicacion> publicacionesRecientes = publicacionesPublicadas.subList(0, Math.min(publicacionesPublicadas.size(), 12));
+
+	    return assembler.toCollectionModel(publicacionesRecientes);
 	}
 	
 
+//	@GetMapping(path = "publicacionesRecientesFree")
+//	@ResponseBody
+//	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(PersistentEntityResourceAssembler assembler) {
+//		List<Publicacion> publicaciones= getPublicacionesService().findAll();
+//		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+//		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
+//		for (Publicacion publicacion : publicacionesRecientes) {
+//			if (publicacion.isPremium()) {
+//				publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
+//			}
+//		}
+//		return assembler.toCollectionModel(publicacionesRecientes);
+//	}
+	
 	@GetMapping(path = "publicacionesRecientesFree")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> publicaciones= getPublicacionesService().findAll();
-		Collections.sort(publicaciones, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
-		List<Publicacion> publicacionesRecientes = publicaciones.subList(0, Math.min(publicaciones.size(), 12));
-		for (Publicacion publicacion : publicacionesRecientes) {
-			if (publicacion.isPremium()) {
-				publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0]);
-			}
-		}
-		return assembler.toCollectionModel(publicacionesRecientes);
+	    List<Publicacion> publicaciones = getPublicacionesService().findAll();
+
+	    // Filtrar las publicaciones con isPublicado en true y isPremium en false
+	    List<Publicacion> publicacionesRecientesFree = publicaciones.stream()
+	            .filter(publicacion -> publicacion.isPublicado())
+	            .sorted(Comparator.comparing(Publicacion::getFechaPublicacion).reversed())
+	            .limit(12)
+	            .peek(publicacion -> {
+	                if (publicacion.isPremium()) {
+	                    // Si es premium, truncamos el htmlPublicacion para que solo tenga el primer párrafo
+	                    String htmlPublicacion = publicacion.getHtmlPublicacion();
+	                    int indexOfParagraphEnd = htmlPublicacion.indexOf("</p>");
+	                    if (indexOfParagraphEnd != -1) {
+	                        publicacion.setHtmlPublicacion(htmlPublicacion.substring(0, indexOfParagraphEnd + 4));
+	                    }
+	                }
+	            })
+	            .collect(Collectors.toList());
+
+	    return assembler.toCollectionModel(publicacionesRecientesFree);
+	}
+	
+	@GetMapping(path = "borradores")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getBorradores(PersistentEntityResourceAssembler assembler) {
+	    List<Publicacion> borradores = getPublicacionesService().findByIsPublicadoFalse();
+	    return assembler.toCollectionModel(borradores);
 	}
 	
 
+	@GetMapping(path = "borradores/{idUsuario}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getBorradores(
+	        PersistentEntityResourceAssembler assembler,
+	        @PathVariable("idUsuario") Long idUsuario) {
+
+	    // Obtener las publicaciones con publicado=false del usuario especificado por idUsuario
+	    List<Publicacion> borradores = getPublicacionesService().findByAutorIdAndIsPublicadoFalse(idUsuario);
+
+	    return assembler.toCollectionModel(borradores);
+	}
+
+
+
+//	@GetMapping(path = "publicacionesDestacadas")
+//	@ResponseBody
+//	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(PersistentEntityResourceAssembler assembler) {
+//		List<Publicacion> listadoPublicacionesDestacadas = getPublicacionesService().findByDestacadoIsTrue();
+//		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
+//	}
 	@GetMapping(path = "publicacionesDestacadas")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesDestacadas = getPublicacionesService().findByDestacadoIsTrue();
-		return assembler.toCollectionModel(listadoPublicacionesDestacadas);
+	    List<Publicacion> publicacionesDestacadas = getPublicacionesService().findByIsPublicadoTrue();
+	    return assembler.toCollectionModel(publicacionesDestacadas);
 	}
+
 	
 	
 	@GetMapping(path = "publicacionesCarousel")
@@ -163,45 +236,46 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesNoCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesNoCarousel(PersistentEntityResourceAssembler assembler) {
-		List<Publicacion> listadoPublicacionesNoCarousel = getPublicacionesService().findByCarouselIsFalse();
-		Collections.sort(listadoPublicacionesNoCarousel, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
-		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
+	    List<Publicacion> listadoPublicacionesNoCarousel = getPublicacionesService().findByCarouselIsFalseAndIsPublicadoTrue();
+	    Collections.sort(listadoPublicacionesNoCarousel, Comparator.comparing(Publicacion::getFechaPublicacion).reversed());
+	    return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
-	
 	
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
-			@PathVariable("lugarNombre") String lugarNombre, @PathVariable("idPublicacion") Long idPublicacion) {
-		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
-		listadoPublicacionesCerca = getPublicacionesService().findByLugar_LugarNombreAndIdNot(lugarNombre,idPublicacion);
-		return assembler.toCollectionModel(listadoPublicacionesCerca);
+	        @PathVariable("lugarNombre") String lugarNombre, @PathVariable("idPublicacion") Long idPublicacion) {
+	    List<Publicacion> listadoPublicacionesCerca = new ArrayList<>();
+	    listadoPublicacionesCerca = getPublicacionesService().findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(lugarNombre, idPublicacion);
+	    return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
+
 	
 	@GetMapping(path = "publicacionesCategoria/{categoriaNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoria(PersistentEntityResourceAssembler assembler,
-			@PathVariable("categoriaNombre") String lugarNombre, @PathVariable("categoriaNombre") String categoriaNombre) {
-		List<Publicacion>listadoPublicacionesCerca = new ArrayList<>();
-		listadoPublicacionesCerca = getPublicacionesService().findByCategoria_categoriaNombre(categoriaNombre);
-		return assembler.toCollectionModel(listadoPublicacionesCerca);
+	        @PathVariable("categoriaNombre") String lugarNombre, @PathVariable("categoriaNombre") String categoriaNombre) {
+	    List<Publicacion> listadoPublicacionesCerca = new ArrayList<>();
+	    listadoPublicacionesCerca = getPublicacionesService().findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
+	    return assembler.toCollectionModel(listadoPublicacionesCerca);
 	}
+
 
 	
 	@GetMapping(path = "publicacionesRelacionadas/{idPublicacion}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler,@PathVariable("idPublicacion") Long idPublicacion) {
-		Publicacion publicacionRelacionada = getPublicacionesService().findById(idPublicacion).get();
-		Set<Publicacion> publicacionesCoincidentesTag = new HashSet();
-		for (Tag tag : publicacionRelacionada.getTags()) {
-			List<Publicacion> publicacionesTag = getPublicacionesService().findByTags_TagNombreAndIdNot(tag.getTagNombre(), idPublicacion);
-			publicacionesCoincidentesTag.addAll(publicacionesTag);
-		}
-		this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada);
-		
-		return assembler.toCollectionModel(this.eliminarElementosExceptoPrimeros3(this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada)));
-		
+	public CollectionModel<PersistentEntityResource> getPublicacionesRelacionadas(PersistentEntityResourceAssembler assembler, @PathVariable("idPublicacion") Long idPublicacion) {
+	    Publicacion publicacionRelacionada = getPublicacionesService().findById(idPublicacion).get();
+	    Set<Publicacion> publicacionesCoincidentesTag = new HashSet<>();
+	    for (Tag tag : publicacionRelacionada.getTags()) {
+	        List<Publicacion> publicacionesTag = getPublicacionesService().findByTags_TagNombreAndIdNotAndIsPublicadoTrue(tag.getTagNombre(), idPublicacion);
+	        publicacionesCoincidentesTag.addAll(publicacionesTag);
+	    }
+	    this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada);
+
+	    return assembler.toCollectionModel(this.eliminarElementosExceptoPrimeros3(this.ordenarPublicacionesPorCoincidencia(publicacionesCoincidentesTag, publicacionRelacionada)));
 	}
+
 	
 	public Set<Publicacion> ordenarPublicacionesPorCoincidencia(Set<Publicacion> conjunto, Publicacion publicacionEntrada) {
 	    List<Tag> tagsEntrada = publicacionEntrada.getTags();
@@ -241,17 +315,19 @@ public class PublicacionesController {
 	
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,@PathVariable("tagNombre") String tagNombre) {
-		List<Publicacion> listadoPublicacionesTag = getPublicacionesService().findByTags_TagNombre(tagNombre);
-		return assembler.toCollectionModel(listadoPublicacionesTag);
+	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler, @PathVariable("tagNombre") String tagNombre) {
+	    List<Publicacion> listadoPublicacionesTag = getPublicacionesService().findByTags_TagNombreAndIsPublicadoTrue(tagNombre);
+	    return assembler.toCollectionModel(listadoPublicacionesTag);
 	}
+
 	
 	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
 	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler,@PathVariable("lugarNombre") String lugarNombre) {	
-		List<Publicacion> listadoPublicacionesLugar = getPublicacionesService().findByLugar_LugarNombre(lugarNombre);
-		return assembler.toCollectionModel(listadoPublicacionesLugar);
+	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(PersistentEntityResourceAssembler assembler, @PathVariable("lugarNombre") String lugarNombre) {
+	    List<Publicacion> listadoPublicacionesLugar = getPublicacionesService().findByLugar_LugarNombreAndIsPublicadoTrue(lugarNombre);
+	    return assembler.toCollectionModel(listadoPublicacionesLugar);
 	}
+
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@PostMapping(path = "postPublicacion")
@@ -282,26 +358,59 @@ public class PublicacionesController {
 		publicacion.setCategoria(categoria);
 		publicacion.setTags(tagsRecibidas);
 		publicacion.setAutor(autor);
+		publicacion.setFechaPublicacion(Instant.now());
 		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
 	}
 	
 
+//	@GetMapping(path = "buscar-publicaciones")
+//	@ResponseBody
+//	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
+//	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
+//	    for (String palabra : palabrasClave) {
+//	    	if (palabra.length()>3) {
+//	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
+//	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
+//	    		            .toLowerCase(); // Convertimos a min�sculas
+//	    		List<Publicacion> publicacionesPorPalabra = getPublicacionesService().findByTituloContainingIgnoreCase(palabraNormalizada);
+//		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
+//			}
+//	    }
+//	    return assembler.toCollectionModel(publicacionesEncontradas);
+//	}
 	@GetMapping(path = "buscar-publicaciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(PersistentEntityResourceAssembler assembler, @RequestParam("palabrasClave") String[] palabrasClave) {
-	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
+	    Set<String> palabrasClaveFiltradas = new HashSet<>();
+	    
+	    // Filtrar palabras clave para eliminar stopwords y palabras cortas
 	    for (String palabra : palabrasClave) {
-	    	if (palabra.length()>3) {
-	    		 String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
-	    		            .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
-	    		            .toLowerCase(); // Convertimos a min�sculas
-	    		List<Publicacion> publicacionesPorPalabra = getPublicacionesService().findByTituloContainingIgnoreCase(palabraNormalizada);
-		        publicacionesEncontradas.addAll(publicacionesPorPalabra);
-			}
+	        if (palabra.length() > 3 && !esStopword(palabra)) {
+	            palabrasClaveFiltradas.add(palabra);
+	        }
 	    }
+
+	    Set<Publicacion> publicacionesEncontradas = new HashSet<>();
+	    for (String palabra : palabrasClaveFiltradas) {
+	        String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
+	                .replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
+	                .toLowerCase(); // Convertimos a minúsculas
+
+	        List<Publicacion> publicacionesPorPalabra = getPublicacionesService().findByTituloContainingIgnoreCaseAndIsPublicadoTrue(palabraNormalizada);
+	        publicacionesEncontradas.addAll(publicacionesPorPalabra);
+	    }
+	    
 	    return assembler.toCollectionModel(publicacionesEncontradas);
 	}
+
+	private boolean esStopword(String palabra) {
+	    // Implementar aquí la lógica para determinar si la palabra es una stopword
+	    // Por ejemplo, puedes tener una lista de stopwords predefinida y verificar si la palabra está en esa lista.
+	    // También puedes utilizar librerías o servicios externos para realizar esta verificación.
+	    return false;
+	}
+
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(path = "deletePublicacion/{id}")

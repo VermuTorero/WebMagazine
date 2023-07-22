@@ -61,6 +61,7 @@ public class Publicacion {
 	
 	private String url;
 	
+	private boolean publicado;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id")
@@ -231,6 +232,17 @@ public class Publicacion {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public boolean isPublicado() {
+		return publicado;
+	}
+	
+
+	public void setPublicado(boolean publicado) {
+		this.publicado = publicado;
+	}
+
+
 	
 	
 }

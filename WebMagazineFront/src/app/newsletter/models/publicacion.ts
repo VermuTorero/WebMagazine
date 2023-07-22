@@ -22,6 +22,7 @@ export class Publicacion {
     categoria: any;
     letraOscura: boolean = false;
     url: string = "";
+    publicado: boolean = false;
 
     constructor(){
 

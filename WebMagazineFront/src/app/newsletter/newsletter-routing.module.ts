@@ -18,6 +18,7 @@ import { SuscripcionFichaComponent } from './suscripcion/suscripcion-ficha/suscr
 import { VerificacionPagoComponent } from './suscripcion/verificacion-pago/verificacion-pago.component';
 import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/renovar-suscripcion.component';
 import { ChatComponent } from './chat/chat.component';
+import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-borrador/publicaciones-borrador.component';
 
 
 const routes: Routes = [
@@ -173,6 +174,15 @@ const routes: Routes = [
       {
         path: `chat`,
         component: ChatComponent,
+      }
+    ],
+  },
+  {
+    path: ``,
+    children: [
+      {
+        path: `borradores`,
+        component: PublicacionesBorradorComponent,
       }
     ],
   }

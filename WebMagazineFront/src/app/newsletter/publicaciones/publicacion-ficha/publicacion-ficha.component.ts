@@ -71,7 +71,13 @@ export class PublicacionFichaComponent implements OnInit {
   palabrasDescripcion: number = 0;
 
   numeroLikes: string = "";
-  tituloValido: boolean = false; 
+  tituloValido: boolean = false;
+  palabrasRepetidasTitulo: string | null = "";
+
+  htmlWordPress: string = "";
+  htmlVermuTorero: string = "";
+
+
 
 
   constructor(
@@ -100,6 +106,11 @@ export class PublicacionFichaComponent implements OnInit {
       }
       this.ajustarEditor();
     })
+    setInterval(() => {
+      if (!this.publicacion.publicado) {
+        this.autoGuardado();
+      }
+    }, 300000)
   }
 
   ajustarEditor() {
@@ -133,7 +144,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.texto = this.publicacion.htmlPublicacion;
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="560" height="315"', 'width="90%" height="auto"');
       /* quill.insertText(10, this.publicacion.htmlPublicacion); */
-      
+      this.analizarTitulo();
     })
   }
 
@@ -148,20 +159,36 @@ export class PublicacionFichaComponent implements OnInit {
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
+  publicarNueva() {
+    this.publicacion.publicado = true;
+    this.postPublicacion();
+  }
+  publicarModificada() {
+    this.publicacion.publicado = true;
+    this.patchPublicacion();
+  }
+  guardarBorradorNuevo() {
+    this.publicacion.publicado = false;
+    this.postPublicacion();
+  }
+  guardarBorradorModificado() {
+    this.publicacion.publicado = false;
+    this.patchPublicacion();
+  }
 
   postPublicacion() {
     if (this.validarURL(this.publicacion.titulo)) {
       this.tituloValido = true;
-    }else{
+    } else {
       this.tituloValido = false;
     }
-    if (this.publicacion.titulo == "" || this.publicacion.autor.id == "" 
-      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == "" 
-      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == "" 
-      || this.texto =="" || !this.validarURL(this.publicacion.titulo)) {
-        $('#errorModal').modal('show');
+    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
+      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
+      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
+      $('#errorModal').modal('show');
     }
-    else{
+    else {
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -169,12 +196,35 @@ export class PublicacionFichaComponent implements OnInit {
       });
       this.descargarTxt();
       this.publicacion.url = this.generarUrl(this.publicacion.titulo);
-      
+
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
         this.getPublicacion();
         this.descargarTxt();
         $('#enviadoModal').modal('show');
         this.router.navigate(["/../../publicaciones/" + this.publicacion.url])
+      });
+    }
+  }
+
+  postPublicacionAutoguardado() {
+    if (this.validarURL(this.publicacion.titulo)) {
+      this.tituloValido = true;
+    } else {
+      this.tituloValido = false;
+    }
+    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
+      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
+      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
+      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
+    }
+    else {
+      this.publicacion.htmlPublicacion = this.texto;
+      this.publicacion.tags = [];
+      this.tagsSeleccionadas.forEach(tag => {
+        this.publicacion.tags.push(tag)
+      });
+      this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+      this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
       });
     }
   }
@@ -187,20 +237,23 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
       this.getPublicacion();
       this.descargarTxt();
-      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url])
+      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url]);
+    })
+  }
+
+  patchPublicacionAutoguardado() {
+    this.publicacion.htmlPublicacion = this.texto;
+    this.publicacion.tags = [];
+    this.publicacion.tags = this.tagsSeleccionadas;
+    this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+    this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
     })
   }
 
   descargarTxt() {
-    let autores = JSON.stringify(this.autores);
-    let tags = JSON.stringify(this.tags);
     let publicacion = JSON.stringify(this.publicacion);
     var blob = new Blob([publicacion], { type: "text/plain;charset=utf-8" });
-    var blob2 = new Blob([tags], { type: "text/plain;charset=utf-8" });
-    var blob3 = new Blob([autores], { type: "text/plain;charset=utf-8" });
     saveAs(blob, this.publicacion.titulo + ".txt");
-    saveAs(blob2, "tags.txt");
-    saveAs(blob3, "autores.txt");
   }
 
   getTags(): void {
@@ -254,7 +307,6 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
-
   getAutores(): void {
     this.usuariosService.getAutores().subscribe(autores => {
       console.log(autores)
@@ -274,8 +326,6 @@ export class PublicacionFichaComponent implements OnInit {
 
     })
   }
-
-  
 
   getCategorias() {
     this.categoriasService.getCategorias().subscribe(categorias => {
@@ -335,6 +385,7 @@ export class PublicacionFichaComponent implements OnInit {
     }
     console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
+
   onSelectFilePreview(event: any) {
 
     if (event.target.files && event.target.files[0]) {
@@ -394,46 +445,210 @@ export class PublicacionFichaComponent implements OnInit {
     this.imagePreviewUrl = urlImagen;
   }
 
-  contarPalabrasTitulo(){
+  contarPalabrasTitulo() {
     let arrayPalabras = this.publicacion.titulo.split(' ');
-    this.palabrasTitulo = arrayPalabras.length - 1;
+    this.palabrasTitulo = arrayPalabras.length;
   }
 
-  contarPalabrasDescripcion(){
+  contarPalabrasDescripcion() {
     let arrayPalabras = this.publicacion.subtitulo.split(' ');
-    this.palabrasDescripcion = arrayPalabras.length -1 ;
+    this.palabrasDescripcion = arrayPalabras.length - 1;
   }
-  getLikes(publicacion: Publicacion){
-    this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+  getLikes(publicacion: Publicacion) {
+    this.likeService.getLikes(publicacion.id).subscribe(likes => {
       likes.forEach(like => {
-        like.id =  this.likeService.getId(like);
+        like.id = this.likeService.getId(like);
       });
       this.publicacion.likesRecibidos = likes;
       this.numeroLikes = likes.length.toString();
     })
   }
-  redireccionar(){
+
+  redireccionar() {
     this.router.navigate(['/acerca-de/' + this.publicacion.url])
   }
+
   validarURL(titulo: string) {
     var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
-  
+
     for (var i = 0; i < caracteresReservados.length; i++) {
       if (titulo.includes(caracteresReservados[i])) {
         return false;
       }
     }
-  
+
     return true;
   }
 
-  generarUrl(titulo: string): string{
-    titulo = titulo.replaceAll("¿", "-");
-    titulo = titulo.replaceAll("¡", "-");
-    titulo = titulo.replaceAll("?", "-");
-    titulo = titulo.replaceAll("!", "-");
-    titulo = titulo.replaceAll(":", "-");
-    titulo = titulo.replaceAll(" ", "-");
-    return titulo;
+  /*   generarUrl(titulo: string): string{
+      titulo = titulo.replaceAll("¿", "-");
+      titulo = titulo.replaceAll("¡", "-");
+      titulo = titulo.replaceAll("?", "-");
+      titulo = titulo.replaceAll("!", "-");
+      titulo = titulo.replaceAll(":", "-");
+      titulo = titulo.replaceAll(" ", "-");
+      return titulo;
+    } */
+
+  generarUrl(titulo: string) {
+    // Lista de stopwords en español (puedes agregar más según tus necesidades)
+    const stopwords = [
+      'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
+      'en', 'entre', 'hacia', 'hasta', 'ni', 'la', 'las', 'lo', 'los',
+      'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
+      'unos', 'y', 'e', 'o', 'u', 'y/o'
+    ];
+
+    // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
+    let urlOptimizada = titulo.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, '-');
+
+    // Separamos las palabras del título
+    const palabras = urlOptimizada.split('-');
+
+    // Filtramos las palabras que no son stopwords y eliminamos palabras duplicadas
+    const palabrasFiltradas = palabras.filter((palabra, index) => !stopwords.includes(palabra) && palabras.indexOf(palabra) === index);
+
+    // Unimos las palabras filtradas en un único string separado por guiones
+    urlOptimizada = palabrasFiltradas.join('-');
+
+    return urlOptimizada;
   }
+
+  analizarTitulo() {
+    this.contarPalabrasTitulo();
+    this.analizarPalabrasRepetidas();
+  }
+
+  analizarPalabrasRepetidas() {
+    const normalizedTitle = this.publicacion.titulo.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const palabras = normalizedTitle.toLowerCase().match(/\b\w+\b/g);
+    const contador: any = {};
+    if (palabras) {
+      palabras.forEach((palabra) => {
+        if (palabra.length > 3) {
+          contador[palabra] = (contador[palabra] || 0) + 1;
+        }
+      });
+      console.log(contador)
+      const palabrasRepetidas = Object.keys(contador).filter((palabra) => contador[palabra] >= 3);
+      this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
+    }
+  }
+  autoGuardado() {
+    if (this.publicacion.fechaPublicacion = "") {
+      this.postPublicacionAutoguardado();
+    } else {
+      this.patchPublicacionAutoguardado();
+    }
+  }
+
+
+  async importar(): Promise<string> {
+    const parser = new DOMParser();
+
+    let htmlTitulo = "";
+    const doc1 = parser.parseFromString(this.htmlWordPress, 'text/html');
+    // Obtener la etiqueta h1
+    const h1Element = doc1.querySelector('h1');
+    // Obtener la etiqueta a dentro de h1
+    if (h1Element) {
+      const aElement = h1Element.querySelector('a');
+      if (aElement) {
+        // Obtener el texto dentro de la etiqueta a
+        if (aElement.textContent) {
+          this.publicacion.titulo = aElement.textContent;
+        }
+      }
+    }
+
+    // Obtener el elemento div con la clase "mg-blog-post-box"
+    const divElement = document.querySelector('div.mg-blog-post-box');
+
+    // Verificar si el elemento div existe y si contiene un elemento img
+    const imgElement = divElement?.querySelector('img');
+
+    // Obtener el atributo "src" del elemento img, o asignar un valor por defecto si no existe
+    const imgSrc = imgElement?.getAttribute('src') ?? 'ruta-por-defecto.jpg';
+
+    if (imgSrc) {
+      // Descargar la imagen y obtener la nueva URL
+      const blobResponse = await fetch(imgSrc);
+      const blob = await blobResponse.blob();
+      const file = new File([blob], 'nombre-unico.png', { type: blob.type });
+      this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
+        setTimeout(() => {
+          // Actualizar el atributo src de la imagen con la nueva URL
+          imgElement?.removeAttribute('width');
+          imgElement?.setAttribute('alt', 'imagenAlt75');
+          imgElement?.removeAttribute('height');
+          imgElement?.setAttribute('src', url);
+          console.log(url)
+          this.publicacion.imagenPreviewUrl = url;
+          this.imagePreviewUrl = url;
+        }, 1500);
+      })
+    }
+
+
+
+
+    this.htmlWordPress = this.htmlWordPress.split('<article')[1];
+    this.htmlWordPress = this.htmlWordPress.split('</article>')[0];
+    this.htmlWordPress = '<article' + this.htmlWordPress + '</article>';
+    this.htmlWordPress = this.htmlWordPress.replaceAll('<p><br></p>', '');
+
+    const doc = parser.parseFromString(this.htmlWordPress, 'text/html');
+
+    // Obtener todas las etiquetas de imagen (img) con data-lazy-fallback="1" del HTML
+    const imagenesLazy = doc.querySelectorAll('img[data-lazy-fallback="1"]');
+
+    // Eliminar cada etiqueta img con data-lazy-fallback="1" encontrada
+    imagenesLazy.forEach((imagen) => {
+      imagen.remove();
+    });
+
+    const noScripts = doc.querySelectorAll('noscript');
+    noScripts.forEach((noscript) => {
+      noscript.remove();
+    })
+    // Obtener todas las etiquetas de imagen (img) del HTML (sin las imágenes eliminadas)
+    const imagenes = doc.getElementsByTagName('img');
+
+    // Recorrer cada imagen y procesarla
+    for (let img of Array.from(imagenes)) {
+      const src = img.getAttribute('src');
+      if (src) {
+        // Descargar la imagen y obtener la nueva URL
+        const blobResponse = await fetch(src);
+        const blob = await blobResponse.blob();
+        const file = new File([blob], 'nombre-unico.png', { type: blob.type });
+        this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
+          setTimeout(() => {
+            // Actualizar el atributo src de la imagen con la nueva URL
+            img.removeAttribute('width');
+            img.setAttribute('alt', 'imagenAlt75');
+            img.removeAttribute('height');
+            img.setAttribute('src', url);
+            console.log(url)
+          }, 1500);
+        })
+      }
+    }
+    setTimeout(() => {
+      this.texto = doc.documentElement.outerHTML;
+      this.texto = this.texto.replaceAll('aligncenter', 'text-center ql-align-center');
+
+    },
+      10000)
+    // Devolver el HTML modificado como string
+    return doc.documentElement.outerHTML;
+  }
+
 }
+
+
+

@@ -98,4 +98,7 @@ export class PublicacionesServiceService {
     return this.http.get<any>(this.endpoint + "/publicaciones/search/getLikesFromPublicacion/" + publicacion.id).pipe(map(response=>response._embedded.likes))
     ;
   }
+  getBorradores(idUsuario: string):Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/borradores/" + idUsuario).pipe(map(response=>response._embedded.publicaciones))
+  }
 }

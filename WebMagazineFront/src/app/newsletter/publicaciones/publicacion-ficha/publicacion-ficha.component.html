@@ -5,9 +5,16 @@
         <!-- Titulo -->
         <div class="row m-3 titulo justify-content-center">
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="100" (keyup)="contarPalabrasTitulo()"></textarea>
-                <p class="row recomendacion-titulo">Recomendado entre 10 y 15 palabras. Llevas: {{palabrasTitulo}}</p>
-        </div>
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130" (keyup)="analizarTitulo()"></textarea>
+                <div class="recomendaciones">
+                    <p class="titulo-recomendaciones"><b>Recomendaciones en título</b></p>
+                    <p class="recomendacion-titulo">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
+                        <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
+                        <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
+                    </p>
+                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion-titulo">- Las siguientes palabras se repiten mucho: {{palabrasRepetidasTitulo}}  ❓</p>
+                </div>
+      </div>
 
         <!-- Datos -->
         <div class="row">
@@ -156,6 +163,12 @@
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
                 </div>
+                <!-- Boton importar WordPress -->
+                <div class="col-4 col-sm-12">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#importarModal">
+                        <img class="icono-spotify" src="../../../../assets/icono-importar.png" alt="">
+                    </button>
+                </div>
             </div>
 
             <!-- Editor de texto Quill-->
@@ -168,15 +181,24 @@
 
     <!-- Boton Publicar -->
     <div class="row text-center m-4">
-        <div class="col-4"></div>
-        <button *ngIf="id" type="button" class="btn btn-warning col-4" (click)="patchPublicacion()">
-            Modificar
-        </button>
-        <button *ngIf="!id" type="button" class="btn btn-warning col-4" (click)="postPublicacion()">
-            Publicar
-        </button>
+        <div class="col-2"></div>
+        <div class="col-4 text-center">
+            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
+                Publicar
+            </button>
+            <button *ngIf="publicacion.fechaPublicacion==''"  type="button" class="btn btn-success" (click)="publicarNueva()">
+                Publicar
+            </button>
+        </div>
+        <div class="col-4 text-center">
+            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
+                Guardar como borrador (no publicado)
+            </button>
+            <button *ngIf="publicacion.fechaPublicacion==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
+                Guardar borrador
+            </button>
+        </div>
     </div>
-
 </body>
 
 <!-- Modal Agregar Podcast-->
@@ -391,3 +413,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Importar-->
+  <div class="modal fade" id="importarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

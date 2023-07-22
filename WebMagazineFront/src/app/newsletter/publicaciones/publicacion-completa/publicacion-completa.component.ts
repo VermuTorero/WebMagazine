@@ -11,6 +11,7 @@ import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { LikesService } from '../../service/likes.service';
 import { Like } from '../../models/like';
 declare const twttr: any;
+declare var $: any;
 
 @Component({
   selector: 'app-publicacion-completa',
@@ -27,9 +28,9 @@ export class PublicacionCompletaComponent implements OnInit {
   fechaFormateada: string = "";
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
-  rol : string | null= "";
+  rol: string | null = "";
   numeroLikes: string = "";
-  
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,12 +47,12 @@ export class PublicacionCompletaComponent implements OnInit {
     this.getLateral();
     this.getUrl();
     this.rol = sessionStorage.getItem("rol");
-    if (this.rol == "ROLE_ADMIN" ||this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacion();
-    }else{
+    } else {
       this.getPublicacionFree();
     }
-    
+
   }
 
   getUrl(): void {
@@ -66,95 +67,98 @@ export class PublicacionCompletaComponent implements OnInit {
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
       this.getLikes(this.publicacion);
-      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
         this.publicacion.autor = autor;
       })
-      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
+      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
         this.publicacion.tags = tags;
-        this.publicacion.tags.forEach(tag=> {
+        this.publicacion.tags.forEach(tag => {
           tag.id = this.tagService.getId(tag);
         });
         this.getPublicacionesRelacionadas();
       })
-      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
         this.publicacion.lugar = lugar;
         this.publicacion.lugar.id = this.lugarService.getId(lugar);
         this.getPublicacionesCerca();
       })
-      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
         this.publicacion.categoria = categoria;
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
-
-      
-      
-      /*Formato de los videos de Youtube*/
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video"allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video" allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
-      
-      /*Formato de los podcast de Spotify*/
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe style="border-radius:12px" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
-
-      /* Cierre de iframe comun para Youtube y Spotify */
-       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('</iframe>', '</iframe></div>');
-      
-       /*Centrar imagenes y meterlas en un imagen-container*/
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p class="ql-align-center"><img src="', '<p class="ql-align-center imagen-container text-center"><img src="')
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt100">', 'alt="imagenAlt100"></p>');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt75">', 'alt="imagenAlt75"></p>');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
-      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt20">', 'alt="imagenAlt20"></p>');
+      this.formatoContenidoMultimedia();
       this.showPublicacion();
- 
-      
+
+
     })
   }
 
-  getPublicacionFree(){
+  getPublicacionFree() {
     this.publicacionesService.getPublicacionFree(this.url).subscribe(publicacion => {
       this.publicacion = publicacion;
       this.getFechaPublicacion();
       this.publicacion.id = this.publicacionesService.getId(publicacion);
-      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
         this.publicacion.autor = autor;
       })
-      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
+      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
         this.publicacion.tags = tags;
-        this.publicacion.tags.forEach(tag=> {
+        this.publicacion.tags.forEach(tag => {
           tag.id = this.tagService.getId(tag);
         });
         this.getPublicacionesRelacionadas();
       })
-      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
         this.publicacion.lugar = lugar;
         this.publicacion.lugar.id = this.lugarService.getId(lugar);
         this.getPublicacionesCerca();
       })
-      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
         this.publicacion.categoria = categoria;
         this.publicacion.categoria.id = this.categoriaService.getId(categoria);
       })
-      this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+      this.likeService.getLikes(publicacion.id).subscribe(likes => {
         this.numeroLikes = likes.length.toString();
       })
-      
-      this.showPublicacion();     
+
+      this.formatoContenidoMultimedia()
+      this.showPublicacion();
     })
   }
-  getPublicacionesCerca(){
-    this.publicacionesService.getPublicacionesCerca(this.publicacion.lugar.lugarNombre, this.publicacion.id).subscribe(publicacionesCerca=>{
+
+  formatoContenidoMultimedia() {
+    /*Formato de los videos de Youtube*/
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video"allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video" allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
+
+    /*Formato de los podcast de Spotify*/
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe style="border-radius:12px" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video" allowfullscreen="true" src="https://open.spotify.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video ql-align-center" allowfullscreen="true" tipo="podcast" src="https://open.spotify.com');
+
+    /* Cierre de iframe comun para Youtube y Spotify */
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('</iframe>', '</iframe></div>');
+
+    /*Centrar imagenes y meterlas en un imagen-container*/
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p class="ql-align-center"><img src="', '<p class="ql-align-center imagen-container text-center"><img src="')
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt100">', 'alt="imagenAlt100"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt75">', 'alt="imagenAlt75"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt20">', 'alt="imagenAlt20"></p>');
+
+  }
+  getPublicacionesCerca() {
+    this.publicacionesService.getPublicacionesCerca(this.publicacion.lugar.lugarNombre, this.publicacion.id).subscribe(publicacionesCerca => {
       this.publicacionesCerca = publicacionesCerca;
       this.publicacionesCerca.forEach(publicacionCerca => {
         publicacionCerca.id = this.publicacionesService.getId(publicacionCerca);
-        publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0,120) + "...";
-        this.publicacionesService.getCategoriaFromPublicacion(publicacionCerca).subscribe(categoria=>{
+        publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0, 120) + "...";
+        this.publicacionesService.getCategoriaFromPublicacion(publicacionCerca).subscribe(categoria => {
           publicacionCerca.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacionCerca).subscribe(autor=>{
+          this.publicacionesService.getAutorFromPublicacion(publicacionCerca).subscribe(autor => {
             publicacionCerca.autor = autor;
           })
         })
@@ -162,15 +166,15 @@ export class PublicacionCompletaComponent implements OnInit {
     })
   }
 
-  getPublicacionesRelacionadas(){
-    this.publicacionesService.getPublicacionesRelacionadas(this.publicacion.id).subscribe(publicacionesRelacionadas=>{
-      this.publicacionesRelacionadas= publicacionesRelacionadas;
+  getPublicacionesRelacionadas() {
+    this.publicacionesService.getPublicacionesRelacionadas(this.publicacion.id).subscribe(publicacionesRelacionadas => {
+      this.publicacionesRelacionadas = publicacionesRelacionadas;
       this.publicacionesRelacionadas.forEach(publicacionRelacionada => {
         publicacionRelacionada.id = this.publicacionesService.getId(publicacionRelacionada);
-        publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0,120) + "...";
-        this.publicacionesService.getCategoriaFromPublicacion(publicacionRelacionada).subscribe(categoria=>{
+        publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0, 120) + "...";
+        this.publicacionesService.getCategoriaFromPublicacion(publicacionRelacionada).subscribe(categoria => {
           publicacionRelacionada.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacionRelacionada).subscribe(autor=>{
+          this.publicacionesService.getAutorFromPublicacion(publicacionRelacionada).subscribe(autor => {
             publicacionRelacionada.autor = autor;
           })
         })
@@ -186,17 +190,21 @@ export class PublicacionCompletaComponent implements OnInit {
     body?.appendChild(html)
   }
 
-  eliminarPublicacion(){
-    this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response=>{
+  eliminarPublicacion() {
+    $('#eliminarPublicacionModal').modal('show');
+  }
+
+  eliminarPublicacionConfirmado() {
+    this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response => {
       this.router.navigate(['#'])
     });
   }
-  getFechaPublicacion(){
+  getFechaPublicacion() {
     this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
   }
 
-  getLateral(){
-    this.lateralService.getLateral().subscribe(lateral=>{
+  getLateral() {
+    this.lateralService.getLateral().subscribe(lateral => {
       this.lateral = lateral;
       this.showHtmlPodcast();
       this.showHtmlTwitter();
@@ -205,7 +213,7 @@ export class PublicacionCompletaComponent implements OnInit {
       this.showHtmlPodcastSM();
     })
   }
-  
+
   showHtmlTwitter() {
     var twitterContainer = document.querySelector("#twitter");
     var tweetContainer = document.createElement('div');
@@ -213,13 +221,13 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
     twitterContainer?.appendChild(tweetContainer);
     var style = document.createElement('style');
-  style.innerHTML = `
+    style.innerHTML = `
     .twitter-widget-0,
     iframe {
       width: 100% !important;
     }
   `;
-  document.head.appendChild(style);
+    document.head.appendChild(style);
   }
 
   showHtmlTwitter2() {
@@ -228,7 +236,7 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter2;
     twitterContainer?.appendChild(tweetContainer);
- 
+
   }
 
   showHtmlTwitter3() {
@@ -260,20 +268,20 @@ export class PublicacionCompletaComponent implements OnInit {
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
   }
-  like(){
-    this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+  like() {
+    this.usuarioService.getUsuarioFromToken().subscribe(usuario => {
       usuario.id = this.usuarioService.getId(usuario);
       let like = new Like();
       like.usuario = usuario;
-      this.likeService.postLike(this.publicacion.id, usuario).subscribe(like=>{
+      this.likeService.postLike(this.publicacion.id, usuario).subscribe(like => {
         this.getLikes(this.publicacion);
       });
     })
   }
-  getLikes(publicacion: Publicacion){
-    this.likeService.getLikes(publicacion.id).subscribe(likes=>{
+  getLikes(publicacion: Publicacion) {
+    this.likeService.getLikes(publicacion.id).subscribe(likes => {
       likes.forEach(like => {
-        like.id =  this.likeService.getId(like);
+        like.id = this.likeService.getId(like);
       });
       this.publicacion.likesRecibidos = likes;
       this.numeroLikes = likes.length.toString();

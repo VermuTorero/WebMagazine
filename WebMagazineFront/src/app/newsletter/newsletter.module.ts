@@ -28,6 +28,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/renovar-suscripcion.component';
 import { ChatComponent } from './chat/chat.component';
 import { MensajeComponent } from './chat/mensaje/mensaje.component';
+import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-borrador/publicaciones-borrador.component';
 
 
 
@@ -55,8 +56,10 @@ import { MensajeComponent } from './chat/mensaje/mensaje.component';
     VerificacionPagoComponent,
     RenovarSuscripcionComponent,
     ChatComponent,
-    MensajeComponent
+    MensajeComponent,
+    PublicacionesBorradorComponent
   ],
+  
   imports: [
     CommonModule,
     NewsletterRoutingModule,
