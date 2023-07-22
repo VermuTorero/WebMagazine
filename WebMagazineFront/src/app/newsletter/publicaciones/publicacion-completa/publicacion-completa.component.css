@@ -254,6 +254,7 @@
 
     ::ng-deep img[alt="imagenAlt75"] {
         width: 75% !important;
+        
     }
 
     ::ng-deep img[alt="imagenAlt50"] {
@@ -322,6 +323,7 @@
 
     ::ng-deep img[alt="imagenAlt75"] {
         width: 75% !important;
+        margin: auto;
     }
 
     ::ng-deep img[alt="imagenAlt50"] {
@@ -404,4 +406,8 @@ a:active {
 }
 ::ng-deep .twitter-widget-0{
     width: 80% !important;
+}
+.imagen-container{
+    text-align: center;
+    justify-content: center;
 }

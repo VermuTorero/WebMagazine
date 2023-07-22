@@ -163,6 +163,12 @@
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
                 </div>
+                <!-- Boton importar WordPress -->
+                <div class="col-4 col-sm-12">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#importarModal">
+                        <img class="icono-spotify" src="../../../../assets/icono-importar.png" alt="">
+                    </button>
+                </div>
             </div>
 
             <!-- Editor de texto Quill-->
@@ -407,3 +413,23 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Importar-->
+  <div class="modal fade" id="importarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

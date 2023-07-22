@@ -72,7 +72,10 @@ export class PublicacionFichaComponent implements OnInit {
 
   numeroLikes: string = "";
   tituloValido: boolean = false;
-  palabrasRepetidasTitulo: string | null= "";
+  palabrasRepetidasTitulo: string | null = "";
+
+  htmlWordPress: string = "";
+  htmlVermuTorero: string = "";
 
 
 
@@ -103,11 +106,11 @@ export class PublicacionFichaComponent implements OnInit {
       }
       this.ajustarEditor();
     })
-   setInterval(()=>{
-    if (!this.publicacion.publicado) {
-      this.autoGuardado();
-    }
-   }, 300000)
+    setInterval(() => {
+      if (!this.publicacion.publicado) {
+        this.autoGuardado();
+      }
+    }, 300000)
   }
 
   ajustarEditor() {
@@ -156,20 +159,20 @@ export class PublicacionFichaComponent implements OnInit {
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
-  publicarNueva(){
-    this.publicacion.publicado=true;
+  publicarNueva() {
+    this.publicacion.publicado = true;
     this.postPublicacion();
   }
-  publicarModificada(){
-    this.publicacion.publicado=true;
+  publicarModificada() {
+    this.publicacion.publicado = true;
     this.patchPublicacion();
   }
-  guardarBorradorNuevo(){
-    this.publicacion.publicado=false;
+  guardarBorradorNuevo() {
+    this.publicacion.publicado = false;
     this.postPublicacion();
   }
-  guardarBorradorModificado(){
-    this.publicacion.publicado=false;
+  guardarBorradorModificado() {
+    this.publicacion.publicado = false;
     this.patchPublicacion();
   }
 
@@ -464,7 +467,7 @@ export class PublicacionFichaComponent implements OnInit {
   redireccionar() {
     this.router.navigate(['/acerca-de/' + this.publicacion.url])
   }
-  
+
   validarURL(titulo: string) {
     var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
 
@@ -488,31 +491,31 @@ export class PublicacionFichaComponent implements OnInit {
     } */
 
   generarUrl(titulo: string) {
-   // Lista de stopwords en español (puedes agregar más según tus necesidades)
-  const stopwords = [
-    'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
-    'en', 'entre', 'hacia', 'hasta', 'ni', 'la', 'las', 'lo', 'los',
-    'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
-    'unos', 'y', 'e', 'o', 'u', 'y/o'
-  ];
+    // Lista de stopwords en español (puedes agregar más según tus necesidades)
+    const stopwords = [
+      'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
+      'en', 'entre', 'hacia', 'hasta', 'ni', 'la', 'las', 'lo', 'los',
+      'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
+      'unos', 'y', 'e', 'o', 'u', 'y/o'
+    ];
 
-  // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
-  let urlOptimizada = titulo.toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s]/g, '')
-    .replace(/\s+/g, '-');
+    // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
+    let urlOptimizada = titulo.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, '-');
 
-  // Separamos las palabras del título
-  const palabras = urlOptimizada.split('-');
+    // Separamos las palabras del título
+    const palabras = urlOptimizada.split('-');
 
-  // Filtramos las palabras que no son stopwords y eliminamos palabras duplicadas
-  const palabrasFiltradas = palabras.filter((palabra, index) => !stopwords.includes(palabra) && palabras.indexOf(palabra) === index);
+    // Filtramos las palabras que no son stopwords y eliminamos palabras duplicadas
+    const palabrasFiltradas = palabras.filter((palabra, index) => !stopwords.includes(palabra) && palabras.indexOf(palabra) === index);
 
-  // Unimos las palabras filtradas en un único string separado por guiones
-  urlOptimizada = palabrasFiltradas.join('-');
+    // Unimos las palabras filtradas en un único string separado por guiones
+    urlOptimizada = palabrasFiltradas.join('-');
 
-  return urlOptimizada;
+    return urlOptimizada;
   }
 
   analizarTitulo() {
@@ -535,11 +538,117 @@ export class PublicacionFichaComponent implements OnInit {
       this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
     }
   }
-  autoGuardado(){
-    if (this.publicacion.fechaPublicacion="") {
+  autoGuardado() {
+    if (this.publicacion.fechaPublicacion = "") {
       this.postPublicacionAutoguardado();
-    }else{
+    } else {
       this.patchPublicacionAutoguardado();
     }
   }
+
+
+  async importar(): Promise<string> {
+    const parser = new DOMParser();
+
+    let htmlTitulo = "";
+    const doc1 = parser.parseFromString(this.htmlWordPress, 'text/html');
+    // Obtener la etiqueta h1
+    const h1Element = doc1.querySelector('h1');
+    // Obtener la etiqueta a dentro de h1
+    if (h1Element) {
+      const aElement = h1Element.querySelector('a');
+      if (aElement) {
+        // Obtener el texto dentro de la etiqueta a
+        if (aElement.textContent) {
+          this.publicacion.titulo = aElement.textContent;
+        }
+      }
+    }
+
+    // Obtener el elemento div con la clase "mg-blog-post-box"
+    const divElement = document.querySelector('div.mg-blog-post-box');
+
+    // Verificar si el elemento div existe y si contiene un elemento img
+    const imgElement = divElement?.querySelector('img');
+
+    // Obtener el atributo "src" del elemento img, o asignar un valor por defecto si no existe
+    const imgSrc = imgElement?.getAttribute('src') ?? 'ruta-por-defecto.jpg';
+
+    if (imgSrc) {
+      // Descargar la imagen y obtener la nueva URL
+      const blobResponse = await fetch(imgSrc);
+      const blob = await blobResponse.blob();
+      const file = new File([blob], 'nombre-unico.png', { type: blob.type });
+      this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
+        setTimeout(() => {
+          // Actualizar el atributo src de la imagen con la nueva URL
+          imgElement?.removeAttribute('width');
+          imgElement?.setAttribute('alt', 'imagenAlt75');
+          imgElement?.removeAttribute('height');
+          imgElement?.setAttribute('src', url);
+          console.log(url)
+          this.publicacion.imagenPreviewUrl = url;
+          this.imagePreviewUrl = url;
+        }, 1500);
+      })
+    }
+
+
+
+
+    this.htmlWordPress = this.htmlWordPress.split('<article')[1];
+    this.htmlWordPress = this.htmlWordPress.split('</article>')[0];
+    this.htmlWordPress = '<article' + this.htmlWordPress + '</article>';
+    this.htmlWordPress = this.htmlWordPress.replaceAll('<p><br></p>', '');
+
+    const doc = parser.parseFromString(this.htmlWordPress, 'text/html');
+
+    // Obtener todas las etiquetas de imagen (img) con data-lazy-fallback="1" del HTML
+    const imagenesLazy = doc.querySelectorAll('img[data-lazy-fallback="1"]');
+
+    // Eliminar cada etiqueta img con data-lazy-fallback="1" encontrada
+    imagenesLazy.forEach((imagen) => {
+      imagen.remove();
+    });
+
+    const noScripts = doc.querySelectorAll('noscript');
+    noScripts.forEach((noscript) => {
+      noscript.remove();
+    })
+    // Obtener todas las etiquetas de imagen (img) del HTML (sin las imágenes eliminadas)
+    const imagenes = doc.getElementsByTagName('img');
+
+    // Recorrer cada imagen y procesarla
+    for (let img of Array.from(imagenes)) {
+      const src = img.getAttribute('src');
+      if (src) {
+        // Descargar la imagen y obtener la nueva URL
+        const blobResponse = await fetch(src);
+        const blob = await blobResponse.blob();
+        const file = new File([blob], 'nombre-unico.png', { type: blob.type });
+        this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
+          setTimeout(() => {
+            // Actualizar el atributo src de la imagen con la nueva URL
+            img.removeAttribute('width');
+            img.setAttribute('alt', 'imagenAlt75');
+            img.removeAttribute('height');
+            img.setAttribute('src', url);
+            console.log(url)
+          }, 1500);
+        })
+      }
+    }
+    setTimeout(() => {
+      this.texto = doc.documentElement.outerHTML;
+      this.texto = this.texto.replaceAll('aligncenter', 'text-center ql-align-center');
+
+    },
+      10000)
+    // Devolver el HTML modificado como string
+    return doc.documentElement.outerHTML;
+  }
+
 }
+
+
+
