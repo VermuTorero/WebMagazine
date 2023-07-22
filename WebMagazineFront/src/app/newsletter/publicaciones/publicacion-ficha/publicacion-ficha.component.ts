@@ -443,6 +443,7 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
+    this.texto = "<img src='" + urlImagen + "' alt=imagenAlt100 >" + this.texto;
   }
 
   contarPalabrasTitulo() {
@@ -546,10 +547,10 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
-
   async importar(): Promise<string> {
     const parser = new DOMParser();
 
+    //Obtener el Titulo del articulo
     let htmlTitulo = "";
     const doc1 = parser.parseFromString(this.htmlWordPress, 'text/html');
     // Obtener la etiqueta h1
@@ -560,46 +561,18 @@ export class PublicacionFichaComponent implements OnInit {
       if (aElement) {
         // Obtener el texto dentro de la etiqueta a
         if (aElement.textContent) {
-          this.publicacion.titulo = aElement.textContent;
+          this.publicacion.titulo = aElement.textContent.trimStart();
         }
       }
     }
 
-    // Obtener el elemento div con la clase "mg-blog-post-box"
-    const divElement = document.querySelector('div.mg-blog-post-box');
-
-    // Verificar si el elemento div existe y si contiene un elemento img
-    const imgElement = divElement?.querySelector('img');
-
-    // Obtener el atributo "src" del elemento img, o asignar un valor por defecto si no existe
-    const imgSrc = imgElement?.getAttribute('src') ?? 'ruta-por-defecto.jpg';
-
-    if (imgSrc) {
-      // Descargar la imagen y obtener la nueva URL
-      const blobResponse = await fetch(imgSrc);
-      const blob = await blobResponse.blob();
-      const file = new File([blob], 'nombre-unico.png', { type: blob.type });
-      this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
-        setTimeout(() => {
-          // Actualizar el atributo src de la imagen con la nueva URL
-          imgElement?.removeAttribute('width');
-          imgElement?.setAttribute('alt', 'imagenAlt75');
-          imgElement?.removeAttribute('height');
-          imgElement?.setAttribute('src', url);
-          console.log(url)
-          this.publicacion.imagenPreviewUrl = url;
-          this.imagePreviewUrl = url;
-        }, 1500);
-      })
-    }
-
-
-
-
+    //Pbtener unicamente la etiqueta article
     this.htmlWordPress = this.htmlWordPress.split('<article')[1];
     this.htmlWordPress = this.htmlWordPress.split('</article>')[0];
     this.htmlWordPress = '<article' + this.htmlWordPress + '</article>';
     this.htmlWordPress = this.htmlWordPress.replaceAll('<p><br></p>', '');
+   
+
 
     const doc = parser.parseFromString(this.htmlWordPress, 'text/html');
 
@@ -629,8 +602,18 @@ export class PublicacionFichaComponent implements OnInit {
         this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
           setTimeout(() => {
             // Actualizar el atributo src de la imagen con la nueva URL
-            img.removeAttribute('width');
-            img.setAttribute('alt', 'imagenAlt75');
+            if (img.getAttribute('width')) {
+              let ancho = parseInt(img.getAttribute('width')?? '600');
+              if (ancho<250) {
+                img.setAttribute('alt', 'imagenAlt35');
+              }if(ancho>500){
+                img.setAttribute('alt', 'imagenAlt75');
+              }if(ancho>250 && ancho<500){
+                img.setAttribute('alt', 'imagenAlt50');
+              }
+            }
+          
+          
             img.removeAttribute('height');
             img.setAttribute('src', url);
             console.log(url)
@@ -641,13 +624,11 @@ export class PublicacionFichaComponent implements OnInit {
     setTimeout(() => {
       this.texto = doc.documentElement.outerHTML;
       this.texto = this.texto.replaceAll('aligncenter', 'text-center ql-align-center');
-
     },
-      10000)
+      10000);
     // Devolver el HTML modificado como string
     return doc.documentElement.outerHTML;
   }
-
 }
 
 
