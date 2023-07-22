@@ -141,8 +141,10 @@ export class PublicacionFichaComponent implements OnInit {
 
       console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
-      this.texto = this.publicacion.htmlPublicacion;
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="560" height="315"', 'width="90%" height="auto"');
+      this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
+      this.texto = this.publicacion.htmlPublicacion;
+      console.log(this.publicacion.htmlPublicacion)
       /* quill.insertText(10, this.publicacion.htmlPublicacion); */
       this.analizarTitulo();
     })
@@ -547,9 +549,19 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
-  async importar(): Promise<string> {
-    const parser = new DOMParser();
 
+
+  async importar() {
+
+    this.importarTitulo();
+    let doc = this.seleccionarArticulo();
+    this.importarImagenes(doc);
+    console.log("DOC: ", doc)
+
+  }
+
+  importarTitulo() {
+    const parser = new DOMParser();
     //Obtener el Titulo del articulo
     let htmlTitulo = "";
     const doc1 = parser.parseFromString(this.htmlWordPress, 'text/html');
@@ -565,35 +577,68 @@ export class PublicacionFichaComponent implements OnInit {
         }
       }
     }
+  }
 
-    //Pbtener unicamente la etiqueta article
+  seleccionarArticulo(): any {
+    const parser = new DOMParser();
+    //Obtener unicamente la etiqueta article con el contenido del articulo (no foto principal)
     this.htmlWordPress = this.htmlWordPress.split('<article')[1];
     this.htmlWordPress = this.htmlWordPress.split('</article>')[0];
     this.htmlWordPress = '<article' + this.htmlWordPress + '</article>';
     this.htmlWordPress = this.htmlWordPress.replaceAll('<p><br></p>', '');
-   
-
-
     const doc = parser.parseFromString(this.htmlWordPress, 'text/html');
 
-    // Obtener todas las etiquetas de imagen (img) con data-lazy-fallback="1" del HTML
+    // Obtener todas las etiquetas de imagen (img) con data-lazy-fallback="1" del HTML y borrarlas
     const imagenesLazy = doc.querySelectorAll('img[data-lazy-fallback="1"]');
-
     // Eliminar cada etiqueta img con data-lazy-fallback="1" encontrada
     imagenesLazy.forEach((imagen) => {
       imagen.remove();
     });
 
+    //Borrar etiquetas noscript
     const noScripts = doc.querySelectorAll('noscript');
     noScripts.forEach((noscript) => {
       noscript.remove();
     })
+
+    //Borrar la barra de navegacion (etiqueta h2 y 2 etiquetas a)
+
+
+    // Obtener todas las etiquetas que deseas eliminar del documento
+    const etiquetasA = doc.querySelectorAll('a');
+
+    // Convertir el NodeList a un Array y obtener los últimos tres elementos
+    const ultimasEtiquetasA = Array.from(etiquetasA).slice(-2);
+
+    // Recorrer los últimos tres elementos y eliminarlos
+    ultimasEtiquetasA.forEach(etiqueta => {
+      etiqueta.remove();
+    });
+
+    // Obtener todas las etiquetas que deseas eliminar del documento
+    const etiquetasH2 = doc.querySelectorAll('h2');
+
+    // Convertir el NodeList a un Array y obtener la ultima etiqueta h2
+    const ultimaEtiquetaH2 = Array.from(etiquetasH2).slice(-1);
+    // Recorrer los últimos tres elementos y eliminarlos
+    ultimaEtiquetaH2.forEach(etiqueta => {
+      etiqueta.remove();
+    });
+
+    return doc;
+  }
+
+  async importarImagenes(doc: Document) {
+    const parser = new DOMParser();
+    //Escanear las img, obtener su url, cargarlas en Firebase y modificar el atributo src con el de Firebase
+
     // Obtener todas las etiquetas de imagen (img) del HTML (sin las imágenes eliminadas)
     const imagenes = doc.getElementsByTagName('img');
 
     // Recorrer cada imagen y procesarla
     for (let img of Array.from(imagenes)) {
       const src = img.getAttribute('src');
+
       if (src) {
         // Descargar la imagen y obtener la nueva URL
         const blobResponse = await fetch(src);
@@ -603,31 +648,28 @@ export class PublicacionFichaComponent implements OnInit {
           setTimeout(() => {
             // Actualizar el atributo src de la imagen con la nueva URL
             if (img.getAttribute('width')) {
-              let ancho = parseInt(img.getAttribute('width')?? '600');
-              if (ancho<250) {
+              let ancho = parseInt(img.getAttribute('width') ?? '600');
+              if (ancho < 250) {
                 img.setAttribute('alt', 'imagenAlt35');
-              }if(ancho>500){
+              } if (ancho > 500) {
                 img.setAttribute('alt', 'imagenAlt75');
-              }if(ancho>250 && ancho<500){
+              } if (ancho > 250 && ancho < 500) {
                 img.setAttribute('alt', 'imagenAlt50');
               }
+              img.removeAttribute('width');
             }
-          
-          
             img.removeAttribute('height');
             img.setAttribute('src', url);
-            console.log(url)
+            console.log(url);
           }, 1500);
         })
       }
     }
     setTimeout(() => {
       this.texto = doc.documentElement.outerHTML;
-      this.texto = this.texto.replaceAll('aligncenter', 'text-center ql-align-center');
+      this.texto = this.texto.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
     },
-      10000);
-    // Devolver el HTML modificado como string
-    return doc.documentElement.outerHTML;
+      15000);
   }
 }
 
