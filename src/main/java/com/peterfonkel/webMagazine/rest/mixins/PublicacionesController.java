@@ -102,14 +102,14 @@ public class PublicacionesController {
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
 	@GetMapping(path = "publicacionByUrl/{url}")
 	@ResponseBody
-	public PersistentEntityResource getPublicacionByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
+	public PersistentEntityResource getPublicacionByUrl(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
 		Publicacion publicacion = getPublicacionesService().findByUrl(url);
 		return assembler.toModel(publicacion);
 	}
 	
 	@GetMapping(path = "publicacionByUrlFree/{url}")
 	@ResponseBody
-	public PersistentEntityResource getPublicacionByTituloFree(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
+	public PersistentEntityResource getPublicacionByUrlFree(PersistentEntityResourceAssembler assembler,@PathVariable("url") String url) {
 		Publicacion publicacion = getPublicacionesService().findByUrl(url);
 		if (publicacion.isPremium()) {
 			publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion().split("</p>")[0] + publicacion.getHtmlPublicacion().split("</p>")[1] + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
