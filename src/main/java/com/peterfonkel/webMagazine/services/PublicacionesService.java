@@ -121,4 +121,8 @@ public class PublicacionesService {
 		return publicacionDAO.findByAutorIdAndPublicadoFalse(id);
 	}
 
+	public List<Publicacion> findByIsPublicadoTrueAndIsDestacadoTrue() {
+		return publicacionDAO.findByIsPublicadoTrueAndIsDestacadoTrue();
+	}
+
 }

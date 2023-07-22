@@ -218,7 +218,7 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesDestacadas")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(PersistentEntityResourceAssembler assembler) {
-	    List<Publicacion> publicacionesDestacadas = getPublicacionesService().findByIsPublicadoTrue();
+	    List<Publicacion> publicacionesDestacadas = getPublicacionesService().findByIsPublicadoTrueAndIsDestacadoTrue();
 	    return assembler.toCollectionModel(publicacionesDestacadas);
 	}
 
