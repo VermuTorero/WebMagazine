@@ -655,8 +655,10 @@ export class PublicacionFichaComponent implements OnInit {
                 img.setAttribute('alt', 'imagenAlt75');
               } if (ancho > 250 && ancho < 500) {
                 img.setAttribute('alt', 'imagenAlt50');
-              }
+              } 
               img.removeAttribute('width');
+            }else {
+              img.setAttribute('alt', 'imagenAlt75');
             }
             img.removeAttribute('height');
             img.setAttribute('src', url);
