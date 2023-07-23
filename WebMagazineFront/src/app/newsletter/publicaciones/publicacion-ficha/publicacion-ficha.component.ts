@@ -445,6 +445,7 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
+    this.texto ="<p><br></p>" + this.texto;
     this.texto = "<img src='" + urlImagen + "' alt=imagenAlt100 >" + this.texto;
   }
 
@@ -549,15 +550,12 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
-
-
   async importar() {
 
     this.importarTitulo();
     let doc = this.seleccionarArticulo();
     this.importarImagenes(doc);
     console.log("DOC: ", doc)
-
   }
 
   importarTitulo() {

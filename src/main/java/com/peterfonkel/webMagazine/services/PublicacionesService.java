@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,6 +125,11 @@ public class PublicacionesService {
 
 	public List<Publicacion> findByIsPublicadoTrueAndIsDestacadoTrue() {
 		return publicacionDAO.findByPublicadoTrueAndDestacadoTrue();
+	}
+
+	public Page<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion,
+			PageRequest pageRequest) {
+		return publicacionDAO.findByLugar_LugarNombreAndPublicadoTrue(lugarNombre, idPublicacion, pageRequest);
 	}
 
 }
