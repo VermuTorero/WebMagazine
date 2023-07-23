@@ -129,7 +129,7 @@ public class PublicacionesService {
 
 	public Page<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion,
 			PageRequest pageRequest) {
-		return publicacionDAO.findByLugar_LugarNombreAndPublicadoTrue(lugarNombre, idPublicacion, pageRequest);
+		return publicacionDAO.findByLugar_LugarNombreAndIdNotAndPublicadoTrue(lugarNombre, idPublicacion, pageRequest);
 	}
 
 }
