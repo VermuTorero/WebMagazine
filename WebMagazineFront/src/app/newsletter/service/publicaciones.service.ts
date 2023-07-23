@@ -78,8 +78,11 @@ export class PublicacionesServiceService {
   getPublicacionesByTag(tagNombre: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByTag/" + tagNombre).pipe(map(response=>response._embedded.publicaciones))
   }
-  getPublicacionesByLugar(lugarNombre: string): Observable<Publicacion[]>{
-    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugar/" + lugarNombre).pipe(map(response=>response._embedded.publicaciones))
+  getPublicacionesByLugarPagina(lugarNombre: string, pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugarPagina/" + lugarNombre  + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesByLugarFreePagina(lugarNombre: string, pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugarFreePagina/" + lugarNombre  + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
   }
   getPublicacionesByCategoriaPagina(categoriaNombre: string, pagina:number): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCategoria/" + categoriaNombre + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))

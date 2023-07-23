@@ -63,6 +63,7 @@ export class PublicacionesCategoriaComponent implements OnInit{
   }
 
   getPublicacionesByCategoria(){
+    /* Si es un usuario ADMIN, WRITER o con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
     this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicacionesCategoria=>{
       this.publicaciones = publicacionesCategoria;
@@ -77,6 +78,7 @@ export class PublicacionesCategoriaComponent implements OnInit{
       });
     })
   }else{
+    /* Si es un usuario sin suscripcion */
     this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicacionesCategoria=>{
       this.publicaciones = publicacionesCategoria;
       this.publicaciones.forEach(publicacion => {
@@ -177,9 +179,6 @@ export class PublicacionesCategoriaComponent implements OnInit{
           this.pagina--;
         })
       }
-  
-   
-  
     }
   
     getPaginaAnterior(){
@@ -217,8 +216,6 @@ export class PublicacionesCategoriaComponent implements OnInit{
             });
           })
         }
-      }
-      
+      } 
     }
-  
 }

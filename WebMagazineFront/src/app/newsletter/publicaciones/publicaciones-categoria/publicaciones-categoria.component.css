@@ -28,6 +28,9 @@
 .texto-categoria{
     text-align: center;
 }
+.numero-pagina{
+    display: inline;
+  }
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {

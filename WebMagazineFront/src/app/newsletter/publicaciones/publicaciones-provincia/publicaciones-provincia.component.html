@@ -4,4 +4,9 @@
     <div *ngFor="let publicacion of publicaciones" style="display:inline-block;" class="card col-12 col-sm-6 col-md-3 col-xxl-2">
       <app-publicacion [publicacion]="publicacion"></app-publicacion>
     </div>
+    <div class="paginas text-center">
+      <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
+      <p class="numero-pagina">Pagina {{pagina +1}}</p>
+      <button class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
+    </div>
   </div>
