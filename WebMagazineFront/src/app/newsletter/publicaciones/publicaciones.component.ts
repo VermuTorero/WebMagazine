@@ -185,25 +185,7 @@ export class PublicacionesComponent implements OnInit {
   }
   getPaginaSiguiente(){
     this.pagina++;
-    this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
-      this.publicaciones = publicaciones;
-      this.publicaciones.forEach(publicacion => {
-        publicacion.id = this.publicacionesService.getId(publicacion);
-        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
-          publicacion.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
-            publicacion.autor = autor;
-          })
-        })
-      });
-    }, err=>{
-      this.pagina--;
-    })
-  }
-
-  getPaginaAnterior(){
-    if (this.pagina>0) {
-      this.pagina--;
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
         this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
@@ -215,8 +197,65 @@ export class PublicacionesComponent implements OnInit {
             })
           })
         });
+      }, err=>{
+        this.pagina--;
+      })
+    }else{
+      this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
+        this.publicaciones = publicaciones;
+        this.publicaciones.forEach(publicacion => {
+          publicacion.id = this.publicacionesService.getId(publicacion);
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            publicacion.categoria = categoria;
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              publicacion.autor = autor;
+            })
+          })
+        });
+      }, err=>{
+        this.pagina--;
       })
     }
+
+ 
+
+  }
+
+  getPaginaAnterior(){
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+      if (this.pagina>0) {
+        this.pagina--;
+        this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        })
+      }
+    }else{
+      if (this.pagina>0) {
+        this.pagina--;
+        this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        })
+      }
+    }
+    
   }
 
 }

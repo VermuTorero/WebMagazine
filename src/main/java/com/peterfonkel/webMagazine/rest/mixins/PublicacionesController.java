@@ -183,13 +183,7 @@ public class PublicacionesController {
 		// Filtrar las publicaciones con isPublicado en true y isPremium en false
 		List<Publicacion> publicacionesRecientesFree = publicaciones.stream()
 				.filter(publicacion -> publicacion.isPublicado())
-				.sorted(Comparator.comparing(Publicacion::getFechaPublicacion).reversed()).skip(page * size) // Omitir
-																												// los
-																												// resultados
-																												// de
-																												// las
-																												// páginas
-																												// anteriores
+				.sorted(Comparator.comparing(Publicacion::getFechaPublicacion).reversed()).skip(page * size)
 				.limit(size) // Tomar solo los resultados de la página actual
 				.peek(publicacion -> {
 					if (publicacion.isPremium()) {
