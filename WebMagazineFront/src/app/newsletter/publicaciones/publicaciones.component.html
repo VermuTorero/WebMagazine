@@ -122,8 +122,9 @@
           <app-publicacion [publicacion]="publicacion"></app-publicacion>
         </div>
         <div class="paginas text-center">
-          <button class="btn btn-sm btn-secondary mx-2">Anterior</button>
-          <button class="btn btn-sm btn-secondary mx-2">Siguiente</button>
+          <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
+          <p class="numero-pagina">Pagina {{pagina +1}}</p>
+          <button class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
         </div>
         <div id="editor" hidden></div>
       </div>

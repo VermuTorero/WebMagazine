@@ -12,7 +12,7 @@
                 <section class="col-12 col-sm-4 columna-autor">
                     <div class="row d-flex align-items-center autor">
                         <div class="d-none d-sm-block col-sm-3 justify-content-center align-items-center">
-                            <img src="../../../../assets/eli.jpeg" alt="" class="foto-autor">
+                            <img *ngIf="publicacion.autor.nombre=='Elisabeth'" src="../../../../assets/eli.jpeg" alt="" class="foto-autor">
                         </div>
                         <div class="col-12 col-sm-9 text-center">
                             <p *ngIf="publicacion.autor" class="autor">{{publicacion.autor.nombre}}
@@ -148,7 +148,7 @@
 </main>
 
 
-<!-- Modal Vino-->
+<!-- Modal Like-->
 <div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -171,7 +171,7 @@
     </div>
 </div>
 
-<!-- Modal Vino-->
+<!-- Modal Eliminar-->
 <div class="modal fade" id="eliminarPublicacionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -196,7 +196,27 @@ export class PublicacionesComponent implements OnInit {
           })
         })
       });
+    }, err=>{
+      this.pagina--;
     })
+  }
+
+  getPaginaAnterior(){
+    if (this.pagina>0) {
+      this.pagina--;
+      this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+        this.publicaciones = publicaciones;
+        this.publicaciones.forEach(publicacion => {
+          publicacion.id = this.publicacionesService.getId(publicacion);
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            publicacion.categoria = categoria;
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              publicacion.autor = autor;
+            })
+          })
+        });
+      })
+    }
   }
 
 }
