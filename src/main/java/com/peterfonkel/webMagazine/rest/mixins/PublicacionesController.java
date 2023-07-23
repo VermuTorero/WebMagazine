@@ -409,7 +409,6 @@ public class PublicacionesController {
 		publicacion.setCategoria(categoria);
 		publicacion.setTags(tagsRecibidas);
 		publicacion.setAutor(autor);
-		publicacion.setFechaPublicacion(Instant.now());
 		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
 	}
