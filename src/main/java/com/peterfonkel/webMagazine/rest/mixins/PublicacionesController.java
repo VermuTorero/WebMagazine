@@ -172,6 +172,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(publicacionesRecientesFree);
 	}
 
+	//	Ver todoslos borradores de todos los escritores
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "borradores")
 	@ResponseBody
@@ -180,6 +181,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(borradores);
 	}
 
+	//Ver los borradores propios
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@GetMapping(path = "borradores/{idUsuario}")
 	@ResponseBody
@@ -195,6 +197,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(borradores);
 	}
 
+	//Publicaciones marcadas como destacadas
 	@GetMapping(path = "publicacionesDestacadas")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesDestacadas(
@@ -203,6 +206,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(publicacionesDestacadas);
 	}
 
+	//Publicaciones que se muestran en el carrousel
 	@GetMapping(path = "publicacionesCarousel")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCarousel(
@@ -211,6 +215,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesCarousel);
 	}
 
+	//Publicaciones que no estan en el carrousel
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Cacheable("myCache")
 	@GetMapping(path = "publicacionesNoCarousel")
@@ -224,6 +229,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(listadoPublicacionesNoCarousel);
 	}
 
+	//Publicaciones cerca de otra publicacion
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
@@ -250,6 +256,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(publicacionesAleatorias);
 	}
 
+	//Publicaciones por categoria con rol de suscripcion
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
 	@GetMapping(path = "publicacionesCategoria/{categoriaNombre}")
 	@ResponseBody
@@ -271,7 +278,8 @@ public class PublicacionesController {
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
 	}
-
+	
+	//Publicaciones por categoria sin rol de suscripcion
 	@GetMapping(path = "publicacionesCategoriaFree/{categoriaNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoriaFree(
@@ -390,7 +398,7 @@ public class PublicacionesController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
-	@GetMapping(path = "publicacionesByLugar/{lugarNombre}")
+	@GetMapping(path = "publicacionesByLugarPagina/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(
 			PersistentEntityResourceAssembler assembler, 
@@ -410,7 +418,7 @@ public class PublicacionesController {
 		return assembler.toCollectionModel(publicacionesPaginadas);
 	}
 
-	@GetMapping(path = "publicacionesByLugarFree/{lugarNombre}")
+	@GetMapping(path = "publicacionesByLugarFreePagina/{lugarNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugarFree(
 			PersistentEntityResourceAssembler assembler, 

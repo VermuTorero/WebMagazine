@@ -26,12 +26,32 @@ export class PublicacionesProvinciaComponent implements OnInit{
       this.provincia = params['provincia'];
     })
     this.rol = sessionStorage.getItem('rol');
-    this.getPublicacionesByLugar();
-    
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+      this.getPublicacionesByLugarPagina();
+    }else{
+      this.getPublicacionesByLugarFreePagina();
+    }
+
   }
 
-  getPublicacionesByLugar(){
+  getPublicacionesByLugarPagina(){
     this.publicacionesService.getPublicacionesByLugarPagina(this.provincia, this.pagina).subscribe(publicacionesProvincia=>{
+      this.publicaciones = publicacionesProvincia;
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+          publicacion.categoria.id = this.categoriaService.getId(categoria);
+        })
+        this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+          publicacion.autor = autor;
+        })
+      });
+    })
+  }
+
+  getPublicacionesByLugarFreePagina(){
+    this.publicacionesService.getPublicacionesByLugarFreePagina(this.provincia, this.pagina).subscribe(publicacionesProvincia=>{
       this.publicaciones = publicacionesProvincia;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
