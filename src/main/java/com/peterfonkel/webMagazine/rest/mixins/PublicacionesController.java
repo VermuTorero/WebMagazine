@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -245,21 +242,31 @@ public class PublicacionesController {
 	}
 	
 	@GetMapping(path = "publicacionesCerca/{lugarNombre}/{idPublicacion}")
-	@ResponseBody
-	public CollectionModel<PersistentEntityResource> getPublicacionesCerca(PersistentEntityResourceAssembler assembler,
-	        @PathVariable("lugarNombre") String lugarNombre, @PathVariable("idPublicacion") Long idPublicacion) {
-	    // Configurar el número de publicaciones aleatorias que quieres obtener (5 en este caso)
-	    int numeroPublicacionesAleatorias = 5;
+    @ResponseBody
+    public CollectionModel<PersistentEntityResource> getPublicacionesCerca(
+            PersistentEntityResourceAssembler assembler,
+            @PathVariable("lugarNombre") String lugarNombre,
+            @PathVariable("idPublicacion") Long idPublicacion) {
+        
+        int numeroPublicacionesAleatorias = 5;
 
-	    // Obtener la página de resultados con paginación y orden aleatorio
-	    PageRequest pageRequest = PageRequest.of(0, numeroPublicacionesAleatorias, Sort.by(Sort.Direction.ASC, "id"));
-	    Page<Publicacion> publicacionesPage = getPublicacionesService().findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(lugarNombre, idPublicacion, pageRequest);
+        // Obtener la lista de publicaciones que cumplen con los criterios de la consulta
+        List<Publicacion> publicaciones = getPublicacionesService()
+            .findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(lugarNombre, idPublicacion);
+        
+        // Verificar si hay menos de 5 publicaciones encontradas
+        if (publicaciones.size() <= numeroPublicacionesAleatorias) {
+            return assembler.toCollectionModel(publicaciones);
+        }
 
-	    // Convertir la página de resultados a una lista
-	    List<Publicacion> listadoPublicacionesCerca = publicacionesPage.getContent();
+        // Mezclar aleatoriamente las publicaciones
+        Collections.shuffle(publicaciones);
 
-	    return assembler.toCollectionModel(listadoPublicacionesCerca);
-	}
+        // Obtener las primeras 5 publicaciones aleatorias
+        List<Publicacion> publicacionesAleatorias = publicaciones.subList(0, numeroPublicacionesAleatorias);
+
+        return assembler.toCollectionModel(publicacionesAleatorias);
+    }
 
 	
 	@GetMapping(path = "publicacionesCategoria/{categoriaNombre}")

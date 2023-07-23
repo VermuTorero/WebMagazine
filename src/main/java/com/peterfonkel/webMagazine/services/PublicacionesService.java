@@ -127,9 +127,6 @@ public class PublicacionesService {
 		return publicacionDAO.findByPublicadoTrueAndDestacadoTrue();
 	}
 
-	public Page<Publicacion> findByLugar_LugarNombreAndIdNotAndIsPublicadoTrue(String lugarNombre, Long idPublicacion,
-			PageRequest pageRequest) {
-		return publicacionDAO.findByLugar_LugarNombreAndIdNotAndPublicadoTrue(lugarNombre, idPublicacion, pageRequest);
-	}
+
 
 }
