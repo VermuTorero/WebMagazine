@@ -101,4 +101,7 @@ export class PublicacionesServiceService {
   getBorradores(idUsuario: string):Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/borradores/" + idUsuario).pipe(map(response=>response._embedded.publicaciones))
   }
+  getPublicacionesRecientesPagina(pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes?page=" + pagina ).pipe(map(response=>response._embedded.publicaciones))
+  }
 }

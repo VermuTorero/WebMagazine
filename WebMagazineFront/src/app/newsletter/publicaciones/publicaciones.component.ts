@@ -25,6 +25,7 @@ export class PublicacionesComponent implements OnInit {
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
   rol: string | null = "";
+  pagina: number = 0;
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -181,6 +182,21 @@ export class PublicacionesComponent implements OnInit {
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
+  }
+  getPaginaSiguiente(){
+    this.pagina++;
+    this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+      this.publicaciones = publicaciones;
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            publicacion.autor = autor;
+          })
+        })
+      });
+    })
   }
 
 }
