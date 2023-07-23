@@ -13,6 +13,8 @@ export class PublicacionesBuscadorComponent {
   palabrasClave: string[] = [];
   id: string = "";
   publicaciones: Publicacion[] = [];
+  pagina: number = 0;
+  rol: string | null= "";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -28,7 +30,7 @@ export class PublicacionesBuscadorComponent {
   }
 
   getPublicacionesByPalabras(){
-    this.publicacionesService.getPublicacionesBuscador(this.palabrasClave).subscribe(publicacionesBuscador=>{
+    this.publicacionesService.getPublicacionesBuscador(this.palabrasClave, this.pagina).subscribe(publicacionesBuscador=>{
       this.publicaciones = publicacionesBuscador;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
@@ -40,6 +42,22 @@ export class PublicacionesBuscadorComponent {
           publicacion.autor = autor;
         })
       });
+    }, err=>{
+      this.pagina--;
     })
+  }
+  /* Navegar entre páginas */
+  getPaginaSiguiente(){
+    this.pagina++;
+      this.getPublicacionesByPalabras();
+  }
+
+  getPaginaAnterior(){
+    /* Para usuarios con suscripcion */
+      if (this.pagina>0) {
+        this.pagina--;
+        this.getPublicacionesByPalabras();
+      }
+    
   }
 }

@@ -96,9 +96,9 @@ export class PublicacionesServiceService {
   getPublicacionesNoCarousel(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesNoCarousel").pipe(map(response=>response._embedded.publicaciones));
   }
-  getPublicacionesBuscador(palbrasClave: string[]): Observable<Publicacion[]>{
+  getPublicacionesBuscador(palbrasClave: string[], pagina: number): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint +  "/publicaciones/search/buscar-publicaciones?palabrasClave=" + palbrasClave[0] + "," + palbrasClave[1]
-     + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5]).pipe(map(response=>response._embedded.publicaciones))
+     + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5] + "&" + "page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
   }
   getLikesFromPublicacion(publicacion: any): Observable<Like[]> {
     return this.http.get<any>(this.endpoint + "/publicaciones/search/getLikesFromPublicacion/" + publicacion.id).pipe(map(response=>response._embedded.likes))

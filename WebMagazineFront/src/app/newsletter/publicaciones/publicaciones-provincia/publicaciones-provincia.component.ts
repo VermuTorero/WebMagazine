@@ -65,6 +65,7 @@ export class PublicacionesProvinciaComponent implements OnInit{
       });
     })
   }
+  
   /* Navegar entre páginas */
   getPaginaSiguiente(){
     this.pagina++;
