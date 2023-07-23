@@ -183,8 +183,12 @@ export class PublicacionesComponent implements OnInit {
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
   }
+
+  
+  /* Navegar entre páginas */
   getPaginaSiguiente(){
     this.pagina++;
+    /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
         this.publicaciones = publicaciones;
@@ -201,6 +205,7 @@ export class PublicacionesComponent implements OnInit {
         this.pagina--;
       })
     }else{
+       /* Para usuarios sin suscripcion */
       this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
         this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
@@ -222,6 +227,7 @@ export class PublicacionesComponent implements OnInit {
   }
 
   getPaginaAnterior(){
+    /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       if (this.pagina>0) {
         this.pagina--;
@@ -239,6 +245,7 @@ export class PublicacionesComponent implements OnInit {
         })
       }
     }else{
+      /* Para usuarios sin suscripcion */
       if (this.pagina>0) {
         this.pagina--;
         this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{

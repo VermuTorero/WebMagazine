@@ -7,6 +7,7 @@ import { CategoriasServiceService } from '../../service/categorias.service';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../../service/imagenes.service';
 import { LoginService } from 'src/app/security/service/login.service';
+import { Rol } from '../../models/Rol';
 
 @Component({
   selector: 'app-publicaciones-categoria',
@@ -26,6 +27,8 @@ export class PublicacionesCategoriaComponent implements OnInit{
   imageName: string ="";
   croppedresult: string = "";
   subiendo: boolean = false;
+  pagina: number = 0;
+  rol: string | null= "";
 
 
   constructor(
@@ -47,6 +50,7 @@ export class PublicacionesCategoriaComponent implements OnInit{
       this.getCategoria();
     })
     this.getPublicacionesByCategoria();
+    this.rol = sessionStorage.getItem('rol');
   }
   getCategoria(){
     this.categoria.categoriaNombre = this.categoria.categoriaNombre.replaceAll("-", " ");
@@ -59,7 +63,8 @@ export class PublicacionesCategoriaComponent implements OnInit{
   }
 
   getPublicacionesByCategoria(){
-    this.publicacionesService.getPublicacionesByCategoria(this.categoria.categoriaNombre).subscribe(publicacionesCategoria=>{
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+    this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicacionesCategoria=>{
       this.publicaciones = publicacionesCategoria;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
@@ -71,6 +76,20 @@ export class PublicacionesCategoriaComponent implements OnInit{
         })
       });
     })
+  }else{
+    this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicacionesCategoria=>{
+      this.publicaciones = publicacionesCategoria;
+      this.publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          publicacion.categoria = categoria;
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            publicacion.autor = autor;
+          })
+        })
+      });
+    })
+    }
   }
 
   abrirEdicion(){
@@ -120,5 +139,86 @@ export class PublicacionesCategoriaComponent implements OnInit{
       }
     }, 'image/jpeg', 0.70)
   }
+
+  
+    /* Navegar entre páginas */
+    getPaginaSiguiente(){
+      this.pagina++;
+      /* Para usuarios con suscripcion */
+      if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+        this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        }, err=>{
+          this.pagina--;
+        })
+      }else{
+         /* Para usuarios sin suscripcion */
+        this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        }, err=>{
+          this.pagina--;
+        })
+      }
+  
+   
+  
+    }
+  
+    getPaginaAnterior(){
+      /* Para usuarios con suscripcion */
+      if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+        if (this.pagina>0) {
+          this.pagina--;
+          this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones=>{
+            this.publicaciones = publicaciones;
+            this.publicaciones.forEach(publicacion => {
+              publicacion.id = this.publicacionesService.getId(publicacion);
+              this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+                publicacion.categoria = categoria;
+                this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                  publicacion.autor = autor;
+                })
+              })
+            });
+          })
+        }
+      }else{
+        /* Para usuarios sin suscripcion */
+        if (this.pagina>0) {
+          this.pagina--;
+          this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones=>{
+            this.publicaciones = publicaciones;
+            this.publicaciones.forEach(publicacion => {
+              publicacion.id = this.publicacionesService.getId(publicacion);
+              this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+                publicacion.categoria = categoria;
+                this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                  publicacion.autor = autor;
+                })
+              })
+            });
+          })
+        }
+      }
+      
+    }
   
 }

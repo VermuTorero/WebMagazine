@@ -77,6 +77,8 @@ export class PublicacionFichaComponent implements OnInit {
   htmlWordPress: string = "";
   htmlVermuTorero: string = "";
 
+  fechaArticuloImportado: string = "";
+
 
 
 
@@ -161,6 +163,35 @@ export class PublicacionFichaComponent implements OnInit {
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
+
+insertTextAtCursor(newText: string) {
+    const textarea = document.createElement('textarea');
+    textarea.style.position = 'fixed'; // Para que no afecte al diseño de la página
+    textarea.style.opacity = '0'; // Hacerlo invisible
+    textarea.value = this.texto;
+  
+    document.body.appendChild(textarea);
+    textarea.focus();
+  
+    // Obtener la posición actual del cursor
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+  
+    // Insertar el nuevo texto en la posición del cursor
+    this.texto = textarea.value.slice(0, start) + newText + textarea.value.slice(end);
+  
+    // Limpiar y eliminar el textarea creado temporalmente
+    textarea.blur();
+    document.body.removeChild(textarea);
+  }
+  
+
+
+
+
+
+
+  
   publicarNueva() {
     this.publicacion.publicado = true;
     this.postPublicacion();
@@ -551,7 +582,10 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   async importar() {
-
+    console.log("FECHA IMPORTADO: " , this.fechaArticuloImportado);
+    if (this.fechaArticuloImportado!="") {
+      this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z"
+    }
     this.importarTitulo();
     let doc = this.seleccionarArticulo();
     this.importarImagenes(doc);
@@ -666,7 +700,8 @@ export class PublicacionFichaComponent implements OnInit {
       }
     }
     setTimeout(() => {
-      this.texto = doc.documentElement.outerHTML;
+      this.texto = this.texto + doc.documentElement.outerHTML;
+      this.texto = this.texto.replaceAll('<figure><img', '<p class="ql-align-center imagen-container text-center"><img')
       this.texto = this.texto.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
     },
       15000);
