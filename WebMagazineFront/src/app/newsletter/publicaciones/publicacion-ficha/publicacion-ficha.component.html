@@ -419,11 +419,19 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar de WordPress</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
+            <div class="fecha-container my-2">
+                <label for="">Fecha de creacion del articulo a importar: </label>
+                <input class="mx-2" type="date" [(ngModel)]="fechaArticuloImportado">
+            </div>
+            <div class="codigo-importar-container">
+                <label for="">Pega aquí el código html de la etiqueta main del articulo.</label>
+                <textarea name="" id="" cols="52" rows="20" [(ngModel)]="htmlWordPress"></textarea>
+            </div>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>

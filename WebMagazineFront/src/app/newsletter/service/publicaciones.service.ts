@@ -78,11 +78,17 @@ export class PublicacionesServiceService {
   getPublicacionesByTag(tagNombre: string): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByTag/" + tagNombre).pipe(map(response=>response._embedded.publicaciones))
   }
-  getPublicacionesByLugar(lugarNombre: string): Observable<Publicacion[]>{
-    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugar/" + lugarNombre).pipe(map(response=>response._embedded.publicaciones))
+  getPublicacionesByLugarPagina(lugarNombre: string, pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugarPagina/" + lugarNombre  + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
   }
-  getPublicacionesByCategoria(categoriaNombre: string): Observable<Publicacion[]>{
-    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCategoria/" + categoriaNombre).pipe(map(response=>response._embedded.publicaciones))
+  getPublicacionesByLugarFreePagina(lugarNombre: string, pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesByLugarFreePagina/" + lugarNombre  + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesByCategoriaPagina(categoriaNombre: string, pagina:number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCategoria/" + categoriaNombre + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesByCategoriaFreePagina(categoriaNombre: string, pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCategoriaFree/" + categoriaNombre + "?page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
   }
   getPublicacionesCarousel(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesCarousel").pipe(map(response=>response._embedded.publicaciones));
@@ -90,9 +96,9 @@ export class PublicacionesServiceService {
   getPublicacionesNoCarousel(): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesNoCarousel").pipe(map(response=>response._embedded.publicaciones));
   }
-  getPublicacionesBuscador(palbrasClave: string[]): Observable<Publicacion[]>{
+  getPublicacionesBuscador(palbrasClave: string[], pagina: number): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint +  "/publicaciones/search/buscar-publicaciones?palabrasClave=" + palbrasClave[0] + "," + palbrasClave[1]
-     + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5]).pipe(map(response=>response._embedded.publicaciones))
+     + "," + palbrasClave[2] + "," + palbrasClave[3] + "," + palbrasClave[4] + "," + palbrasClave[5] + "&" + "page=" + pagina).pipe(map(response=>response._embedded.publicaciones))
   }
   getLikesFromPublicacion(publicacion: any): Observable<Like[]> {
     return this.http.get<any>(this.endpoint + "/publicaciones/search/getLikesFromPublicacion/" + publicacion.id).pipe(map(response=>response._embedded.likes))
@@ -100,5 +106,11 @@ export class PublicacionesServiceService {
   }
   getBorradores(idUsuario: string):Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/borradores/" + idUsuario).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesRecientesPagina(pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientes?page=" + pagina ).pipe(map(response=>response._embedded.publicaciones))
+  }
+  getPublicacionesRecientesFreePagina(pagina: number): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientesFree?page=" + pagina ).pipe(map(response=>response._embedded.publicaciones))
   }
 }

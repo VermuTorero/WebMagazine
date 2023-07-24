@@ -163,6 +163,9 @@ app-publicacion {
 .carousel-item .carousel-caption {
   animation: slide-down 0s forwards;
 }
+.numero-pagina{
+  display: inline;
+}
 
 /* Animación para hacer aparecer el texto */
 @keyframes slide-up {

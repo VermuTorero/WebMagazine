@@ -25,6 +25,7 @@ export class PublicacionesComponent implements OnInit {
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
   rol: string | null = "";
+  pagina: number = 0;
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -181,6 +182,87 @@ export class PublicacionesComponent implements OnInit {
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
+  }
+
+  
+  /* Navegar entre páginas */
+  getPaginaSiguiente(){
+    this.pagina++;
+    /* Para usuarios con suscripcion */
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+      this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+        this.publicaciones = publicaciones;
+        this.publicaciones.forEach(publicacion => {
+          publicacion.id = this.publicacionesService.getId(publicacion);
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            publicacion.categoria = categoria;
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              publicacion.autor = autor;
+            })
+          })
+        });
+      }, err=>{
+        this.pagina--;
+      })
+    }else{
+       /* Para usuarios sin suscripcion */
+      this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
+        this.publicaciones = publicaciones;
+        this.publicaciones.forEach(publicacion => {
+          publicacion.id = this.publicacionesService.getId(publicacion);
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            publicacion.categoria = categoria;
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              publicacion.autor = autor;
+            })
+          })
+        });
+      }, err=>{
+        this.pagina--;
+      })
+    }
+
+ 
+
+  }
+
+  getPaginaAnterior(){
+    /* Para usuarios con suscripcion */
+    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+      if (this.pagina>0) {
+        this.pagina--;
+        this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        })
+      }
+    }else{
+      /* Para usuarios sin suscripcion */
+      if (this.pagina>0) {
+        this.pagina--;
+        this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+                publicacion.autor = autor;
+              })
+            })
+          });
+        })
+      }
+    }
+    
   }
 
 }

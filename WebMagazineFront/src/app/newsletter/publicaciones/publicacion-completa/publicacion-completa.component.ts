@@ -142,7 +142,8 @@ export class PublicacionCompletaComponent implements OnInit {
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('</iframe>', '</iframe></div>');
 
     /*Centrar imagenes y meterlas en un imagen-container*/
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p class="ql-align-center"><img src="', '<p class="ql-align-center imagen-container text-center"><img src="')
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p class="ql-align-center"><img', '<p class="ql-align-center imagen-container text-center"><img')
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt100">', 'alt="imagenAlt100"></p>');
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt75">', 'alt="imagenAlt75"></p>');
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
@@ -220,14 +221,7 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
     twitterContainer?.appendChild(tweetContainer);
-    var style = document.createElement('style');
-    style.innerHTML = `
-    .twitter-widget-0,
-    iframe {
-      width: 100% !important;
-    }
-  `;
-    document.head.appendChild(style);
+   
   }
 
   showHtmlTwitter2() {
