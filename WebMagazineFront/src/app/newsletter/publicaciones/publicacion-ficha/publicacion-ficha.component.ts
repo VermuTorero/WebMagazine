@@ -106,11 +106,7 @@ export class PublicacionFichaComponent implements OnInit {
       }
       this.ajustarEditor();
     })
-    setInterval(() => {
-      if (!this.publicacion.publicado) {
-        this.autoGuardado();
-      }
-    }, 300000)
+    this.autoGuardado();
   }
 
   ajustarEditor() {
@@ -468,6 +464,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.router.navigate(['/acerca-de/' + this.publicacion.url])
   }
 
+  /* Comprobar si el título cumple con las condiciones necesarias */
   validarURL(titulo: string) {
     var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
 
@@ -476,27 +473,17 @@ export class PublicacionFichaComponent implements OnInit {
         return false;
       }
     }
-
     return true;
   }
 
-  /*   generarUrl(titulo: string): string{
-      titulo = titulo.replaceAll("¿", "-");
-      titulo = titulo.replaceAll("¡", "-");
-      titulo = titulo.replaceAll("?", "-");
-      titulo = titulo.replaceAll("!", "-");
-      titulo = titulo.replaceAll(":", "-");
-      titulo = titulo.replaceAll(" ", "-");
-      return titulo;
-    } */
-
+  /* Generar una url a partir del titulo */
   generarUrl(titulo: string) {
-    // Lista de stopwords en español (puedes agregar más según tus necesidades)
+    // Lista de stopwords en español que se quitaran de la url
     const stopwords = [
       'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
-      'en', 'entre', 'hacia', 'hasta', 'ni', 'la', 'las', 'lo', 'los',
+      'en', 'entre', 'hacia', 'hasta', 'ni', 'el','la', 'las', 'lo', 'los',
       'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
-      'unos', 'y', 'e', 'o', 'u', 'y/o'
+      'unos', 'y', 'e', 'o', 'u', 'y/o', "del", "que", "año", "años"
     ];
 
     // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
@@ -518,11 +505,13 @@ export class PublicacionFichaComponent implements OnInit {
     return urlOptimizada;
   }
 
+    /* Analizar el título para comprobar si tiene palabras repetidas y su longitud recomendada */
   analizarTitulo() {
     this.contarPalabrasTitulo();
     this.analizarPalabrasRepetidas();
   }
 
+  /* Comprobar que no hay palabras repetidas mas de dos veces */
   analizarPalabrasRepetidas() {
     const normalizedTitle = this.publicacion.titulo.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const palabras = normalizedTitle.toLowerCase().match(/\b\w+\b/g);
@@ -538,15 +527,22 @@ export class PublicacionFichaComponent implements OnInit {
       this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
     }
   }
+
+  /* Guardar la publicación automaticamente cada 5 min*/
   autoGuardado() {
-    if (this.publicacion.fechaPublicacion = "") {
-      this.postPublicacionAutoguardado();
-    } else {
-      this.patchPublicacionAutoguardado();
-    }
+    setInterval(() => {
+      if (!this.publicacion.publicado) {
+        if (this.publicacion.fechaPublicacion = "") {
+          this.postPublicacionAutoguardado();
+        } else {
+          this.patchPublicacionAutoguardado();
+        }
+      }
+    }, 300000)
   }
 
 
+  
   async importar(): Promise<string> {
     const parser = new DOMParser();
 
