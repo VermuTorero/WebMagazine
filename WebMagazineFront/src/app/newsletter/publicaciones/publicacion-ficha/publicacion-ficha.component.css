@@ -183,6 +183,9 @@
 .texto-obligatorio{
     color: red;
 }
+.boton-accion{
+    display: inline;
+}
 
 
 

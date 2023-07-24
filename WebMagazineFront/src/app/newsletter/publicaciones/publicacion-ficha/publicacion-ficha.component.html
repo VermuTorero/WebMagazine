@@ -144,27 +144,27 @@
     <h3 class="text-center mt-4">Contenido de la publicación</h3>
     <div class="editor-container mx-3">
         <form class="m-1 agregar-bloque-texto row form-group text-center">
-            <div class="row col-12 col-sm-1">
+            <div class="row col-12">
                 <!-- Boton agregar Imagen -->
-                <div class="col-4 col-sm-12">
+                <div class="boton-accion col-4 col-sm-3">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#imagenModal">
                         <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Video -->
-                <div class="col-4 col-sm-12">
+                <div class="col-4 col-sm-3">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
                         <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Podcast -->
-                <div class="col-4 col-sm-12">
+                <div class="col-4 col-sm-3">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
                 </div>
                 <!-- Boton importar WordPress -->
-                <div class="col-4 col-sm-12">
+                <div class="col-4 col-sm-3">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#importarModal">
                         <img class="icono-spotify" src="../../../../assets/icono-importar.png" alt="">
                     </button>
@@ -174,8 +174,9 @@
             <!-- Editor de texto Quill-->
             <div class="col-11 editor-container" id="editor">
                 <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor"
-                    id="editor"></quill-editor>
+                    id="quill-editor"></quill-editor>
             </div>
+            
         </form>
     </div>
 
@@ -419,19 +420,11 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar de WordPress</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="fecha-container my-2">
-                <label for="">Fecha de creacion del articulo a importar: </label>
-                <input class="mx-2" type="date" [(ngModel)]="fechaArticuloImportado">
-            </div>
-            <div class="codigo-importar-container">
-                <label for="">Pega aquí el código html de la etiqueta main del articulo.</label>
-                <textarea name="" id="" cols="52" rows="20" [(ngModel)]="htmlWordPress"></textarea>
-            </div>
-            
+            <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>
