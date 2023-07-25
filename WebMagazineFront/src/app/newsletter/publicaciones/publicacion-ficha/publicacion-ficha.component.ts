@@ -185,6 +185,16 @@ export class PublicacionFichaComponent implements OnInit {
       $('#errorModal').modal('show');
     }
     else {
+      if (this.fechaArticuloImportado !== "") {
+        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z"
+      } else {
+        const fechaActual = new Date();
+        const year = fechaActual.getFullYear();
+        const month = String(fechaActual.getMonth() + 1).padStart(2, '0');
+        const day = String(fechaActual.getDate()).padStart(2, '0');
+
+        this.publicacion.fechaPublicacion = year + "-" + month + "-" + day + "T00:00:00.000Z";
+      }
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {

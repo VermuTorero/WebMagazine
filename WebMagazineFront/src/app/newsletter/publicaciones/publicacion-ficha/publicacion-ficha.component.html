@@ -184,18 +184,18 @@
     <div class="row text-center m-4">
         <div class="col-2"></div>
         <div class="col-4 text-center">
-            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
+            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
                 Publicar
             </button>
-            <button *ngIf="publicacion.fechaPublicacion==''"  type="button" class="btn btn-success" (click)="publicarNueva()">
+            <button *ngIf="publicacion.id==''"  type="button" class="btn btn-success" (click)="publicarNueva()">
                 Publicar
             </button>
         </div>
         <div class="col-4 text-center">
-            <button *ngIf="publicacion.fechaPublicacion!=''" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
+            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
                 Guardar como borrador (no publicado)
             </button>
-            <button *ngIf="publicacion.fechaPublicacion==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
+            <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
                 Guardar borrador
             </button>
         </div>
@@ -424,6 +424,11 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+            <div class="fecha-importado-container my-2">
+                <label for="" class="mx-2">Fecha publicación:</label>
+                <input type="date" class="mx-2" [(ngModel)]="fechaArticuloImportado">
+            </div>
+            
             <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
         </div>
         <div class="modal-footer">

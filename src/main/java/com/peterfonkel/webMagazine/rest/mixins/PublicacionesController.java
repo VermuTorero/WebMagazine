@@ -463,7 +463,6 @@ public class PublicacionesController {
 			logger.info("TAG: " + tag.getId());
 		}
 		publicacion.setTags(tagsRecibidas);
-		publicacion.setFechaPublicacion(Instant.now());
 		logger.info("GUARDANDO PUBLICACION CON ID: " + publicacion);
 		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
