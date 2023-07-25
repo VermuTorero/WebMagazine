@@ -454,15 +454,19 @@ public class PublicacionesController {
 	public PersistentEntityResource postPublicacion(PersistentEntityResourceAssembler assembler,
 			@RequestBody Publicacion publicacion) {
 		Usuario autor = getUsuarioService().findById(publicacion.getAutor().getId()).get();
+		logger.info("CREANDO PUBLICACION CON AUTOR ID: " + autor.getId());
 		Categoria categoria = getCategoriaService().getById(publicacion.getCategoria().getId());
+		logger.info("CREANDO PUBLICACION CON CATEGORIA ID: " + categoria.getId());
 		List<Tag> tagsRecibidas = new ArrayList<>();
 		for (Tag tag : publicacion.getTags()) {
 			tagsRecibidas.add(tagDAO.getById(tag.getId()));
+			logger.info("TAG: " + tag.getId());
 		}
 		publicacion.setTags(tagsRecibidas);
 		if (publicacion.getFechaPublicacion().toString().equals("")) {
 			publicacion.setFechaPublicacion(Instant.now());
 		}
+		logger.info("GUARDANDO PUBLICACION CON ID: " + publicacion);
 		getPublicacionesService().save(publicacion);
 		return assembler.toModel(publicacion);
 	}
