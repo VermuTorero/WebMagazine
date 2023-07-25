@@ -247,6 +247,7 @@ insertTextAtCursor(newText: string) {
       || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
     }
     else {
+      
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -259,6 +260,7 @@ insertTextAtCursor(newText: string) {
   }
 
   patchPublicacion() {
+    
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
