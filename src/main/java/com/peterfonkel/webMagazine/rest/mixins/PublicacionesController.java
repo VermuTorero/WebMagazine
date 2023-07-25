@@ -463,7 +463,7 @@ public class PublicacionesController {
 			logger.info("TAG: " + tag.getId());
 		}
 		publicacion.setTags(tagsRecibidas);
-		if (publicacion.getFechaPublicacion().toString().equals("")) {
+		if (publicacion.getFechaPublicacion().toString().equals("2033-01-01T00:00:00.000Z")) {
 			publicacion.setFechaPublicacion(Instant.now());
 		}
 		logger.info("GUARDANDO PUBLICACION CON ID: " + publicacion);
