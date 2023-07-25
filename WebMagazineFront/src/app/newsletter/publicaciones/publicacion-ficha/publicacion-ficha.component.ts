@@ -79,9 +79,6 @@ export class PublicacionFichaComponent implements OnInit {
 
   fechaArticuloImportado: string = "";
 
-
-
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -153,41 +150,11 @@ export class PublicacionFichaComponent implements OnInit {
     this.texto = this.texto + this.htmlPodcast;
 
   }
-
   agregarVideo() {
     this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="youtube"></iframe>');
     this.texto = this.texto + this.htmlVideo;
     this.htmlVideo = "";
   }
-
-insertTextAtCursor(newText: string) {
-    const textarea = document.createElement('textarea');
-    textarea.style.position = 'fixed'; // Para que no afecte al diseño de la página
-    textarea.style.opacity = '0'; // Hacerlo invisible
-    textarea.value = this.texto;
-  
-    document.body.appendChild(textarea);
-    textarea.focus();
-  
-    // Obtener la posición actual del cursor
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-  
-    // Insertar el nuevo texto en la posición del cursor
-    this.texto = textarea.value.slice(0, start) + newText + textarea.value.slice(end);
-  
-    // Limpiar y eliminar el textarea creado temporalmente
-    textarea.blur();
-    document.body.removeChild(textarea);
-  }
-  
-
-
-
-
-
-
-  
   publicarNueva() {
     this.publicacion.publicado = true;
     this.postPublicacion();
@@ -247,7 +214,7 @@ insertTextAtCursor(newText: string) {
       || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
     }
     else {
-      
+
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -260,7 +227,7 @@ insertTextAtCursor(newText: string) {
   }
 
   patchPublicacion() {
-    
+
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
@@ -474,7 +441,7 @@ insertTextAtCursor(newText: string) {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
-    this.texto ="<p><br></p>" + this.texto;
+    this.texto = "<p><br></p>" + this.texto;
     this.texto = "<img src='" + urlImagen + "' alt=imagenAlt100 >" + this.texto;
   }
 
@@ -518,7 +485,7 @@ insertTextAtCursor(newText: string) {
     // Lista de stopwords en español que se quitaran de la url
     const stopwords = [
       'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
-      'en', 'entre', 'hacia', 'hasta', 'ni', 'el','la', 'las', 'lo', 'los',
+      'en', 'entre', 'hacia', 'hasta', 'ni', 'el', 'la', 'las', 'lo', 'los',
       'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
       'unos', 'y', 'e', 'o', 'u', 'y/o', "del", "que", "año", "años"
     ];
@@ -542,7 +509,7 @@ insertTextAtCursor(newText: string) {
     return urlOptimizada;
   }
 
-    /* Analizar el título para comprobar si tiene palabras repetidas y su longitud recomendada */
+  /* Analizar el título para comprobar si tiene palabras repetidas y su longitud recomendada */
   analizarTitulo() {
     this.contarPalabrasTitulo();
     this.analizarPalabrasRepetidas();
@@ -579,8 +546,8 @@ insertTextAtCursor(newText: string) {
   }
 
   async importar() {
-    console.log("FECHA IMPORTADO: " , this.fechaArticuloImportado);
-    if (this.fechaArticuloImportado!="") {
+    console.log("FECHA IMPORTADO: ", this.fechaArticuloImportado);
+    if (this.fechaArticuloImportado != "") {
       this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z"
     }
     this.importarTitulo();
@@ -684,9 +651,9 @@ insertTextAtCursor(newText: string) {
                 img.setAttribute('alt', 'imagenAlt75');
               } if (ancho > 250 && ancho < 500) {
                 img.setAttribute('alt', 'imagenAlt50');
-              } 
+              }
               img.removeAttribute('width');
-            }else {
+            } else {
               img.setAttribute('alt', 'imagenAlt75');
             }
             img.removeAttribute('height');

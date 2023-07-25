@@ -87,6 +87,9 @@ public class LikesController {
 			like.getUsuario().setClaveRecuperacion("");
 			like.getUsuario().setClaveRecuperacion("");
 			like.getUsuario().setEmail("");
+			like.getUsuario().setDirecciones(null);
+			like.getUsuario().setApellido1(like.getUsuario().getApellido1().substring(0,1));
+			like.getUsuario().setApellido2(like.getUsuario().getApellido2().substring(0,1));
 		}
 		return assembler.toCollectionModel(likesPublicacion);
 	}
