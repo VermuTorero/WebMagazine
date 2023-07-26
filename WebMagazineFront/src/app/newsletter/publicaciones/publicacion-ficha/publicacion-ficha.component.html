@@ -22,7 +22,7 @@
                 <h3 class="text-center">Datos</h3>
                 <!-- Autor -->
                 <div class="m-4 row row-dato">
-                    <p class="col-3 m-1">Autor:</p>
+                    <p class="col-2 col-sm-3 m-1">Autor:</p>
                     <div *ngIf="publicacion.autor" class="col-6 m-2">
                         <select name="autorSeleccionado" id="autorSeleccionado" [(ngModel)]="publicacion.autor.id">
                             <option *ngFor="let autor of autores" value="{{autor.id}}">
@@ -34,7 +34,7 @@
 
                 <!-- Lugar -->
                 <div class="m-4 row row-dato">
-                    <p class="col-3 m-1">Lugar:</p>
+                    <p class="col-2 col-sm-3 m-1">Lugar:</p>
                     <div *ngIf="publicacion.lugar" class="col-6 m-2">
                         <select name="lugar" id="lugar" [(ngModel)]="publicacion.lugar.id">
                             <option *ngFor="let lugar of lugares" value="{{lugar.id}}">
@@ -46,7 +46,7 @@
 
                 <!-- Categoria -->
                 <div class="m-4 row row-dato">
-                    <p class="col-3 m-1">Categoria:</p>
+                    <p class="col-2 col-sm-3 m-1">Categoria:</p>
                     <div *ngIf="publicacion.categoria" class="col-6 m-2">
                         <select name="autor" id="categoria" [(ngModel)]="publicacion.categoria.id">
                             <!--  <option value="{{publicacion.categoria.id}}" selected disabled>
@@ -146,26 +146,26 @@
         <form class="m-1 agregar-bloque-texto row form-group text-center">
             <div class="row col-12">
                 <!-- Boton agregar Imagen -->
-                <div class="boton-accion col-4 col-sm-3">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                <div class="boton-accion col-3 col-sm-3">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#imagenModal">
                         <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Video -->
-                <div class="col-4 col-sm-3">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#videoModal">
+                <div class="col-3 col-sm-3">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#videoModal">
                         <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Podcast -->
-                <div class="col-4 col-sm-3">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                <div class="col-3 col-sm-3">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#podcastModal">
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
                 </div>
                 <!-- Boton importar WordPress -->
-                <div class="col-4 col-sm-3">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#importarModal">
+                <div class="col-3 col-sm-3">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#importarModal">
                         <img class="icono-spotify" src="../../../../assets/icono-importar.png" alt="">
                     </button>
                 </div>
@@ -420,7 +420,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar publicacion</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -429,9 +429,10 @@
                 <input type="date" class="mx-2" [(ngModel)]="fechaArticuloImportado">
             </div>
             
-            <textarea name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress"></textarea>
+            <textarea class="texto-importar" name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress" placeholder="Pega aqui la etiqueta main del articulo que deseas importar. Al hacer click en Importar tardará unos segundos en acabar. Mientras se carga puede continuar cumplimentando el resto de datos del artículo. Por ejemplo cargando manualmente la fotografía principal, esta no se importará."></textarea>
         </div>
         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>
         </div>
       </div>

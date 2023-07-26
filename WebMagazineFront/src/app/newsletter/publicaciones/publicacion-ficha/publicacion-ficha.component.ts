@@ -18,10 +18,10 @@ import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
 import { LikesService } from '../../service/likes.service';
 
-const quill = new Quill('#editor', {
-  theme: 'snow',
-  scrollingContainer: '#scrolling-container',
-});
+
+
+
+
 
 
 @Component({
@@ -78,6 +78,12 @@ export class PublicacionFichaComponent implements OnInit {
   htmlVermuTorero: string = "";
 
   fechaArticuloImportado: string = "";
+
+  quill: Quill = new Quill('#editor', {
+    theme: 'snow',
+    scrollingContainer: '#scrolling-container',
+    
+  });
 
   constructor(
     private router: Router,
@@ -186,7 +192,7 @@ export class PublicacionFichaComponent implements OnInit {
     }
     else {
       if (this.fechaArticuloImportado !== "") {
-        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z"
+        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
       } else {
         const fechaActual = new Date();
         const year = fechaActual.getFullYear();

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
@@ -10,6 +10,10 @@ import { LateralServiceService } from '../../service/lateral.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { LikesService } from '../../service/likes.service';
 import { Like } from '../../models/like';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { paypalConfig } from 'src/environments/paypalConfig';
+import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 declare const twttr: any;
 declare var $: any;
 
@@ -31,6 +35,10 @@ export class PublicacionCompletaComponent implements OnInit {
   rol: string | null = "";
   numeroLikes: string = "";
 
+  @ViewChild('modalPaypal') modalPaypal: any;
+  public payPalConfig?: IPayPalConfig;
+  clientId: string = paypalConfig.clientId;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,7 +49,8 @@ export class PublicacionCompletaComponent implements OnInit {
     private router: Router,
     private lateralService: LateralServiceService,
     private usuarioService: UsuariosService,
-    private likeService: LikesService) { }
+    private likeService: LikesService,
+    private modalService:  NgbModal) { }
 
   ngOnInit(): void {
     this.getLateral();
@@ -280,5 +289,96 @@ export class PublicacionCompletaComponent implements OnInit {
       this.publicacion.likesRecibidos = likes;
       this.numeroLikes = likes.length.toString();
     })
+  }
+  invitarVino(){
+    this.pagar("2");
+  }
+
+  
+  pagar(precio: string): void {
+    this.modalService.open(this.modalPaypal, {
+      size: 'm',
+      windowClass: 'modalPaypal'
+    });
+   this.initConfig(precio);
+  }
+
+  // metodo paypal
+  private initConfig(precio: string): void {
+    this.payPalConfig = {
+      currency: 'EUR',
+      //colocar id de la pagina paypal developer, en proyecto meter variable en enviroment
+      clientId: this.clientId,
+      createOrderOnClient: (data) =>
+        <ICreateOrderRequest>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                //en que moneda lo queremos mirar doc de paypal
+                currency_code: 'EUR',
+                //colocamos el valor total de los items del carro en string
+                value: precio,
+                breakdown: {
+                  item_total: {
+                    currency_code: 'EUR',
+                    value: precio,
+                  },
+                },
+              },
+              // colocamos los items del carrito con el metodo getItemsList
+              items: [{name: "suscripcion", quantity: "1", unit_amount: {value: precio, currency_code: 'EUR'}}],
+            },
+          ],
+        },
+      advanced: {
+        commit: 'true',
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+      },
+      onApprove: (data, actions) => {
+        //mostramos un spinner mientras se procesa el pago
+        /* this.spinner.show(); */
+        console.log(
+          'onApprove - transaction was approved, but not authorized',
+          data,
+          actions
+        );
+        actions.order.get().then((details: any) => {
+          console.log(
+            'onApprove - you can get full order details inside onApprove: ',
+            details
+          );
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log(
+          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+          data
+        );
+          this.modalService.dismissAll();
+          $('#pagadoVinoModal').modal('show');
+ 
+       
+
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: (err) => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+  }
+
+  openModal(items: any, amount: any): void {
+    const modalRef = this.modalService.open(ModalReceiptComponent, { size: 'lg' });
+    modalRef.componentInstance.items = items;
+    modalRef.componentInstance.amount = amount
   }
 }
