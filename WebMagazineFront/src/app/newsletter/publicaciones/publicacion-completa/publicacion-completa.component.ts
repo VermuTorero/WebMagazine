@@ -153,11 +153,11 @@ export class PublicacionCompletaComponent implements OnInit {
     /*Centrar imagenes y meterlas en un imagen-container*/
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p class="ql-align-center"><img', '<p class="ql-align-center imagen-container text-center"><img')
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt100">', 'alt="imagenAlt100"></p>');
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt75">', 'alt="imagenAlt75"></p>');
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt50">', 'alt="imagenAlt50"></p>');
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt35">', 'alt="imagenAlt35"></p>');
-    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('alt="imagenAlt20">', 'alt="imagenAlt20"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%">', 'width="100%"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="75%">', 'width="75%"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="50%">', 'width="50%"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="35%">', 'width="35%"></p>');
+    this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="20%">', 'width="20%"></p>');
 
   }
   getPublicacionesCerca() {
@@ -193,7 +193,7 @@ export class PublicacionCompletaComponent implements OnInit {
   }
 
   showPublicacion() {
-    var body = document.querySelector("#body");
+    var body = document.querySelector("#article");
     var html = document.createElement("div");
     /* html.setAttribute("class", "d-flex"); */
     html.innerHTML = this.publicacion.htmlPublicacion;

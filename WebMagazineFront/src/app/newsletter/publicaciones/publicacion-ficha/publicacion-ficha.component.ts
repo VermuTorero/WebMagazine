@@ -448,7 +448,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   insertarImagenUrl(urlImagen: string) {
-    this.texto = this.texto + '<img src="' + urlImagen + '" alt="imagenAlt' + this.anchoImagen + '">'
+    this.texto = this.texto + '<img src="' + urlImagen + '" width="' + this.anchoImagen + '%">'
     urlImagen = "";
     this.imageUrl = "";
     this.imageName = "";
@@ -458,7 +458,7 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
     this.texto = "<p><br></p>" + this.texto;
-    this.texto = "<img src='" + urlImagen + "' alt=imagenAlt100 >" + this.texto;
+    this.texto = "<img src='" + urlImagen + "' width=100% >" + this.texto;
   }
 
   contarPalabrasTitulo() {
@@ -655,23 +655,25 @@ export class PublicacionFichaComponent implements OnInit {
         // Descargar la imagen y obtener la nueva URL
         const blobResponse = await fetch(src);
         const blob = await blobResponse.blob();
-        const file = new File([blob], 'nombre-unico.png', { type: blob.type });
+        const file = new File([blob], blob.name + '.png', { type: blob.type });
         this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
           setTimeout(() => {
             // Actualizar el atributo src de la imagen con la nueva URL
             if (img.getAttribute('width')) {
               let ancho = parseInt(img.getAttribute('width') ?? '600');
               if (ancho < 250) {
-                img.setAttribute('alt', 'imagenAlt35');
+                img.setAttribute('width', '35%');
               } if (ancho > 500) {
-                img.setAttribute('alt', 'imagenAlt75');
+                img.setAttribute('width', '75%');
               } if (ancho > 250 && ancho < 500) {
-                img.setAttribute('alt', 'imagenAlt50');
+                img.setAttribute('width', '50%');
               }
-              img.removeAttribute('width');
+              /* img.removeAttribute('width'); */
+              
             } else {
-              img.setAttribute('alt', 'imagenAlt75');
+              img.setAttribute('width', '75%');
             }
+            img.setAttribute('alt', file.name)
             img.removeAttribute('height');
             img.setAttribute('src', url);
             console.log(url);
