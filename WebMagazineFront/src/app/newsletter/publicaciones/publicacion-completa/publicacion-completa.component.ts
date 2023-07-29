@@ -406,5 +406,6 @@ export class PublicacionCompletaComponent implements OnInit {
     localStorage.setItem("description", this.publicacion.subtitulo);
     localStorage.setItem("keyWords", this.keyWords);
     localStorage.setItem("autor", this.publicacion.autor.nombre + " " + this.publicacion.autor.apellido1 + " " + this.publicacion.autor.apellido2);
+    localStorage.setItem("url", this.publicacion.url);
   }
 }

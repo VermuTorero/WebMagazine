@@ -34,6 +34,14 @@
     }else{
       document.getElementById("author").setAttribute('content', "Elisabeth G. Iborra");
     }
+
+    const url = localStorage.getItem("url");
+
+    if (urlCompleta) {
+      document.getElementById("urlCompleta").setAttribute('href', 'https://webmagazine-3758a.web.app/publicaciones/' + url );
+    }else{
+      document.getElementById("urlCompleta").remove();
+    }
     
     }
     document.addEventListener("DOMContentLoaded", setMetaTagsFromLocalStorage);
@@ -47,6 +55,7 @@
   <meta name="robots" content="index, follow">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link id="urlCompleta" rel="canonical" href="">
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
