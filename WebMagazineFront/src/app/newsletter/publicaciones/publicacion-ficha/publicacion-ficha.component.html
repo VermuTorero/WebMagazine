@@ -8,11 +8,11 @@
                 [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130" (keyup)="analizarTitulo()"></textarea>
                 <div class="recomendaciones">
                     <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
-                    <p class="recomendacion-titulo">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
+                    <p class="recomendacion">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
                         <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
                         <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
                     </p>
-                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion-titulo">- Las siguientes palabras se repiten mucho: {{palabrasRepetidasTitulo}}  ❓</p>
+                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- Las siguientes palabras se repiten mucho: {{palabrasRepetidasTitulo}}  ❓</p>
                 </div>
       </div>
 
@@ -125,7 +125,7 @@
                                 <div class="card-text text-center">
                                     <textarea class="row text-descripcion mt-4 mb-2 mx-1" type="text" name="subtitulo"
                                         rows="3" maxlength="210" [(ngModel)]="publicacion.subtitulo"
-                                        placeholder="Descripción de la publicación (para preview)" (keyup)="contarPalabrasDescripcion()"></textarea>
+                                        placeholder="Descripción de la publicación (para preview)" (keyup)="analizarSubtitulo()"></textarea>
                                         <p class="row recomendacion-titulo mx-1">Recomendado entre 20 y 30 palabras. Llevas: {{palabrasDescripcion}}</p>
                                 </div>
                                 <div class="color-letra m-2">
@@ -181,18 +181,23 @@
         <div class="recomendaciones-container">
             <div class="recomendaciones">
                 <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
-                <p *ngIf="!titulosH1" class="recomendacion-titulo">- No debe usarse el tamaño H2. Esta reservado para el nombre de la web ❓</p>
-                <p *ngIf="titulosH1" class="recomendacion-titulo">- No se emplea tamaño H1. Reservado nombre web ✅</p>
-                <p *ngIf="!titulosH2" class="recomendacion-titulo">- No debe usarse el tamaño H2. Esta reservado para el título del artículo ❓</p>
-                <p *ngIf="titulosH2" class="recomendacion-titulo">- No se emplea tamaño H2. Reservado para el título del artículo ✅</p>
-                <p *ngIf="!titulosH3" class="recomendacion-titulo">- Los titulos de cada sección de tu artículo deben tener tamaño H3. No se encuentra ninguno ❓</p>
-                <p *ngIf="titulosH3" class="recomendacion-titulo">- Se ha empleado el tamaño H3 (títulos de secciones del artículo) ✅</p>
-                <p *ngIf="!numeroEnlaces" class="recomendacion-titulo">- Es conveniente que tu articulo tenga algún hipervínculo. No se encuentra ninguno ❓</p>
-                <p *ngIf="numeroEnlaces" class="recomendacion-titulo">- El articulo tiene al menos un hipervínculo ✅</p>
-                <p *ngIf="!enlaces" class="recomendacion-titulo">- Hay al menos un hipervínculo que no esta funcionando ❓</p>
-                <p *ngIf="enlaces" class="recomendacion-titulo">- Los hipervínculos funcionan correctamente ✅</p>
-                <p *ngIf="numeroImgs>15" class="recomendacion-titulo">- Alto número de imagenes {{numeroImgs}}. Recomendado un máximo de 15❓</p>
-                <p *ngIf="numeroImgs<16" class="recomendacion-titulo">- Número de imágenes ({{numeroImgs}}) adecuado ✅</p>
+                <p *ngIf="!titulosH1" class="recomendacion">- No debe usarse el tamaño H1. Esta reservado para el título ❓</p>
+                <p *ngIf="titulosH1" class="recomendacion">- No se emplea tamaño H1. Reservado para el título ✅</p>
+                <p *ngIf="!titulosH2" class="recomendacion">- El tamaño h2 solo debe usarse para el subtítulo ❓</p>
+                <p *ngIf="titulosH2" class="recomendacion">- No se emplea tamaño H2. Reservado para el subtítulo del artículo ✅</p>
+                <p *ngIf="!titulosH3" class="recomendacion">- Los titulos de cada sección de tu artículo deben tener tamaño H3. No se encuentra ninguno ❓</p>
+                <p *ngIf="titulosH3" class="recomendacion">- Se ha empleado el tamaño H3 (títulos de secciones del artículo) ✅</p>
+                <p *ngIf="!numeroEnlaces" class="recomendacion">- Es conveniente que tu articulo tenga algún hipervínculo. No se encuentra ninguno ❓</p>
+                <p *ngIf="numeroEnlaces" class="recomendacion">- El articulo tiene al menos un hipervínculo ✅</p>
+                <p *ngIf="!enlaces" class="recomendacion">- Hay al menos un hipervínculo que no esta funcionando ❓</p>
+                <p *ngIf="enlaces && numeroEnlaces" class="recomendacion">- Los hipervínculos funcionan correctamente ✅</p>
+                <p *ngIf="numeroImgs>15" class="recomendacion">- Alto número de imagenes {{numeroImgs}}. Recomendado un máximo de 15❓</p>
+                <p *ngIf="numeroImgs<16 && numeroImgs>0" class="recomendacion">- Número de imágenes ({{numeroImgs}}) adecuado ✅</p>
+                <p *ngIf="numeroImgs<1" class="recomendacion">- La publicación debe contener al menos la imagen de preview❓</p>
+                <p *ngIf="!srcImgs" class="recomendacion">- Hay al menos un enlace de imagen que no esta funcionando❓</p>
+                <div *ngIf="numeroImgs>0">
+                    <p *ngIf="srcImgs" class="recomendacion">- Los enlaces a las imagenes funcionan correctamente ✅</p>
+                </div>
             </div>
         </div>
     </div>
