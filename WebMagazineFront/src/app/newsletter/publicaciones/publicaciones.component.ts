@@ -34,6 +34,7 @@ export class PublicacionesComponent implements OnInit {
     private lateralService: LateralServiceService) { }
 
   ngOnInit() {
+    this.guardarLocalStorageMeta();
     this.getLateral();
     this.getImagenesInicio(); 
     this.rol = sessionStorage.getItem('rol');
@@ -44,6 +45,7 @@ export class PublicacionesComponent implements OnInit {
     }
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
+   
   }
 /* Publicaciones recientes - 12 ultimas */
   getPublicacionesRecientes(){
@@ -56,6 +58,7 @@ export class PublicacionesComponent implements OnInit {
           publicacion.categoria = categoria;
           this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
             publicacion.autor = autor;
+          
           })
         })
       });
@@ -72,6 +75,7 @@ export class PublicacionesComponent implements OnInit {
           publicacion.categoria = categoria;
           this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
             publicacion.autor = autor;
+    
           })
         })
       });
@@ -88,6 +92,7 @@ export class PublicacionesComponent implements OnInit {
           publicacion.categoria = categoria;
           this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
             publicacion.autor = autor;
+            
           })
         })
       });
@@ -261,8 +266,14 @@ export class PublicacionesComponent implements OnInit {
           });
         })
       }
-    }
-    
+    } 
+  }
+
+  guardarLocalStorageMeta(){
+    localStorage.setItem("title", "Vermú Torero");
+    localStorage.setItem("description", "La revista digital y podcast del aperitivo a la cena. Vinos, restaurantes, viajes, eventos culturales, estilos de vida.");
+    localStorage.setItem("keyWords", "revista, digital, aperitivo, comer, comida, cena, cenar, viajes, viajar, vino, carnes, gastronomía, turismo");
+    localStorage.setItem("autor", "Elisabeth G. Iborra");
   }
 
 }

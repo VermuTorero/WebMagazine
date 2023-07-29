@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute, ParamMap, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
@@ -17,11 +17,6 @@ import { LugaresServiceService } from '../../service/lugares.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
 import { LikesService } from '../../service/likes.service';
-
-
-
-
-
 
 
 @Component({
@@ -53,6 +48,7 @@ export class PublicacionFichaComponent implements OnInit {
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
+  nombreImagen: string = ""
   /* Tipos para las opciones del formulario */
   lugares: Lugar[] = [];
 
@@ -78,6 +74,14 @@ export class PublicacionFichaComponent implements OnInit {
   htmlVermuTorero: string = "";
 
   fechaArticuloImportado: string = "";
+
+  titulosH3: boolean = false;
+  titulosH2: boolean = false;
+  titulosH1: boolean = false;
+  enlaces: boolean = false;
+  numeroEnlaces: boolean = false;
+  imgs: boolean = false;
+  numeroImgs: number = 0;
 
   quill: Quill = new Quill('#editor', {
     theme: 'snow',
@@ -148,6 +152,7 @@ export class PublicacionFichaComponent implements OnInit {
       console.log(this.publicacion.htmlPublicacion)
       /* quill.insertText(10, this.publicacion.htmlPublicacion); */
       this.analizarTitulo();
+      this.analizarTexto();
     })
   }
 
@@ -423,7 +428,7 @@ export class PublicacionFichaComponent implements OnInit {
       reader.onload = () => {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
-        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        let imagenRecortada = new File([blobGenerado], this.nombreImagen, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
           console.log("URL IMAGEN SUBIDA: ", url)
           this.insertarImagenUrl(url);
@@ -448,7 +453,8 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   insertarImagenUrl(urlImagen: string) {
-    this.texto = this.texto + '<img src="' + urlImagen + '" width="' + this.anchoImagen + '%">'
+    this.texto = this.texto + '<img src="' + urlImagen + '" width="' + this.anchoImagen + '%" alt="' + this.nombreImagen + '">'
+    this.nombreImagen = "";
     urlImagen = "";
     this.imageUrl = "";
     this.imageName = "";
@@ -458,7 +464,10 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
     this.texto = "<p><br></p>" + this.texto;
-    this.texto = "<img src='" + urlImagen + "' width=100% >" + this.texto;
+    console.log("NOMBRE-IMAGEN: ", this.nombreImagen)
+    this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
+    this.nombreImagen = "";
+    console.log("TEXTO: ", this.texto )
   }
 
   contarPalabrasTitulo() {
@@ -546,6 +555,85 @@ export class PublicacionFichaComponent implements OnInit {
       const palabrasRepetidas = Object.keys(contador).filter((palabra) => contador[palabra] >= 3);
       this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
     }
+  }
+
+  analizarTexto(){
+    if (this.texto.split('<h3').length<2) {
+      this.titulosH3 = false;
+    }
+    if (this.texto.split('<h1').length>0 ) {
+      this.titulosH1 = false;
+    }
+    if (this.texto.split('<h2').length>0 ) {
+      this.titulosH2 = false;
+    }
+    if(this.texto.split('<a').length<2){
+      this.enlaces = false;
+    }
+    if(this.texto.split('<img').length>15){
+      this.enlaces = false;
+    }
+
+    if((this.texto.split('<h3').length>1) ){
+      this.titulosH3 = true;
+    }
+    if (this.texto.split('<h1').length==1) {
+      this.titulosH1 = true;
+    }
+    if (this.texto.split('<h2').length==1) {
+      this.titulosH2 = true;
+    }
+    if(this.texto.split('<a').length>1){
+      this.enlaces = true;
+    }
+    if(this.texto.split('<img').length<16){
+      this.enlaces = true;
+    }
+    this.numeroImgs = this.texto.split('<img').length-1;
+    this.analizarEnlaces();
+  }
+
+  analizarEnlaces() {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(this.texto, "text/html");
+    const enlaces = doc.querySelectorAll("a");
+    this.enlaces = true;
+    if (enlaces.length>0) {
+      this.numeroEnlaces = true;
+    }
+    enlaces.forEach((enlace) => {
+      const url = enlace.getAttribute("href");
+      if (url) {
+        this.comprobarEnlace(url).then((status) => {
+          if (status === 200) {
+            console.log(`El enlace "${url}" está funcionando correctamente.`);
+          } else {
+            console.log(`El enlace "${url}" no está disponible o ha devuelto un código de error.`);
+            this.enlaces = false;
+          }
+        }).catch(() => {
+          console.log(`Error al intentar acceder al enlace "${url}".`);
+        });
+      }
+    });
+  }
+
+
+  comprobarEnlace(url: string): Promise<number> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("HEAD", url, true);
+  
+      xhr.onload = () => {
+        resolve(xhr.status);
+      };
+  
+      xhr.onerror = () => {
+        reject();
+      };
+  
+      xhr.send();
+    });
   }
 
   /* Guardar la publicación automaticamente cada 5 min*/
@@ -688,6 +776,7 @@ export class PublicacionFichaComponent implements OnInit {
     },
       15000);
   }
+ 
 }
 
 

@@ -1,19 +1,65 @@
 <!doctype html>
 <html lang="es">
+
 <head>
+  <script>
+    function setMetaTagsFromLocalStorage() {
+       
+    const title = localStorage.getItem("title");
+    if (title) {
+      document.getElementById("title").textContent = title;
+    }else{
+      document.getElementById("title").textContent = "Vermú Torero";
+    }
+   
+
+    const description = localStorage.getItem("description");
+    if (description) {
+      document.getElementById("description").setAttribute('content', description);
+    }else{
+      document.getElementById("description").setAttribute('content', "La revista digital y podcast del aperitivo a la cena");
+    }
+   
+    const keyWords = localStorage.getItem("keyWords");
+    if (keyWords) {
+      document.getElementById("keyWords").setAttribute('content', keyWords);
+    }else{
+      document.getElementById("keyWords").setAttribute('content', "revista, digital, aperitivo, comer, comida, cena, cenar, viajes, viajar, vino, carnes, gastronomía, turismo");
+    }
+
+
+    const autor = localStorage.getItem("autor");
+    if (autor) {
+      document.getElementById("author").setAttribute('content',autor);
+    }else{
+      document.getElementById("author").setAttribute('content', "Elisabeth G. Iborra");
+    }
+    
+    }
+    document.addEventListener("DOMContentLoaded", setMetaTagsFromLocalStorage);
+  </script>
   <meta charset="utf-8">
-  <title>WebMagazineFront</title>
+  <meta name="language" content="es">
+  <title id="title"></title>
+  <meta id="description" name="description" content="">
+  <meta id="keyWords" name="keywords" content="">
+  <meta id="author" name="author" content="">
+  <meta name="robots" content="index, follow">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body class="m-0 p-0">
   <app-root></app-root>
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
-</html>
 
+</html>

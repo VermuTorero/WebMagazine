@@ -183,6 +183,11 @@
 .boton-accion{
     display: inline;
 }
+.tip-seo{
+    background-color: dodgerblue;
+    color: white;
+    padding: 5%;
+}
 
 
 
@@ -254,12 +259,15 @@
         padding: 0;
     }
     .recomendaciones{
-        background-color: rgb(229, 225, 225);
+        background-color: dodgerblue;
+        color: white;
         margin-left: 0%;
         margin-top: 1%;
         width: 80%;
+        font-size: small;
         border-style: solid;
         border-width: 1px;
+        border-color: black;
     }
     .editor-container{
         margin-left: 2% !important;
@@ -272,6 +280,9 @@
     .texto-importar{
         margin-left: 1%;
         width: 90%;
+    }
+    .nombre-imagen{
+        width: 100% !important;
     }
     
   
@@ -310,18 +321,28 @@
         margin-left: 6%;
     }
     .recomendaciones{
-        background-color: rgb(229, 225, 225);
+        background-color: dodgerblue;
+        color: white;
         margin-left: 0%;
         margin-top: 2%;
         width: 60%;
         border-style: solid;
         border-width: 1px;
+        border-color: black;
+        padding: 1%;
+    }
+    .recomendaciones-container{
+        justify-content: center;
+        display: flex;
     }
     .quill-editor {
         background-color: white;
         margin-left: 7%;
         width: 92%;
         box-shadow: 2px 2px 10px #666;
+    }
+    .nombre-imagen{
+        width: 100%;
     }
 
 }
@@ -330,4 +351,10 @@
 }
 .recomendacion-titulo{
     margin-bottom: 0%;
+}
+.tip-seo{
+    font-size: small;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
 }

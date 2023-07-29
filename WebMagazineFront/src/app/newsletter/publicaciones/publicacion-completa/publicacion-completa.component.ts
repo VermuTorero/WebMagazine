@@ -34,6 +34,7 @@ export class PublicacionCompletaComponent implements OnInit {
   palabrasClave: string = "";
   rol: string | null = "";
   numeroLikes: string = "";
+  keyWords: string = "";
 
   @ViewChild('modalPaypal') modalPaypal: any;
   public payPalConfig?: IPayPalConfig;
@@ -61,7 +62,6 @@ export class PublicacionCompletaComponent implements OnInit {
     } else {
       this.getPublicacionFree();
     }
-
   }
 
   getUrl(): void {
@@ -97,6 +97,8 @@ export class PublicacionCompletaComponent implements OnInit {
       })
       this.formatoContenidoMultimedia();
       this.showPublicacion();
+      this.generarKeyWords();
+      this.guardarLocalStorageMeta();
 
 
     })
@@ -129,9 +131,10 @@ export class PublicacionCompletaComponent implements OnInit {
       this.likeService.getLikes(publicacion.id).subscribe(likes => {
         this.numeroLikes = likes.length.toString();
       })
-
       this.formatoContenidoMultimedia()
       this.showPublicacion();
+      this.generarKeyWords();
+      this.guardarLocalStorageMeta();
     })
   }
 
@@ -210,7 +213,12 @@ export class PublicacionCompletaComponent implements OnInit {
     });
   }
   getFechaPublicacion() {
-    this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
+    if (this.publicacion.fechaPublicacion) {
+      this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
+    }else{
+      this.fechaFormateada = "2000-01-01"
+    }
+    
   }
 
   getLateral() {
@@ -248,7 +256,7 @@ export class PublicacionCompletaComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter3;
     twitterContainer?.appendChild(tweetContainer);
-    /* twttr.widgets.load(); */
+    twttr.widgets.load();
   }
 
   showHtmlPodcast() {
@@ -380,5 +388,23 @@ export class PublicacionCompletaComponent implements OnInit {
     const modalRef = this.modalService.open(ModalReceiptComponent, { size: 'lg' });
     modalRef.componentInstance.items = items;
     modalRef.componentInstance.amount = amount
+  }
+
+  generarKeyWords(){
+    this.publicacion.url.split('-').forEach(keyWord => {
+      if (this.keyWords!="") {
+        this.keyWords = this.keyWords + ", " + keyWord;
+      }else{
+        this.keyWords = keyWord;
+      }
+      
+    });
+  };
+
+  guardarLocalStorageMeta(){
+    localStorage.setItem("title", this.publicacion.titulo);
+    localStorage.setItem("description", this.publicacion.subtitulo);
+    localStorage.setItem("keyWords", this.keyWords);
+    localStorage.setItem("autor", this.publicacion.autor.nombre + " " + this.publicacion.autor.apellido1 + " " + this.publicacion.autor.apellido2);
   }
 }

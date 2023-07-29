@@ -7,7 +7,7 @@
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
                 [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130" (keyup)="analizarTitulo()"></textarea>
                 <div class="recomendaciones">
-                    <p class="titulo-recomendaciones"><b>Recomendaciones en título</b></p>
+                    <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
                     <p class="recomendacion-titulo">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
                         <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
                         <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
@@ -142,7 +142,7 @@
 
     <!-- Editor de texto -->
     <h3 class="text-center mt-4">Contenido de la publicación</h3>
-    <div class="editor-container mx-3">
+    <div class="editor-container mx-3"  (click)="analizarTexto()">
         <form class="m-1 agregar-bloque-texto row form-group text-center">
             <div class="row col-12">
                 <!-- Boton agregar Imagen -->
@@ -174,10 +174,27 @@
             <!-- Editor de texto Quill-->
             <div class="col-11 editor-container" id="editor">
                 <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor"
-                    id="quill-editor"></quill-editor>
+                    id="quill-editor"  (keyup)="analizarTexto()"></quill-editor>
             </div>
-            
+
         </form>
+        <div class="recomendaciones-container">
+            <div class="recomendaciones">
+                <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
+                <p *ngIf="!titulosH1" class="recomendacion-titulo">- No debe usarse el tamaño H2. Esta reservado para el nombre de la web ❓</p>
+                <p *ngIf="titulosH1" class="recomendacion-titulo">- No se emplea tamaño H1. Reservado nombre web ✅</p>
+                <p *ngIf="!titulosH2" class="recomendacion-titulo">- No debe usarse el tamaño H2. Esta reservado para el título del artículo ❓</p>
+                <p *ngIf="titulosH2" class="recomendacion-titulo">- No se emplea tamaño H2. Reservado para el título del artículo ✅</p>
+                <p *ngIf="!titulosH3" class="recomendacion-titulo">- Los titulos de cada sección de tu artículo deben tener tamaño H3. No se encuentra ninguno ❓</p>
+                <p *ngIf="titulosH3" class="recomendacion-titulo">- Se ha empleado el tamaño H3 (títulos de secciones del artículo) ✅</p>
+                <p *ngIf="!numeroEnlaces" class="recomendacion-titulo">- Es conveniente que tu articulo tenga algún hipervínculo. No se encuentra ninguno ❓</p>
+                <p *ngIf="numeroEnlaces" class="recomendacion-titulo">- El articulo tiene al menos un hipervínculo ✅</p>
+                <p *ngIf="!enlaces" class="recomendacion-titulo">- Hay al menos un hipervínculo que no esta funcionando ❓</p>
+                <p *ngIf="enlaces" class="recomendacion-titulo">- Los hipervínculos funcionan correctamente ✅</p>
+                <p *ngIf="numeroImgs>15" class="recomendacion-titulo">- Alto número de imagenes {{numeroImgs}}. Recomendado un máximo de 15❓</p>
+                <p *ngIf="numeroImgs<16" class="recomendacion-titulo">- Número de imágenes ({{numeroImgs}}) adecuado ✅</p>
+            </div>
+        </div>
     </div>
 
     <!-- Boton Publicar -->
@@ -272,6 +289,16 @@
                         <option value="20">Ancho 20%</option>
                     </select>
                 </section>
+                <section>
+                    <div action="" class="my-2">
+                        <label for="" class="mx-2">Nombre de la imagen: </label>
+                        <input type="text" class="nombre-imagen" [(ngModel)]="nombreImagen">
+                    </div>
+                    <div>
+                        <p class="my-0">*Escribe entre 3 y 5 palabras descriptivas de la imagen separadas por "-"</p>
+                        <p class="my-0">*Ejemplo: solomillo-brasa-restaurante-manolo</p>
+                    </div>
+                </section>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -331,6 +358,15 @@
                     <angular-cropper [cropperOptions]='{aspectRatio: 3 / 2}' [imageUrl]="imagePreviewUrl"
                         #angularCropper2></angular-cropper>
                 </section>
+                <section action="" class="my-2">
+                    <label for="nombre-imagen" class="mx-2">Nombre de la imagen: </label>
+                    <input type="text" class="nombre-imagen" [(ngModel)]="nombreImagen" id="nombre-imagen">
+                </section>
+                <div class="tip-seo p-1">
+                    <p class="my-0"><b>TIP SEO</b></p>
+                    <p class="my-0">*Escribe entre 3 y 5 palabras descriptivas de la imagen separadas por "-"</p>
+                    <p class="my-0">*Ejemplo: solomillo-brasa-restaurante-manolo</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -12,7 +12,7 @@ const routes: Routes = [
       import("src/app/ecommerce/ecommerce.module").then(
         (m) => m.EcommerceModule),
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  /* { path: '**', redirectTo: '', pathMatch: 'full' }, */
 
 ];
 

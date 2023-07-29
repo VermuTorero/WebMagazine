@@ -3,6 +3,7 @@
         <section class="hoja">
 
             <!-- Titulo de la publicacion -->
+            
             <h2 class="text-center"><b>{{publicacion.titulo}}</b></h2>
 
             <!-- Datos de la publicacion -->
@@ -80,7 +81,7 @@
                 <article class="article" id="article"></article>
             </section>
             <div class="text-center">
-                <p>Publicado el {{fechaFormateada}}</p>
+                <p *ngIf="fechaFormateada">Publicado el {{fechaFormateada}}</p>
             </div>
             <div class="row justify-content-center">
                 <a *ngIf="rol == 'ROLE_ADMIN' || rol == 'ROLE_WRITER'" class="btn btn-outline-warning m-2"

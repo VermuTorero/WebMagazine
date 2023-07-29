@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit{
   isLoggedAdmin: any;
   isLoggedWriter: any;
   public isCollapsed = true;  
+
+
   constructor(private loginService: LoginService){
   }
 
@@ -31,5 +33,9 @@ export class HeaderComponent implements OnInit{
     this.loginService.getIsWriterFlagObs().subscribe((flag) => {
       this.isLoggedWriter = flag;
     });
+  }
+
+  getMeta(){
+
   }
 }
