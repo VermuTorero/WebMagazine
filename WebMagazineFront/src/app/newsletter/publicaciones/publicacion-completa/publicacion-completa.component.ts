@@ -36,7 +36,7 @@ export class PublicacionCompletaComponent implements OnInit {
   numeroLikes: string = "";
   keyWords: string = "";
 
-  @ViewChild('modalPaypal') modalPaypal: any;
+  @ViewChild('modalVinoPaypal') modalPaypal: any;
   public payPalConfig?: IPayPalConfig;
   clientId: string = paypalConfig.clientId;
 
@@ -298,15 +298,15 @@ export class PublicacionCompletaComponent implements OnInit {
       this.numeroLikes = likes.length.toString();
     })
   }
+
   invitarVino(){
-    this.pagar("2");
+    this.pagar("3");
   }
 
-  
   pagar(precio: string): void {
     this.modalService.open(this.modalPaypal, {
       size: 'm',
-      windowClass: 'modalPaypal'
+      windowClass: 'modalVinoPaypal'
     });
    this.initConfig(precio);
   }
@@ -368,14 +368,13 @@ export class PublicacionCompletaComponent implements OnInit {
         );
           this.modalService.dismissAll();
           $('#pagadoVinoModal').modal('show');
- 
-       
-
       },
       onCancel: (data, actions) => {
+        this.modalService.dismissAll();
         console.log('OnCancel', data, actions);
       },
       onError: (err) => {
+        this.modalService.dismissAll();
         console.log('OnError', err);
       },
       onClick: (data, actions) => {

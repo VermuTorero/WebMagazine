@@ -20,7 +20,8 @@
         </div>
         <div class="text-center precio-suscripcion">
             <p>PRECIO</p>
-            <input [(ngModel)]="suscripciones[0].precio">
+            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 1)" [(ngModel)]="suscripciones[0].precio">
+            <p id="mensajeError1" style="color: red; display: none;">Solo se admiten números</p>
         </div>
     </div>
     
@@ -45,7 +46,8 @@
         </div>
         <div class="text-center precio-suscripcion">
             <p>PRECIO</p>
-            <input [(ngModel)]="suscripciones[1].precio">
+            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 2)" [(ngModel)]="suscripciones[1].precio">
+            <p id="mensajeError2" style="color: red; display: none;">Solo se admiten números</p>
         </div>
     </div>
 
@@ -70,7 +72,8 @@
         </div>
         <div class="text-center precio-suscripcion">
             <p>PRECIO</p>
-            <input [(ngModel)]="suscripciones[2].precio">
+            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 3)" [(ngModel)]="suscripciones[2].precio">
+            <p id="mensajeError3" style="color: red; display: none;">Solo se admiten números</p>
         </div>
     </div>
 </div>

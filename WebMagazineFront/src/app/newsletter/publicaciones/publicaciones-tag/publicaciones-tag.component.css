@@ -4,3 +4,8 @@
     border-style: none;
     padding: 0%;
 }
+.cards-container{
+    display: flex;
+     flex-wrap: wrap;
+    align-items: flex-start
+  }

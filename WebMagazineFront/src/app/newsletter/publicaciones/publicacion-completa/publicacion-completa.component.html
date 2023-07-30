@@ -192,7 +192,7 @@
 </div>
 
 <!-- Modal Pagado Vino-->
-<div class="modal fade" id="pagadoModal" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
+<div class="modal fade" id="pagadoVinoModal" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -208,3 +208,21 @@
       </div>
     </div>
   </div>
+
+   <!-- Modal de pago de paypal-->
+   <ng-template #modalVinoPaypal let-modal>
+
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Realizar Pago</h1>
+        <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-secondary"
+            (click)="modal.close('Save click')">Cerrar</button>
+    </div>
+
+</ng-template>

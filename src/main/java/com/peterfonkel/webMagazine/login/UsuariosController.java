@@ -205,7 +205,7 @@ public class UsuariosController {
 							+ "\r\n"
 							+ "Si tienes alguna pregunta o inquietud sobre nuestros términos y condiciones o nuestra política de privacidad, no dudes en contactarnos.\"\r\n"
 							+ "\r\n"
-							+ "Recuerda adaptar el texto a las necesidades específicas de tu aplicación y a las leyes y regulaciones aplicables en tu jurisdicción. Además, se recomienda consultar con un asesor legal para asegurarse de que el texto cumpla con todos los requisitos legales pertinentes.");
+							+ "Esta aplicación utiliza una pasarela de pago de Paypal, no obtiene ni almacena ningún dato bancario ni de tu usuario o contraseña de Paypal");
 			logger.info("Enviado un correo a: " + usuario.getEmail());
 			return true;
 		} catch (Exception e) {

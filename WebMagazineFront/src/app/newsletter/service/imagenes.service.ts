@@ -53,7 +53,7 @@ export class ImagenesService {
 
   subirImagen(file: File, id: string, tipo: string): Observable<string> {
     let arrayNombre = file.name.split(".");
-    let num = Math.floor(Math.random()*1000);
+    let num = Math.floor(Math.random()*100000000);
     arrayNombre[0] = arrayNombre[0] + num;
 
     //Creo una referencia en el storage

@@ -10,6 +10,7 @@ declare var $: any;
 })
 export class SuscripcionFichaComponent implements OnInit {
   suscripciones: TipoSuscripcion[] = [];
+  numeroValido: boolean = true;
 
   constructor(private tiposSuscripcionService: TipoSuscripcionService) {
 
@@ -38,4 +39,35 @@ export class SuscripcionFichaComponent implements OnInit {
       });
     });
   }
+
+  soloNumeros(event: KeyboardEvent, suscripcion: number): void {
+    const input = event.target as HTMLInputElement;
+    const charCode = event.charCode;
+    const char = String.fromCharCode(charCode);
+    const regex = /^[0-9]+(\.[0-9]*)?$/; // Expresión regular para números enteros o con decimales
+  
+    if (!regex.test(input.value + char)) {
+      event.preventDefault();
+      this.mostrarMensajeError(suscripcion);
+    } else {
+      this.ocultarMensajeError(suscripcion);
+    }
+  }
+  
+  mostrarMensajeError(suscripcion: number): void {
+    const mensajeError = document.getElementById("mensajeError" + suscripcion);
+    if (mensajeError) {
+      mensajeError.style.display = "block";
+    }
+  }
+  
+  ocultarMensajeError(suscripcion: number): void {
+    const mensajeError = document.getElementById("mensajeError" + suscripcion);
+    if (mensajeError) {
+      mensajeError.style.display = "none";
+    }
+  }
+  
+  
+
 }

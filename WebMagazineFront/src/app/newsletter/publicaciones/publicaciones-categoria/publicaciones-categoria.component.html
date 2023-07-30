@@ -30,10 +30,13 @@
     </div>
   </div>
   <hr class="mt-4">
-  <div *ngFor="let publicacion of publicaciones"
+  <div class="cards-container">
+    <div *ngFor="let publicacion of publicaciones"
     class="card row col-12 col-md-3 col-xxl-2">
     <app-publicacion [publicacion]="publicacion"></app-publicacion>
   </div>
+  </div>
+
   <div class="paginas text-center">
     <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
     <p class="numero-pagina">Pagina {{pagina +1}}</p>

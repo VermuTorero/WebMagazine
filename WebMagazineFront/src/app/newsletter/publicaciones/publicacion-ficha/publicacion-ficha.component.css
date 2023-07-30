@@ -41,7 +41,53 @@
     width: 100%;
 }
 
+::ng-deep h2{
+    font-size:medium!important;
 
+}
+::ng-deep h3{
+    font-size:large!important;
+
+}
+
+::ng-deep p{
+    font-size:medium!important;
+
+}
+::ng-deep blockquote{
+    font-size:medium!important;
+
+}
+::ng-deep img[width="20%"]{
+    padding: 1.5%;
+    background-color: rgb(241, 240, 240);
+    border-style: dashed;
+    border-width: 1px;
+}
+::ng-deep img[width="35%"]{
+    padding: 1.5%;
+    background-color: rgb(241, 240, 240);
+    border-style: dashed;
+    border-width: 1px;
+}
+::ng-deep img[width="50%"]{
+    padding: 1.5%;
+    background-color: rgb(241, 240, 240);
+    border-style: dashed;
+    border-width: 1px;
+}
+::ng-deep img[width="75%"]{
+    padding: 1.5%;
+    background-color: rgb(241, 240, 240);
+    border-style: dashed;
+    border-width: 1px;
+}
+::ng-deep img[width="100%"]{
+    padding: 1.5%;
+    background-color: rgb(241, 240, 240);
+    border-style: dashed;
+    border-width: 1px;
+}
 
 
 .icono-spotify {

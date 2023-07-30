@@ -4,6 +4,7 @@ import { PublicacionesServiceService } from '../service/publicaciones.service';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../service/imagenes.service';
 import { ImagenInicio } from '../models/imagenInicio';
+import { LikesService } from '../service/likes.service';
 
 @Component({
   selector: 'app-editor-inicio',
@@ -29,7 +30,7 @@ export class EditorInicioComponent implements OnInit {
   imagenInicioCentral: ImagenInicio = new ImagenInicio();
 
   constructor(private publicacionesService: PublicacionesServiceService,
-    private imagenesService: ImagenesService) {
+    private imagenesService: ImagenesService, private likesService: LikesService) {
 
   }
   
@@ -82,9 +83,24 @@ export class EditorInicioComponent implements OnInit {
             this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
               lugar.id = this.publicacionesService.getId(lugar);
               publicacion.lugar = lugar;
-              this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
-                this.getPublicaciones();
-                this.getImagenesInicio();
+              this.likesService.getLikes(publicacion.id).subscribe(likes => {
+                likes.forEach(like => {
+                  like.id = this.likesService.getId(like);
+                });
+                publicacion.likesRecibidos = likes;
+                
+              }, 
+              err=>{
+                this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                  this.getPublicaciones();
+                  this.getImagenesInicio();
+                })
+              },
+              ()=>{
+                this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                  this.getPublicaciones();
+                  this.getImagenesInicio();
+                })
               })
             })
           })
@@ -111,9 +127,24 @@ export class EditorInicioComponent implements OnInit {
             this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
               lugar.id = this.publicacionesService.getId(lugar);
               publicacion.lugar = lugar;
-              this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
-                this.getPublicaciones();
-                this.getImagenesInicio();
+              this.likesService.getLikes(publicacion.id).subscribe(likes => {
+                likes.forEach(like => {
+                  like.id = this.likesService.getId(like);
+                });
+                publicacion.likesRecibidos = likes;
+               
+              }, 
+              err=>{
+                this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                  this.getPublicaciones();
+                  this.getImagenesInicio();
+                })
+              }, 
+              ()=>{
+                this.publicacionesService.patchPublicacion(publicacion).subscribe(publicacion => {
+                  this.getPublicaciones();
+                  this.getImagenesInicio();
+                })
               })
             })
           })
