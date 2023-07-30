@@ -236,7 +236,9 @@ export class PublicacionFichaComponent implements OnInit {
       || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
     }
     else {
-
+      if (this.fechaArticuloImportado) {
+        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
+      }
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -249,7 +251,9 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   patchPublicacion() {
-
+    if (this.fechaArticuloImportado) {
+      this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
+    }
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
@@ -464,7 +468,7 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
-    this.texto = "<p><br></p>" + this.texto;
+   
     console.log("NOMBRE-IMAGEN: ", this.nombreImagen)
     this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
     this.nombreImagen = "";
@@ -732,14 +736,15 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   async importar() {
-    console.log("FECHA IMPORTADO: ", this.fechaArticuloImportado);
-    if (this.fechaArticuloImportado != "") {
-      this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z"
+    if (this.fechaArticuloImportado) {
+      this.importarTitulo();
+      let doc = this.seleccionarArticulo();
+      this.importarContenido(doc);
+      console.log("DOC: ", doc)
+    }else{
+
     }
-    this.importarTitulo();
-    let doc = this.seleccionarArticulo();
-    this.importarImagenes(doc);
-    console.log("DOC: ", doc)
+
   }
 
   importarTitulo() {
@@ -810,7 +815,7 @@ export class PublicacionFichaComponent implements OnInit {
     return doc;
   }
 
-  async importarImagenes(doc: Document) {
+  async importarContenido(doc: Document) {
     const parser = new DOMParser();
     //Escanear las img, obtener su url, cargarlas en Firebase y modificar el atributo src con el de Firebase
 
@@ -851,6 +856,19 @@ export class PublicacionFichaComponent implements OnInit {
         })
       }
     }
+    /* Extraer el subtitulo que se encuentra en una etiqueta li al inicio del articulo y cambiarlo a una etiqueta h2 en la misma posicion */
+    const textoSubtitulo = doc.querySelector('li')?.innerText;
+    if (textoSubtitulo) {   
+      this.publicacion.subtitulo = textoSubtitulo;
+    }
+
+    const listaSubtitulo = doc.querySelector('ul');
+    const nuevoSubtitulo =  doc.createElement('h2');
+    nuevoSubtitulo.innerText = this.publicacion.subtitulo;
+    listaSubtitulo?.appendChild(nuevoSubtitulo);
+    const subtituloAntiguo = doc.querySelector('li');
+    subtituloAntiguo?.remove();
+    
     setTimeout(() => {
       this.texto = this.texto + doc.documentElement.outerHTML;
       this.texto = this.texto.replaceAll('<figure><img', '<p class="ql-align-center imagen-container text-center"><img')
@@ -858,7 +876,6 @@ export class PublicacionFichaComponent implements OnInit {
     },
       15000);
   }
- 
 }
 
 

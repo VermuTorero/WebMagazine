@@ -7,7 +7,8 @@
 }
 
 ::ng-deep h2{
-    font-size: medium !important;
+    font-size: large !important;
+    font-weight: bold;
 
 }
 ::ng-deep h3{

@@ -5,16 +5,18 @@
         <!-- Titulo -->
         <div class="row m-3 titulo justify-content-center">
             <textarea *ngIf="publicacion" class="row text-titulo" type="text" name="titulo"
-                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130" (keyup)="analizarTitulo()"></textarea>
-                <div class="recomendaciones">
-                    <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
-                    <p class="recomendacion">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
-                        <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
-                        <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
-                    </p>
-                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- Las siguientes palabras se repiten mucho: {{palabrasRepetidasTitulo}}  ❓</p>
-                </div>
-      </div>
+                [(ngModel)]="publicacion.titulo" placeholder="Titulo (*Obligatorio)" maxlength="130"
+                (keyup)="analizarTitulo()"></textarea>
+            <div class="recomendaciones">
+                <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
+                <p class="recomendacion">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
+                    <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
+                    <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
+                </p>
+                <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- Las siguientes palabras se repiten mucho:
+                    {{palabrasRepetidasTitulo}} ❓</p>
+            </div>
+        </div>
 
         <!-- Datos -->
         <div class="row">
@@ -29,7 +31,9 @@
                                 {{autor.nombre}} {{autor.apellido1}} {{autor.apellido2}}</option>
                         </select>
                     </div>
-                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
+                    <div class="col-2 texto-obligatorio">
+                        <p>*Obligatorio</p>
+                    </div>
                 </div>
 
                 <!-- Lugar -->
@@ -41,7 +45,9 @@
                                 {{lugar.lugarNombre}}</option>
                         </select>
                     </div>
-                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
+                    <div class="col-2 texto-obligatorio">
+                        <p>*Obligatorio</p>
+                    </div>
                 </div>
 
                 <!-- Categoria -->
@@ -55,7 +61,9 @@
                                 {{categoria.categoriaNombre}}</option>
                         </select>
                     </div>
-                    <div class="col-2 texto-obligatorio"><p>*Obligatorio</p></div>
+                    <div class="col-2 texto-obligatorio">
+                        <p>*Obligatorio</p>
+                    </div>
                 </div>
                 <!-- Tags -->
                 <div class="m-4 row row-dato">
@@ -82,7 +90,7 @@
 
                 <!-- Premiun y destacado -->
                 <div class="m-4 row">
-                    
+
                     <!-- Premium -->
                     <div class="col-4">
                         <label for="premium">Premium</label>
@@ -125,8 +133,10 @@
                                 <div class="card-text text-center">
                                     <textarea class="row text-descripcion mt-4 mb-2 mx-1" type="text" name="subtitulo"
                                         rows="3" maxlength="210" [(ngModel)]="publicacion.subtitulo"
-                                        placeholder="Descripción de la publicación (para preview)" (keyup)="analizarSubtitulo()"></textarea>
-                                        <p class="row recomendacion-titulo mx-1">Recomendado entre 20 y 30 palabras. Llevas: {{palabrasDescripcion}}</p>
+                                        placeholder="Descripción de la publicación (para preview)"
+                                        (keyup)="analizarSubtitulo()"></textarea>
+                                    <p class="row recomendacion-titulo mx-1">Recomendado entre 20 y 30 palabras. Llevas:
+                                        {{palabrasDescripcion}}</p>
                                 </div>
                                 <div class="color-letra m-2">
                                     <label class="mx-2" for="colorLetra">Letra oscura sobre la imagen</label>
@@ -142,30 +152,34 @@
 
     <!-- Editor de texto -->
     <h3 class="text-center mt-4">Contenido de la publicación</h3>
-    <div class="editor-container mx-3"  (click)="analizarTexto()">
+    <div class="editor-container mx-3" (click)="analizarTexto()">
         <form class="m-1 agregar-bloque-texto row form-group text-center">
             <div class="row col-12">
                 <!-- Boton agregar Imagen -->
                 <div class="boton-accion col-3 col-sm-3">
-                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#imagenModal">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal"
+                        data-bs-target="#imagenModal">
                         <img class="icono-youtube" src="../../../../assets/icono-foto.png" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Video -->
                 <div class="col-3 col-sm-3">
-                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#videoModal">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal"
+                        data-bs-target="#videoModal">
                         <img class="icono-youtube" src="../../../../assets/icono-youtube.jpg" alt="">
                     </button>
                 </div>
                 <!-- Boton agregar Podcast -->
                 <div class="col-3 col-sm-3">
-                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#podcastModal">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal"
+                        data-bs-target="#podcastModal">
                         <img class="icono-spotify" src="../../../../assets/icono-spotify.png" alt="">
                     </button>
                 </div>
                 <!-- Boton importar WordPress -->
                 <div class="col-3 col-sm-3">
-                    <button type="button" class="btn icono-container" data-bs-toggle="modal" data-bs-target="#importarModal">
+                    <button type="button" class="btn icono-container" data-bs-toggle="modal"
+                        data-bs-target="#importarModal">
                         <img class="icono-spotify" src="../../../../assets/icono-importar.png" alt="">
                     </button>
                 </div>
@@ -173,28 +187,38 @@
 
             <!-- Editor de texto Quill-->
             <div class="col-11 editor-container" id="editor">
-                <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor"
-                    id="quill-editor"  (keyup)="analizarTexto()"></quill-editor>
+                <quill-editor class="quill-editor my-2 py-4" [(ngModel)]="texto" name="editor" id="quill-editor"
+                    (keyup)="analizarTexto()"></quill-editor>
             </div>
 
         </form>
         <div class="recomendaciones-container">
             <div class="recomendaciones">
                 <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
-                <p *ngIf="!titulosH1" class="recomendacion">- No debe usarse el tamaño H1. Esta reservado para el título ❓</p>
+                <p *ngIf="!titulosH1" class="recomendacion">- No debe usarse el tamaño H1. Esta reservado para el título
+                    ❓</p>
                 <p *ngIf="titulosH1" class="recomendacion">- No se emplea tamaño H1. Reservado para el título ✅</p>
                 <p *ngIf="!titulosH2" class="recomendacion">- El tamaño h2 solo debe usarse para el subtítulo ❓</p>
-                <p *ngIf="titulosH2" class="recomendacion">- No se emplea tamaño H2. Reservado para el subtítulo del artículo ✅</p>
-                <p *ngIf="!titulosH3" class="recomendacion">- Los titulos de cada sección de tu artículo deben tener tamaño H3. No se encuentra ninguno ❓</p>
-                <p *ngIf="titulosH3" class="recomendacion">- Se ha empleado el tamaño H3 (títulos de secciones del artículo) ✅</p>
-                <p *ngIf="!numeroEnlaces" class="recomendacion">- Es conveniente que tu articulo tenga algún hipervínculo. No se encuentra ninguno ❓</p>
+                <p *ngIf="titulosH2" class="recomendacion">- No se emplea tamaño H2. Reservado para el subtítulo del
+                    artículo ✅</p>
+                <p *ngIf="!titulosH3" class="recomendacion">- Los titulos de cada sección de tu artículo deben tener
+                    tamaño H3. No se encuentra ninguno ❓</p>
+                <p *ngIf="titulosH3" class="recomendacion">- Se ha empleado el tamaño H3 (títulos de secciones del
+                    artículo) ✅</p>
+                <p *ngIf="!numeroEnlaces" class="recomendacion">- Es conveniente que tu articulo tenga algún
+                    hipervínculo. No se encuentra ninguno ❓</p>
                 <p *ngIf="numeroEnlaces" class="recomendacion">- El articulo tiene al menos un hipervínculo ✅</p>
                 <p *ngIf="!enlaces" class="recomendacion">- Hay al menos un hipervínculo que no esta funcionando ❓</p>
-                <p *ngIf="enlaces && numeroEnlaces" class="recomendacion">- Los hipervínculos funcionan correctamente ✅</p>
-                <p *ngIf="numeroImgs>15" class="recomendacion">- Alto número de imagenes {{numeroImgs}}. Recomendado un máximo de 15❓</p>
-                <p *ngIf="numeroImgs<16 && numeroImgs>0" class="recomendacion">- Número de imágenes ({{numeroImgs}}) adecuado ✅</p>
-                <p *ngIf="numeroImgs<1" class="recomendacion">- La publicación debe contener al menos la imagen de preview❓</p>
-                <p *ngIf="!srcImgs" class="recomendacion">- Hay al menos un enlace de imagen que no esta funcionando❓</p>
+                <p *ngIf="enlaces && numeroEnlaces" class="recomendacion">- Los hipervínculos funcionan correctamente ✅
+                </p>
+                <p *ngIf="numeroImgs>15" class="recomendacion">- Alto número de imagenes {{numeroImgs}}. Recomendado un
+                    máximo de 15❓</p>
+                <p *ngIf="numeroImgs<16 && numeroImgs>0" class="recomendacion">- Número de imágenes ({{numeroImgs}})
+                    adecuado ✅</p>
+                <p *ngIf="numeroImgs<1" class="recomendacion">- La publicación debe contener al menos la imagen de
+                    preview❓</p>
+                <p *ngIf="!srcImgs" class="recomendacion">- Hay al menos un enlace de imagen que no esta funcionando❓
+                </p>
                 <div *ngIf="numeroImgs>0">
                     <p *ngIf="srcImgs" class="recomendacion">- Los enlaces a las imagenes funcionan correctamente ✅</p>
                 </div>
@@ -209,12 +233,13 @@
             <button *ngIf="publicacion.id!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
                 Publicar
             </button>
-            <button *ngIf="publicacion.id==''"  type="button" class="btn btn-success" (click)="publicarNueva()">
+            <button *ngIf="publicacion.id==''" type="button" class="btn btn-success" (click)="publicarNueva()">
                 Publicar
             </button>
         </div>
         <div class="col-4 text-center">
-            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-warning" (click)="guardarBorradorModificado()">
+            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-warning"
+                (click)="guardarBorradorModificado()">
                 Guardar como borrador (no publicado)
             </button>
             <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
@@ -413,71 +438,93 @@
 </div>
 
 <!-- Modal Error-->
-<div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="errorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Error al enviar</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p><b>Error al crear publicación. Revise lo siguiente:</b></p>
-          <p *ngIf="publicacion.titulo ==''">El título no puede estar vacío.</p>
-          <p *ngIf="publicacion.autor.id==''">Debe seleccionar un autor.</p>
-          <p *ngIf="publicacion.imagenPreviewUrl==''">Debe seleccionar una imagen para la preview.</p>
-          <p *ngIf="publicacion.subtitulo==''">El texto de la preview no puede estar vacío.</p>
-          <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
-          <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
-          <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
-          <p *ngIf="!tituloValido">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;, =, :, /, ?, #, [, ], %</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Enviado-->
-<div class="modal fade" id="enviadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Publicación enviada.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Importar-->
-  <div class="modal fade" id="importarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar publicacion</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="fecha-importado-container my-2">
-                <label for="" class="mx-2">Fecha publicación:</label>
-                <input type="date" class="mx-2" [(ngModel)]="fechaArticuloImportado">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Error al enviar</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-            <textarea class="texto-importar" name="" id="" cols="50" rows="20" [(ngModel)]="htmlWordPress" placeholder="Pega aqui la etiqueta main del articulo que deseas importar. Al hacer click en Importar tardará unos segundos en acabar. Mientras se carga puede continuar cumplimentando el resto de datos del artículo. Por ejemplo cargando manualmente la fotografía principal, esta no se importará."></textarea>
+            <div class="modal-body">
+                <p><b>Error al crear publicación. Revise lo siguiente:</b></p>
+                <p *ngIf="publicacion.titulo ==''">El título no puede estar vacío.</p>
+                <p *ngIf="publicacion.autor.id==''">Debe seleccionar un autor.</p>
+                <p *ngIf="publicacion.imagenPreviewUrl==''">Debe seleccionar una imagen para la preview.</p>
+                <p *ngIf="publicacion.subtitulo==''">El texto de la preview no puede estar vacío.</p>
+                <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
+                <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
+                <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
+                <p *ngIf="!tituloValido">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;,
+                    =, :, /, ?, #, [, ], %</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="importar()">Importar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  
+<!-- Modal Enviado-->
+<div class="modal fade" id="enviadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicación enviada</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Publicación enviada.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Importar-->
+<div class="modal fade" id="importarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Importar publicacion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sigue los siguientes pasos:</p>
+                <ul>
+                    <li>No hace falta que escribas el título. Se hará automaticamente.</li>
+                    <li>Descarga la imagen principal y cargala en el apartado preview.</li>
+                    <li>Copia el texto subtitulo y pégalo en el texto de preview. Automaticamnete se copiará también en
+                        el contenido de la publicación.</li>
+                    <li>Indica, aqui abajo, la fecha del articulo que vas a importar</li>
+                    <li>Haz click derecho en el título de la publicacion a importar y elige "Inspeccionar". Haz click
+                        derecho sobre la etiqueta main y copia el html interno.</li>
+                    <li>Pega el texto copiado en la caja de abajo y haz click en importar. Espera unos 15 segundos y
+                        verás aparecer la publicación.</li>
+                    <li>Centra una de las imagenes del cuerpo de la publicación. Las demás se centrarán automaticamente
+                        cuando la guardes o publiques.</li>
+                    <li>Rellena los campos que quedan: Autor, categoria, lugar, tags ... y guarda el borrador o publica.
+                    </li>
+                </ul>
+                <div class="fecha-importado-container my-2">
+                    <label for="" class="mx-2">Fecha publicación:</label>
+                    <input type="date" class="mx-2" [(ngModel)]="fechaArticuloImportado">
+                    <p *ngIf="!fechaArticuloImportado" style="color: red;">El campo fecha es obligatorio</p>
+                </div>
+                <textarea class="texto-importar" name="" id="" cols="50" rows="10" [(ngModel)]="htmlWordPress"
+                    placeholder="Pega aqui la etiqueta main del articulo que deseas importar. Al hacer click en Importar tardará unos segundos en acabar. Mientras se carga puede continuar cumplimentando el resto de datos del artículo. Por ejemplo cargando manualmente la fotografía principal, esta no se importará."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button *ngIf="fechaArticuloImportado" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                (click)="importar()">Importar</button>
+                <button *ngIf="!fechaArticuloImportado"type="button" class="btn btn-primary"
+                    >Importar</button>
+            </div>
+        </div>
+    </div>
+</div>

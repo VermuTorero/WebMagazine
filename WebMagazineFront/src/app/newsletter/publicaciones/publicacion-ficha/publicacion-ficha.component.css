@@ -42,21 +42,17 @@
 }
 
 ::ng-deep h2{
-    font-size:medium!important;
-
+    font-size: large !important;
 }
 ::ng-deep h3{
     font-size:large!important;
-
 }
 
 ::ng-deep p{
     font-size:medium!important;
-
 }
 ::ng-deep blockquote{
     font-size:medium!important;
-
 }
 ::ng-deep img[width="20%"]{
     padding: 1.5%;
@@ -88,7 +84,6 @@
     border-style: dashed;
     border-width: 1px;
 }
-
 
 .icono-spotify {
     width: 9vw;
