@@ -84,6 +84,20 @@
     border-style: dashed;
     border-width: 1px;
 }
+.keyWords-inputs{
+    display: inline-block;
+}
+.keyWords-label{
+    align-items: start;
+}
+.keyWord{
+    display: inline;
+    width: 23%
+}
+
+.keyWords-columna{
+    display: flex;
+}
 
 .icono-spotify {
     width: 9vw;

@@ -108,6 +108,26 @@
                         <label for="destacado">Carousel</label>
                         <input type="checkbox" name="carousel" [(ngModel)]="publicacion.carousel" class="m-1">
                     </div>
+
+                    <!-- Palabras clave -->
+                    <div class="keyWords-container my-4 row">
+                        <div class="col-12">
+                                <label for="keyWords" class="row p-3">Palabras clave:</label>
+                                <input type="text" name="keyWord0" class="keyWord m-1 px-2" [(ngModel)]="publicacion.keyWords[0]">
+                                <input *ngIf="publicacion.keyWords[0]" name="keyWord1" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[1]">
+                                <input *ngIf="publicacion.keyWords[1]" name="keyWord2" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[2]">
+                                <input *ngIf="publicacion.keyWords[2]" name="keyWord3" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[3]">
+                                <input *ngIf="publicacion.keyWords[3]" name="keyWord4" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[4]">
+                                <input *ngIf="publicacion.keyWords[4]" name="keyWord5" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[5]">
+                                <input *ngIf="publicacion.keyWords[5]" name="keyWord6" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[6]">
+                                <input *ngIf="publicacion.keyWords[6]" name="keyWord7" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[7]">
+                                <input *ngIf="publicacion.keyWords[7]" name="keyWord8" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[8]">
+                                <input *ngIf="publicacion.keyWords[8]" name="keyWord9" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[9]">
+                                <input *ngIf="publicacion.keyWords[9]" name="keyWord8" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[10]">
+                                <input *ngIf="publicacion.keyWords[10]" name="keyWord9" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[11]">
+                                <p *ngIf="publicacion.keyWords[11]" style="color: red;">Alcanzado en numero máximo de palabras clave.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

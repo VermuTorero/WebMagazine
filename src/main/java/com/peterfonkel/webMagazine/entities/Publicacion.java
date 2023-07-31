@@ -77,6 +77,8 @@ public class Publicacion {
 	
 	private boolean letraOscura;
 	
+	private String[] keyWords;
+	
 	public Publicacion() {
 		super();
 	}
@@ -240,6 +242,14 @@ public class Publicacion {
 
 	public void setPublicado(boolean publicado) {
 		this.publicado = publicado;
+	}
+
+	public String[] getKeyWords() {
+		return keyWords;
+	}
+
+	public void setKeyWords(String[] keyWords) {
+		this.keyWords = keyWords;
 	}
 
 

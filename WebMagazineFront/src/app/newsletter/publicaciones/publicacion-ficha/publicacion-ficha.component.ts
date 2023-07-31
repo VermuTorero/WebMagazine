@@ -84,6 +84,7 @@ export class PublicacionFichaComponent implements OnInit {
   numeroImgs: number = 0;
   srcImgs: boolean = false;
 
+  keyWords: string[] = [];
   quill: Quill = new Quill('#editor', {
     theme: 'snow',
     scrollingContainer: '#scrolling-container',
