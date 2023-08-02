@@ -210,7 +210,13 @@ export class PublicacionCompletaComponent implements OnInit {
 
   eliminarPublicacionConfirmado() {
     this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response => {
-      this.router.navigate(['/../..'])
+      this.router.navigate(['#'])
+    }, 
+    err=>{
+      $('#errorEliminarPublicacionModal').modal('show');
+    },
+    ()=>{
+      this.router.navigate(['#'])
     });
   }
   getFechaPublicacion() {
