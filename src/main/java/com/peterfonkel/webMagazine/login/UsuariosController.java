@@ -392,6 +392,7 @@ public class UsuariosController {
 			@PathVariable("id") Long id) {
 		try {
 			Usuario usuario = getUsuarioService().getById(id).get();
+			logger.error("NOMBRE: " + usuario.getNombre());
 			if (!usuario.getNombre().isEmpty() || !usuario.getNombre().equals(null)) {
 				usuario.setNombre("" + usuario.getNombre().charAt(0));
 			}
