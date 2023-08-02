@@ -393,13 +393,13 @@ public class UsuariosController {
 		try {
 			Usuario usuario = getUsuarioService().getById(id).get();
 			logger.error("NOMBRE: " + usuario.getNombre());
-			if (!usuario.getNombre().isEmpty() || usuario.getNombre()!=null) {
+			if (!usuario.getNombre().isEmpty() && usuario.getNombre()!=null) {
 				usuario.setNombre("" + usuario.getNombre().charAt(0));
 			}
-			if (!usuario.getApellido1().isEmpty() || usuario.getApellido1()!=null) {
+			if (!usuario.getApellido1().isEmpty() && usuario.getApellido1()!=null) {
 				usuario.setApellido1("" + usuario.getApellido1().charAt(0));
 			}
-			if (!usuario.getApellido2().isEmpty() || usuario.getApellido2()!=null) {
+			if (!usuario.getApellido2().isEmpty() && usuario.getApellido2()!=null) {
 				usuario.setApellido2("" + usuario.getApellido2().charAt(0));
 			}
 			
