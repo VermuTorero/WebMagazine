@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { paypalConfig } from 'src/environments/paypalConfig';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
+import { MetaService } from '../../service/meta.service';
 declare const twttr: any;
 declare var $: any;
 
@@ -51,7 +52,8 @@ export class PublicacionCompletaComponent implements OnInit {
     private lateralService: LateralServiceService,
     private usuarioService: UsuariosService,
     private likeService: LikesService,
-    private modalService:  NgbModal) { }
+    private modalService:  NgbModal,
+    private metaService: MetaService) { }
 
   ngOnInit(): void {
     this.getLateral();
@@ -97,9 +99,8 @@ export class PublicacionCompletaComponent implements OnInit {
       })
       this.formatoContenidoMultimedia();
       this.showPublicacion();
-      this.generarKeyWords();
-      this.guardarLocalStorageMeta();
-
+      this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
+      this.metaService.setMetaTagsFromLocalStorage();
 
     })
   }
@@ -133,8 +134,8 @@ export class PublicacionCompletaComponent implements OnInit {
       })
       this.formatoContenidoMultimedia()
       this.showPublicacion();
-      this.generarKeyWords();
-      this.guardarLocalStorageMeta();
+      this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
+      this.metaService.setMetaTagsFromLocalStorage();
     })
   }
 
@@ -209,7 +210,7 @@ export class PublicacionCompletaComponent implements OnInit {
 
   eliminarPublicacionConfirmado() {
     this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response => {
-      this.router.navigate(['#'])
+      this.router.navigate(['/../..'])
     });
   }
   getFechaPublicacion() {
@@ -264,17 +265,14 @@ export class PublicacionCompletaComponent implements OnInit {
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
-    console.log(html.innerHTML)
   }
   showHtmlPodcastSM() {
     var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
-    console.log(html.innerHTML)
   }
   buscarPublicacionesPorPalabras() {
-    console.log(this.palabrasClave)
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
@@ -347,8 +345,6 @@ export class PublicacionCompletaComponent implements OnInit {
         layout: 'vertical',
       },
       onApprove: (data, actions) => {
-        //mostramos un spinner mientras se procesa el pago
-        /* this.spinner.show(); */
         console.log(
           'onApprove - transaction was approved, but not authorized',
           data,
@@ -387,24 +383,5 @@ export class PublicacionCompletaComponent implements OnInit {
     const modalRef = this.modalService.open(ModalReceiptComponent, { size: 'lg' });
     modalRef.componentInstance.items = items;
     modalRef.componentInstance.amount = amount
-  }
-
-  generarKeyWords(){
-    this.publicacion.url.split('-').forEach(keyWord => {
-      if (this.keyWords!="") {
-        this.keyWords = this.keyWords + ", " + keyWord;
-      }else{
-        this.keyWords = keyWord;
-      }
-      
-    });
-  };
-
-  guardarLocalStorageMeta(){
-    localStorage.setItem("title", this.publicacion.titulo);
-    localStorage.setItem("description", this.publicacion.subtitulo);
-    localStorage.setItem("keyWords", this.keyWords);
-    localStorage.setItem("autor", this.publicacion.autor.nombre + " " + this.publicacion.autor.apellido1 + " " + this.publicacion.autor.apellido2);
-    localStorage.setItem("url", this.publicacion.url);
   }
 }

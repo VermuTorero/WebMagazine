@@ -9,12 +9,18 @@
                 (keyup)="analizarTitulo()"></textarea>
             <div class="recomendaciones">
                 <p class="titulo-recomendaciones"><b>TIP SEO</b></p>
-                <p class="recomendacion">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}
+                <p class="recomendacion">- Palabras recomendadas entre 10 y 15. Llevas: {{palabrasTitulo}}.
                     <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
                     <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
                 </p>
                 <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- Las siguientes palabras se repiten mucho:
                     {{palabrasRepetidasTitulo}} ❓</p>
+                <p *ngIf="!urlValida" class="recomendacion">- El título del artículo no puede contener los
+                    caracteres $ , & , \ , ( , ) , * , + , ; , = , / , # , [ , ] , % ❌</p>
+                <p *ngIf="caracteresTitulo" class="recomendacion">- La longitud recomendada para apariciones en motores de búsqueda es de menos de 60. Llevas {{caracteresTitulo}}
+                    <span *ngIf="caracteresTitulo<61">✅</span>
+                    <span *ngIf="caracteresTitulo>60">El titulo saldrá recortado, no afecta al posicionamiento solo a UX.❓</span>
+                </p>
             </div>
         </div>
 
@@ -112,20 +118,33 @@
                     <!-- Palabras clave -->
                     <div class="keyWords-container my-4 row">
                         <div class="col-12">
-                                <label for="keyWords" class="row p-3">Palabras clave:</label>
-                                <input type="text" name="keyWord0" class="keyWord m-1 px-2" [(ngModel)]="publicacion.keyWords[0]">
-                                <input *ngIf="publicacion.keyWords[0]" name="keyWord1" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[1]">
-                                <input *ngIf="publicacion.keyWords[1]" name="keyWord2" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[2]">
-                                <input *ngIf="publicacion.keyWords[2]" name="keyWord3" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[3]">
-                                <input *ngIf="publicacion.keyWords[3]" name="keyWord4" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[4]">
-                                <input *ngIf="publicacion.keyWords[4]" name="keyWord5" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[5]">
-                                <input *ngIf="publicacion.keyWords[5]" name="keyWord6" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[6]">
-                                <input *ngIf="publicacion.keyWords[6]" name="keyWord7" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[7]">
-                                <input *ngIf="publicacion.keyWords[7]" name="keyWord8" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[8]">
-                                <input *ngIf="publicacion.keyWords[8]" name="keyWord9" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[9]">
-                                <input *ngIf="publicacion.keyWords[9]" name="keyWord8" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[10]">
-                                <input *ngIf="publicacion.keyWords[10]" name="keyWord9" type="text" class="keyWord m-1" [(ngModel)]="publicacion.keyWords[11]">
-                                <p *ngIf="publicacion.keyWords[11]" style="color: red;">Alcanzado en numero máximo de palabras clave.</p>
+                            <label for="keyWords" class="row p-3">Palabras clave:</label>
+                            <input type="text" name="keyWord0" class="keyWord m-1 px-2"
+                                [(ngModel)]="publicacion.keyWords[0]">
+                            <input *ngIf="publicacion.keyWords[0]" name="keyWord1" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[1]">
+                            <input *ngIf="publicacion.keyWords[1]" name="keyWord2" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[2]">
+                            <input *ngIf="publicacion.keyWords[2]" name="keyWord3" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[3]">
+                            <input *ngIf="publicacion.keyWords[3]" name="keyWord4" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[4]">
+                            <input *ngIf="publicacion.keyWords[4]" name="keyWord5" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[5]">
+                            <input *ngIf="publicacion.keyWords[5]" name="keyWord6" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[6]">
+                            <input *ngIf="publicacion.keyWords[6]" name="keyWord7" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[7]">
+                            <input *ngIf="publicacion.keyWords[7]" name="keyWord8" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[8]">
+                            <input *ngIf="publicacion.keyWords[8]" name="keyWord9" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[9]">
+                            <input *ngIf="publicacion.keyWords[9]" name="keyWord8" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[10]">
+                            <input *ngIf="publicacion.keyWords[10]" name="keyWord9" type="text" class="keyWord m-1"
+                                [(ngModel)]="publicacion.keyWords[11]">
+                            <p *ngIf="publicacion.keyWords[11]" style="color: red;">Alcanzado en numero máximo de
+                                palabras clave.</p>
                         </div>
                     </div>
                 </div>
@@ -225,9 +244,9 @@
                     tamaño H3. No se encuentra ninguno ❓</p>
                 <p *ngIf="titulosH3" class="recomendacion">- Se ha empleado el tamaño H3 (títulos de secciones del
                     artículo) ✅</p>
-                <p *ngIf="!numeroEnlaces" class="recomendacion">- Es conveniente que tu articulo tenga algún
+                <p *ngIf="numeroEnlaces<1" class="recomendacion">- Es conveniente que tu articulo tenga algún
                     hipervínculo. No se encuentra ninguno ❓</p>
-                <p *ngIf="numeroEnlaces" class="recomendacion">- El articulo tiene al menos un hipervínculo ✅</p>
+                <p *ngIf="numeroEnlaces>1" class="recomendacion">- El articulo tiene al menos un hipervínculo ✅</p>
                 <p *ngIf="!enlaces" class="recomendacion">- Hay al menos un hipervínculo que no esta funcionando ❓</p>
                 <p *ngIf="enlaces && numeroEnlaces" class="recomendacion">- Los hipervínculos funcionan correctamente ✅
                 </p>
@@ -250,20 +269,27 @@
     <div class="row text-center m-4">
         <div class="col-2"></div>
         <div class="col-4 text-center">
-            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-success" (click)="publicarModificada()">
+            <button *ngIf="publicacion.id!='' && publicacion.publicado" type="button" class="btn btn-success" (click)="publicarModificada()">
+                Actualizar publicación
+            </button>
+            <button *ngIf="publicacion.id!='' && !publicacion.publicado" type="button" class="btn btn-success" (click)="publicarModificada()">
                 Publicar
             </button>
             <button *ngIf="publicacion.id==''" type="button" class="btn btn-success" (click)="publicarNueva()">
-                Publicar
+                Publicar directamente
             </button>
         </div>
         <div class="col-4 text-center">
-            <button *ngIf="publicacion.id!=''" type="button" class="btn btn-warning"
+            <button *ngIf="publicacion.id!='' && publicacion.publicado" type="button" class="btn btn-warning"
                 (click)="guardarBorradorModificado()">
-                Guardar como borrador (no publicado)
+                Pasar a borradores (retirar de publicados)
+            </button>
+            <button *ngIf="publicacion.id!='' && !publicacion.publicado" type="button" class="btn btn-warning"
+                (click)="guardarBorradorModificado()">
+                Guardar borrador
             </button>
             <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning" (click)="guardarBorradorNuevo()">
-                Guardar borrador
+                Guardar como borrador
             </button>
         </div>
     </div>
@@ -475,7 +501,7 @@
                 <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
                 <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
                 <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
-                <p *ngIf="!tituloValido">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;,
+                <p *ngIf="!urlValida">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;,
                     =, :, /, ?, #, [, ], %</p>
             </div>
             <div class="modal-footer">
@@ -541,9 +567,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button *ngIf="fechaArticuloImportado" type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                (click)="importar()">Importar</button>
-                <button *ngIf="!fechaArticuloImportado"type="button" class="btn btn-primary"
-                    >Importar</button>
+                    (click)="importar()">Importar</button>
+                <button *ngIf="!fechaArticuloImportado" type="button" class="btn btn-primary">Importar</button>
             </div>
         </div>
     </div>

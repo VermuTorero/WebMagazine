@@ -17,6 +17,7 @@ import { LugaresServiceService } from '../../service/lugares.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
 import { LikesService } from '../../service/likes.service';
+import { SeoService } from '../../service/seo.service';
 
 
 @Component({
@@ -51,11 +52,11 @@ export class PublicacionFichaComponent implements OnInit {
   nombreImagen: string = ""
   /* Tipos para las opciones del formulario */
   lugares: Lugar[] = [];
-
   categorias: Categoria[] = [];
   tags: Tag[] = [];
   tagNueva: Tag = new Tag();
   autores: Usuario[] = [];
+
   /* Selecciones en el formulario */
   tagsSeleccionadas: Tag[] = [];
   tagSeleccionada: Tag = new Tag();
@@ -66,29 +67,31 @@ export class PublicacionFichaComponent implements OnInit {
   palabrasTitulo: number = 0;
   palabrasDescripcion: number = 0;
 
+  /* Likes */
   numeroLikes: string = "";
-  tituloValido: boolean = false;
-  palabrasRepetidasTitulo: string | null = "";
 
+  /* Importador */
   htmlWordPress: string = "";
   htmlVermuTorero: string = "";
-
   fechaArticuloImportado: string = "";
 
+  /* Variables de TIP SEO */
+  palabrasRepetidasTitulo: string | null = "";
   titulosH3: boolean = false;
   titulosH2: boolean = false;
   titulosH1: boolean = false;
   enlaces: boolean = false;
-  numeroEnlaces: boolean = false;
+  numeroEnlaces: number = 0;
   imgs: boolean = false;
   numeroImgs: number = 0;
   srcImgs: boolean = false;
-
+  urlValida: boolean = true;
   keyWords: string[] = [];
+  caracteresTitulo: number = 0;
+
   quill: Quill = new Quill('#editor', {
     theme: 'snow',
     scrollingContainer: '#scrolling-container',
-    
   });
 
   constructor(
@@ -100,7 +103,8 @@ export class PublicacionFichaComponent implements OnInit {
     private imagenesService: ImagenesService,
     private categoriasService: CategoriasServiceService,
     private lugaresService: LugaresServiceService,
-    private likeService: LikesService
+    private likeService: LikesService,
+    private seoService: SeoService
   ) { }
 
   ngOnInit(): void {
@@ -128,6 +132,7 @@ export class PublicacionFichaComponent implements OnInit {
     }, 500);
   }
 
+  /* Obtener el id de la publicacion de la url */
   getId(): void {
     this.activatedRoute.params.subscribe(params => {
       this.id = params['id']
@@ -145,76 +150,45 @@ export class PublicacionFichaComponent implements OnInit {
       this.getTagsPublicacion();
       this.getFechaPublicacion();
       this.getLikes(publicacion);
-
-      console.log("PUBLICACION CARGADA:", this.publicacion)
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="100%" height="352"', 'width="80%" height="200"');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="560" height="315"', 'width="90%" height="auto"');
       this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
       this.texto = this.publicacion.htmlPublicacion;
-      console.log(this.publicacion.htmlPublicacion)
-      /* quill.insertText(10, this.publicacion.htmlPublicacion); */
       this.analizarTitulo();
       this.analizarTexto();
     })
   }
 
-  agregarPodcast() {
-    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="podcast"></iframe>');
-    this.texto = this.texto + this.htmlPodcast;
-
-  }
-  agregarVideo() {
-    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="youtube"></iframe>');
-    this.texto = this.texto + this.htmlVideo;
-    this.htmlVideo = "";
-  }
   publicarNueva() {
     this.publicacion.publicado = true;
     this.postPublicacion();
   }
+
   publicarModificada() {
     this.publicacion.publicado = true;
     this.patchPublicacion();
   }
+
   guardarBorradorNuevo() {
     this.publicacion.publicado = false;
     this.postPublicacion();
   }
+
   guardarBorradorModificado() {
     this.publicacion.publicado = false;
     this.patchPublicacion();
   }
 
   postPublicacion() {
-    if (this.validarURL(this.publicacion.titulo)) {
-      this.tituloValido = true;
-    } else {
-      this.tituloValido = false;
-    }
-    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
-      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
-      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
-      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
-      $('#errorModal').modal('show');
-    }
-    else {
-      if (this.fechaArticuloImportado !== "") {
-        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
-      } else {
-        const fechaActual = new Date();
-        const year = fechaActual.getFullYear();
-        const month = String(fechaActual.getMonth() + 1).padStart(2, '0');
-        const day = String(fechaActual.getDate()).padStart(2, '0');
-
-        this.publicacion.fechaPublicacion = year + "-" + month + "-" + day + "T00:00:00.000Z";
-      }
+    if (this.verificarCamposObligatorios()) {
+      this.setFecha();
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
       this.descargarTxt();
-      this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+      this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
 
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
         this.getPublicacion();
@@ -222,32 +196,46 @@ export class PublicacionFichaComponent implements OnInit {
         $('#enviadoModal').modal('show');
         this.router.navigate(["/../../publicaciones/" + this.publicacion.url])
       });
+    } else {
+      $('#errorModal').modal('show');
     }
   }
 
   postPublicacionAutoguardado() {
-    if (this.validarURL(this.publicacion.titulo)) {
-      this.tituloValido = true;
-    } else {
-      this.tituloValido = false;
-    }
-    if (this.publicacion.titulo == "" || this.publicacion.autor.id == ""
-      || this.publicacion.lugar.id == "" || this.publicacion.categoria.id == ""
-      || this.publicacion.imagenPreviewUrl == "" || this.publicacion.subtitulo == ""
-      || this.texto == "" || !this.validarURL(this.publicacion.titulo)) {
-    }
-    else {
-      if (this.fechaArticuloImportado) {
-        this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
-      }
+    if (this.verificarCamposObligatorios()) {
+      this.setFecha();
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
-      this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+      this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
       });
+    }
+  }
+
+  setFecha() {
+    if (this.fechaArticuloImportado) {
+      this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
+    } else {
+      const fechaActual = new Date();
+      const year = fechaActual.getFullYear();
+      const month = String(fechaActual.getMonth() + 1).padStart(2, '0');
+      const day = String(fechaActual.getDate()).padStart(2, '0');
+
+      this.publicacion.fechaPublicacion = year + "-" + month + "-" + day + "T00:00:00.000Z";
+    }
+  }
+
+  verificarCamposObligatorios(): boolean {
+    if (this.publicacion.titulo != "" && this.publicacion.autor.id != ""
+      && this.publicacion.lugar.id != "" && this.publicacion.categoria.id != ""
+      && this.publicacion.imagenPreviewUrl != "" && this.publicacion.subtitulo != ""
+      && this.texto != "" && this.seoService.validarURL(this.publicacion.titulo)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -258,19 +246,28 @@ export class PublicacionFichaComponent implements OnInit {
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
-    this.publicacion.url = this.generarUrl(this.publicacion.titulo);
-    this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
-      this.getPublicacion();
-      this.descargarTxt();
-      this.router.navigate(["/../../publicaciones/" + publicacionModicada.url]);
-    })
+    this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
+    if (this.verificarCamposObligatorios()) {
+      this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
+        this.getPublicacion();
+        this.descargarTxt();
+        this.router.navigate(["/../../publicaciones/" + publicacionModicada.url]);
+      })
+    } else {
+      $('#errorModal').modal('show');
+    }
+
+
   }
 
   patchPublicacionAutoguardado() {
+    if (this.fechaArticuloImportado) {
+      this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
+    }
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
-    this.publicacion.url = this.generarUrl(this.publicacion.titulo);
+    this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
     this.publicacionesService.patchPublicacion(this.publicacion).subscribe(publicacionModicada => {
     })
   }
@@ -281,13 +278,15 @@ export class PublicacionFichaComponent implements OnInit {
     saveAs(blob, this.publicacion.titulo + ".txt");
   }
 
+
+  //TAGS
+
   getTags(): void {
     this.tagsService.getTags().subscribe(tags => {
       this.tags = tags;
       this.tags.forEach(tag => {
         tag.id = this.tagsService.getId(tag);
       });
-      console.log("TAGS CON ID:", this.tags)
     });
   }
 
@@ -332,6 +331,7 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
+  //AUTOR
   getAutores(): void {
     this.usuariosService.getAutores().subscribe(autores => {
       console.log(autores)
@@ -352,6 +352,7 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
+  //CATEGORIA
   getCategorias() {
     this.categoriasService.getCategorias().subscribe(categorias => {
       this.categorias = categorias;
@@ -378,6 +379,7 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
+  //LUGAR
   getLugares() {
     this.lugaresService.getLugares().subscribe(lugares => {
       this.lugares = lugares;
@@ -397,6 +399,32 @@ export class PublicacionFichaComponent implements OnInit {
     })
   }
 
+  //LIKES
+  getLikes(publicacion: Publicacion) {
+    this.likeService.getLikes(publicacion.id).subscribe(likes => {
+      likes.forEach(like => {
+        like.id = this.likeService.getId(like);
+      });
+      this.publicacion.likesRecibidos = likes;
+      this.numeroLikes = likes.length.toString();
+    })
+  }
+
+  /* Agregar un podcast al contenido de la publicacion */
+  agregarPodcast() {
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="podcast"></iframe>');
+    this.texto = this.texto + this.htmlPodcast;
+
+  }
+
+  /* Agregar un video de youtube al contenido de la publicacion */
+  agregarVideo() {
+    this.htmlPodcast = this.htmlPodcast.replace('></iframe>', 'tipo ="youtube"></iframe>');
+    this.texto = this.texto + this.htmlVideo;
+    this.htmlVideo = "";
+  }
+
+  //SELECCION Y RECORTE DE IMAGENES
   onSelectFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -469,98 +497,106 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
-   
+
     console.log("NOMBRE-IMAGEN: ", this.nombreImagen)
     this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
     this.nombreImagen = "";
-    console.log("TEXTO: ", this.texto )
-  }
-
- 
-
-  getLikes(publicacion: Publicacion) {
-    this.likeService.getLikes(publicacion.id).subscribe(likes => {
-      likes.forEach(like => {
-        like.id = this.likeService.getId(like);
-      });
-      this.publicacion.likesRecibidos = likes;
-      this.numeroLikes = likes.length.toString();
-    })
+    console.log("TEXTO: ", this.texto)
   }
 
   redireccionar() {
     this.router.navigate(['/acerca-de/' + this.publicacion.url])
   }
 
-  /* Comprobar si el título cumple con las condiciones necesarias */
-  validarURL(titulo: string) {
-    var caracteresReservados = ['$', '&', '\'', '(', ')', '*', '+', ';', '=', '/', '#', '[', ']', '%'];
 
-    for (var i = 0; i < caracteresReservados.length; i++) {
-      if (titulo.includes(caracteresReservados[i])) {
-        return false;
+  /* Guardar la publicación automaticamente cada 5 min*/
+  autoGuardado() {
+    setInterval(() => {
+      if (!this.publicacion.publicado) {
+        if (this.publicacion.fechaPublicacion = "") {
+          this.postPublicacionAutoguardado();
+        } else {
+          this.patchPublicacionAutoguardado();
+        }
       }
-    }
-    return true;
+    }, 300000)
   }
 
-  /* Generar una url a partir del titulo */
-  generarUrl(titulo: string) {
-    // Lista de stopwords en español que se quitaran de la url
-    const stopwords = [
-      'a', 'al', 'ante', 'bajo', 'cabe', 'con', 'contra', 'de', 'desde',
-      'en', 'entre', 'hacia', 'hasta', 'ni', 'el', 'la', 'las', 'lo', 'los',
-      'para', 'por', 'segun', 'sin', 'sobre', 'tras', 'un', 'una', 'unas',
-      'unos', 'y', 'e', 'o', 'u', 'y/o', "del", "que", "año", "años"
-    ];
+  //TIP SEO
 
-    // Convertimos el título a minúsculas y reemplazamos caracteres especiales y espacios en blanco por guiones
-    let urlOptimizada = titulo.toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^\w\s]/g, '')
-      .replace(/\s+/g, '-');
-
-    // Separamos las palabras del título
-    const palabras = urlOptimizada.split('-');
-
-    // Filtramos las palabras que no son stopwords y eliminamos palabras duplicadas
-    const palabrasFiltradas = palabras.filter((palabra, index) => !stopwords.includes(palabra) && palabras.indexOf(palabra) === index);
-
-    // Unimos las palabras filtradas en un único string separado por guiones
-    urlOptimizada = palabrasFiltradas.join('-');
-
-    return urlOptimizada;
-  }
-
-  /* Analizar el título para comprobar si tiene palabras repetidas y su longitud recomendada */
+  /* Analizar el título para comprobar si tiene palabras repetidas, su longitud recomendada y si no contiene caracteres invalidos para formar una url*/
   analizarTitulo() {
-    this.contarPalabrasTitulo();
-    this.analizarPalabrasRepetidas();
+    this.palabrasTitulo = this.seoService.contarPalabras(this.publicacion.titulo);
+    this.palabrasRepetidasTitulo = this.seoService.analizarPalabrasRepetidas(this.publicacion.titulo);
+    this.urlValida = this.seoService.validarURL(this.publicacion.titulo);
+    this.caracteresTitulo = this.seoService.contarCaracteres(this.publicacion.titulo);
   }
 
-  contarPalabrasTitulo() {
-    let arrayPalabras = this.publicacion.titulo.split(' ');
-    this.palabrasTitulo = arrayPalabras.length;
-  }
   /* Analizar el subtítulo. Se escribe en la card y se inserta automaticamente en el texto */
-  analizarSubtitulo(){
-    this.contarPalabrasSubtitulo();
-    this.insertarSubtituloEnHTML();
+  analizarSubtitulo() {
+    this.palabrasDescripcion = this.seoService.contarPalabras(this.publicacion.subtitulo);
+    this.texto = this.insertarSubtituloEnHTML();
   }
 
-  contarPalabrasSubtitulo() {
-    let arrayPalabras = this.publicacion.subtitulo.split(' ');
-    this.palabrasDescripcion = arrayPalabras.length - 1;
+  /* Analiza el contenido de la publicacion desde el punto de vista SEO */
+  analizarTexto() {
+    this.analizarEncabezados();
+    this.analizarImagenes();
+    this.enlaces = this.seoService.analizarEnlaces(this.texto);
+    this.numeroEnlaces = this.seoService.contarEnlaces(this.texto);
   }
-  
-  insertarSubtituloEnHTML(): void {
+
+  analizarEncabezados() {
+    //H1 esta reservado para el titulo, el texto no debe tener ninguno.
+    if (this.seoService.contarEtiquetas('h1', this.texto) != 0) {
+      this.titulosH1 = false;
+    } else {
+      this.titulosH1 = true;
+    }
+
+    //h2 Esta reservado para el subtítulo, el texto solo debe contener uno.
+    if (this.seoService.contarEtiquetas('h2', this.texto) != 1) {
+      this.titulosH2 = false;
+    } else {
+      this.titulosH2 = true;
+    }
+
+    //h3 El titulo de las diferentes secciones del articulo irá en h3. Debe haber al menos 1
+    if (this.seoService.contarEtiquetas('h3', this.texto) < 1) {
+      this.titulosH3 = false;
+    } else {
+      this.titulosH3 = true;
+    }
+
+    //Todas las publicaciones deben tener algún enlace
+    if (this.seoService.contarEtiquetas('a', this.texto) < 1) {
+      this.enlaces = false;
+    } else {
+      this.enlaces = true;
+    }
+
+    //Es conveniente que no tenga mas de 15 imagenes por tiempos de carga
+    if (this.seoService.contarEtiquetas('img', this.texto) > 15) {
+      this.imgs = false;
+    } else {
+      this.imgs = true;
+    }
+  }
+
+  analizarImagenes() {
+    this.numeroImgs = this.seoService.getNumeroImgs(this.texto);
+    this.srcImgs = this.seoService.comprobarSrcEnImgs(this.texto);
+  }
+
+
+  /* Inserta el subtitulo en la card y en el editor (debajo de la imagen principal) */
+  insertarSubtituloEnHTML(): string {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = this.texto;
-  
+
     const primerElemento = tempDiv.firstElementChild;
     const primerParrafoConImagen = tempDiv.querySelector('img');
-  
+
     if (primerParrafoConImagen) {
       const subtitulo = tempDiv.querySelector('h2');
       if (!subtitulo) {
@@ -580,161 +616,11 @@ export class PublicacionFichaComponent implements OnInit {
         subtitulo.textContent = this.publicacion.subtitulo;
       }
     }
-    this.texto = tempDiv.innerHTML;
-  }
-  
-
-  /* Comprobar que no hay palabras repetidas mas de dos veces */
-  analizarPalabrasRepetidas() {
-    const normalizedTitle = this.publicacion.titulo.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const palabras = normalizedTitle.toLowerCase().match(/\b\w+\b/g);
-    const contador: any = {};
-    if (palabras) {
-      palabras.forEach((palabra) => {
-        if (palabra.length > 3) {
-          contador[palabra] = (contador[palabra] || 0) + 1;
-        }
-      });
-      console.log(contador)
-      const palabrasRepetidas = Object.keys(contador).filter((palabra) => contador[palabra] >= 3);
-      this.palabrasRepetidasTitulo = palabrasRepetidas.join(", ");
-    }
-  }
-  
-  /* Analiza el contenido de la publicacion desde el punto de vista SEO */
-  analizarTexto(){
-    this.analizarEncabezados();
-    this.analizarImagenes();
-    this.analizarEnlaces();
+    return tempDiv.innerHTML;
   }
 
-  analizarEncabezados(){
-    if (this.texto.split('<h3').length<2) {
-      this.titulosH3 = false;
-    }
-    if (this.texto.split('<h1').length>0 ) {
-      this.titulosH1 = false;
-    }
-    if (this.texto.split('<h2').length>1 ) {
-      this.titulosH2 = false;
-    }
-    if(this.texto.split('<a').length<2){
-      this.enlaces = false;
-    }
-    if(this.texto.split('<img').length>15){
-      this.enlaces = false;
-    }
+  //IMPORTADOR
 
-    if((this.texto.split('<h3').length>1) ){
-      this.titulosH3 = true;
-    }
-    if (this.texto.split('<h1').length==1) {
-      this.titulosH1 = true;
-    }
-    if (this.texto.split('<h2').length==2) {
-      this.titulosH2 = true;
-    }
-    if(this.texto.split('<a').length>1){
-      this.enlaces = true;
-    }
-    if(this.texto.split('<img').length<16){
-      this.enlaces = true;
-    }
-  }
-
-  analizarImagenes(){
-    this.getNumeroImgs();
-    this.comprobarSrcEnImgs();
-  }
-
-  getNumeroImgs(){
-    this.numeroImgs = this.texto.split('<img').length-1;
-  }
-
-  comprobarSrcEnImgs(): void {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = this.texto;
-  
-    // Convertimos HTMLCollection a un arreglo utilizando Array.from()
-    const imgElements = Array.from(tempDiv.getElementsByTagName('img')) as HTMLImageElement[];
-    this.srcImgs = true;
-    for (const imgElement of imgElements) {
-      const src = imgElement.getAttribute('src');
-      if (!src) {
-        console.error('Imagen sin atributo "src":', imgElement);
-        this.srcImgs = false;
-        continue;
-      }
-  
-      const tempImg = new Image();
-      tempImg.onload = () => {
-        console.log('Imagen válida:', src);
-      };
-      tempImg.onerror = () => {
-        console.error('Error en la imagen:', src);
-        this.srcImgs = false;
-      };
-      tempImg.src = src;
-    }
-  }
-
-  analizarEnlaces() {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(this.texto, "text/html");
-    const enlaces = doc.querySelectorAll("a");
-    console.log("NUMERO ENLACES", enlaces.length)
-    this.enlaces = true;
-    if (enlaces.length>0) {
-      this.numeroEnlaces = true;
-    }
-    enlaces.forEach((enlace) => {
-      const url = enlace.getAttribute("href");
-      if (url) {
-        this.comprobarEnlace(url).then((status) => {
-          if (status === 200) {
-            console.log(`El enlace "${url}" está funcionando correctamente.`);
-          } else {
-            console.log(`El enlace "${url}" no está disponible o ha devuelto un código de error.`);
-            this.enlaces = false;
-          }
-        }).catch(() => {
-          this.enlaces = false;
-          console.log(`Error al intentar acceder al enlace "${url}".`);
-        });
-      }
-    });
-  }
-
-
-  comprobarEnlace(url: string): Promise<number> {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("HEAD", url, true);
-  
-      xhr.onload = () => {
-        resolve(xhr.status);
-      };
-  
-      xhr.onerror = () => {
-        reject();
-      };
-  
-      xhr.send();
-    });
-  }
-
-  /* Guardar la publicación automaticamente cada 5 min*/
-  autoGuardado() {
-    setInterval(() => {
-      if (!this.publicacion.publicado) {
-        if (this.publicacion.fechaPublicacion = "") {
-          this.postPublicacionAutoguardado();
-        } else {
-          this.patchPublicacionAutoguardado();
-        }
-      }
-    }, 300000)
-  }
 
   async importar() {
     if (this.fechaArticuloImportado) {
@@ -742,7 +628,7 @@ export class PublicacionFichaComponent implements OnInit {
       let doc = this.seleccionarArticulo();
       this.importarContenido(doc);
       console.log("DOC: ", doc)
-    }else{
+    } else {
 
     }
 
@@ -845,7 +731,7 @@ export class PublicacionFichaComponent implements OnInit {
                 img.setAttribute('width', '50%');
               }
               /* img.removeAttribute('width'); */
-              
+
             } else {
               img.setAttribute('width', '75%');
             }
@@ -859,17 +745,17 @@ export class PublicacionFichaComponent implements OnInit {
     }
     /* Extraer el subtitulo que se encuentra en una etiqueta li al inicio del articulo y cambiarlo a una etiqueta h2 en la misma posicion */
     const textoSubtitulo = doc.querySelector('li')?.innerText;
-    if (textoSubtitulo) {   
+    if (textoSubtitulo) {
       this.publicacion.subtitulo = textoSubtitulo;
     }
 
     const listaSubtitulo = doc.querySelector('ul');
-    const nuevoSubtitulo =  doc.createElement('h2');
+    const nuevoSubtitulo = doc.createElement('h2');
     nuevoSubtitulo.innerText = this.publicacion.subtitulo;
     listaSubtitulo?.appendChild(nuevoSubtitulo);
     const subtituloAntiguo = doc.querySelector('li');
     subtituloAntiguo?.remove();
-    
+
     setTimeout(() => {
       this.texto = this.texto + doc.documentElement.outerHTML;
       this.texto = this.texto.replaceAll('<figure><img', '<p class="ql-align-center imagen-container text-center"><img')

@@ -6,6 +6,7 @@ import { ImagenesService } from '../service/imagenes.service';
 import { Router } from '@angular/router';
 import { LateralServiceService } from '../service/lateral.service';
 import { Lateral } from '../models/lateral';
+import { MetaService } from '../service/meta.service';
 declare const twttr: any;
 
 @Component({
@@ -31,10 +32,12 @@ export class PublicacionesComponent implements OnInit {
     private publicacionesService: PublicacionesServiceService,
     private imagenesService: ImagenesService,
     private router: Router,
-    private lateralService: LateralServiceService) { }
+    private lateralService: LateralServiceService,
+    private metaService: MetaService) { }
 
   ngOnInit() {
     this.guardarLocalStorageMeta();
+    this.setMetaTagsFromLocalStorage();
     this.getLateral();
     this.getImagenesInicio(); 
     this.rol = sessionStorage.getItem('rol');
@@ -166,7 +169,7 @@ export class PublicacionesComponent implements OnInit {
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter3;
     twitterContainer?.appendChild(tweetContainer);
-    /* twttr.widgets.load(); */
+    twttr.widgets.load();
   }
 
   showHtmlPodcast() {
@@ -270,10 +273,11 @@ export class PublicacionesComponent implements OnInit {
   }
 
   guardarLocalStorageMeta(){
-    localStorage.setItem("title", "Vermú Torero");
-    localStorage.setItem("description", "La revista digital y podcast del aperitivo a la cena. Vinos, restaurantes, viajes, eventos culturales, estilos de vida.");
-    localStorage.setItem("keyWords", "revista, digital, aperitivo, comer, comida, cena, cenar, viajes, viajar, vino, carnes, gastronomía, turismo");
-    localStorage.setItem("autor", "Elisabeth G. Iborra");
+    this.metaService.guardarLocalStorageMetaPaginaPrincipal();
+  }
+
+  setMetaTagsFromLocalStorage() {
+    this.metaService.setMetaTagsFromLocalStorage();
   }
 
 }

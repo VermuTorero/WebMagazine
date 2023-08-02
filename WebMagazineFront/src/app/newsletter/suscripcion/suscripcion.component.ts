@@ -86,8 +86,11 @@ export class SuscripcionComponent implements OnInit {
       } else {
         console.log("ABRIENDO PASARELA DE PAGO");
         clearInterval(interval);
-        this.pagar(precio);
-        this.initConfig(precio);
+        if (precio!="0") {
+          this.pagar(precio);
+          this.initConfig(precio);
+        }
+    
         if(verificationWindow){
           verificationWindow.close(); // Cerrar la ventana de verificación
         }

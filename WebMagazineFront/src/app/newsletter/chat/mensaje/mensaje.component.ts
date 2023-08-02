@@ -26,7 +26,7 @@ export class MensajeComponent implements OnInit{
       this.hora = this.mensaje.fecha.split('T')[1];
       this.horas = parseInt(this.hora.split(':')[0]) + 2;
       this.minutos = this.hora.split(':')[1];
-      this.fechaHoraMensaje =this.horas + ":" + this.minutos;
+      this.fechaHoraMensaje = "Hoy " + this.horas + ":" + this.minutos;
     }else{
       this.fechaHoraMensaje = this.mensaje.fecha.split('T')[0];
     }

@@ -392,9 +392,17 @@ public class UsuariosController {
 			@PathVariable("id") Long id) {
 		try {
 			Usuario usuario = getUsuarioService().getById(id).get();
-			usuario.setNombre("" + usuario.getNombre().charAt(0));
-			usuario.setApellido1("" + usuario.getApellido1().charAt(0));
-			usuario.setApellido2("" + usuario.getApellido2().charAt(0));
+			if (!usuario.getNombre().isBlank()) {
+				usuario.setNombre("" + usuario.getNombre().charAt(0));
+				
+			}
+			if (!usuario.getApellido1().isBlank()) {
+				usuario.setApellido1("" + usuario.getApellido1().charAt(0));
+			}
+			if (!usuario.getApellido2().isBlank()) {
+				usuario.setApellido2("" + usuario.getApellido2().charAt(0));
+			}
+			
 			Random random = new Random();
 			int numero =  random.nextInt(900) + 100;
 			usuario.setEmail(usuario.getEmail() + "/deleted/" + numero);
