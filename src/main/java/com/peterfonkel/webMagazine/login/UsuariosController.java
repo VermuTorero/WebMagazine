@@ -392,13 +392,13 @@ public class UsuariosController {
 			@PathVariable("id") Long id) {
 		try {
 			Usuario usuario = getUsuarioService().getById(id).get();
-			if (!usuario.getNombre().isEmpty() || usuario.getNombre().equals(null)) {
+			if (!usuario.getNombre().isEmpty() || !usuario.getNombre().equals(null)) {
 				usuario.setNombre("" + usuario.getNombre().charAt(0));
 			}
-			if (!usuario.getApellido1().isEmpty() || usuario.getApellido1().equals(null)) {
+			if (!usuario.getApellido1().isEmpty() || !usuario.getApellido1().equals(null)) {
 				usuario.setApellido1("" + usuario.getApellido1().charAt(0));
 			}
-			if (!usuario.getApellido2().isEmpty() || usuario.getApellido2().equals(null)) {
+			if (!usuario.getApellido2().isEmpty() || !usuario.getApellido2().equals(null)) {
 				usuario.setApellido2("" + usuario.getApellido2().charAt(0));
 			}
 			
