@@ -47,3 +47,9 @@ a.olvidado{
     height: 10% !important;
     font-size: small;
 }
+/* Estilos tamaño movil */
+@media (max-width: 40em) {
+    .login{
+        margin-bottom: 3%;
+    }
+}

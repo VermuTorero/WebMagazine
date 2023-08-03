@@ -1,11 +1,12 @@
-<div class="col-12">
+<div class="col-12 login">
   <button *ngIf="isLoggedUser" class="btn btn-outline-danger btn-sm boton-login ml-4 mx-2 " type="submit"
     (click)="exitLogin()">Exit</button>
   <button *ngIf="!isLoggedUser" class="btn btn-outline-success btn-sm boton-login ml-4 mx-2 " type="submit"
     data-bs-toggle="modal" data-bs-target="#logInModal">Acceder</button>
-  <a *ngIf="!isLoggedUser" class="btn btn-outline-light btn-sm boton-login" type="submit" 
-  href="/suscripcion">Suscríbete</a>
-  <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}} {{usuario.apellido1}} {{usuario.apellido2}}</a>
+  <a *ngIf="!isLoggedUser" class="btn btn-outline-light btn-sm boton-login" type="submit"
+    href="/suscripcion">Suscríbete</a>
+  <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}} {{usuario.apellido1}}
+    {{usuario.apellido2}}</a>
 </div>
 <div class="col-12 olvidado-container">
   <a *ngIf="!usuario.nombre" href="security/login/pass-recovery" class="olvidado">¿Has olvidado tu contraseña?</a>
@@ -33,7 +34,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="submit" value="Aceptar" class="btn btn-primary" (click)="login()" data-bs-dismiss="modal" >Aceptar</button>
+        <button type="submit" value="Aceptar" class="btn btn-primary" (click)="login()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
@@ -61,7 +63,7 @@
           <label for="email">Segundo apellido</label>
           <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
-      <!--   <div class="email-input m-2">
+        <!--   <div class="email-input m-2">
           <label for="email">Dirección</label>
           <input type="text" class="mx-2" [(ngModel)]="usuarioNuevo.direccion">
         </div> -->
@@ -100,11 +102,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       <p>La suscripcion ha caducado. Puedes suscribire por 31 dias más.</p>
+        <p>La suscripcion ha caducado. Puedes suscribire por 31 dias más.</p>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <a  class="btn btn-primary" href="renovar-suscripcion">Renovar suscripcion</a>
+        <a class="btn btn-primary" href="renovar-suscripcion">Renovar suscripcion</a>
       </div>
     </div>
   </div>
@@ -119,11 +121,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       <p>Tu sesion se ha cerrado por tiempo de inactividad. Ingresa de nuevo con tu usuario y contraseña.</p>
+        <p>Tu sesion se ha cerrado por tiempo de inactividad. Ingresa de nuevo con tu usuario y contraseña.</p>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button  class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#logInModal">Ingesar de nuevo</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logInModal">Ingesar de nuevo</button>
       </div>
     </div>
   </div>
@@ -137,11 +139,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       <p>El usuario o contraseña son incorrectos</p>
+        <p>El usuario o contraseña son incorrectos</p>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button  class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#logInModal">Ingresar de nuevo</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#logInModal">Ingresar de nuevo</button>
       </div>
     </div>
   </div>

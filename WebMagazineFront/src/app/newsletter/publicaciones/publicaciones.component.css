@@ -1,12 +1,5 @@
-.inicio {
-  background-color: black;
-  margin: 0% !important;
-  padding: 0% !important;
-  width: 85% !important;
-}
-.zona-articulos{
-  margin-left: 5%;
-}
+
+
 .seccion-recientes{
   background-color: #ebeaea;
   padding: 1%;
@@ -109,10 +102,11 @@ app-publicacion {
   background-color: white;
   padding: 3%;
   border-style: ridge;
-  border-color: black;
+  border-color: rgb(206, 205, 205);
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
   height: fit-content;
+  border-radius: 5px;
 }
 
 .buscador{
@@ -121,9 +115,10 @@ app-publicacion {
   background-color: rgb(255, 109, 0, 255);
   padding: 3%;
   border-style: ridge;
-  border-color: black;
+  border-color: rgb(139, 139, 139);
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
+  border-radius: 5px;
 }
 .titulo-buscador{
   color: white;
@@ -134,13 +129,12 @@ app-publicacion {
   margin-right: 32%;
   padding: 3%;
   border-style: ridge;
-  border-color: black;
+  border-color: rgb(206, 205, 205);
   border-width: 1px;
   box-shadow: 2px 2px 10px #666;
   height: fit-content;
+  border-radius: 5px;
 }
-
-
 
 .recomendaciones{
   margin-top: 5%;
@@ -306,11 +300,33 @@ app-publicacion {
     padding: 0;
     box-shadow: 1px 1px 5px #666 !important;
   }
+  .zona-articulos{
+    width: 100%;
+    text-align: center;
+    margin-left: 0%;
+    padding: 0;
+  }
+  .carousel{
+    width: 100% !important;
+  }
+  .inicio {
+    background-color: black;
+    margin: 0% !important;
+    padding: 0% !important;
+    width: 100% !important;
+  }
 }
 
-
-/* Estilos tamaño grande */
-@media (min-width: 41em) {
+@media (min-width: 40em) and (max-width:80em){
+  .inicio {
+    background-color: black;
+    margin: 0% !important;
+    padding: 0% !important;
+    width: 96% !important;
+  }
+  .carousel{
+    width: 100% !important;
+  }
   .texto-carousel {
     font-size: small;
   }
@@ -331,28 +347,106 @@ app-publicacion {
     display: flex;
     justify-content: center;
   }
-  .inicio {
-    width: 80%;
-    margin: auto;
-  }
   .zona-articulos{
     margin-top: 1% !important;
+    margin-left: 0% !important;
+    text-align: center;
+    margin-left: 0%;
+    padding: 0;
+    width: 100% !important;
+  }
+  .columna-articulos{
+    margin: 0%;
+    padding-left: 1%;
+    padding-right: 0% !important;
+  }
+
+  .seccion-recientes{
+    margin-top: 5% !important;
+    text-align: center;
+    width: 96%;
+    margin-left: 2% !important;
+  }
+  .seccion-destacados{
+    margin-top: 0 !important;
+    text-align: center;
+    width: 96%;
+    margin-left: 2% !important;
+  }
+  .podcast{
+    margin-top: 13%;
+    margin-right: 2%;
+    background-color: white;
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(206, 205, 205);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    height: fit-content;
+    border-radius: 5px;
+  }
+  
+  .buscador{
+    margin-top: 5%;
+    margin-right: 2%;
+    background-color: rgb(255, 109, 0, 255);
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(139, 139, 139);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+  }
+  .twitter{
+    margin-top: 5%;
+    margin-right: 2%;
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(206, 205, 205);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    height: fit-content;
+    border-radius: 5px;
   }
 }
 
-
-/* Estilos tamaño muy grande */
-@media (min-width: 80em) {
-
+/* Estilos tamaño grande */
+@media (min-width: 81em) {
   .inicio {
-    width: 80%;
-    margin: auto;
-
+    background-color: black;
+    margin: 0% !important;
+    padding: 0% !important;
+    width: 85% !important;
   }
-
+  .texto-carousel {
+    font-size: small;
+  }
+  .texto-titulo{
+    font-size: medium;
+    
+  }
+  .letra-blanca{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .letra-negra{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .boton-buscador{
+    width: 20%;
+  }
   .inicio-container {
     display: flex;
     justify-content: center;
+  }
+ 
+
+  .zona-articulos{
+    margin-top: 1% !important;
+    margin-left: 5% !important;
+    text-align: center;
+    margin-left: 0%;
+    padding: 0;
+    width: 95% !important;
   }
 
 }

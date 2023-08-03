@@ -1,11 +1,14 @@
 <div class="promo-tienda-component" (click)="irATienda()">
     <div class="row row-promo">
-        <div class="col-6 seccion-texto">
+        <div class="col-12 d-md-none seccion-imagen">
+            <img class="imagen" src="{{imagenPromoTienda.url}}" alt="">
+        </div>
+        <div class="col-12 seccion-texto">
             <h3 class="titulo">Visita nuestra tienda</h3>
             <p class="texto">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt in tellus quis luctus. 
                 Vivamus eu nulla elit. Proin sit amet nisi ut dolor mollis posuere. Praesent porta nulla odio, vitae fringilla orci facilisis in. Praesent at faucibus lacus.</p>
         </div>
-        <div class="col-6 seccion-imagen">
+        <div class="d-none d-md-block seccion-imagen">
             <img class="imagen" src="{{imagenPromoTienda.url}}" alt="">
         </div>
     </div>

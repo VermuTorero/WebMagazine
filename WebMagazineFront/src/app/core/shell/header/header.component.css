@@ -1,77 +1,208 @@
-.navbar{
-    /* background-color: rgb(255,109,0,255); */
-    background-color: white;
-    margin-top: 1%;
-    margin-left: 7%;
-    margin-right: 10% !important;
-    padding-right: 0%;
-   
-}
 
-.navbar-brand {
-    font-size: 2vw;
-    width: 30%;
-    margin: 0%;
-    padding-right: 0%;
-}
-.navbar-icon {
-    margin-top: 1%;
-    margin-right: 0%;
-    padding-right: 0%;
-    width: 100%; 
-    font-size: 5vw;
-}
-
-.navbar-nav{
-    background-color: black;
-    padding: 1%;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-    margin-right: 10%;
-    padding-right: 5%;
-   
-}
-.nav-item{
-    align-self: center;
-}
-
-.barra-admin{
-    /* background-color: rgb(255,109,0,255); */
-    background-color: black;
-}
-.nav-link{
-    font-size: medium;
-    font-family:sans-serif
-}
-.nav-link:hover{
-    opacity: 0.5;
-}
-.navbar-collapse {
-    width: 5%;
-    margin: 0;
-    padding-left: 0%;
-    margin-right: 15% !important;
-}
-
-@media (min-width: 101em) {
-    .nav-link{
-        font-size: 1.1em;
-    }
-}
-
-@media (max-width: 100em) {
-    .nav-link{
-        font-size:medium;
-    }
-}
 @media (max-width: 40em) {
 
-    .navbar-brand{
-        width: 100% !important;
-        font-size: large;
+    .navbar{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: white;
+        margin-top: 1%;
+        margin-left: 0%;
+        margin-right: 10% !important;
+        padding-right: 0%;
     }
-    .navbar-icon{
-        width: 95%;
+    .navbar-row{
+        justify-content: center;
     }
+
+    .navbar-brand {
+        font-size: 2vw;
+        width: 85%;
+        margin: 0%;
+        padding-right: 0%;
+    }
+    .navbar-icon {
+        margin-top: 0%;
+        margin-right: 0%;
+        padding-right: 0%;
+        width: 100%; 
+        font-size: 5vw;
+    }
+    
+    .navbar-nav{
+        background-color: black;
+        padding: 0%;
+        margin-right: 0%;
+        padding-right: 0%;
+       
+    }
+    /* Estilos personalizados para el botón negro */
+    .boton-negro {
+        background-color: rgb(255, 109, 0, 255);
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
+        width: 20% !important
+      }
+      
+    
+    .nav-item{
+        align-self: center;
+    }
+    
+    .barra-admin{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: black;
+    }
+    .nav-link{
+        font-size: medium;
+        font-family:sans-serif
+    }
+    .nav-link:hover{
+        opacity: 0.5;
+    }
+    .navbar-collapse {
+        width: 5%;
+        margin: 0;
+        padding-left: 0%;
+        margin-right: 0% !important;
+        padding-bottom: 2% !important;
+    }
+    
 }
 
+@media (min-width: 40em) and (max-width:80em){
+
+    .navbar{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: white;
+        margin-top: 1%;
+        margin-left: 0%;
+        margin-right: 10% !important;
+        padding-right: 0%;
+    }
+    .navbar-row{
+        justify-content: center;
+    }
+
+    .navbar-brand {
+        font-size: 2vw;
+        width: 85%;
+        margin: 0%;
+        padding-right: 0%;
+    }
+    .navbar-icon {
+        margin-top: 0%;
+        margin-right: 0%;
+        padding-right: 0%;
+        width: 100%; 
+        font-size: 5vw;
+    }
+    
+    .navbar-nav{
+        background-color: black;
+        padding: 0%;
+        margin-right: 0%;
+        padding-right: 0%;
+       
+    }
+    /* Estilos personalizados para el botón negro */
+    .boton-negro {
+        background-color: rgb(255, 109, 0, 255);
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
+        width: 20% !important
+      }
+      
+    .nav-item{
+        align-self: center;
+    }
+    
+    .barra-admin{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: black;
+    }
+    .nav-link{
+        font-size: medium;
+        font-family:sans-serif
+    }
+    .nav-link:hover{
+        opacity: 0.5;
+    }
+    .navbar-collapse {
+        width: 5%;
+        margin: 0;
+        padding-left: 0%;
+        margin-right: 0% !important;
+        padding-bottom: 2% !important;
+        font-size: x-small !important;
+    }
+    
+}
+
+
+
+@media (min-width: 81em) {
+    .navbar{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: white;
+        margin-top: 1%;
+        margin-left: 7%;
+        margin-right: 10% !important;
+        padding-right: 0%;
+       
+    }
+    
+    .navbar-brand {
+        font-size: 2vw;
+        width: 30%;
+        margin: 0%;
+        padding-right: 0%;
+    }
+    .navbar-icon {
+        margin-top: 1%;
+        margin-right: 0%;
+        padding-right: 0%;
+        width: 100%; 
+        font-size: 5vw;
+    }
+    
+    .navbar-nav{
+        background-color: black;
+        padding: 1%;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        margin-right: 10%;
+        padding-right: 5%;
+       
+    }
+    /* Estilos personalizados para el botón negro */
+    .boton-negro {
+        background-color: black;
+    
+      }
+      
+    
+    .nav-item{
+        align-self: center;
+    }
+    
+    .barra-admin{
+        /* background-color: rgb(255,109,0,255); */
+        background-color: black;
+    }
+    .nav-link{
+        font-size: medium;
+        font-family:sans-serif
+    }
+    .nav-link:hover{
+        opacity: 0.5;
+    }
+    .navbar-collapse {
+        width: 5%;
+        margin: 0;
+        padding-left: 0%;
+        margin-right: 15% !important;
+    }
+    
+
+}
