@@ -1,0 +1,38 @@
+.promo-tienda-component {
+    background-color: #ebeaea;
+    padding: 1%;
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-bottom: 3% !important;
+    margin-top: 3%;
+    margin-right: 2%;
+    margin-left: 2%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+.seccion-imagen{
+    width: 45%;
+    background-color: rgb(255, 109, 0, 255);
+    text-align: center;
+  
+}
+.imagen{
+    width:70%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    padding-bottom: 0%;
+    padding-top: 0%;
+}
+.seccion-texto{
+    text-align: center;
+    align-self: center;
+    width: 48%;
+    margin-left: 2%;
+}
+.titulo{
+    font-weight: bold;
+}
+.texto{
+    margin-left: 2%;
+    margin-right: 5%;
+}

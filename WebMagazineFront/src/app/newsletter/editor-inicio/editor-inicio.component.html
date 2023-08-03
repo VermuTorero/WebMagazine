@@ -210,7 +210,7 @@
           <input type="file" accept="images/" (change)="onSelectFileIzquierda($event)">
         </section>
         <section *ngIf="imagePreviewUrl">
-          <angular-cropper [cropperOptions]='{aspectRatio: 3 / 4}' [imageUrl]="imagenInicioIzquierda.url"
+          <angular-cropper [cropperOptions]='{aspectRatio: 1 / 1}' [imageUrl]="imagenInicioIzquierda.url"
             #angularCropper2></angular-cropper>
         </section>
       </div>

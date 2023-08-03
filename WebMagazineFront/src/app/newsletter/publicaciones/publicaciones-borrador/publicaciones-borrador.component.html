@@ -6,5 +6,8 @@
       class="card col-12 col-sm-6 col-md-3 col-xxl-2">
       <app-publicacion [publicacion]="publicacion"></app-publicacion>
     </div>
+    <div class="sin-borradores">
+      <h5 *ngIf="publicaciones.length==0">No tienes borradores actualmente</h5>
+    </div>
   </div>
 </div>

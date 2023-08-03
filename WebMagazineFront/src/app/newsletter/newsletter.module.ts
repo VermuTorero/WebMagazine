@@ -29,6 +29,8 @@ import { RenovarSuscripcionComponent } from './suscripcion/renovar-suscripcion/r
 import { ChatComponent } from './chat/chat.component';
 import { MensajeComponent } from './chat/mensaje/mensaje.component';
 import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-borrador/publicaciones-borrador.component';
+import { EcommerceModule } from '../ecommerce/ecommerce.module';
+import { PromoTiendaComponent } from './promo-tienda/promo-tienda.component';
 
 
 
@@ -57,7 +59,8 @@ import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-bo
     RenovarSuscripcionComponent,
     ChatComponent,
     MensajeComponent,
-    PublicacionesBorradorComponent
+    PublicacionesBorradorComponent,
+    PromoTiendaComponent
   ],
   
   imports: [

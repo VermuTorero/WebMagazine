@@ -1,6 +1,7 @@
 .usuarioLoggeado {
     color: white;
     margin-top: 5%;
+    font-size: small;
 }
 
 .modal-body {
@@ -30,4 +31,7 @@ a.olvidado{
 .olvidado:hover{ 
     opacity: 0.7;
     color: white;
+}
+.btn{
+    height: 10% !important;
 }

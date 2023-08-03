@@ -4,12 +4,10 @@ import { TipoSuscripcionService } from '../service/tiposSuscripcion.service';
 import { Usuario } from 'src/app/security/models/usuario';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Rol } from '../models/Rol';
-import { clear } from 'console';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
-import { environment } from 'src/environments/environment';
 import { paypalConfig } from 'src/environments/paypalConfig';
 declare var $: any;
 
@@ -81,10 +79,8 @@ export class SuscripcionComponent implements OnInit {
       if (!this.usuarioConfirmando.isConfirmadoEmail) {
         this.usuariosService.getIsConfirmed(this.usuarioNuevo.email).subscribe(UsuarioIsConfirmed => {
           this.usuarioConfirmando.isConfirmadoEmail = UsuarioIsConfirmed.isConfirmadoEmail;
-          console.log("ESPERANDO A CONFIRMACION DE EMAIL");
         });
       } else {
-        console.log("ABRIENDO PASARELA DE PAGO");
         clearInterval(interval);
         if (precio!="0") {
           this.pagar(precio);
@@ -94,7 +90,6 @@ export class SuscripcionComponent implements OnInit {
         if(verificationWindow){
           verificationWindow.close(); // Cerrar la ventana de verificación
         }
-        
       }
     }, 3000);
   }
@@ -144,22 +139,13 @@ export class SuscripcionComponent implements OnInit {
       },
       onApprove: (data, actions) => {
         //mostramos un spinner mientras se procesa el pago
-        /* this.spinner.show(); */
-        console.log(
-          'onApprove - transaction was approved, but not authorized',
-          data,
-          actions
-        );
-        actions.order.get().then((details: any) => {
-          console.log(
-            'onApprove - you can get full order details inside onApprove: ',
-            details
-          );
+        this.spinner.show();
+        actions.order.get().then((details: any) => {  
         });
       },
       onClientAuthorization: (data) => {
         console.log(
-          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+          'Pagado: ',
           data
         );
         this.usuariosService.setIsPaid(this.usuarioNuevo.email).subscribe(response=>{
@@ -170,10 +156,14 @@ export class SuscripcionComponent implements OnInit {
 
       },
       onCancel: (data, actions) => {
-        console.log('OnCancel', data, actions);
+        this.modalService.dismissAll();
+        $('#errorPagoSuscripcionModal').modal('show');
+        console.log('Cancelado: ', data, actions);
       },
       onError: (err) => {
-        console.log('OnError', err);
+        this.modalService.dismissAll();
+        $('#errorPagoSuscripcionModal').modal('show');
+        console.log('Error en pago: ', err);
       },
       onClick: (data, actions) => {
         console.log('onClick', data, actions);

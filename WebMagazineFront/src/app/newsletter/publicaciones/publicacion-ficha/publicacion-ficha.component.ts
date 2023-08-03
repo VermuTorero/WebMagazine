@@ -297,7 +297,6 @@ export class PublicacionFichaComponent implements OnInit {
       }
     });
     this.tagsSeleccionadas.push(this.tagSeleccionada);
-    console.log("TAGS SELECCIONADAS", this.tagsSeleccionadas)
     this.tagSeleccionada = new Tag();
   }
 
@@ -307,7 +306,6 @@ export class PublicacionFichaComponent implements OnInit {
         this.tagsSeleccionadas.splice(index, 1);
       }
     }
-    console.log("TAGS SEL DESP BORRAR", this.tagsSeleccionadas)
   }
 
   nuevaTag() {
@@ -326,7 +324,6 @@ export class PublicacionFichaComponent implements OnInit {
         tagPublicacion.id = this.tagsService.getId(tagPublicacion);
       });
       this.publicacion.tags = tagsPublicacion;
-      console.log("TAGS PUBLICACION:", this.publicacion.tags)
       this.tagsSeleccionadas = tagsPublicacion;
     })
   }
@@ -334,19 +331,16 @@ export class PublicacionFichaComponent implements OnInit {
   //AUTOR
   getAutores(): void {
     this.usuariosService.getAutores().subscribe(autores => {
-      console.log(autores)
       this.autores = autores;
       this.autores.forEach(autor => {
         autor.id = this.usuariosService.getId(autor);
       });
-      console.log("AUTORES CON ID:", this.autores)
     });
   }
 
   getAutorPublicacion() {
     this.publicacionesService.getAutorFromPublicacion(this.publicacion).subscribe(autorPublicacion => {
       autorPublicacion.id = this.usuariosService.getId(autorPublicacion)
-      console.log("AUTOR PUBLICACION:", autorPublicacion)
       this.publicacion.autor = autorPublicacion;
 
     })
@@ -359,14 +353,12 @@ export class PublicacionFichaComponent implements OnInit {
       this.categorias.forEach(categoria => {
         categoria.id = this.categoriasService.getId(categoria);
       });
-      console.log("CATEGORIAS RECIBIDAS: ", this.categorias)
     })
   }
 
   getCategoriaPublicacion() {
     this.publicacionesService.getCategoriaFromPublicacion(this.publicacion).subscribe(categoria => {
       categoria.id = this.categoriasService.getId(categoria);
-      console.log("CATEG: ", categoria)
       this.publicacion.categoria = categoria;
       this.categoriaSeleccionada = categoria;
 
@@ -386,7 +378,6 @@ export class PublicacionFichaComponent implements OnInit {
       this.lugares.forEach(lugar => {
         lugar.id = this.lugaresService.getId(lugar);
       });
-      console.log("LUGARES RECIBIDOS: ", this.lugares);
     })
   }
 
@@ -432,11 +423,8 @@ export class PublicacionFichaComponent implements OnInit {
       reader.onload = () => {
         this.imageUrl = reader.result as string;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imageUrl)
   }
 
   onSelectFilePreview(event: any) {
@@ -447,11 +435,8 @@ export class PublicacionFichaComponent implements OnInit {
       reader.onload = () => {
         this.imagePreviewUrl = reader.result as string;
       }
-      console.log("EVENT", event.target.files[0])
       this.imageName = event.target.files[0].name;
-
     }
-    console.log("IMAGEN SELECCIONADA EN PC: ", this.imagePreviewUrl)
   }
 
   getCroppedImage() {
@@ -464,7 +449,6 @@ export class PublicacionFichaComponent implements OnInit {
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.nombreImagen, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.publicacion.titulo, "publicacion").subscribe(url => {
-          console.log("URL IMAGEN SUBIDA: ", url)
           this.insertarImagenUrl(url);
         })
       }
@@ -497,11 +481,8 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
-
-    console.log("NOMBRE-IMAGEN: ", this.nombreImagen)
     this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
     this.nombreImagen = "";
-    console.log("TEXTO: ", this.texto)
   }
 
   redireccionar() {
@@ -627,7 +608,6 @@ export class PublicacionFichaComponent implements OnInit {
       this.importarTitulo();
       let doc = this.seleccionarArticulo();
       this.importarContenido(doc);
-      console.log("DOC: ", doc)
     } else {
 
     }
@@ -738,7 +718,6 @@ export class PublicacionFichaComponent implements OnInit {
             img.setAttribute('alt', file.name)
             img.removeAttribute('height');
             img.setAttribute('src', url);
-            console.log(url);
           }, 1500);
         })
       }

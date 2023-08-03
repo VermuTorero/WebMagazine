@@ -1,14 +1,12 @@
 <div class="row my-2">
-    <div class="col-4"></div>
-    <div class="col 4">
-        <label for="email">Email: </label>
-        <input type="text" [(ngModel)]="email">
-    </div>
-    <div class="col-4"></div>
-</div>
-<div class="row my-2">
-    <div class="col-4"></div>
-    <div class="col-4">
+    <div class="col-2"></div>
+    <div class="col-8 email-container">
+        <label for="email" class="mx-2 email-label">Email: </label>
+        <input type="text" [(ngModel)]="email" class="email-input mx-2">
         <button class="btn btn-success" (click)="recuperarPassword()">Enviar correo de recuperación</button>
     </div>
+    <div class="col-2"></div>
+</div>
+<div class="text-center my-4">
+    Escribe tu email y te enviaremos un correo de recuperacion.
 </div>

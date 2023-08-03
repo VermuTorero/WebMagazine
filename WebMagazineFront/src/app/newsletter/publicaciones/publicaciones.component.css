@@ -1,5 +1,25 @@
 .inicio {
   background-color: black;
+  margin: 0% !important;
+  padding: 0% !important;
+  width: 85% !important;
+}
+.zona-articulos{
+  margin-left: 5%;
+}
+.seccion-recientes{
+  background-color: #ebeaea;
+  padding: 1%;
+  box-shadow: 2px 2px 10px #666;
+  border-radius: 5px;
+  margin-top: 4%;
+}
+.seccion-destacados{
+  background-color: #ebeaea;
+  padding: 1%;
+  box-shadow: 2px 2px 10px #666;
+  border-radius: 5px;
+  margin-bottom: 2% !important;
 }
 
 .card {
@@ -7,6 +27,7 @@
   border-radius: 0px;
   border-style: none;
   display: inline-flex;
+  background-color: #ebeaea;
 }
 
 .inicio-container {
@@ -83,8 +104,8 @@ app-publicacion {
 }
 
 .podcast{
-  margin-top: 15%;
-  margin-right: 10%;
+  margin-top: 13%;
+  margin-right: 32%;
   background-color: white;
   padding: 3%;
   border-style: ridge;
@@ -96,7 +117,7 @@ app-publicacion {
 
 .buscador{
   margin-top: 5%;
-  margin-right: 10%;
+  margin-right: 32%;
   background-color: rgb(255, 109, 0, 255);
   padding: 3%;
   border-style: ridge;
@@ -110,7 +131,7 @@ app-publicacion {
 
 .twitter{
   margin-top: 5%;
-  margin-right: 10%;
+  margin-right: 32%;
   padding: 3%;
   border-style: ridge;
   border-color: black;
@@ -166,6 +187,20 @@ app-publicacion {
 .numero-pagina{
   display: inline;
 }
+.carousel-item {
+  height: 0;
+  padding-top: 33.33%; /* 1/3 de la altura para mantener relación de aspecto 3:1 */
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  position: relative;
+  top: -50%; /* Desplaza la imagen hacia arriba para recortar la parte superior */
+  transform: translateY(-50%); /* Corrige el desplazamiento vertical */
+}
+
 
 /* Animación para hacer aparecer el texto */
 @keyframes slide-up {

@@ -11,6 +11,8 @@ declare var $: any;
 export class SuscripcionFichaComponent implements OnInit {
   suscripciones: TipoSuscripcion[] = [];
   numeroValido: boolean = true;
+  precioVino: string = "";
+  clientIdPayPal: string = "";
 
   constructor(private tiposSuscripcionService: TipoSuscripcionService) {
 

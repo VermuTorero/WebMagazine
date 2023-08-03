@@ -1,0 +1,10 @@
+.email-input{
+    display: inline;
+}
+.email-label{
+    display: inline;
+}
+.email-container{
+    text-align: center;
+    align-items: center;
+}

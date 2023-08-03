@@ -125,7 +125,7 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(
 			PersistentEntityResourceAssembler assembler, 
 			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "4") int size // Tamaño por defecto es 12 (12 resultados por página)
 	) {
 		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 
@@ -149,7 +149,7 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(
 			PersistentEntityResourceAssembler assembler, 
 			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "4") int size // Tamaño por defecto es 12 (12 resultados por página)
 	) {
 		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 

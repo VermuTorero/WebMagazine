@@ -17,12 +17,12 @@ declare const twttr: any;
 export class PublicacionesComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacionesDestacadas: Publicacion[] = [];
-  publicacionesCarousel: Publicacion[]= [];
-  urlImagenLateralDerecha: string = ""; 
-  imagenInicioDerecha : ImagenInicio = new ImagenInicio();
+  publicacionesCarousel: Publicacion[] = [];
+  urlImagenLateralDerecha: string = "";
+  imagenInicioDerecha: ImagenInicio = new ImagenInicio();
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
   imagenInicioCentral: ImagenInicio = new ImagenInicio();
-  tituloUrl: string ="";
+  tituloUrl: string = "";
   lateral: Lateral = new Lateral();
   palabrasClave: string = "";
   rol: string | null = "";
@@ -38,146 +38,144 @@ export class PublicacionesComponent implements OnInit {
   ngOnInit() {
     this.guardarLocalStorageMeta();
     this.setMetaTagsFromLocalStorage();
-    this.getLateral();
-    this.getImagenesInicio(); 
+    this.getImagenesInicio();
     this.rol = sessionStorage.getItem('rol');
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.getPublicacionesRecientes();
-    }else{
+    } else {
       this.getPublicacionesRecientesFree();
     }
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
-   
+    this.getLateral();
   }
-/* Publicaciones recientes - 12 ultimas */
-  getPublicacionesRecientes(){
+
+  /* Publicaciones recientes - 12 ultimas */
+  getPublicacionesRecientes() {
     this.publicaciones = [];
     this.publicacionesService.getPublicacionesRecientes().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
-        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
           publicacion.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
             publicacion.autor = autor;
-          
+
           })
         })
       });
     })
   }
+
   /* Publicaciones recientes - 12 ultimas */
-  getPublicacionesRecientesFree(){
+  getPublicacionesRecientesFree() {
     this.publicaciones = [];
     this.publicacionesService.getPublicacionesRecientesFree().subscribe(publicaciones => {
       this.publicaciones = publicaciones;
       this.publicaciones.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
-        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
           publicacion.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
             publicacion.autor = autor;
-    
+
           })
         })
       });
     })
   }
-/* Publicaciones marcadas como destacadas */
-  getPublicacionesDestacadas(){
+
+  /* Publicaciones marcadas como destacadas */
+  getPublicacionesDestacadas() {
     this.publicacionesDestacadas = [];
     this.publicacionesService.getPublicacionesDestacadas().subscribe(publicaciones => {
       this.publicacionesDestacadas = publicaciones;
       this.publicacionesDestacadas.forEach(publicacion => {
         publicacion.id = this.publicacionesService.getId(publicacion);
-        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+        this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
           publicacion.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+          this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
             publicacion.autor = autor;
-            
+
           })
         })
       });
     })
   }
-/* Publicaciones agregadas al Carrusel */
-  getPublicacionesCarousel(){
-    this.publicacionesService.getPublicacionesCarousel().subscribe(publicacionesCarousel=>{
+
+  /* Publicaciones agregadas al Carrusel */
+  getPublicacionesCarousel() {
+    this.publicacionesService.getPublicacionesCarousel().subscribe(publicacionesCarousel => {
       this.publicacionesCarousel = publicacionesCarousel;
       this.publicacionesCarousel.forEach(publicacionCarousel => {
         publicacionCarousel.id = this.publicacionesService.getId(publicacionCarousel);
-        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0,160) + "...";
-       
+        publicacionCarousel.subtitulo = publicacionCarousel.subtitulo.substring(0, 160) + "...";
+
       });
     })
   }
-/* Imagenes de inicio promo izda, central y dcha */
+
+  /* Imagenes de inicio promo izda, central y dcha */
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
         if (imagenInicio.posicion == "derecha") {
           this.imagenInicioDerecha = imagenInicio;
         }
-        if(imagenInicio.posicion == "izquierda"){
+        if (imagenInicio.posicion == "izquierda") {
           this.imagenInicioIzquierda = imagenInicio;
         }
-        if(imagenInicio.posicion == "centro"){
+        if (imagenInicio.posicion == "centro") {
           this.imagenInicioCentral = imagenInicio;
         }
       });
     })
   }
-/* routing a una publicacion a partir de su titulo */
-  irAPublicacion(publicacion: Publicacion){
-    this.router.navigate(["/publicaciones/"+ publicacion.url]);
+
+  /* routing a una publicacion a partir de su titulo */
+  irAPublicacion(publicacion: Publicacion) {
+    this.router.navigate(["/publicaciones/" + publicacion.url]);
   }
 
-  getLateral(){
-    this.lateralService.getLateral().subscribe(lateral=>{
+  /* Sección lateral con podcast y tweets */
+  getLateral() {
+    this.lateralService.getLateral().subscribe(lateral => {
       this.lateral = lateral;
       this.showHtmlPodcast();
       this.showHtmlPodcastSM();
       this.showHtmlTwitter();
-      this.showHtmlTwitter2();
-      this.showHtmlTwitter3();
-  
+    
     })
   }
-  
+
+  /* Mostrar los 3 tweets */
   showHtmlTwitter() {
-    var twitterContainer = document.querySelector("#twitter");
+    for (let index = 0; index < 4; index++) {
+    var twitterContainer = document.querySelector("#twitter" + index);
     var tweetContainer = document.createElement('div');
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
-    twitterContainer?.appendChild(tweetContainer);
-    
+    twitterContainer?.appendChild(tweetContainer); 
+    }
+    this.loadTwitterWidgets();
   }
 
-  showHtmlTwitter2() {
-    var twitterContainer = document.querySelector("#twitter2");
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter2;
-    twitterContainer?.appendChild(tweetContainer);
-   
+  /* Cargar los widgets de Twitter */
+  loadTwitterWidgets() {
+    if (twttr) {
+      twttr.widgets.load();
+    }
   }
 
-  showHtmlTwitter3() {
-    var twitterContainer = document.querySelector("#twitter3");
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter3;
-    twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
-  }
-
+  /* Mostrar el podcast */
   showHtmlPodcast() {
     var podcastContainer = document.querySelector("#podcast");
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
   }
+/* Mostrar el podcast en pantallas pequeñas */
   showHtmlPodcastSM() {
     var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
@@ -186,98 +184,103 @@ export class PublicacionesComponent implements OnInit {
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
   }
+
+  /* Buscador */
   buscarPublicacionesPorPalabras() {
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
   }
 
-  
   /* Navegar entre páginas */
-  getPaginaSiguiente(){
+  getPaginaSiguiente() {
     this.pagina++;
     /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
-      this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+      this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones => {
         this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
           publicacion.id = this.publicacionesService.getId(publicacion);
-          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
             publicacion.categoria = categoria;
-            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
               publicacion.autor = autor;
             })
           })
         });
-      }, err=>{
+      }, err => {
+        /* Si no existe siguiente página volver a la que estaba */
         this.pagina--;
       })
-    }else{
-       /* Para usuarios sin suscripcion */
-      this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
-        this.publicaciones = publicaciones;
+    } else {
+      /* Para usuarios sin suscripcion */
+      this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones => {
+
+        if (publicaciones[0]!=undefined) {
+          this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
           publicacion.id = this.publicacionesService.getId(publicacion);
-          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
             publicacion.categoria = categoria;
-            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
               publicacion.autor = autor;
             })
           })
         });
-      }, err=>{
+        }else{
+          this.pagina--;
+        }
+      }, err => {
+        /* Si no existe siguiente página volver a la que estaba */
         this.pagina--;
       })
     }
-
- 
-
   }
 
-  getPaginaAnterior(){
+  getPaginaAnterior() {
     /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
-      if (this.pagina>0) {
+      if (this.pagina > 0) {
         this.pagina--;
-        this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones=>{
+        this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones => {
           this.publicaciones = publicaciones;
           this.publicaciones.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
-            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
               publicacion.categoria = categoria;
-              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
                 publicacion.autor = autor;
               })
             })
           });
         })
       }
-    }else{
+    } else {
       /* Para usuarios sin suscripcion */
-      if (this.pagina>0) {
+      if (this.pagina > 0) {
         this.pagina--;
-        this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones=>{
+        this.publicacionesService.getPublicacionesRecientesFreePagina(this.pagina).subscribe(publicaciones => {
           this.publicaciones = publicaciones;
           this.publicaciones.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
-            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria=>{
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
               publicacion.categoria = categoria;
-              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor=>{
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
                 publicacion.autor = autor;
               })
             })
           });
         })
       }
-    } 
+    }
   }
-
-  guardarLocalStorageMeta(){
+  /* Guardar en localStorage los datos de las etiquetas meta */
+  guardarLocalStorageMeta() {
     this.metaService.guardarLocalStorageMetaPaginaPrincipal();
   }
 
+  /* Crear las meta tags */
   setMetaTagsFromLocalStorage() {
     this.metaService.setMetaTagsFromLocalStorage();
   }
-
 }

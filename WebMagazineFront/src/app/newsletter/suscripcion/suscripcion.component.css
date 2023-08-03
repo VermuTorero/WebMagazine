@@ -1,28 +1,41 @@
+.suscripciones-component {
+    background-color: #ebeaea;
+    padding: 1%;
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-bottom: 3% !important;
+    margin-top: 3%;
+    margin-right: 2%;
+    margin-left: 2%;
+
+}
 .texto-descripcion{
     font-weight: bold;
     font-family:sans-serif;
+    font-size: x-large;
 }
-
+.contenido-suscripcion{
+    background-color: rgb(172, 170, 170);
+    height: 100%;
+}
 .tipo-suscripcion{
-    border-radius: 10px;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
     margin: 1%;
-
     box-shadow: 2px 2px 10px #666;
 }
 .tipo-suscripcion-1{
-    background-color: rgb(247, 179, 52);
+    background-color: rgb(255, 109, 0, 255);
 }
 .tipo-suscripcion-2{
-    background-color: orange;
+    background-color: rgb(255, 109, 0, 255);
 }
 .tipo-suscripcion-3{
-    background-color: rgb(247, 149, 36);
+    background-color: rgb(255, 109, 0, 255);
+    /* background-color: rgb(172, 170, 170) */
 }
 .titulo-suscripcion{
+    margin-top: 10%;
     font-weight: bold;
     color: white;
 }
@@ -44,16 +57,11 @@ li{
     background-color: rgb(255, 109, 0, 255);
     color: white;
 }
-.bloque-precio-boton{
-
-}
-.btn{
- 
-}
 .caracteristica{
     padding-right: 12%;
     margin-top: 5%;
     text-align: justify;
+    font-size: small;
 }
 .texto-aviso-pagos{
     margin-left: 15%;

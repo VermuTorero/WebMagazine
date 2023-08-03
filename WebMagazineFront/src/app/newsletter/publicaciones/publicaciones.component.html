@@ -1,14 +1,16 @@
+<!-- Asegúrate de que esta línea se encuentra antes del resto de tu código JavaScript -->
+<script async src="https://platform.twitter.com/widgets.js" onload="onTwitterScriptLoad()"></script>
 <section class="inicio-container">
   <!-- Seccion de inicio -->
   <section class="inicio row p-0 m-0">
     <!-- Promo Izquierda -->
-    <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
+    <!-- <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
       <a href="/ecommerce">
         <img *ngIf="imagenInicioIzquierda.url" src="{{imagenInicioIzquierda.url}}" alt="" class="w-100 p-0 m-0">
       </a>
-    </section>
+    </section> -->
     <!-- Carrusel -->
-    <section class="carrusel col-12 col-sm-6 p-0 m-0">
+    <section class="carrusel col-12 col-sm-12 p-0 m-0">
       <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
@@ -33,7 +35,7 @@
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="3500">
             <img src="{{imagenInicioCentral.url}}" class="d-block w-100 p-0 m-0" alt="...">
-            <section class="carousel-caption rrss">
+        <!--     <section class="carousel-caption rrss">
               <div class="row align-items-center mt-1">
                 <div class="col-1"></div>
                 <div class="col-2 col-sm-1 my-1 mx-2">
@@ -57,10 +59,10 @@
                   </a>
                 </div>
               </div>
-            </section>
+            </section> -->
           </div>
           <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
-            <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="..."
+            <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="img-carousel d-block w-100" alt="..."
               (click)="irAPublicacion(publicacionCarousel)">
             <div class="carousel-caption" (click)="irAPublicacion(publicacionCarousel)">
               <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca texto-titulo">
@@ -92,11 +94,11 @@
       </div>
     </section>
     <!-- Promo Derecha -->
-    <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
+    <!-- <section class="promo d-none d-sm-block col-sm-3 p-0 m-0">
       <a href="/suscripcion">
         <img *ngIf="imagenInicioDerecha.url" src="{{imagenInicioDerecha.url}}" alt="" class="img-fluid p-0 m-0">
       </a>
-    </section>
+    </section> -->
   </section>
 </section>
 
@@ -108,7 +110,6 @@
   <a class="justify-content-center" href="/ecommerce">
     <img class="btn boton-tienda" src="../../../assets/boton_tienda.png" alt="">
   </a>
-  
 </section>
 
 <section class="zona-articulos row">
@@ -129,7 +130,8 @@
         <div id="editor" hidden></div>
       </div>
     </section>
-
+    <app-suscripcion></app-suscripcion>
+    <app-promo-tienda></app-promo-tienda>
     <!-- Seccion articulos destacados -->
     <section class="seccion-destacados my-1 pt-3 mx-1 mx-md-4">
       <h3 class="row mx-2 my-1"><b>Destacados</b></h3>
@@ -156,15 +158,13 @@
     </div>
     <div class="row twitter">
       <h5 class="row titulo-twitter">Twitter</h5>
-      <div class="col-12" id="twitter">
+      <div class="col-12" id="twitter1">
       </div>
       <div class="col-12" id="twitter2">
       </div>
       <div class="col-12" id="twitter3">
       </div>
     </div>
-   
-
   </div>
-
 </section>
+

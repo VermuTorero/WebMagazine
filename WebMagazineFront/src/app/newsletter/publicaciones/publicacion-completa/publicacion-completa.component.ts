@@ -52,11 +52,11 @@ export class PublicacionCompletaComponent implements OnInit {
     private lateralService: LateralServiceService,
     private usuarioService: UsuariosService,
     private likeService: LikesService,
-    private modalService:  NgbModal,
+    private modalService: NgbModal,
     private metaService: MetaService) { }
 
   ngOnInit(): void {
-    this.getLateral();
+  
     this.getUrl();
     this.rol = sessionStorage.getItem("rol");
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
@@ -64,74 +64,26 @@ export class PublicacionCompletaComponent implements OnInit {
     } else {
       this.getPublicacionFree();
     }
+    this.getLateral();
   }
-
+  /* Obtener la url del articulo */
   getUrl(): void {
     this.activatedRoute.params.subscribe(params => {
       this.url = params['titulo'];
     })
   }
 
+  /* Publicacion si es un usuario suscrito */
   getPublicacion(): void {
     this.publicacionesService.getPublicacion(this.url).subscribe(publicacion => {
+      this.getFechaPublicacion(publicacion);
+      publicacion.id = this.publicacionesService.getId(publicacion);
+      this.getAutorFromPublicacion(publicacion);
+      this.getTagsFromPublicacion(publicacion);
+      this.getLugarFromPublicacion(publicacion);
+      this.getCategoriaFromPublicacion(publicacion);
+      this.getLikes(publicacion);
       this.publicacion = publicacion;
-      this.getFechaPublicacion();
-      this.publicacion.id = this.publicacionesService.getId(publicacion);
-      this.getLikes(this.publicacion);
-      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
-        this.publicacion.autor = autor;
-      })
-      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
-        this.publicacion.tags = tags;
-        this.publicacion.tags.forEach(tag => {
-          tag.id = this.tagService.getId(tag);
-        });
-        this.getPublicacionesRelacionadas();
-      })
-      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
-        this.publicacion.lugar = lugar;
-        this.publicacion.lugar.id = this.lugarService.getId(lugar);
-        this.getPublicacionesCerca();
-      })
-      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
-        this.publicacion.categoria = categoria;
-        this.publicacion.categoria.id = this.categoriaService.getId(categoria);
-      })
-      this.formatoContenidoMultimedia();
-      this.showPublicacion();
-      this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
-      this.metaService.setMetaTagsFromLocalStorage();
-
-    })
-  }
-
-  getPublicacionFree() {
-    this.publicacionesService.getPublicacionFree(this.url).subscribe(publicacion => {
-      this.publicacion = publicacion;
-      this.getFechaPublicacion();
-      this.publicacion.id = this.publicacionesService.getId(publicacion);
-      this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
-        this.publicacion.autor = autor;
-      })
-      this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
-        this.publicacion.tags = tags;
-        this.publicacion.tags.forEach(tag => {
-          tag.id = this.tagService.getId(tag);
-        });
-        this.getPublicacionesRelacionadas();
-      })
-      this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
-        this.publicacion.lugar = lugar;
-        this.publicacion.lugar.id = this.lugarService.getId(lugar);
-        this.getPublicacionesCerca();
-      })
-      this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
-        this.publicacion.categoria = categoria;
-        this.publicacion.categoria.id = this.categoriaService.getId(categoria);
-      })
-      this.likeService.getLikes(publicacion.id).subscribe(likes => {
-        this.numeroLikes = likes.length.toString();
-      })
       this.formatoContenidoMultimedia()
       this.showPublicacion();
       this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
@@ -139,6 +91,80 @@ export class PublicacionCompletaComponent implements OnInit {
     })
   }
 
+  /* Publicación si es un usuario sin suscripción */
+  getPublicacionFree() {
+    this.publicacionesService.getPublicacionFree(this.url).subscribe(publicacion => {
+      this.getFechaPublicacion(publicacion);
+      publicacion.id = this.publicacionesService.getId(publicacion);
+      this.getAutorFromPublicacion(publicacion);
+      this.getTagsFromPublicacion(publicacion);
+      this.getLugarFromPublicacion(publicacion);
+      this.getCategoriaFromPublicacion(publicacion);
+      this.getLikes(publicacion);
+      this.publicacion = publicacion;
+      this.formatoContenidoMultimedia()
+      this.showPublicacion();
+      this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
+      this.metaService.setMetaTagsFromLocalStorage();
+    })
+  }
+
+  /* Fecha de una publicación */
+  getFechaPublicacion(publicacion: Publicacion) {
+    if (publicacion.fechaPublicacion) {
+      this.fechaFormateada = publicacion.fechaPublicacion.split("T")[0];
+    } else {
+      this.fechaFormateada = "Sin fecha"
+    }
+  }
+
+  /* Autor de una publicación */
+  getAutorFromPublicacion(publicacion: Publicacion){
+    this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
+      this.publicacion.autor = autor;
+    })
+  }
+
+  /* Tags de una publicación */
+  getTagsFromPublicacion(publicacion: Publicacion){
+    this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
+      this.publicacion.tags = tags;
+      this.publicacion.tags.forEach(tag => {
+        tag.id = this.tagService.getId(tag);
+      });
+      this.getPublicacionesRelacionadas(publicacion);
+    })
+  }
+
+  /* Lugar de una publicación */
+  getLugarFromPublicacion(publicacion: Publicacion){
+    this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
+      this.publicacion.lugar = lugar;
+      this.publicacion.lugar.id = this.lugarService.getId(lugar);
+      this.getPublicacionesCerca(publicacion);
+    })
+  }
+
+  /* Categoría de una publicación */
+  getCategoriaFromPublicacion(publicacion: Publicacion){
+    this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
+      this.publicacion.categoria = categoria;
+      this.publicacion.categoria.id = this.categoriaService.getId(categoria);
+    })
+  }
+
+  /* Likes de una publicación */
+  getLikes(publicacion: Publicacion) {
+    this.likeService.getLikes(publicacion.id).subscribe(likes => {
+      likes.forEach(like => {
+        like.id = this.likeService.getId(like);
+      });
+      this.publicacion.likesRecibidos = likes;
+      this.numeroLikes = likes.length.toString();
+    })
+  }
+
+  /* Formato del contenido de la publicacion */
   formatoContenidoMultimedia() {
     /*Formato de los videos de Youtube*/
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('<iframe class="ql-video ql-align-center" frameborder="0" allowfullscreen="true" src="https://www.youtube.com', '<div class="iframe-container d-flex justify-content-center"><iframe class="ql-video"allowfullscreen="true" tipo="youtube" src="https://www.youtube.com');
@@ -164,8 +190,10 @@ export class PublicacionCompletaComponent implements OnInit {
     this.publicacion.htmlPublicacion = this.publicacion.htmlPublicacion.replaceAll('width="20%">', 'width="20%"></p>');
 
   }
-  getPublicacionesCerca() {
-    this.publicacionesService.getPublicacionesCerca(this.publicacion.lugar.lugarNombre, this.publicacion.id).subscribe(publicacionesCerca => {
+
+  /* Publicaciones con coincidencia en el lugar */
+  getPublicacionesCerca(publicacion: Publicacion) {
+    this.publicacionesService.getPublicacionesCerca(publicacion.lugar.lugarNombre, publicacion.id).subscribe(publicacionesCerca => {
       this.publicacionesCerca = publicacionesCerca;
       this.publicacionesCerca.forEach(publicacionCerca => {
         publicacionCerca.id = this.publicacionesService.getId(publicacionCerca);
@@ -180,8 +208,9 @@ export class PublicacionCompletaComponent implements OnInit {
     })
   }
 
-  getPublicacionesRelacionadas() {
-    this.publicacionesService.getPublicacionesRelacionadas(this.publicacion.id).subscribe(publicacionesRelacionadas => {
+  /* Publicaciones con coincidencias en las tag */
+  getPublicacionesRelacionadas(publicacion: Publicacion) {
+    this.publicacionesService.getPublicacionesRelacionadas(publicacion.id).subscribe(publicacionesRelacionadas => {
       this.publicacionesRelacionadas = publicacionesRelacionadas;
       this.publicacionesRelacionadas.forEach(publicacionRelacionada => {
         publicacionRelacionada.id = this.publicacionesService.getId(publicacionRelacionada);
@@ -199,7 +228,6 @@ export class PublicacionCompletaComponent implements OnInit {
   showPublicacion() {
     var body = document.querySelector("#article");
     var html = document.createElement("div");
-    /* html.setAttribute("class", "d-flex"); */
     html.innerHTML = this.publicacion.htmlPublicacion;
     body?.appendChild(html)
   }
@@ -210,22 +238,12 @@ export class PublicacionCompletaComponent implements OnInit {
 
   eliminarPublicacionConfirmado() {
     this.publicacionesService.deletePublicacion(this.publicacion.id).subscribe(response => {
-      this.router.navigate(['#'])
-    }, 
-    err=>{
-      $('#errorEliminarPublicacionModal').modal('show');
+      this.router.navigate(['../../'])
     },
-    ()=>{
-      this.router.navigate(['#'])
-    });
-  }
-  getFechaPublicacion() {
-    if (this.publicacion.fechaPublicacion) {
-      this.fechaFormateada = this.publicacion.fechaPublicacion.split("T")[0];
-    }else{
-      this.fechaFormateada = "2000-01-01"
-    }
-    
+      err => {
+        $('#errorEliminarPublicacionModal').modal('show');
+        console.log("Error al eliminar: ", err)
+      });
   }
 
   getLateral() {
@@ -233,37 +251,19 @@ export class PublicacionCompletaComponent implements OnInit {
       this.lateral = lateral;
       this.showHtmlPodcast();
       this.showHtmlTwitter();
-      this.showHtmlTwitter2();
-      this.showHtmlTwitter3();
       this.showHtmlPodcastSM();
+      this.loadTwitterWidgets();
     })
   }
 
   showHtmlTwitter() {
-    var twitterContainer = document.querySelector("#twitter");
+    for (let index = 0; index < 4; index++) {
+    var twitterContainer = document.querySelector("#twitter" + index);
     var tweetContainer = document.createElement('div');
     tweetContainer.classList.add('twitter-tweet');
     tweetContainer.innerHTML = this.lateral.htmlTwitter;
-    twitterContainer?.appendChild(tweetContainer);
-   
-  }
-
-  showHtmlTwitter2() {
-    var twitterContainer = document.querySelector("#twitter2");
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter2;
-    twitterContainer?.appendChild(tweetContainer);
-
-  }
-
-  showHtmlTwitter3() {
-    var twitterContainer = document.querySelector("#twitter3");
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter3;
-    twitterContainer?.appendChild(tweetContainer);
-    twttr.widgets.load();
+    twitterContainer?.appendChild(tweetContainer); 
+    }
   }
 
   showHtmlPodcast() {
@@ -272,17 +272,27 @@ export class PublicacionCompletaComponent implements OnInit {
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
   }
+
   showHtmlPodcastSM() {
     var podcastContainer = document.querySelector("#podcastSM");
     var html = document.createElement("div");
     html.innerHTML = this.lateral.htmlPodcast;
     podcastContainer?.appendChild(html);
   }
+
+  // Función para cargar los widgets de Twitter
+  loadTwitterWidgets() {
+    if (twttr) {
+      twttr.widgets.load();
+    }
+  }
+
   buscarPublicacionesPorPalabras() {
     let palabrasClaveArray = this.palabrasClave.split(" ");
     const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
     this.router.navigateByUrl(url);
   }
+
   like() {
     this.usuarioService.getUsuarioFromToken().subscribe(usuario => {
       usuario.id = this.usuarioService.getId(usuario);
@@ -293,17 +303,8 @@ export class PublicacionCompletaComponent implements OnInit {
       });
     })
   }
-  getLikes(publicacion: Publicacion) {
-    this.likeService.getLikes(publicacion.id).subscribe(likes => {
-      likes.forEach(like => {
-        like.id = this.likeService.getId(like);
-      });
-      this.publicacion.likesRecibidos = likes;
-      this.numeroLikes = likes.length.toString();
-    })
-  }
 
-  invitarVino(){
+  invitarVino() {
     this.pagar("3");
   }
 
@@ -312,7 +313,7 @@ export class PublicacionCompletaComponent implements OnInit {
       size: 'm',
       windowClass: 'modalVinoPaypal'
     });
-   this.initConfig(precio);
+    this.initConfig(precio);
   }
 
   // metodo paypal
@@ -339,7 +340,7 @@ export class PublicacionCompletaComponent implements OnInit {
                 },
               },
               // colocamos los items del carrito con el metodo getItemsList
-              items: [{name: "suscripcion", quantity: "1", unit_amount: {value: precio, currency_code: 'EUR'}}],
+              items: [{ name: "suscripcion", quantity: "1", unit_amount: { value: precio, currency_code: 'EUR' } }],
             },
           ],
         },
@@ -368,15 +369,17 @@ export class PublicacionCompletaComponent implements OnInit {
           'onClientAuthorization - you should probably inform your server about completed transaction at this point',
           data
         );
-          this.modalService.dismissAll();
-          $('#pagadoVinoModal').modal('show');
+        this.modalService.dismissAll();
+        $('#pagadoVinoModal').modal('show');
       },
       onCancel: (data, actions) => {
         this.modalService.dismissAll();
+        $('#errorPagoModal').modal('show');
         console.log('OnCancel', data, actions);
       },
       onError: (err) => {
         this.modalService.dismissAll();
+        $('#errorPagoModal').modal('show');
         console.log('OnError', err);
       },
       onClick: (data, actions) => {

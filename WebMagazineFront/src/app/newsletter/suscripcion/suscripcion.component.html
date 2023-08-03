@@ -1,93 +1,130 @@
-<div class="row descripcion-pagina text-center">
-  <h3 class="col-11 m-4 texto-descripcion">Suscribete a nuestra web y disfruta de los mejores contenidos premium.</h3>
-</div>
-<div class="row suscripciones justify-content-center">
-  <div class="col-10 col-lg-3 tipo-suscripcion tipo-suscripcion-1 d-flex flex-column">
-    <div class="text-center titulo-suscripcion">
-      <h4 class="texto-titulo">{{suscripciones[0].nombre}}</h4>
-    </div>
-    <div class="caracteristicas-suscripcion mt-3">
-      <ul>
-        <li *ngIf="suscripciones[0].caracteristica1" class="row caracteristica">- {{suscripciones[0].caracteristica1}}</li>
-        <li *ngIf="suscripciones[0].caracteristica2" class="row caracteristica">- {{suscripciones[0].caracteristica2}}</li>
-        <li *ngIf="suscripciones[0].caracteristica3" class="row caracteristica">- {{suscripciones[0].caracteristica3}}</li>
-        <li *ngIf="suscripciones[0].caracteristica4" class="row caracteristica">- {{suscripciones[0].caracteristica4}}</li>
-        <li *ngIf="suscripciones[0].caracteristica5" class="row caracteristica">- {{suscripciones[0].caracteristica5}}</li>
-        <li *ngIf="suscripciones[0].caracteristica6" class="row caracteristica">- {{suscripciones[0].caracteristica6}}</li>
-        <li *ngIf="suscripciones[0].caracteristica7" class="row caracteristica">- {{suscripciones[0].caracteristica7}}</li>
-        <li *ngIf="suscripciones[0].caracteristica8" class="row caracteristica">- {{suscripciones[0].caracteristica8}}</li>
-      </ul>
-    </div>
-    <div class="bloque-precio-boton mt-auto">
-      <div class="text-center precio-suscripcion">
-        <p *ngIf="suscripciones[0].precio">{{suscripciones[0].precio}}</p>
-        <p *ngIf="!suscripciones[0].precio">GRATIS</p>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#signInModalTipo1">Registrarme</button>
-      </div>
-    </div>
+<div class="suscripciones-component">
+  <div class="row descripcion-pagina text-center">
+    <h3 class="col-12 texto-descripcion">¡Suscríbete!</h3>
   </div>
+  <div class="row suscripciones justify-content-center">
+    <div class="col-10 col-lg-3 tipo-suscripcion tipo-suscripcion-1 d-flex flex-column"  data-bs-toggle="modal" data-bs-target="#signInModalTipo1">
+      <div class="contenido-suscripcion">
+        <div class="text-center titulo-suscripcion">
+          <h4 *ngIf="suscripciones[0]" class="texto-titulo">{{suscripciones[0].nombre}}</h4>
+        </div>
+        <div class="caracteristicas-suscripcion mt-3">
+          <ul>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica1" class="row caracteristica">-
+              {{suscripciones[0].caracteristica1}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica2" class="row caracteristica">-
+              {{suscripciones[0].caracteristica2}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica3" class="row caracteristica">-
+              {{suscripciones[0].caracteristica3}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica4" class="row caracteristica">-
+              {{suscripciones[0].caracteristica4}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica5" class="row caracteristica">-
+              {{suscripciones[0].caracteristica5}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica6" class="row caracteristica">-
+              {{suscripciones[0].caracteristica6}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica7" class="row caracteristica">-
+              {{suscripciones[0].caracteristica7}}</li>
+            <li *ngIf="suscripciones[0] && suscripciones[0].caracteristica8" class="row caracteristica">-
+              {{suscripciones[0].caracteristica8}}</li>
+          </ul>
+        </div>
+        <!-- <div class="bloque-precio-boton mt-auto">
+          <div *ngIf="suscripciones[0]" class="text-center precio-suscripcion">
+            <p *ngIf="suscripciones[0] && suscripciones[0].precio">{{suscripciones[0].precio}}</p>
+            <p *ngIf="!suscripciones[0].precio">GRATIS</p>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mb-2" data-bs-toggle="modal"
+              data-bs-target="#signInModalTipo1">Registrarme</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
 
-  <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-2 d-flex flex-column mt-3">
-    <div class="text-center titulo-suscripcion">
-      <h4 class="texto-titulo">{{suscripciones[1].nombre}}</h4>
-    </div>
-    <div class="caracteristicas-suscripcion mt-3">
-      <ul>
-        <li *ngIf="suscripciones[1].caracteristica1" class="row caracteristica">- {{suscripciones[1].caracteristica1}}</li>
-        <li *ngIf="suscripciones[1].caracteristica2" class="row caracteristica">- {{suscripciones[1].caracteristica2}}</li>
-        <li *ngIf="suscripciones[1].caracteristica3" class="row caracteristica">- {{suscripciones[1].caracteristica3}}</li>
-        <li *ngIf="suscripciones[1].caracteristica4" class="row caracteristica">- {{suscripciones[1].caracteristica4}}</li>
-        <li *ngIf="suscripciones[1].caracteristica5" class="row caracteristica">- {{suscripciones[1].caracteristica5}}</li>
-        <li *ngIf="suscripciones[1].caracteristica6" class="row caracteristica">- {{suscripciones[1].caracteristica6}}</li>
-        <li *ngIf="suscripciones[1].caracteristica7" class="row caracteristica">- {{suscripciones[1].caracteristica7}}</li>
-        <li *ngIf="suscripciones[1].caracteristica8" class="row caracteristica">- {{suscripciones[1].caracteristica8}}</li>
-      </ul>
-    </div>
-    <div class="bloque-precio-boton mt-auto">
-      <div class="text-center precio-suscripcion">
-        <p *ngIf="suscripciones[1].precio">{{suscripciones[1].precio}} EUROS / MES</p>
-        <p *ngIf="!suscripciones[1].precio">GRATIS</p>
+    <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-2 d-flex flex-column mt-3"  data-bs-toggle="modal" data-bs-target="#signInModalTipo2">
+      <div class="contenido-suscripcion">
+        <div class="text-center titulo-suscripcion">
+          <h4 *ngIf="suscripciones[1]" class="texto-titulo">{{suscripciones[1].nombre}}</h4>
+        </div>
+        <div class="caracteristicas-suscripcion mt-3">
+          <ul>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica1" class="row caracteristica">-
+              {{suscripciones[1].caracteristica1}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica2" class="row caracteristica">-
+              {{suscripciones[1].caracteristica2}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica3" class="row caracteristica">-
+              {{suscripciones[1].caracteristica3}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica4" class="row caracteristica">-
+              {{suscripciones[1].caracteristica4}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica5" class="row caracteristica">-
+              {{suscripciones[1].caracteristica5}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica6" class="row caracteristica">-
+              {{suscripciones[1].caracteristica6}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica7" class="row caracteristica">-
+              {{suscripciones[1].caracteristica7}}</li>
+            <li *ngIf="suscripciones[1] && suscripciones[1].caracteristica8" class="row caracteristica">-
+              {{suscripciones[1].caracteristica8}}</li>
+          </ul>
+        </div>
+        <!-- <div class="bloque-precio-boton mt-auto">
+          <div class="text-center precio-suscripcion">
+            <p *ngIf="suscripciones[1] && suscripciones[1].precio">{{suscripciones[1].precio}} EUROS / MES</p>
+            <p *ngIf="!suscripciones[1]">GRATIS</p>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mb-2" data-bs-toggle="modal"
+              data-bs-target="#signInModalTipo2">Suscribirme</button>
+          </div>
+        </div> -->
       </div>
-      <div class="text-center">
-        <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#signInModalTipo2">Suscribirme</button>
-      </div>
     </div>
-  </div>
 
-  <div class="col-10 col-lg-3 tipo-suscripcion tipo-suscripcion-3 d-flex flex-column my-3">
-    <div class="text-center titulo-suscripcion">
-      <h4 class="texto-titulo">{{suscripciones[2].nombre}}</h4>
-    </div>
-    <div class="caracteristicas-suscripcion mt-3">
-      <ul>
-        <li *ngIf="suscripciones[2].caracteristica1" class="row caracteristica">- {{suscripciones[2].caracteristica1}}</li>
-        <li *ngIf="suscripciones[2].caracteristica2" class="row caracteristica">- {{suscripciones[2].caracteristica2}}</li>
-        <li *ngIf="suscripciones[2].caracteristica3" class="row caracteristica">- {{suscripciones[2].caracteristica3}}</li>
-        <li *ngIf="suscripciones[2].caracteristica4" class="row caracteristica">- {{suscripciones[2].caracteristica4}}</li>
-        <li *ngIf="suscripciones[2].caracteristica5" class="row caracteristica">- {{suscripciones[2].caracteristica5}}</li>
-        <li *ngIf="suscripciones[2].caracteristica6" class="row caracteristica">- {{suscripciones[2].caracteristica6}}</li>
-        <li *ngIf="suscripciones[2].caracteristica7" class="row caracteristica">- {{suscripciones[2].caracteristica7}}</li>
-        <li *ngIf="suscripciones[2].caracteristica8" class="row caracteristica">- {{suscripciones[2].caracteristica8}}</li>
-      </ul>
-    </div>
-    <div class="bloque-precio-boton mt-auto">
-      <div class="text-center precio-suscripcion">
-        <p *ngIf="suscripciones[2].precio">{{suscripciones[2].precio}} EUROS / MES</p>
-        <p *ngIf="!suscripciones[2].precio">GRATIS</p>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#signInModalTipo3">Hacerme miembro</button>
+    <div class="col-10 col-lg-3 tipo-suscripcion tipo-suscripcion-3 d-flex flex-column my-3"  data-bs-toggle="modal" data-bs-target="#signInModalTipo3">
+      <div class="contenido-suscripcion">
+        <div class="text-center titulo-suscripcion">
+          <h4 *ngIf="suscripciones[2]" class="texto-titulo">{{suscripciones[2].nombre}}</h4>
+        </div>
+        <div class="caracteristicas-suscripcion mt-3">
+          <ul>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica1" class="row caracteristica">-
+              {{suscripciones[2].caracteristica1}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica2" class="row caracteristica">-
+              {{suscripciones[2].caracteristica2}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica3" class="row caracteristica">-
+              {{suscripciones[2].caracteristica3}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica4" class="row caracteristica">-
+              {{suscripciones[2].caracteristica4}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica5" class="row caracteristica">-
+              {{suscripciones[2].caracteristica5}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica6" class="row caracteristica">-
+              {{suscripciones[2].caracteristica6}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica7" class="row caracteristica">-
+              {{suscripciones[2].caracteristica7}}</li>
+            <li *ngIf="suscripciones[2] && suscripciones[2].caracteristica8" class="row caracteristica">-
+              {{suscripciones[2].caracteristica8}}</li>
+          </ul>
+        </div>
+        <div class="bloque-precio-boton mt-auto">
+          <!-- <div class="text-center precio-suscripcion">
+            <p *ngIf="suscripciones[2] && suscripciones[2].precio">{{suscripciones[2].precio}} EUROS / MES</p>
+            <p *ngIf="!suscripciones[2]">GRATIS</p>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#signInModalTipo3">Hacerme
+              miembro</button>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
 </div>
-<div class="aviso-pagos text-center">
-  <p class="texto-aviso-pagos">Sabemos lo tedioso que es a veces darse de baja de una suscripción. Por eso esta web no realiza cobros recurrentes. 
+
+<!-- <div class="aviso-pagos text-center">
+  <p class="texto-aviso-pagos">Sabemos lo tedioso que es a veces darse de baja de una suscripción. Por eso esta web no
+    realiza cobros recurrentes.
     Esto quiere decir que no te haremos un cobro cada mes, solo haremos uno, el que nos pides.
     Cuando te suscribes, lo haces solo por un mes. Pasado ese mes te preguntaremos si quieres volver a suscribirte.</p>
-</div>
+</div> -->
 
 
 <!-- Modal Signin Tipo1-->
@@ -142,7 +179,7 @@
           <label for="apellido2" class="col-5">Segundo apellido</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
-<!--         <div class="email-input m-2">
+        <!--         <div class="email-input m-2">
           <label for="dirección" class="col-5">Dirección</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
         </div> -->
@@ -189,7 +226,7 @@
           <label for="apellido2" class="col-5">Segundo apellido</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.apellido2">
         </div>
-<!--         <div class="email-input m-2">
+        <!--         <div class="email-input m-2">
           <label for="dirección" class="col-5">Dirección</label>
           <input type="text" class="mx-2 col-5" [(ngModel)]="usuarioNuevo.direccion">
         </div> -->
@@ -243,6 +280,44 @@
       </div>
       <div class="modal-body">
         <p>Pago realizado con exito. Ya puedes acceder con tu usuario y contraseña.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Error en pago-->
+<div class="modal fade" id="errorPagoSuscripcionModal" tabindex="-1" aria-labelledby="signModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fs-5" id="exampleModalLabel">Algo ha fallado</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Ha habido un error en el pago y no se ha realizado.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pago cancelado-->
+<div class="modal fade" id="canceladoPagoSuscripcionModal" tabindex="-1" aria-labelledby="signModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fs-5" id="exampleModalLabel">Pago cancelado</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>El pago se ha cancelado.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>

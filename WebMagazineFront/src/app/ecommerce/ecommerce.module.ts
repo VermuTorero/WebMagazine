@@ -24,6 +24,7 @@ import { GestionPedidosComponent } from './components/gestion/gestion-pedidos/ge
 import localeEs from '@angular/common/locales/es';
 import { PedidoDetalleComponent } from './components/gestion/gestion-pedidos/pedido-detalle/pedido-detalle.component'
 import { CoreModule } from '../core/core.module';
+import { PromoTiendaComponent } from '../newsletter/promo-tienda/promo-tienda.component';
 
 //Para formatear fechas a hora local de España
 registerLocaleData(localeEs, 'es');

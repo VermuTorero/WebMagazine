@@ -1,12 +1,10 @@
 <div class="col-12">
   <button *ngIf="isLoggedUser" class="btn btn-outline-danger btn-sm boton-login ml-4 mx-2 " type="submit"
-    (click)="exitLogin()">Exit log in</button>
+    (click)="exitLogin()">Exit</button>
   <button *ngIf="!isLoggedUser" class="btn btn-outline-success btn-sm boton-login ml-4 mx-2 " type="submit"
-    data-bs-toggle="modal" data-bs-target="#logInModal">Log in</button>
-  <a *ngIf="!isLoggedUser" class="btn  btn-outline-light btn-sm boton-login" type="submit" 
+    data-bs-toggle="modal" data-bs-target="#logInModal">Acceder</button>
+  <a *ngIf="!isLoggedUser" class="btn btn-outline-light btn-sm boton-login" type="submit" 
   href="/suscripcion">Suscríbete</a>
-</div>
-<div class="col-12">
   <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}} {{usuario.apellido1}} {{usuario.apellido2}}</a>
 </div>
 <div class="col-12">

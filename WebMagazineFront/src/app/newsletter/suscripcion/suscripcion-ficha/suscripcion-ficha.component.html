@@ -1,89 +1,105 @@
-<div class="row mb-4 suscripciones justify-content-center mt-4">
-    <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-1 my-2">
-        <div class="text-center titulo-suscripcion">
-            <input class="texto-titulo" [(ngModel)]="suscripciones[0].nombre">
-        </div>
-        <div class="caracteristicas-suscripcion mt-3">
-            <div class="text-center">
-                <p>CARACTERÍSTICAS</p>
-            </div>
-            <ul>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica1"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica2"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica3"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica4"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica5"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica6"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica7"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica8"></textarea>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p>PRECIO</p>
-            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 1)" [(ngModel)]="suscripciones[0].precio">
-            <p id="mensajeError1" style="color: red; display: none;">Solo se admiten números</p>
-        </div>
+<div class="suscripciones-component">
+  <div class="row paypal-row text-center">
+    <div class="paypal-container">
+      <label class="clientId-label" for="vinos">Client Id de tu cuenta Bussiness de PayPal: </label>
+      <input class="clientId-input" type="text" [(ngModel)]="clientIdPayPal">
     </div>
-    
-    <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-2 my-2">
-        <div class="text-center titulo-suscripcion">
-            <input class="texto-titulo" [(ngModel)]="suscripciones[1].nombre">
-        </div>
-        <div class="caracteristicas-suscripcion mt-3">
-            <div class="text-center">
-                <p>CARACTERÍSTICAS</p>
-            </div>
-            <ul>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica1"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica2"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica3"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica4"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica5"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica6"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica7"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica8"></textarea>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p>PRECIO</p>
-            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 2)" [(ngModel)]="suscripciones[1].precio">
-            <p id="mensajeError2" style="color: red; display: none;">Solo se admiten números</p>
-        </div>
+  </div>
+  
+  <div class="row vinos text-center">
+    <div class="vinos-container">
+      <label class="vinos-label" for="vinos">Precio de la invitación a un vino</label>
+      <input class="vinos-input" type="text" [(ngModel)]="precioVino" (keypress)="soloNumeros($event, 1)">
     </div>
-
-    <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-3 my-2">
-        <div class="text-center titulo-suscripcion">
-            <input class="texto-titulo" [(ngModel)]="suscripciones[2].nombre">
-        </div>
-        <div class="caracteristicas-suscripcion mt-3">
-            <div class="text-center">
-                <p>CARACTERÍSTICAS</p>
-            </div>
-            <ul>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica1"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica2"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica3"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica4"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica5"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica6"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica7"></textarea>
-                <textarea  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica8"></textarea>
-            </ul>
-        </div>
-        <div class="text-center precio-suscripcion">
-            <p>PRECIO</p>
-            <input type="text" id="numeroInput" (keypress)="soloNumeros($event, 3)" [(ngModel)]="suscripciones[2].precio">
-            <p id="mensajeError3" style="color: red; display: none;">Solo se admiten números</p>
-        </div>
-    </div>
+  </div>
+  <div class="row mb-4 suscripciones justify-content-center mt-4">
+      <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-1 my-2">
+          <div *ngIf="suscripciones[0]" class="text-center titulo-suscripcion">
+              <input class="texto-titulo" [(ngModel)]="suscripciones[0].nombre">
+          </div>
+          <div class="caracteristicas-suscripcion mt-3">
+              <div class="text-center">
+                  <p>CARACTERÍSTICAS</p>
+              </div>
+              <ul>
+                  <textarea *ngIf="suscripciones[0]" rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica1"></textarea>
+                  <textarea *ngIf="suscripciones[0]" rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica2"></textarea>
+                  <textarea *ngIf="suscripciones[0]" rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica3"></textarea>
+                  <textarea *ngIf="suscripciones[0]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica4"></textarea>
+                  <textarea *ngIf="suscripciones[0]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica5"></textarea>
+                  <textarea *ngIf="suscripciones[0]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica6"></textarea>
+                  <textarea *ngIf="suscripciones[0]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica7"></textarea>
+                  <textarea *ngIf="suscripciones[0]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[0].caracteristica8"></textarea>
+              </ul>
+          </div>
+          <div class="text-center precio-suscripcion">
+              <p>PRECIO</p>
+              <input class="precio-input" *ngIf="suscripciones[0]" type="text" id="numeroInput" (keypress)="soloNumeros($event, 1)" [(ngModel)]="suscripciones[0].precio">
+              <p id="mensajeError1" style="color: red; display: none;">Solo se admiten números</p>
+          </div>
+      </div>
+      
+      <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-2 my-2">
+          <div class="text-center titulo-suscripcion">
+              <input *ngIf="suscripciones[1]" class="texto-titulo" [(ngModel)]="suscripciones[1].nombre">
+          </div>
+          <div class="caracteristicas-suscripcion mt-3">
+              <div class="text-center">
+                  <p>CARACTERÍSTICAS</p>
+              </div>
+              <ul>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica1"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica2"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica3"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica4"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica5"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica6"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica7"></textarea>
+                  <textarea *ngIf="suscripciones[1]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[1].caracteristica8"></textarea>
+              </ul>
+          </div>
+          <div class="text-center precio-suscripcion">
+              <p>PRECIO</p>
+              <input class="precio-input" *ngIf="suscripciones[1]" type="text" id="numeroInput" (keypress)="soloNumeros($event, 2)" [(ngModel)]="suscripciones[1].precio">
+              <p id="mensajeError2" style="color: red; display: none;">Solo se admiten números</p>
+          </div>
+      </div>
+  
+      <div class="col-10 col-lg-3  tipo-suscripcion tipo-suscripcion-3 my-2">
+          <div class="text-center titulo-suscripcion">
+              <input *ngIf="suscripciones[2]" class="texto-titulo" [(ngModel)]="suscripciones[2].nombre">
+          </div>
+          <div class="caracteristicas-suscripcion mt-3">
+              <div class="text-center">
+                  <p>CARACTERÍSTICAS</p>
+              </div>
+              <ul>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica1"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica2"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica3"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica4"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica5"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica6"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica7"></textarea>
+                  <textarea *ngIf="suscripciones[2]"  rows="3" class="row my-2" [(ngModel)]="suscripciones[2].caracteristica8"></textarea>
+              </ul>
+          </div>
+          <div class="text-center precio-suscripcion">
+              <p>PRECIO</p>
+              <input class="precio-input" *ngIf="suscripciones[2]" type="text" id="numeroInput" (keypress)="soloNumeros($event, 3)" [(ngModel)]="suscripciones[2].precio">
+              <p id="mensajeError3" style="color: red; display: none;">Solo se admiten números</p>
+          </div>
+      </div>
+  </div>
+  
+  <div class="text-center mb-4">
+      <button class="btn btn-primary my-2" style="width: 20%;" (click)="patchTipoSuscripcions()">Guardar cambios</button>
+  </div>
 </div>
 
-<div class="text-center mb-4">
-    <button class="btn btn-primary my-2" style="width: 20%;" (click)="patchTipoSuscripcions()">Guardar cambios</button>
-</div>
-
-<!-- Modal confirmar modificada suscripcion -->
-<div class="modal fade" id="modificadaSuscripcionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  
+  <!-- Modal confirmar modificada suscripcion -->
+  <div class="modal fade" id="modificadaSuscripcionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
