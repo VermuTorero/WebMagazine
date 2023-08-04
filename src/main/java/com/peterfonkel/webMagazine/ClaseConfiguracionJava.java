@@ -26,6 +26,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.relational.core.sql.IdentifierProcessing.LetterCasing;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -105,6 +109,9 @@ public class ClaseConfiguracionJava {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
 
 	
 	@Bean
@@ -128,45 +135,6 @@ public class ClaseConfiguracionJava {
 		return new CorsFilter(source);
 	}
 
-	
-//    @Bean
-//    public void setProvincias() {
-//    	if (lugarService.findAll().size()<1) {	
-//    		for (String provincia : provincias) {
-//    			Lugar lugar = new Lugar();
-//    			provincia = provincia.replaceAll("'", "");
-//				lugar.setLugarNombre(provincia);
-//				lugarService.save(lugar);
-//			}
-//		}
-//    }
-    
-    @Bean
-    public void setImagenesInicio() {
-    	if (imagenInicioDAO.findAll().size()<2) {	
-    		ImagenInicio imagenInicio = new ImagenInicio(1L, "", "derecha");
-    		imagenInicioDAO.save(imagenInicio);
-    		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", "izquierda");
-    		imagenInicioDAO.save(imagenInicio2);
-    		ImagenInicio imagenInicio3 = new ImagenInicio(3L, "", "centro");
-    		imagenInicioDAO.save(imagenInicio3);		
-		}
-    }
-    
-    @Bean
-    public void setLateralVacio() {
-    	if (lateralDAO.findAll().size()<1) {	
-    		Lateral lateral = new Lateral("", "", "","");
-    		lateralDAO.save(lateral);
-		}
-    }
-    
-    
-	@Bean
-	public ObjectMapper getObjectMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper;
-	}
 	
 	@Bean
 	public void inicializarBD() {
@@ -257,5 +225,53 @@ public class ClaseConfiguracionJava {
 					
 		}
 	}
+	
+    @Bean
+    public void loginApp() {
+    	Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(correoAdmin, secretPsw));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+	
+    @Bean
+    public void setProvincias() {
+    	if (lugarService.findAll().size()<1) {	
+    		for (String provincia : provincias) {
+    			Lugar lugar = new Lugar();
+    			provincia = provincia.replaceAll("'", "");
+				lugar.setLugarNombre(provincia);
+				lugarService.save(lugar);
+			}
+		}
+    }
+    
+    @Bean
+    public void setImagenesInicio() {
+    	if (imagenInicioDAO.findAll().size()<2) {	
+    		ImagenInicio imagenInicio = new ImagenInicio(1L, "", "derecha");
+    		imagenInicioDAO.save(imagenInicio);
+    		ImagenInicio imagenInicio2 = new ImagenInicio(2L, "", "izquierda");
+    		imagenInicioDAO.save(imagenInicio2);
+    		ImagenInicio imagenInicio3 = new ImagenInicio(3L, "", "centro");
+    		imagenInicioDAO.save(imagenInicio3);		
+		}
+    }
+    
+    @Bean
+    public void setLateralVacio() {
+    	if (lateralDAO.findAll().size()<1) {	
+    		Lateral lateral = new Lateral("", "", "","");
+    		lateralDAO.save(lateral);
+		}
+    }
+    
+    
+	@Bean
+	public ObjectMapper getObjectMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper;
+	}
+	
+	
 	
 }
