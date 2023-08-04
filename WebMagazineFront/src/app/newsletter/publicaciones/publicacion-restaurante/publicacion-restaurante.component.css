@@ -3,7 +3,7 @@
     height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    margin-left: 20%;
+    margin: 0 auto;
 }
 
   .img-card {
