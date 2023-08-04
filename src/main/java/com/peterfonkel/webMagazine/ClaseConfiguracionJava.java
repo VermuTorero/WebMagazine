@@ -52,6 +52,7 @@ import com.peterfonkel.webMagazine.repositories.LugarDAO;
 import com.peterfonkel.webMagazine.repositories.TipoSuscripcionDAO;
 import com.peterfonkel.webMagazine.rest.mixins.Mixins;
 import com.peterfonkel.webMagazine.services.CategoriaService;
+import com.peterfonkel.webMagazine.services.LugarService;
 
 
 
@@ -81,7 +82,7 @@ public class ClaseConfiguracionJava {
 	
 	
 	@Autowired
-	LugarDAO lugarDAO;
+	LugarService lugarService;
 	
 	@Autowired
 	ImagenInicioDAO imagenInicioDAO;
@@ -130,12 +131,12 @@ public class ClaseConfiguracionJava {
 	
     @Bean
     public void setProvincias() {
-    	if (lugarDAO.findAll().size()<1) {	
+    	if (lugarService.findAll().size()<1) {	
     		for (String provincia : provincias) {
     			Lugar lugar = new Lugar();
     			provincia = provincia.replaceAll("'", "");
 				lugar.setLugarNombre(provincia);
-				lugarDAO.save(lugar);
+				lugarService.save(lugar);
 			}
 		}
     }
