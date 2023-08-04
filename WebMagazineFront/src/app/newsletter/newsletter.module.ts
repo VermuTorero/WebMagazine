@@ -31,6 +31,7 @@ import { MensajeComponent } from './chat/mensaje/mensaje.component';
 import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-borrador/publicaciones-borrador.component';
 import { EcommerceModule } from '../ecommerce/ecommerce.module';
 import { PromoTiendaComponent } from './promo-tienda/promo-tienda.component';
+import { PublicacionRestauranteComponent } from './publicaciones/publicacion-restaurante/publicacion-restaurante.component';
 
 
 
@@ -60,7 +61,8 @@ import { PromoTiendaComponent } from './promo-tienda/promo-tienda.component';
     ChatComponent,
     MensajeComponent,
     PublicacionesBorradorComponent,
-    PromoTiendaComponent
+    PromoTiendaComponent,
+    PublicacionRestauranteComponent
   ],
   
   imports: [

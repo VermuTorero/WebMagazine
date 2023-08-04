@@ -16,6 +16,14 @@
     text-align: center;
     justify-content: center;
 }
+.cards-container-restaurante {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.titulo-restaurantes{
+    margin-left: 8%;
+}  
 
 .nombre-categoria{
 

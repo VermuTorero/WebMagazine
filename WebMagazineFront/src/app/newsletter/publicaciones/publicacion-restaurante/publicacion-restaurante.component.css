@@ -1,0 +1,74 @@
+.card-image {
+    width: 200px; /* Ajusta el tamaño deseado para el círculo */
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 20%;
+}
+
+  .img-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para que ocupe todo el espacio del contenedor circular */
+  }
+
+.publicacion-preview {
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 0;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+.btn{
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+}
+
+/* rgb(255,109,0,255); */
+.card-title {
+    height: fit-content !important;
+    text-align: center;
+    padding-top: 2%;
+}
+.card-text{
+    text-align:left;
+    font-size: small;
+}
+
+.card-title:hover {
+    opacity: 0.5;
+    color: rgb(247, 162, 3);
+}
+
+hr {
+    color: rgb(255, 109, 0, 255);
+    border-width: 1.5px;
+}
+
+.categoria-container {
+   
+}
+
+.categoria {
+    transform: rotate(-3deg);
+    position: absolute;
+    top: 5%;
+    font-size: x-small;
+    background-color: orange;
+    border-radius: 15px;
+    height: 1rem;
+    width: fit-content;
+    cursor: pointer;
+    cursor: hand;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: auto;
+}
+.autor{
+    font-size: small;
+    font-style: italic;
+  }
