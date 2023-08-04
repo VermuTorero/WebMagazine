@@ -13,13 +13,13 @@ public class Lateral {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	@Column(length = 1000)
+	@Column(length = 2000)
 	private String htmlPodcast;
-	@Column(length = 1000)
+	@Column(length = 2000)
 	private String htmlTwitter;
-	@Column(length = 1000)
+	@Column(length = 2000)
     private String htmlTwitter2;
-	@Column(length = 1000)
+	@Column(length = 2000)
     private String htmlTwitter3;
     
 	public Lateral() {
