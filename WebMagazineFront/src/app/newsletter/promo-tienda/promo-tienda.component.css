@@ -19,6 +19,7 @@
         background-color: rgb(255, 109, 0, 255);
         text-align: center;
         margin-left: 5%;
+        box-shadow: 2px 2px 10px #666;
       
     }
     .imagen{
@@ -64,6 +65,7 @@
         background-color: rgb(255, 109, 0, 255);
         text-align: center;
         align-self: center;
+        box-shadow: 2px 2px 10px #666;
     }
     .imagen{
         width:70%;
