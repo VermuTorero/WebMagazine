@@ -129,17 +129,17 @@ public class ClaseConfiguracionJava {
 	}
 
 	
-    @Bean
-    public void setProvincias() {
-    	if (lugarService.findAll().size()<1) {	
-    		for (String provincia : provincias) {
-    			Lugar lugar = new Lugar();
-    			provincia = provincia.replaceAll("'", "");
-				lugar.setLugarNombre(provincia);
-				lugarService.save(lugar);
-			}
-		}
-    }
+//    @Bean
+//    public void setProvincias() {
+//    	if (lugarService.findAll().size()<1) {	
+//    		for (String provincia : provincias) {
+//    			Lugar lugar = new Lugar();
+//    			provincia = provincia.replaceAll("'", "");
+//				lugar.setLugarNombre(provincia);
+//				lugarService.save(lugar);
+//			}
+//		}
+//    }
     
     @Bean
     public void setImagenesInicio() {
