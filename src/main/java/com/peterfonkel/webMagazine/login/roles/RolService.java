@@ -42,7 +42,7 @@ public class RolService {
 		return rolDAO.existsByRolNombre(rolNombre);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void save(Rol rol) {
 		rolDAO.save(rol);
 	}
