@@ -164,6 +164,9 @@ public class ClaseConfiguracionJava {
 			roles.add(rolAdmin);
 			usuarioAdmin.setRoles(roles);
 			usuarioService.save(usuarioAdmin);
+//		  	Authentication authentication = authenticationManager.authenticate(
+//					new UsernamePasswordAuthenticationToken(correoAdmin, secretPsw));
+//			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 	
 		if (categoriaService.findAll().size()<3) {
@@ -226,13 +229,7 @@ public class ClaseConfiguracionJava {
 		}
 	}
 	
-    @Bean
-    public void loginApp() {
-    	Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(correoAdmin, secretPsw));
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-	
+
     @Bean
     public void setProvincias() {
     	if (lugarService.findAll().size()<1) {	
