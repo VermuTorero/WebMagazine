@@ -14,7 +14,7 @@ public interface ImagenInicioDAO extends JpaRepository<ImagenInicio, Long> {
 	@Override
 	List<ImagenInicio> findAll();
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	<S extends ImagenInicio> S save(S entity);
 

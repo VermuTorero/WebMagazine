@@ -110,8 +110,6 @@ public class ClaseConfiguracionJava {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	@Autowired
-	AuthenticationManager authenticationManager;
 
 	
 	@Bean

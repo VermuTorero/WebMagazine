@@ -15,7 +15,7 @@ public interface LugarDAO extends JpaRepository<Lugar, Long> {
 	@Override
 	List<Lugar> findAll();
 
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@Override
 	<S extends Lugar> S save(S entity);
 	

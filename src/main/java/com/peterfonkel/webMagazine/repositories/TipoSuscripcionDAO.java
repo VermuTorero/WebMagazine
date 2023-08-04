@@ -14,7 +14,7 @@ public interface TipoSuscripcionDAO extends JpaRepository<TipoSuscripcion, Long>
 	@Override
 	List<TipoSuscripcion> findAll();
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	<S extends TipoSuscripcion> S save(S entity);
 	

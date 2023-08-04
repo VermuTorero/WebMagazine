@@ -13,7 +13,7 @@ public interface LateralDAO extends JpaRepository<Lateral, Long>{
 	@Override
 	List<Lateral> findAll();
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	<S extends Lateral> S save(S entity);
 
