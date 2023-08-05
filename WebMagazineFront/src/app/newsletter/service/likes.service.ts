@@ -13,7 +13,7 @@ export class LikesService {
   constructor(private http: HttpClient) { }
 
   getLikes(idPublicacion: string): Observable<Like[]>{
-    return this.http.get<any>(this.endpoint + "/likes/search/likesFromPublicacion/" + idPublicacion).pipe(map(response=>response._embedded.likes));
+    return this.http.get<any>(this.endpoint + "/likes/search/likesFromPublicacion/" + idPublicacion).pipe(map(response=>response._embedded.likes) || []);
   }
   getId(p: any): string {
     let url = p._links.self.href;

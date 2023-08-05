@@ -28,10 +28,14 @@
     }
     
     .navbar-nav{
-        background-color: black;
+        background-color:black;
         padding: 0%;
-        margin-right: 0%;
+        margin: 0%;
+        margin-right: 0% !important;
         padding-right: 0%;
+        padding-left: 0%;
+        margin-top: 2%;
+        border-radius: 20px !important;
        
     }
     /* Estilos personalizados para el botón negro */
@@ -40,10 +44,9 @@
         border-style: solid;
         border-color: black;
         border-width: 2px;
-        width: 20% !important
+        width: 18% !important
       }
       
-    
     .nav-item{
         align-self: center;
     }
@@ -54,7 +57,8 @@
     }
     .nav-link{
         font-size: medium;
-        font-family:sans-serif
+        font-family:sans-serif;
+        color: white
     }
     .nav-link:hover{
         opacity: 0.5;
@@ -62,9 +66,10 @@
     .navbar-collapse {
         width: 5%;
         margin: 0;
-        padding-left: 0%;
+        padding-left: 2%;
         margin-right: 0% !important;
-        padding-bottom: 2% !important;
+        padding-bottom: 3% !important;
+
     }
     
 }

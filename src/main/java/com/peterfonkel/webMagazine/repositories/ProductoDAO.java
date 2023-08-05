@@ -11,5 +11,6 @@ import com.peterfonkel.webMagazine.entities.Producto;
 public interface ProductoDAO extends JpaRepository<Producto , Long>{
     @Override
 	List<Producto> findAll();
+    
 }
 

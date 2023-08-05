@@ -1,25 +1,47 @@
-<div *ngIf="categoria.categoriaNombre=='Restaurantes'" class="">
-  <h1 class="titulo-restaurantes">Gastrosofía  / <i>Restaurantes</i></h1>
-</div>
+<!-- Publicaciones de Restaurantes -->
 
-<div *ngIf="categoria.categoriaNombre=='Restaurantes'" class="cards-container-restaurante mt-4">
-  <div *ngFor="let publicacion of publicaciones" class="card mb-4 col-12 col-md-6 col-lg-4">
-    <app-publicacion-restaurante [publicacion]="publicacion"></app-publicacion-restaurante>
+<div *ngIf="categoria.categoriaNombre=='Restaurantes'" class="restaurantes">
+  <div class="titulo-restaurantes-container">
+    <h1 class="titulo-restaurantes">Gastrosofía / <i>Restaurantes</i></h1>
+  </div>
+
+  <div class="cards-container-restaurante mt-4">
+    <div *ngFor="let publicacion of publicacionesRestauranteFila1" class="card mb-4 col-12 col-md-6 col-lg-4">
+      <app-publicacion-restaurante [publicacion]="publicacion"></app-publicacion-restaurante>
+    </div>
+  </div>
+
+  <div class="cards-container-restaurante mt-4">
+    <div *ngFor="let publicacion of publicacionesRestauranteFila2" class="card mb-4 col-12 col-md-6 col-lg-4">
+      <app-publicacion-restaurante [publicacion]="publicacion"></app-publicacion-restaurante>
+    </div>
+  </div>
+
+  <div class="cards-container-restaurante mt-4">
+    <div *ngFor="let publicacion of publicacionesRestauranteFila3" class="card mb-4 col-12 col-md-6 col-lg-4">
+      <app-publicacion-restaurante [publicacion]="publicacion"></app-publicacion-restaurante>
+    </div>
   </div>
 </div>
 
 
+<!-- Publicaciones de Entrevidas -->
+
+<div *ngIf="categoria.categoriaNombre=='Entrevidas'" class="row restaurantes">
+  <div class="cards-container-entrevidas col-2">
+    <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12" [ngClass]="{'clicked': i === activeCard}" 
+    (click)="onClickCard(i)">
+      <app-publicacion-entrevidas [publicacion]="publicacion" (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-entrevidas>
+    </div>
+  </div>
+  <div class="publicacion-seleccionada-container col-9">
+    <app-publicacion-completa [publicacion]="publicacionSeleccionada"></app-publicacion-completa>
+  </div>
+</div>
 
 
-
-
-
-
-
-
-
-
-<div *ngIf="categoria.categoriaNombre!='Restaurantes'">
+<!-- Publicaciones que no son Restaurantes ni Entrevidas -->
+<div *ngIf="categoria.categoriaNombre!='Restaurantes' && categoria.categoriaNombre!='Entrevidas'">
   <div class="row my-1 py-1 mx-2">
     <div *ngIf="edicion" class="col-12 col-lg-6">
       <img *ngIf="this.categoria.urlImagen" class="imagen-edicion img-fluid mt-4 pt-4 w-100"
@@ -28,7 +50,8 @@
         src="../../../../assets/no-imagen.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
     </div>
     <div *ngIf="!edicion" class="col-12 col-lg-6 p-0">
-      <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-1 mt-lg-4 w-100" src="{{this.categoria.urlImagen}}" alt="">
+      <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-1 mt-lg-4 w-100" src="{{this.categoria.urlImagen}}"
+        alt="">
     </div>
     <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3 container-texto">
       <div class="container-bloques">
@@ -53,19 +76,18 @@
     </div>
     <hr class="mt-4">
     <div class="cards-container">
-      <div *ngFor="let publicacion of publicaciones"
-      class="card row col-12 col-md-3 col-xxl-2">
-      <app-publicacion [publicacion]="publicacion"></app-publicacion>
+      <div *ngFor="let publicacion of publicaciones" class="card row col-12 col-md-3 col-xxl-2">
+        <app-publicacion [publicacion]="publicacion"></app-publicacion>
+      </div>
     </div>
-    </div>
-  
+
     <div class="paginas text-center">
       <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
       <p class="numero-pagina">Pagina {{pagina +1}}</p>
       <button class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
     </div>
   </div>
-  
+
   <!-- Modal Agregar Imagen de preview-->
   <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { Publicacion } from '../../models/publicacion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
@@ -23,9 +23,8 @@ declare var $: any;
   templateUrl: './publicacion-completa.component.html',
   styleUrls: ['./publicacion-completa.component.css']
 })
-export class PublicacionCompletaComponent implements OnInit {
-
-  publicacion: Publicacion = new Publicacion();
+export class PublicacionCompletaComponent implements OnInit, OnChanges {
+  @Input() publicacion: Publicacion = new Publicacion();
   url: string = "";
   id: string = "";
   publicacionesCerca: Publicacion[] = [];
@@ -56,20 +55,35 @@ export class PublicacionCompletaComponent implements OnInit {
     private metaService: MetaService) { }
 
   ngOnInit(): void {
-  
-    this.getUrl();
     this.rol = sessionStorage.getItem("rol");
-    if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
-      this.getPublicacion();
-    } else {
-      this.getPublicacionFree();
+    this.getUrl();
+    if (this.url) {
+      if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
+        this.getPublicacion();
+      } else {
+        this.getPublicacionFree();
+      }
     }
     this.getLateral();
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['publicacion'] && !changes['publicacion'].firstChange) {
+      this.showPublicacion();
+      this.getPublicacionesRelacionadas(this.publicacion);
+      this.publicacionesService.getLugarFromPublicacion(this.publicacion).subscribe(lugar=>{
+        lugar.id=this.lugarService.getId(lugar);
+        this.publicacion.lugar = lugar;
+        this.getPublicacionesCerca(this.publicacion);
+      })
+    }
+  }
+
   /* Obtener la url del articulo */
   getUrl(): void {
     this.activatedRoute.params.subscribe(params => {
       this.url = params['titulo'];
+      console.log(this.url)
     })
   }
 
@@ -226,6 +240,7 @@ export class PublicacionCompletaComponent implements OnInit {
   }
 
   showPublicacion() {
+    document.querySelector('#article')?.firstChild?.remove();
     var body = document.querySelector("#article");
     var html = document.createElement("div");
     html.innerHTML = this.publicacion.htmlPublicacion;
@@ -250,9 +265,9 @@ export class PublicacionCompletaComponent implements OnInit {
     this.lateralService.getLateral().subscribe(lateral => {
       this.lateral = lateral;
       this.showHtmlPodcast();
-      this.showHtmlTwitter();
+      /* this.showHtmlTwitter(); */
       this.showHtmlPodcastSM();
-      this.loadTwitterWidgets();
+     /*  this.loadTwitterWidgets(); */
     })
   }
 

@@ -4,6 +4,7 @@
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto;
+    margin-top: 3%;
 }
 
   .img-card {
@@ -13,12 +14,14 @@
   }
 
 .publicacion-preview {
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 0%;
+    margin-right: 0%;
     border-radius: 0;
+    padding-right: 0%;
     height: fit-content;
     display: flex;
     justify-content: center;
+    /* background-color: rgb(238, 235, 235);  */
 }
 .btn{
     justify-content: center;
@@ -26,6 +29,17 @@
     align-items: center;
     align-self: center;
     align-content: center;
+
+    /* background-color: rgb(238, 235, 235);  */
+
+}
+.btn-selecionado{
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    background-color: rgb(218, 216, 216); 
 }
 
 /* rgb(255,109,0,255); */
@@ -72,3 +86,6 @@ hr {
     font-size: small;
     font-style: italic;
   }
+ 
+  
+  

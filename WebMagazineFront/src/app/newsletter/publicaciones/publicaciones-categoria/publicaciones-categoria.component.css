@@ -1,54 +1,100 @@
-.card{
+.card {
     margin: 0px;
     padding: 0%;
     border-radius: 0px;
     border-style: none;
 }
 
-.cards-container{
+.cards-container {
     display: flex;
-     flex-wrap: wrap;
+    flex-wrap: wrap;
     align-items: flex-start
-  }
-.container-texto{
+}
+
+.container-texto {
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
 }
+
 .cards-container-restaurante {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.titulo-restaurantes{
-    margin-left: 8%;
-}  
 
-.nombre-categoria{
 
-}
-.descripcion-categoria{
-    font-size:x-large;
+
+.nombre-categoria {}
+
+.descripcion-categoria {
+    font-size: x-large;
 
 }
-.imagen-edicion:hover{
+
+.imagen-edicion:hover {
     opacity: 0.5;
 }
-.modal-header{
-    background-color: rgb(255,109,0,255);
+
+.modal-header {
+    background-color: rgb(255, 109, 0, 255);
     color: white;
 }
-.texto-categoria{
+
+.texto-categoria {
     text-align: center;
 }
-.numero-pagina{
+
+.numero-pagina {
     display: inline;
-  }
+}
 
 /* Estilos tamaño movil */
 @media (max-width: 40em) {
-    .descripcion-categoria{
+    .descripcion-categoria {
         font-size: medium;
     }
 }
+
+.restaurantes{
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.titulo-restaurantes {
+    margin-left: 6%;
+    margin-bottom: 3%;
+}
+/* En tu archivo CSS (por ejemplo, styles.css) */
+.cards-container-restaurante .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cards-container-entrevidas {
+    justify-content: center;
+    background-color: rgb(238, 235, 235); 
+    margin-left: 5%;
+    margin-right: 0%;
+    padding-right: 0%;
+}
+.card-entrevidas{
+   width: 100%;
+   margin-top: 0%;
+   margin-right: 0%;
+   padding-right: 0%;
+   
+}
+
+.publicacion-seleccionada-container{ 
+    height: 100%;
+    margin-left: 0%;
+    margin-top: 0%;
+    margin-right: 0%;
+    padding-right: 4%;
+}
+.clicked {
+    background-color: rgb(205, 205, 205);
+    box-shadow: 2px 2px 10px #666;
+  }

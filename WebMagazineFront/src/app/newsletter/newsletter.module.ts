@@ -32,6 +32,7 @@ import { PublicacionesBorradorComponent } from './publicaciones/publicaciones-bo
 import { EcommerceModule } from '../ecommerce/ecommerce.module';
 import { PromoTiendaComponent } from './promo-tienda/promo-tienda.component';
 import { PublicacionRestauranteComponent } from './publicaciones/publicacion-restaurante/publicacion-restaurante.component';
+import { PublicacionEntrevidasComponent } from './publicaciones/publicacion-entrevidas/publicacion-entrevidas.component';
 
 
 
@@ -62,7 +63,8 @@ import { PublicacionRestauranteComponent } from './publicaciones/publicacion-res
     MensajeComponent,
     PublicacionesBorradorComponent,
     PromoTiendaComponent,
-    PublicacionRestauranteComponent
+    PublicacionRestauranteComponent,
+    PublicacionEntrevidasComponent
   ],
   
   imports: [
