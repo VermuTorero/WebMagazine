@@ -21,6 +21,7 @@ export class EditorInicioComponent implements OnInit {
   /* Recortador de imagenes */
   imageUrl: string = "";
   imagePreviewUrl = "";
+  imageCarouselUrl = "";
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
@@ -190,21 +191,7 @@ export class EditorInicioComponent implements OnInit {
     }
   }
 /* Métodos para obtener la imagen recortada y reducida */
-  getCroppedImageDerecha() {
-    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob as Blob);
-      reader.onload = () => {
-        this.croppedresult = reader.result as string;
-        let blobGenerado = blob as Blob;
-        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
-        this.imagenesService.subirImagen(imagenRecortada, "imagenLateralDerecha", "lateral").subscribe(url => {
-          this.imagenInicioDerecha.url = url;
-          this.setImagenInicioDerecha();
-        })
-      }
-    }, 'image/jpeg', 0.70)
-  }
+
   getCroppedImageIzquierda() {
      this.angularCropper2.cropper.getCroppedCanvas().toBlob((blob) => {
       const reader = new FileReader();

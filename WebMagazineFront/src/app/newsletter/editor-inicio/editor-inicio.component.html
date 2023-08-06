@@ -12,7 +12,7 @@
       data-bs-target="#imagenLateralIzquierdaModal">
   </section>
   <!-- Carrusel tamaño grande -->
-  <section class="carrusel d-none d-sm-block col-sm-6 p-0 m-0">
+  <section class="carrusel d-none d-sm-block col-sm-9 p-0 m-0">
     <div id="carouselCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-wrap="true">
       <!-- Botones del Carrusel -->
       <div class="carousel-indicators">
@@ -50,7 +50,7 @@
         <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
           <button class="boton-central btn btn-danger btn-sm m-3" (click)="quitarDelCarousel(publicacionCarousel.id)"
             data-bs-target="#carouselCaptions" data-bs-slide-to="0">QUITAR DEL CARRUSEL</button>
-          <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="...">
+          <img src="{{publicacionCarousel.imagenCarouselUrl}}" class="d-block w-100" alt="...">
           <div class="carousel-caption">
             <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b></h5>
             <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
@@ -75,15 +75,7 @@
       </button>
     </div>
   </section>
-  <!-- Imagen de promo Derecha -->
-  <section class="promo col-12 col-sm-3 p-0 m-0">
-    <h5 class="col-12 d-sm-none text-center">Imagen suscripcion</h5>
-    <button class="boton btn btn-warning btn-sm m-3" data-bs-toggle="modal"
-      data-bs-target="#imagenLateralDerechaModal">CAMBIAR</button>
-    <img src="{{imagenInicioDerecha.url}}" alt="" class="imagen-promo img-fluid p-0 m-0" data-bs-toggle="modal"
-      data-bs-target="#imagenLateralDerechaModal">
-  </section>
-</section>
+
 
 <!-- Carrusel tamaño pequeño-->
 <section class="carrusel-pequeno col-12 d-sm-none p-0 m-0">
@@ -169,31 +161,6 @@
 
 <!-- MODALES -->
 
-<!-- Modal Agregar Imagen lateral derecha-->
-<div class="modal fade" id="imagenLateralDerechaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <section>
-          <input type="file" accept="images/" (change)="onSelectFileDerecha($event)">
-        </section>
-        <section *ngIf="imagePreviewUrl">
-          <angular-cropper [cropperOptions]='{aspectRatio: 3 / 4}' [imageUrl]="imagenInicioDerecha.url"
-            #angularCropper></angular-cropper>
-        </section>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="getCroppedImageDerecha()" data-bs-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- Modal Agregar Imagen lateral izquierda-->
@@ -234,8 +201,8 @@
         <section>
           <input type="file" accept="images/" (change)="onSelectFileCentral($event)">
         </section>
-        <section *ngIf="imagePreviewUrl">
-          <angular-cropper [cropperOptions]='{aspectRatio: 6 / 4}' [imageUrl]="imagenInicioCentral.url"
+        <section *ngIf="imageCarouselUrl">
+          <angular-cropper [cropperOptions]='{aspectRatio: 3 / 1}' [imageUrl]="imagenInicioCentral.url"
             #angularCropper3></angular-cropper>
         </section>
       </div>

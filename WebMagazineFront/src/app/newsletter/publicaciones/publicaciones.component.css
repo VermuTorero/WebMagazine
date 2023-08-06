@@ -143,19 +143,6 @@ app-publicacion {
 .numero-pagina{
   display: inline;
 }
-.carousel-item {
-  height: 0;
-  padding-top: 33.33%; /* 1/3 de la altura para mantener relación de aspecto 3:1 */
-  overflow: hidden;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: auto;
-  position: relative;
-  top: -50%; /* Desplaza la imagen hacia arriba para recortar la parte superior */
-  transform: translateY(-50%); /* Corrige el desplazamiento vertical */
-}
 
 
 /* Animación para hacer aparecer el texto */
