@@ -33,6 +33,8 @@ import { EcommerceModule } from '../ecommerce/ecommerce.module';
 import { PromoTiendaComponent } from './promo-tienda/promo-tienda.component';
 import { PublicacionRestauranteComponent } from './publicaciones/publicacion-restaurante/publicacion-restaurante.component';
 import { PublicacionEntrevidasComponent } from './publicaciones/publicacion-entrevidas/publicacion-entrevidas.component';
+import { LateralComponent } from './lateral/lateral.component';
+import { PublicacionGastroComponent } from './publicaciones/publicacion-gastro/publicacion-gastro.component';
 
 
 
@@ -64,7 +66,9 @@ import { PublicacionEntrevidasComponent } from './publicaciones/publicacion-entr
     PublicacionesBorradorComponent,
     PromoTiendaComponent,
     PublicacionRestauranteComponent,
-    PublicacionEntrevidasComponent
+    PublicacionEntrevidasComponent,
+    LateralComponent,
+    PublicacionGastroComponent
   ],
   
   imports: [

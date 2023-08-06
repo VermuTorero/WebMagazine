@@ -1,5 +1,4 @@
 <!-- Publicaciones de Restaurantes -->
-
 <div *ngIf="categoria.categoriaNombre=='Restaurantes'" class="restaurantes">
   <div class="titulo-restaurantes-container">
     <h1 class="titulo-restaurantes">Gastrosofía / <i>Restaurantes</i></h1>
@@ -26,22 +25,69 @@
 
 
 <!-- Publicaciones de Entrevidas -->
-
 <div *ngIf="categoria.categoriaNombre=='Entrevidas'" class="row restaurantes">
   <div class="cards-container-entrevidas col-2">
-    <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12" [ngClass]="{'clicked': i === activeCard}" 
-    (click)="onClickCard(i)">
-      <app-publicacion-entrevidas [publicacion]="publicacion" (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-entrevidas>
+    <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12"
+      [ngClass]="{'clicked': i === activeCard}" (click)="onClickCard(i)">
+      <app-publicacion-entrevidas [publicacion]="publicacion"
+        (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-entrevidas>
     </div>
   </div>
   <div class="publicacion-seleccionada-container col-9">
-    <app-publicacion-completa [publicacion]="publicacionSeleccionada"></app-publicacion-completa>
+    <app-publicacion-completa [publicacion]="publicacionSeleccionada"
+      class="publicacion-completa"></app-publicacion-completa>
   </div>
 </div>
 
+<!-- Publicaciones de Patata Santa, Bares o Mercados-->
+<div
+  *ngIf="categoria.categoriaNombre=='Patata Santa' || categoria.categoriaNombre=='Bares' || categoria.categoriaNombre=='Patata Santa'"
+  class="row gastro">
+  <section class="zona-articulos row">
+    <div class="columna-articulos col-12">
+      <!-- Seccion articulos gastro recientes-->
+      <section class="seccion-recientes">
+        <div class="publicaciones-gastro-container row mt-2">
+          <div *ngFor="let publicacion of publicaciones; let i = index"
+            class="card-gastro col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4" [ngClass]="{'clicked': i === activeCard}"
+            (click)="onClickCard(i)">
+            <app-publicacion-gastro [publicacion]="publicacion"
+              (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-gastro>
+          </div>
+          <div class="paginas text-center">
+            <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2"
+              (click)="getPaginaAnterior()">Anterior</button>
+            <p class="numero-pagina">Pagina {{pagina +1}}</p>
+            <button *ngIf="publicaciones.length>3" class="btn btn-sm btn-secondary mx-2"
+              (click)="getPaginaSiguiente()">Siguiente</button>
+          </div>
+          <div id="editor" hidden></div>
+        </div>
+      </section>
+      <section class="publicacion-gastro-seleccionada-container">
+        <app-publicacion-completa [publicacion]="publicacionSeleccionada"
+          class="publicacion-completa"></app-publicacion-completa>
+      </section>
 
-<!-- Publicaciones que no son Restaurantes ni Entrevidas -->
-<div *ngIf="categoria.categoriaNombre!='Restaurantes' && categoria.categoriaNombre!='Entrevidas'">
+      <!-- Seccion articulos destacados -->
+      <section class="seccion-destacados my-1 pt-3 mx-1 mx-md-4">
+        <h3 class="row mx-2 my-1"><b>Destacados</b></h3>
+        <hr class="my-0">
+        <div class="destacados row align-items-start mt-2">
+          <div *ngFor="let publicacionDestacada of publicacionesDestacadas"
+            class="card col-12 col-sm-6 col-lg-3 col-xxl-3 mb-4">
+            <app-publicacion [publicacion]="publicacionDestacada"></app-publicacion>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+
+<!-- Publicaciones con formato normal-->
+<div
+  *ngIf="categoria.categoriaNombre!='Restaurantes' && categoria.categoriaNombre!='Entrevidas' 
+&& categoria.categoriaNombre!='Patata Santa' && categoria.categoriaNombre!='Bares'&& categoria.categoriaNombre!='Mercados'">
   <div class="row my-1 py-1 mx-2">
     <div *ngIf="edicion" class="col-12 col-lg-6">
       <img *ngIf="this.categoria.urlImagen" class="imagen-edicion img-fluid mt-4 pt-4 w-100"
@@ -85,31 +131,6 @@
       <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
       <p class="numero-pagina">Pagina {{pagina +1}}</p>
       <button class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
-    </div>
-  </div>
-
-  <!-- Modal Agregar Imagen de preview-->
-  <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <section class="my-2">
-            <input type="file" accept="images/" (change)="onSelectFile($event)">
-          </section>
-          <section *ngIf="imageUrl">
-            <angular-cropper [cropperOptions]='{aspectRatio: 15 / 10}' [imageUrl]="imageUrl"
-              #angularCropper></angular-cropper>
-          </section>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>

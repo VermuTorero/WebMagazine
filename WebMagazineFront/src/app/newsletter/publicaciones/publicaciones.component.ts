@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { LateralServiceService } from '../service/lateral.service';
 import { Lateral } from '../models/lateral';
 import { MetaService } from '../service/meta.service';
-declare const twttr: any;
+
 
 @Component({
   selector: 'app-publicaciones',
@@ -47,7 +47,6 @@ export class PublicacionesComponent implements OnInit {
     }
     this.getPublicacionesDestacadas();
     this.getPublicacionesCarousel();
-    this.getLateral();
   }
 
   /* Publicaciones recientes - 12 ultimas */
@@ -138,59 +137,7 @@ export class PublicacionesComponent implements OnInit {
     this.router.navigate(["/publicaciones/" + publicacion.url]);
   }
 
-  /* Sección lateral con podcast y tweets */
-  getLateral() {
-    this.lateralService.getLateral().subscribe(lateral => {
-      this.lateral = lateral;
-      this.showHtmlPodcast();
-      this.showHtmlPodcastSM();
-      this.showHtmlTwitter();
-    
-    })
-  }
 
-  /* Mostrar los 3 tweets */
-  showHtmlTwitter() {
-    for (let index = 0; index < 4; index++) {
-    var twitterContainer = document.querySelector("#twitter" + index);
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter;
-    twitterContainer?.appendChild(tweetContainer); 
-    }
-    this.loadTwitterWidgets();
-  }
-
-  /* Cargar los widgets de Twitter */
-  loadTwitterWidgets() {
-    if (twttr) {
-      twttr.widgets.load();
-    }
-  }
-
-  /* Mostrar el podcast */
-  showHtmlPodcast() {
-    var podcastContainer = document.querySelector("#podcast");
-    var html = document.createElement("div");
-    html.innerHTML = this.lateral.htmlPodcast;
-    podcastContainer?.appendChild(html);
-  }
-/* Mostrar el podcast en pantallas pequeñas */
-  showHtmlPodcastSM() {
-    var podcastContainer = document.querySelector("#podcastSM");
-    var html = document.createElement("div");
-    html.classList.add("podcastSM-container");
-    html.classList.add("justify-content-center");
-    html.innerHTML = this.lateral.htmlPodcast;
-    podcastContainer?.appendChild(html);
-  }
-
-  /* Buscador */
-  buscarPublicacionesPorPalabras() {
-    let palabrasClaveArray = this.palabrasClave.split(" ");
-    const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
-    this.router.navigateByUrl(url);
-  }
 
   /* Navegar entre páginas */
   getPaginaSiguiente() {

@@ -1,0 +1,82 @@
+.lateral{
+    margin-top: 5%;
+    margin-right: 3%;
+    background-color: white;
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(206, 205, 205);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    height: fit-content;
+    border-radius: 5px;
+  }
+.publicaciones-cerca {
+    align-content: start;
+
+}
+
+.card {
+    margin-top: 2%;
+    margin-bottom: 4%;
+    padding-top: 0%;
+    display: flex;
+    border-width: 1;
+    background-color: rgb(240, 240, 240);
+    height: fit-content !important
+}
+
+.podcast{
+    margin-top: 3%;
+    margin-right: 3%;
+    background-color: white;
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(206, 205, 205);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    height: fit-content;
+    border-radius: 5px;
+  }
+  
+  .buscador{
+    margin-top: 3%;
+    margin-right: 3%;
+    background-color: rgb(255, 109, 0, 255);
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(139, 139, 139);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+  }
+  .titulo-buscador{
+    color: white;
+  }
+  
+  .twitter{
+    margin-top: 5%;
+    margin-right: 32%;
+    padding: 3%;
+    border-style: ridge;
+    border-color: rgb(206, 205, 205);
+    border-width: 1px;
+    box-shadow: 2px 2px 10px #666;
+    height: fit-content;
+    border-radius: 5px;
+  }
+
+  .titulo-podcast {
+    color: rgb(255, 109, 0, 255);
+}
+
+.titulo-twitter {
+    color: rgb(255, 109, 0, 255);
+}
+
+.input-buscador {
+    width: 80%;
+}
+
+.titulo-publicaciones-lateral {
+    color: rgb(255, 109, 0, 255);
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PublicacionesServiceService } from '../../service/publicaciones.service';
 import { Publicacion } from '../../models/publicacion';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from '../../models/Categoria';
 import { CategoriasServiceService } from '../../service/categorias.service';
 import { CropperComponent } from 'angular-cropperjs';
@@ -36,7 +36,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
   publicacionesRestauranteFila3: Publicacion[] = [];
   publicacionSeleccionada: Publicacion = new Publicacion();
   activeCard: number = -1; // Inicialmente, no hay ninguna card activa
-
+  publicacionesDestacadas: Publicacion[] = [];
+  palabrasClave: string = "";
 
   constructor(
     private publicacionesService: PublicacionesServiceService,
@@ -46,7 +47,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
     private loginService: LoginService, 
     private tagsService: TagsServiceService,
     private lugarService: LugaresServiceService,
-    private likesService: LikesService) { }
+    private likesService: LikesService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.loginService.getIsLoggedFlagObs().subscribe((flag) => {
@@ -74,8 +76,6 @@ export class PublicacionesCategoriaComponent implements OnInit {
   }
 
  
-  
-
   getPublicacionesByCategoria() {
     /* Si es un usuario ADMIN, WRITER o con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
@@ -107,7 +107,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
         if (this.categoria.categoriaNombre=="Restaurantes") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
-        if (this.categoria.categoriaNombre=="Entrevidas") {
+        if (this.categoria.categoriaNombre=="Entrevidas" || this.categoria.categoriaNombre=="Patata Santa"
+         || this.categoria.categoriaNombre=="Bares" || this.categoria.categoriaNombre=="Mercados") {
           this.publicacionSeleccionada = this.publicaciones[0];
           this.activeCard = 0;
         }
@@ -143,7 +144,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
         if (this.categoria.categoriaNombre=="Restaurantes") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
-        if (this.categoria.categoriaNombre=="Entrevidas") {
+        if (this.categoria.categoriaNombre=="Entrevidas" || this.categoria.categoriaNombre=="Patata Santa"
+         || this.categoria.categoriaNombre=="Bares" || this.categoria.categoriaNombre=="Mercados") {
           this.publicacionSeleccionada = this.publicaciones[0];
           this.activeCard = 0;
         }
@@ -325,4 +327,10 @@ export class PublicacionesCategoriaComponent implements OnInit {
   onClickCard(index: number) {
     this.activeCard = index;
   }
+    /* Buscador */
+    buscarPublicacionesPorPalabras() {
+      let palabrasClaveArray = this.palabrasClave.split(" ");
+      const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
+      this.router.navigateByUrl(url);
+    }
 }

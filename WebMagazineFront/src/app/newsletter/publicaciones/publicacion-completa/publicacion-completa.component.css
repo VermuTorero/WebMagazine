@@ -1,10 +1,4 @@
-.lateral {
-    background-color: white;
-    box-shadow: 2px 2px 10px #666;
-    margin-right: 0%;
-    display: flex;
-    /* background-image: url(../../../../assets/fondo_periodico.jpg); */
-}
+
 
 ::ng-deep h2{
     font-size: large !important;
@@ -16,20 +10,6 @@
 
 }
 
-.publicaciones-cerca {
-    align-content: start;
-
-}
-
-.card {
-    margin-top: 2%;
-    margin-bottom: 4%;
-    padding-top: 0%;
-    display: flex;
-    border-width: 1;
-    background-color: rgb(240, 240, 240);
-    height: fit-content !important
-}
 
 .fondo {
     background-color: rgb(205, 205, 205);
@@ -296,6 +276,9 @@
     }
     .titulo-twitter{
         font-size: medium;
+    }
+    .lateral-container{
+        width: 1%;
     }
 
 }

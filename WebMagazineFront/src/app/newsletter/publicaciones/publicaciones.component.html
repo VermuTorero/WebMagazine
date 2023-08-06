@@ -145,26 +145,8 @@
     </section>
   </div>
 
-  <div class="d-none d-md-block col-md-4 col-lg-3 mb-3">
-    <div class="row podcast" id="podcast">
-      <h5 class="row titulo-podcast">Podcast</h5>
-    </div>
-    <div class="row buscador">
-      <h5 class="row titulo-buscador">Buscador de artículos</h5>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2 input-buscador" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="palabrasClave" id="palabrasClave" name="palabrasClave">
-        <button class="btn btn-outline-light btn-sm" type="submit" (click)="buscarPublicacionesPorPalabras()">Buscar</button>
-      </form>
-    </div>
-    <div class="row twitter">
-      <h5 class="row titulo-twitter">Twitter</h5>
-      <div class="col-12" id="twitter1">
-      </div>
-      <div class="col-12" id="twitter2">
-      </div>
-      <div class="col-12" id="twitter3">
-      </div>
-    </div>
+  <div class="d-none d-md-block col-md-4 col-lg-3 mb-3 lateral-container">
+    <app-lateral></app-lateral>
   </div>
 </section>
 

@@ -1,0 +1,47 @@
+<div class="d-none d-md-block col-12">
+    <div class="row podcast" id="podcast">
+        <h5 class="row titulo-podcast">Podcast</h5>
+    </div>
+    <div class="row buscador">
+        <h5 class="row titulo-buscador">Buscador de artículos</h5>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2 input-buscador" placeholder="Buscar" aria-label="Buscar"
+                [(ngModel)]="palabrasClave" id="palabrasClave" name="palabrasClave">
+            <button class="btn btn-outline-light btn-sm" type="submit"
+                (click)="buscarPublicacionesPorPalabras()">Buscar</button>
+        </form>
+    </div>
+    <!--     <div class="row twitter">
+      <h5 class="row titulo-twitter">Twitter</h5>
+      <div class="col-12" id="twitter1">
+      </div>
+      <div class="col-12" id="twitter2">
+      </div>
+      <div class="col-12" id="twitter3">
+      </div>
+    </div> -->
+
+    <!-- Publicaciones en la misma provincia -->
+    <section *ngIf="publicacionesCerca[0]" class="row lateral mb-4">
+        <div class="col-12 pt-2">
+            <h5 class="titulo-publicaciones-lateral">Cerca de aquí</h5>
+        </div>
+        <div class="col-12 preview">
+            <div *ngFor="let publicacion of publicacionesCerca" style="display:inline-block;" class="card">
+                <app-publicacion [publicacion]="publicacion"></app-publicacion>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publicaciones relacionadas con las tag -->
+    <section *ngIf="publicacionesRelacionadas[0]" class="row lateral mb-3">
+        <div class="col-12 mt-2">
+            <h5 class="titulo-publicaciones-lateral">Relacionadas</h5>
+        </div>
+        <div class="col-12 preview">
+            <div *ngFor="let publicacion of publicacionesRelacionadas" style="display:inline-block;" class="card">
+                <app-publicacion [publicacion]="publicacion"></app-publicacion>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,5 +1,5 @@
 <main class="fondo row py-3">
-    <section class="col-12 col-sm-9">
+    <section class="col-12 col-md-9">
         <section class="hoja">
             <!-- Titulo de la publicacion -->
             <h1 class="text-center"><b>{{publicacion.titulo}}</b></h1>
@@ -89,54 +89,18 @@
             </div>
         </section>
     </section>
-    <!-- Seccion lateral -->
-    <section class="d-none d-sm-block col-sm-3">
-        <section class="row podcast lateral mb-4" id="podcast">
-            <h5 class="row titulo-podcast">Podcast</h5>
-        </section>
-        <section class="row buscador lateral mb-4 ">
-            <h5 class="row titulo-buscador">Buscador de artículos</h5>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2 input-buscador" placeholder="Buscar" aria-label="Buscar"
-                    [(ngModel)]="palabrasClave" id="palabrasClave" name="palabrasClave">
-                <button class="btn btn-outline-light btn-sm" type="submit"
-                    (click)="buscarPublicacionesPorPalabras()">Buscar</button>
-            </form>
-        </section>
-  <!--       <section class="row twitter lateral mb-4">
-            <h5 class="row titulo-twitter">Twitter</h5>
-            <div class="col-12" id="twitter1">
-            </div>
-            <div class="col-12" id="twitter2">
-            </div>
-            <div class="col-12" id="twitter3">
-            </div>
-        </section> -->
-        <!-- Publicaciones en la misma provincia -->
-        <section *ngIf="publicacionesCerca[0]" class="row lateral mb-4">
-            <div class="col-12 pt-4">
-                <h5 class="titulo-publicaciones-lateral">Cerca de aquí</h5>
-            </div>
-            <div class="col-12 preview">
-                <div *ngFor="let publicacion of publicacionesCerca" style="display:inline-block;" class="card">
-                    <app-publicacion [publicacion]="publicacion"></app-publicacion>
-                </div>
-            </div>
-        </section>
 
-        <!-- Publicaciones relacionadas con las tag -->
-        <section *ngIf="publicacionesRelacionadas[0]" class="row lateral mb-3">
-            <div class="col-12 mt-4">
-                <h5 class="titulo-publicaciones-lateral">Relacionadas</h5>
-            </div>
-            <div class="col-12 preview">
-                <div *ngFor="let publicacion of publicacionesRelacionadas" style="display:inline-block;" class="card">
-                    <app-publicacion [publicacion]="publicacion"></app-publicacion>
-                </div>
-            </div>
-        </section>
+    <!-- Seccion lateral -->
+    <section class="lateral-container d-none d-md-block col-sm-3">
+            <app-lateral [publicacion]="publicacion"></app-lateral>
     </section>
 </main>
+
+
+
+
+
+
 
 <!-- Modal Like-->
 <div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

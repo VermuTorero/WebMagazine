@@ -48,7 +48,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     private tagService: TagsServiceService,
     private categoriaService: CategoriasServiceService,
     private router: Router,
-    private lateralService: LateralServiceService,
     private usuarioService: UsuariosService,
     private likeService: LikesService,
     private modalService: NgbModal,
@@ -64,17 +63,14 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
         this.getPublicacionFree();
       }
     }
-    this.getLateral();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['publicacion'] && !changes['publicacion'].firstChange) {
       this.showPublicacion();
-      this.getPublicacionesRelacionadas(this.publicacion);
       this.publicacionesService.getLugarFromPublicacion(this.publicacion).subscribe(lugar=>{
         lugar.id=this.lugarService.getId(lugar);
         this.publicacion.lugar = lugar;
-        this.getPublicacionesCerca(this.publicacion);
       })
     }
   }
@@ -146,7 +142,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.publicacion.tags.forEach(tag => {
         tag.id = this.tagService.getId(tag);
       });
-      this.getPublicacionesRelacionadas(publicacion);
     })
   }
 
@@ -155,7 +150,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
       this.publicacion.lugar = lugar;
       this.publicacion.lugar.id = this.lugarService.getId(lugar);
-      this.getPublicacionesCerca(publicacion);
     })
   }
 
@@ -205,40 +199,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
 
   }
 
-  /* Publicaciones con coincidencia en el lugar */
-  getPublicacionesCerca(publicacion: Publicacion) {
-    this.publicacionesService.getPublicacionesCerca(publicacion.lugar.lugarNombre, publicacion.id).subscribe(publicacionesCerca => {
-      this.publicacionesCerca = publicacionesCerca;
-      this.publicacionesCerca.forEach(publicacionCerca => {
-        publicacionCerca.id = this.publicacionesService.getId(publicacionCerca);
-        publicacionCerca.subtitulo = publicacionCerca.subtitulo.substring(0, 120) + "...";
-        this.publicacionesService.getCategoriaFromPublicacion(publicacionCerca).subscribe(categoria => {
-          publicacionCerca.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacionCerca).subscribe(autor => {
-            publicacionCerca.autor = autor;
-          })
-        })
-      });
-    })
-  }
-
-  /* Publicaciones con coincidencias en las tag */
-  getPublicacionesRelacionadas(publicacion: Publicacion) {
-    this.publicacionesService.getPublicacionesRelacionadas(publicacion.id).subscribe(publicacionesRelacionadas => {
-      this.publicacionesRelacionadas = publicacionesRelacionadas;
-      this.publicacionesRelacionadas.forEach(publicacionRelacionada => {
-        publicacionRelacionada.id = this.publicacionesService.getId(publicacionRelacionada);
-        publicacionRelacionada.subtitulo = publicacionRelacionada.subtitulo.substring(0, 120) + "...";
-        this.publicacionesService.getCategoriaFromPublicacion(publicacionRelacionada).subscribe(categoria => {
-          publicacionRelacionada.categoria = categoria;
-          this.publicacionesService.getAutorFromPublicacion(publicacionRelacionada).subscribe(autor => {
-            publicacionRelacionada.autor = autor;
-          })
-        })
-      });
-    })
-  }
-
   showPublicacion() {
     document.querySelector('#article')?.firstChild?.remove();
     var body = document.querySelector("#article");
@@ -261,52 +221,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       });
   }
 
-  getLateral() {
-    this.lateralService.getLateral().subscribe(lateral => {
-      this.lateral = lateral;
-      this.showHtmlPodcast();
-      /* this.showHtmlTwitter(); */
-      this.showHtmlPodcastSM();
-     /*  this.loadTwitterWidgets(); */
-    })
-  }
-
-  showHtmlTwitter() {
-    for (let index = 0; index < 4; index++) {
-    var twitterContainer = document.querySelector("#twitter" + index);
-    var tweetContainer = document.createElement('div');
-    tweetContainer.classList.add('twitter-tweet');
-    tweetContainer.innerHTML = this.lateral.htmlTwitter;
-    twitterContainer?.appendChild(tweetContainer); 
-    }
-  }
-
-  showHtmlPodcast() {
-    var podcastContainer = document.querySelector("#podcast");
-    var html = document.createElement("div");
-    html.innerHTML = this.lateral.htmlPodcast;
-    podcastContainer?.appendChild(html);
-  }
-
-  showHtmlPodcastSM() {
-    var podcastContainer = document.querySelector("#podcastSM");
-    var html = document.createElement("div");
-    html.innerHTML = this.lateral.htmlPodcast;
-    podcastContainer?.appendChild(html);
-  }
-
-  // Función para cargar los widgets de Twitter
-  loadTwitterWidgets() {
-    if (twttr) {
-      twttr.widgets.load();
-    }
-  }
-
-  buscarPublicacionesPorPalabras() {
-    let palabrasClaveArray = this.palabrasClave.split(" ");
-    const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
-    this.router.navigateByUrl(url);
-  }
 
   like() {
     this.usuarioService.getUsuarioFromToken().subscribe(usuario => {
@@ -407,5 +321,10 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     const modalRef = this.modalService.open(ModalReceiptComponent, { size: 'lg' });
     modalRef.componentInstance.items = items;
     modalRef.componentInstance.amount = amount
+  }
+  quitarLateral(){
+    if(this.publicacion.categoria.categoriaNombre=="Atata Santa"){
+      document.querySelector('.')
+    }
   }
 }

@@ -312,8 +312,12 @@ public class PublicacionesController {
 						if (indexOfParagraphEnd != -1) {
 							publicacion.setHtmlPublicacion(htmlPublicacion.substring(0, indexOfParagraphEnd + 4));
 						}
+						publicacion.setHtmlPublicacion(publicacion.getHtmlPublicacion() + "<br><p><b>Para ver este contenido por completo debes estar suscrito...</b></p> ");
+				
 					}
 				}).collect(Collectors.toList());
+		
+				
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
 	}
