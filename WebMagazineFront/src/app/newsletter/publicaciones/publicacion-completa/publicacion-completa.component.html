@@ -1,5 +1,5 @@
 <main class="fondo row py-3">
-    <section class="col-12 col-md-9">
+    <section class="hoja-container col-12 col-md-9">
         <section class="hoja">
             <!-- Titulo de la publicacion -->
             <h1 class="text-center"><b>{{publicacion.titulo}}</b></h1>
@@ -91,8 +91,8 @@
     </section>
 
     <!-- Seccion lateral -->
-    <section class="lateral-container d-none d-md-block col-sm-3">
-            <app-lateral [publicacion]="publicacion"></app-lateral>
+    <section class="lateral-container d-none d-md-block">
+            <app-lateral [publicacion]="publicacion" class="lateral"></app-lateral>
     </section>
 </main>
 

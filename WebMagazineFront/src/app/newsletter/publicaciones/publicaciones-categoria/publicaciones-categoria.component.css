@@ -20,8 +20,7 @@
     border-style: none;
 }
 .card-gastro {
-    margin-right: 3%;
-
+    margin-right: 0%;
     border-radius: 0px;
     border-style: none;
 }
@@ -123,10 +122,10 @@
 }
 .publicaciones-gastro-container{ 
     height: 100%;
-    padding-left: 4%;
+    padding-left: 2%;
     margin-top: 0%;
-    margin-right: 5%;
-    padding-right: 10%;
+    margin-right: 0%;
+    padding-right: 2%;
 }
 .publicacion-gastro-seleccionada-container{ 
     background-color: rgb(205, 205, 205);

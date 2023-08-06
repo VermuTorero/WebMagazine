@@ -24,6 +24,7 @@ export class Publicacion {
     url: string = "";
     publicado: boolean = false;
     keyWords: string[] = [];
+    imagenCarouselUrl: string = "";
 
     constructor(){
 

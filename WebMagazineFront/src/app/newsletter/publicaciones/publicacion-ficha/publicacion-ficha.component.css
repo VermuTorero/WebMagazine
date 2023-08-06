@@ -84,20 +84,6 @@
     border-style: dashed;
     border-width: 1px;
 }
-.keyWords-inputs{
-    display: inline-block;
-}
-.keyWords-label{
-    align-items: start;
-}
-.keyWord{
-    display: inline;
-    width: 31%
-}
-
-.keyWords-columna{
-    display: flex;
-}
 
 .icono-spotify {
     width: 9vw;
@@ -145,12 +131,7 @@
     display: inline;
     font-size: small;
 }
-.tags-container{
-    margin: 4%;
-    border-style: ridge;
-    border-color: black;
-    padding-bottom: 5%;
-}
+
 
 .boton-eliminar{
     border-radius: 50%;
@@ -175,11 +156,7 @@
     width: auto;
     display: inline;
 }
-.text-titulo{
-    font-size: xx-large;
-    width: 80%;
-    box-shadow: 2px 2px 10px #666;
-}
+
 .recomendacion-titulo{
     width: 80%;
 }
@@ -188,10 +165,7 @@
     width: 80%;
 }
 
-.text-descripcion{
-    font-size: large;
-    width: 100%;
-}
+
 .boton-img-preview{
     width: auto;
     height: fit-content;
@@ -219,9 +193,7 @@
     box-shadow: 2px 2px 10px #666;
 
 }
-.text-descripcion{
-    height: 200px;
-}
+
 .card-title{
     height: fit-content !important
 }
@@ -232,9 +204,7 @@
     background-color: rgb(255,109,0,255);
     color: white;
 }
-.texto-obligatorio{
-    color: red;
-}
+
 .boton-accion{
     display: inline;
 }
@@ -243,7 +213,16 @@
     color: white;
     padding: 5%;
 }
-
+.imagen-carousel-container{
+   display:inline-block;
+   margin-left: 7%;
+   width: 53%;
+}
+.imagen-preview-container{
+    display:inline-block;
+    margin-left: 1%;
+    width: 31.5%;
+ }
 
 
 /* Estilos tamaño movil */
@@ -368,19 +347,14 @@
         width: 75% !important;
         height: 35vw !important;
     }
-    .row-dato{
-        width: 98%;
-        margin-right: 10%;
-    }
-    .datos{
-        margin-left: 6%;
-    }
+    
+ 
     .recomendaciones{
         background-color: dodgerblue;
         color: white;
-        margin-left: 0%;
+        margin-left: 2%;
         margin-top: 2%;
-        width: 60%;
+        width: 40%;
         border-style: solid;
         border-width: 1px;
         border-color: black;
@@ -399,11 +373,105 @@
     .nombre-imagen{
         width: 100%;
     }
+    .text-titulo{
+        font-size: x-large;
+        width: 45%;
+        margin-left: 6%;
+    }
+    .recomendaciones{
+        margin-top: 0%;
+    }
+    .titulo-recomendaciones{
+        margin-bottom: 0%;
+    }
+
+    .subtitulo-container{
+        width:100%;
+        margin-left: 7%;
+        display: flex;
+     }
+     .text-subtitulo{
+        font-size: large;
+        width: 44%;
+    }
+    .recomendacion-subtitulo{
+        margin-left: 2%;
+    }
+
+    .row-dato{
+        width: 100%;
+        display: flex;
+    }
+    .tags-container{
+        width:100%;
+        margin: 4%;
+        border-style: ridge;
+        border-color: black;
+        padding-bottom: 5%;
+    }
+
+    .datos{
+        margin-left: 7%;
+        display: flex;
+        width:95%;
+    }
+    .datos-contenido{
+        width: 45%;
+        margin-top: 1%;
+    }
+    .datos-tags{
+        width: 45%;
+        align-items: start;
+    }
+    .label-dato{
+        width:20%
+    }
+    .select-dato{
+        width:100%;
+    }
+    .texto-obligatorio{
+        color: red;
+        margin-left: 10%;
+    }
+    .meta{
+        height: fit-content;
+    }
+    .palabras-clave{
+        margin-left: 3%;
+        width: 86%;
+        align-items: start;
+        height: 1% !important;
+    }
+    
+    .keyWords-container{
+        width:100%;
+        margin-top: 0%;
+        margin-left: 4%;
+        border-style: ridge;
+        border-color: black;
+    }
+
+    .keyWords-inputs{
+        display: inline-block;
+    }
+    .keyWords-label{
+        align-items: start;
+    }
+    .keyWord{
+        display: inline;
+        width: 15%
+    }
+    
+    .keyWords-columna{
+        display: flex;
+    }
+    .label-keywords{
+        padding-left: 1.5%;
+    }
+    
 
 }
-.titulo-recomendaciones{
-    margin-bottom: 0%;
-}
+
 .recomendacion{
     margin-bottom: 0%;
     

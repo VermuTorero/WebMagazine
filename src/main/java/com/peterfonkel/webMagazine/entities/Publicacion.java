@@ -53,6 +53,9 @@ public class Publicacion {
 	@Column(length = 600)
 	private String imagenPreviewUrl;
 	
+	@Column(length = 600)
+	private String imagenCarouselUrl;
+	
 	@ManyToOne
 	private Lugar lugar;
 	
@@ -250,6 +253,14 @@ public class Publicacion {
 
 	public void setKeyWords(String[] keyWords) {
 		this.keyWords = keyWords;
+	}
+
+	public String getImagenCarouselUrl() {
+		return imagenCarouselUrl;
+	}
+
+	public void setImagenCarouselUrl(String imagenCarouselUrl) {
+		this.imagenCarouselUrl = imagenCarouselUrl;
 	}
 
 

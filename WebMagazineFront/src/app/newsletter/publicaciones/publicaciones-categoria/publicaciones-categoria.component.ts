@@ -236,7 +236,6 @@ export class PublicacionesCategoriaComponent implements OnInit {
     /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
-        this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
           publicacion.id = this.publicacionesService.getId(publicacion);
           this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
@@ -252,16 +251,19 @@ export class PublicacionesCategoriaComponent implements OnInit {
     } else {
       /* Para usuarios sin suscripcion */
       this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
-        this.publicaciones = publicaciones;
-        this.publicaciones.forEach(publicacion => {
-          publicacion.id = this.publicacionesService.getId(publicacion);
-          this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
-            publicacion.categoria = categoria;
-            this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
-              publicacion.autor = autor;
+        if (publicaciones) {
+          this.publicaciones = publicaciones;
+          this.publicaciones.forEach(publicacion => {
+            publicacion.id = this.publicacionesService.getId(publicacion);
+            this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
+              publicacion.categoria = categoria;
+              this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
+                publicacion.autor = autor;
+              })
             })
-          })
-        });
+          });
+        }
+      
       }, err => {
         this.pagina--;
       })

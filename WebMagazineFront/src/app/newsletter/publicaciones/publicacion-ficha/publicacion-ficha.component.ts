@@ -29,6 +29,7 @@ import { SeoService } from '../../service/seo.service';
 export class PublicacionFichaComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   @ViewChild('angularCropper2') angularCropper2: CropperComponent = new CropperComponent;
+  @ViewChild('angularCropper3') angularCropper3: CropperComponent = new CropperComponent;
   id: string = "";
   publicacion: Publicacion = new Publicacion();
   /* Variables para agregar contenido al editor Quill */
@@ -46,6 +47,7 @@ export class PublicacionFichaComponent implements OnInit {
   /* Recortador de imagenes */
   imageUrl: string = "";
   imagePreviewUrl = "";
+  imageCarouselUrl = "";
   imageName: string = "";
   croppedresult = "";
   anchoImagen: string = "100";
@@ -439,6 +441,18 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
+  onSelectFileCarousel(event: any) {
+
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.imageCarouselUrl = reader.result as string;
+      }
+      this.imageName = event.target.files[0].name;
+    }
+  }
+
   getCroppedImage() {
     // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
     this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
@@ -470,6 +484,21 @@ export class PublicacionFichaComponent implements OnInit {
     }, 'image/jpeg', 0.70)
   }
 
+  getCroppedImageCarousel() {
+    this.angularCropper3.cropper.getCroppedCanvas().toBlob((blob3) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob3 as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob3 as Blob;
+        let imagenRecortada = new File([blobGenerado], this.imageName, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, this.publicacion.id, "publicacion").subscribe(url => {
+          this.setImageCarousel(url)
+        });
+      }
+    }, 'image/jpeg', 0.70)
+  }
+
   insertarImagenUrl(urlImagen: string) {
     this.texto = this.texto + '<img src="' + urlImagen + '" width="' + this.anchoImagen + '%" alt="' + this.nombreImagen + '">'
     this.nombreImagen = "";
@@ -481,6 +510,13 @@ export class PublicacionFichaComponent implements OnInit {
   setImagePreview(urlImagen: string) {
     this.publicacion.imagenPreviewUrl = urlImagen;
     this.imagePreviewUrl = urlImagen;
+    this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
+    this.nombreImagen = "";
+  }
+
+  setImageCarousel(urlImagen: string) {
+    this.publicacion.imagenCarouselUrl = urlImagen;
+    this.imageCarouselUrl = urlImagen;
     this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
     this.nombreImagen = "";
   }
