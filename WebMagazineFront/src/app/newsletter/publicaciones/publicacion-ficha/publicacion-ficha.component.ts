@@ -517,7 +517,6 @@ export class PublicacionFichaComponent implements OnInit {
   setImageCarousel(urlImagen: string) {
     this.publicacion.imagenCarouselUrl = urlImagen;
     this.imageCarouselUrl = urlImagen;
-    this.texto = "<img src='" + urlImagen + "' width='100%' alt='" + this.nombreImagen + "'>" + this.texto;
     this.nombreImagen = "";
   }
 

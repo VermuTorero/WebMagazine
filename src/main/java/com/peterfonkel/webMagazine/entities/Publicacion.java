@@ -82,6 +82,8 @@ public class Publicacion {
 	
 	private String[] keyWords;
 	
+	private String entrevistado;
+	
 	public Publicacion() {
 		super();
 	}
@@ -261,6 +263,14 @@ public class Publicacion {
 
 	public void setImagenCarouselUrl(String imagenCarouselUrl) {
 		this.imagenCarouselUrl = imagenCarouselUrl;
+	}
+
+	public String getEntrevistado() {
+		return entrevistado;
+	}
+
+	public void setEntrevistado(String entrevistado) {
+		this.entrevistado = entrevistado;
 	}
 
 

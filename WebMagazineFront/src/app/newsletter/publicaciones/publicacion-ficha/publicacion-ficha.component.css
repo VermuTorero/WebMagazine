@@ -3,11 +3,6 @@
     border-width: 1px;
 }
 
-.agregar-bloque-texto {
-    border-style: solid;
-    background-color: rgb(250, 250, 249);
-    border-width: 1px;
-}
 
 .agregar-bloque-imagen {
     border-style: solid;
@@ -213,16 +208,6 @@
     color: white;
     padding: 5%;
 }
-.imagen-carousel-container{
-   display:inline-block;
-   margin-left: 7%;
-   width: 53%;
-}
-.imagen-preview-container{
-    display:inline-block;
-    margin-left: 1%;
-    width: 31.5%;
- }
 
 
 /* Estilos tamaño movil */
@@ -248,12 +233,7 @@
         width: 50% !important;
         height: 45vw !important;
     }
-    .quill-editor{
-        width: 100%;
-    }
-    .editor-container{
-        margin: 0;
-    }
+
     .agregar-bloque-texto{
         justify-content: center;
     }
@@ -348,7 +328,15 @@
         height: 35vw !important;
     }
     
- 
+    .row-titulo-pagina{
+        text-align: center;
+        margin-top: 0%;
+    }
+    .titulo-pagina{
+        font-weight: bold;
+        font-size: xx-large;
+        font-family:'Times New Roman', Times, serif
+    }
     .recomendaciones{
         background-color: dodgerblue;
         color: white;
@@ -364,12 +352,17 @@
         justify-content: center;
         display: flex;
     }
-    .quill-editor {
-        background-color: white;
-        margin-left: 7%;
-        width: 92%;
-        box-shadow: 2px 2px 10px #666;
+    .recomendaciones-contenido{
+        background-color: dodgerblue;
+        color: white;
+        margin-top: 2%;
+        width: 65%;
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        padding: 1%;
     }
+ 
     .nombre-imagen{
         width: 100%;
     }
@@ -433,6 +426,9 @@
         color: red;
         margin-left: 10%;
     }
+    .entrevistado{
+        margin-top: 2%
+    }
     .meta{
         height: fit-content;
     }
@@ -468,8 +464,63 @@
     .label-keywords{
         padding-left: 1.5%;
     }
-    
-
+    .fondo{ 
+        width: 85%;
+        height: 90%;
+        margin: 0 auto;
+        background-image:url(../../../../assets/fondo-editor.jpg) ;
+        border-radius: 50px;
+        padding-top: 1%;
+        padding-bottom: 1%;
+    }
+    .publicacion{
+        margin-left: 5% !important;
+        margin-top: 5%;
+        margin-bottom: 3%;
+        padding-top: 3%;
+        padding-bottom: 3%;
+        border-style: solid;
+        border-radius: 50px;
+        width: 90%;
+        box-shadow: 2px 2px 10px #666;
+        background-color: white;
+    }
+    .editor-container{
+        margin-left: 6.5%;
+        margin-top: 1%;
+        width: 93.5%
+        
+    }
+    .quill-editor-container{
+        margin-left: 1%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 97%
+        
+    }
+    .agregar-bloque-texto {
+        border-style: solid;
+        background-color: rgb(250, 250, 249);
+        border-width: 1px;
+        width:91%;
+    }
+    .quill-editor{
+        background-color: white;
+        width: 95%;
+        margin-right: 1%;
+        box-shadow: 2px 2px 10px #666;
+    }
+    .imagen-carousel-container{
+        display:inline-block;
+        margin-left: 7%;
+        width: 53%;
+     }
+     .imagen-preview-container{
+         display:inline-block;
+         margin-left: 1%;
+         width: 31.5%;
+      }
+     
 }
 
 .recomendacion{

@@ -25,6 +25,7 @@ export class Publicacion {
     publicado: boolean = false;
     keyWords: string[] = [];
     imagenCarouselUrl: string = "";
+    entrevistado: string = "";
 
     constructor(){
 
