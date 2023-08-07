@@ -2,8 +2,8 @@
     <div class="d-none d-md-block col-md-2 col-lg-3"></div>
     <div class="col-12 col-md-8 col-lg-6">
       <div class="imagen-usuario-container">
-        <img class="imagen-usuario" src="{{usuario.urlImagen}}" alt="" data-bs-toggle="modal" data-bs-target="#imagenUsuarioModal">
-
+        <img *ngIf="usuario.urlImagen" class="imagen-usuario" src="{{usuario.urlImagen}}" alt="" data-bs-toggle="modal" data-bs-target="#imagenUsuarioModal">
+        <img *ngIf="!usuario.urlImagen" class="imagen-usuario" src="../../../../assets/icono-usuario.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenUsuarioModal">
       </div>
         <div>
             <h4 class="my-3">DATOS DEL USUARIO</h4>
