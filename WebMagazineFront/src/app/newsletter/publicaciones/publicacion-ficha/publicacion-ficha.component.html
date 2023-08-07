@@ -40,11 +40,13 @@
                         <span *ngIf="palabrasTitulo<16 && palabrasTitulo>9">✅</span>
                         <span *ngIf="palabrasTitulo>16 || palabrasTitulo<10">❓</span>
                     </p>
-                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- TITULO: Las siguientes palabras se repiten mucho:
+                    <p *ngIf="palabrasRepetidasTitulo" class="recomendacion">- TITULO: Las siguientes palabras se
+                        repiten mucho:
                         {{palabrasRepetidasTitulo}} ❓</p>
                     <p *ngIf="!urlValida" class="recomendacion">- TITULO: No puede contener los
                         caracteres $ , & , \ , ( , ) , * , + , ; , = , / , # , [ , ] , % ❌</p>
-                    <p *ngIf="caracteresTitulo" class="recomendacion">- TITULO: La longitud recomendada para apariciones en
+                    <p *ngIf="caracteresTitulo" class="recomendacion">- TITULO: La longitud recomendada para apariciones
+                        en
                         motores
                         de búsqueda es de menos de 60. Llevas {{caracteresTitulo}}
                         <span *ngIf="caracteresTitulo<61">✅</span>
@@ -62,7 +64,7 @@
                 <textarea class="text-subtitulo" type="text" name="subtitulo" rows="3" maxlength="210"
                     [(ngModel)]="publicacion.subtitulo" placeholder="Subtítulo"
                     (keyup)="analizarSubtitulo()"></textarea>
-                
+
 
             </div>
             <!-- Datos -->
@@ -111,7 +113,8 @@
                             </select>
                             <div *ngIf="publicacion.categoria.id==5" class="entrevistado">
                                 <label for="entrevistado" class="entrevistado-label mx-1">Entrevistado: </label>
-                                <input type="text" class="entrevistado-input" [(ngModel)]="publicacion.entrevistado" name="entrevistado">
+                                <input type="text" class="entrevistado-input" [(ngModel)]="publicacion.entrevistado"
+                                    name="entrevistado">
                             </div>
                         </div>
                         <div class=" texto-obligatorio">
@@ -287,8 +290,8 @@
 
         <!-- Boton Publicar -->
         <div class="row text-center m-4">
-            <div class="col-2"></div>
-            <div class="col-4 text-center">
+            <div class="col-1"></div>
+            <div class="col-3 text-center">
                 <button *ngIf="publicacion.id!='' && publicacion.publicado" type="button" class="btn btn-success"
                     (click)="publicarModificada()">
                     Actualizar publicación
@@ -301,7 +304,7 @@
                     Publicar directamente
                 </button>
             </div>
-            <div class="col-4 text-center">
+            <div class="col-3 text-center">
                 <button *ngIf="publicacion.id!='' && publicacion.publicado" type="button" class="btn btn-warning"
                     (click)="guardarBorradorModificado()">
                     Pasar a borradores (retirar de publicados)
@@ -313,6 +316,15 @@
                 <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning"
                     (click)="guardarBorradorNuevo()">
                     Guardar como borrador
+                </button>
+
+
+                
+            </div>
+            <div class="col-3 text-center">
+                <button *ngIf=" !publicacion.publicado" type="button" class="btn btn-primary"
+                 data-bs-toggle="modal" data-bs-target="#publicarFuturaModal">
+                    Publicar con fecha futura
                 </button>
             </div>
         </div>
@@ -620,6 +632,48 @@
                 <button *ngIf="fechaArticuloImportado" type="button" class="btn btn-primary" data-bs-dismiss="modal"
                     (click)="importar()">Importar</button>
                 <button *ngIf="!fechaArticuloImportado" type="button" class="btn btn-primary">Importar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Publicar Fecha Futura-->
+<div class="modal fade" id="publicarFuturaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Publicar en fecha futura</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><b>Error al crear publicación. Revise lo siguiente:</b></p>
+                <p *ngIf="publicacion.titulo ==''">El título no puede estar vacío.</p>
+                <p *ngIf="publicacion.autor.id==''">Debe seleccionar un autor.</p>
+                <p *ngIf="publicacion.imagenPreviewUrl==''">Debe seleccionar una imagen para la preview.</p>
+                <p *ngIf="publicacion.subtitulo==''">El texto de la preview no puede estar vacío.</p>
+                <p *ngIf="texto==''">La publicacion no puede estar vacía.</p>
+                <p *ngIf="publicacion.categoria.id==''">Debe seleccionar una categoría.</p>
+                <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
+                <p *ngIf="!urlValida">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;,
+                    =, :, /, ?, #, [, ], %</p>
+
+                <div class="fecha-importado-container my-2">
+                    <label for="" class="mx-2">Fecha publicación futura:</label>
+                    <input type="date" class="mx-2" [(ngModel)]="fechaPublicacionFutura">
+                    <p *ngIf="!fechaPublicacionFutura" style="color: red;">El campo fecha es obligatorio</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button *ngIf="publicacion.id!='' && !publicacion.publicado" type="button" class="btn btn-warning"
+                    (click)="guardarBorradorModificado()" data-bs-dismiss="modal">
+                    Publicar en la fecha seleccionada (guardado en borradores)
+                </button>
+                <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning"
+                    (click)="guardarBorradorNuevo()" data-bs-dismiss="modal">
+                    Publicar en la fecha seleccionada (guardado en borradores)
+                </button>   
             </div>
         </div>
     </div>

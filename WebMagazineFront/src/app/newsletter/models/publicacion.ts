@@ -26,6 +26,7 @@ export class Publicacion {
     keyWords: string[] = [];
     imagenCarouselUrl: string = "";
     entrevistado: string = "";
+    fechaPublicacionFutura: string = "";
 
     constructor(){
 

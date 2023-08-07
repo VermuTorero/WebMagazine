@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.mapping.Array;
 import org.slf4j.Logger;
@@ -40,6 +43,7 @@ import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
 import com.peterfonkel.webMagazine.entities.Lugar;
+import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.TipoSuscripcion;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
@@ -57,6 +61,7 @@ import com.peterfonkel.webMagazine.repositories.TipoSuscripcionDAO;
 import com.peterfonkel.webMagazine.rest.mixins.Mixins;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.LugarService;
+import com.peterfonkel.webMagazine.services.PublicacionesService;
 
 
 
@@ -100,6 +105,8 @@ public class ClaseConfiguracionJava {
 	@Autowired
 	UsuarioService usuarioService;
 
+	@Autowired
+	PublicacionesService publicacionesService;
 	
 	@Autowired
 	CategoriaService categoriaService;
@@ -266,6 +273,29 @@ public class ClaseConfiguracionJava {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper;
 	}
+	
+	
+	@Bean
+	public void iniciarTareaProgramada() {
+		
+		List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
+		
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+        
+        Runnable tarea = () -> {
+            Instant ahora = Instant.now();
+            for (Publicacion publicacion : listaPublicaciones) {
+                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
+                    publicacion.setPublicado(true);
+                    publicacionesService.save(publicacion);
+                }
+            }
+        };
+
+        // Programar la tarea para que se ejecute cada hora
+        executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
+    }
 	
 	
 	

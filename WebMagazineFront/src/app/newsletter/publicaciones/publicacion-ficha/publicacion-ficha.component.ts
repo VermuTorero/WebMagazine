@@ -91,6 +91,8 @@ export class PublicacionFichaComponent implements OnInit {
   keyWords: string[] = [];
   caracteresTitulo: number = 0;
 
+  fechaPublicacionFutura: string = "";
+
   quill: Quill = new Quill('#editor', {
     theme: 'snow',
     scrollingContainer: '#scrolling-container',
@@ -185,6 +187,7 @@ export class PublicacionFichaComponent implements OnInit {
   postPublicacion() {
     if (this.verificarCamposObligatorios()) {
       this.setFecha();
+      this.setFechaFutura();
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -207,6 +210,7 @@ export class PublicacionFichaComponent implements OnInit {
   postPublicacionAutoguardado() {
     if (this.verificarCamposObligatorios()) {
       this.setFecha();
+      this.setFechaFutura();
       this.publicacion.htmlPublicacion = this.texto;
       this.publicacion.tags = [];
       this.tagsSeleccionadas.forEach(tag => {
@@ -231,6 +235,12 @@ export class PublicacionFichaComponent implements OnInit {
     }
   }
 
+  setFechaFutura() {
+    if (this.fechaPublicacionFutura) {
+      this.publicacion.fechaPublicacionFutura = this.fechaPublicacionFutura + "T00:00:00.000Z";
+    } 
+  }
+
   verificarCamposObligatorios(): boolean {
     if (this.publicacion.titulo != "" && this.publicacion.autor.id != ""
       && this.publicacion.lugar.id != "" && this.publicacion.categoria.id != ""
@@ -246,6 +256,7 @@ export class PublicacionFichaComponent implements OnInit {
     if (this.fechaArticuloImportado) {
       this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
     }
+    this.setFechaFutura();
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
@@ -267,6 +278,7 @@ export class PublicacionFichaComponent implements OnInit {
     if (this.fechaArticuloImportado) {
       this.publicacion.fechaPublicacion = this.fechaArticuloImportado + "T00:00:00.000Z";
     }
+    this.setFechaFutura();
     this.publicacion.htmlPublicacion = this.texto;
     this.publicacion.tags = [];
     this.publicacion.tags = this.tagsSeleccionadas;
