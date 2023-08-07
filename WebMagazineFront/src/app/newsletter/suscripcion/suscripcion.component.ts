@@ -9,6 +9,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 import { paypalConfig } from 'src/environments/paypalConfig';
+import { CropperComponent } from 'angular-cropperjs';
+import { ImagenesService } from '../service/imagenes.service';
 declare var $: any;
 
 @Component({
@@ -18,6 +20,10 @@ declare var $: any;
 })
 export class SuscripcionComponent implements OnInit {
 
+  @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
+  croppedresult = "";
+  imageUrl: string = "";
+  nombreImagen: string = "";
   @ViewChild('modalPaypal') modalPaypal: any;
   suscripciones: TipoSuscripcion[] = [];
   usuarioNuevo: Usuario = new Usuario();
@@ -27,13 +33,15 @@ export class SuscripcionComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
   suscripcion: any[] = [];
   clientId: string = paypalConfig.clientId;
+ 
 
 
 
   constructor(private tiposSuscripcionService: TipoSuscripcionService,
     private usuariosService: UsuariosService,
     private modalService:  NgbModal,
-    private spinner: NgxSpinnerService) {
+    private spinner: NgxSpinnerService,
+    private imagenesService: ImagenesService) {
 
   }
 
@@ -92,6 +100,33 @@ export class SuscripcionComponent implements OnInit {
         }
       }
     }, 3000);
+  }
+
+  onSelectFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.imageUrl = reader.result as string;
+      }
+      this.imageUrl = event.target.files[0].name;
+    }
+  }
+
+  getCroppedImage() {
+    // this.croppedresult = this.angularCropper.cropper.getCroppedCanvas().toDataURL();
+    this.angularCropper.cropper.getCroppedCanvas().toBlob((blob) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob as Blob);
+      reader.onload = () => {
+        this.croppedresult = reader.result as string;
+        let blobGenerado = blob as Blob;
+        let imagenRecortada = new File([blobGenerado], this.nombreImagen, { type: "image/jpeg" })
+        this.imagenesService.subirImagen(imagenRecortada, this.nombreImagen, "publicacion").subscribe(url => {
+          this.usuarioNuevo.urlImagen = url;
+        })
+      }
+    }, 'image/jpeg', 0.70)
   }
 
   pagar(precio: string): void {

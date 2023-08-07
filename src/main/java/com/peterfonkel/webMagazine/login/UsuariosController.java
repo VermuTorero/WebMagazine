@@ -136,6 +136,7 @@ public class UsuariosController {
 		usuarioNuevo.setNombre(usuario.getNombre());
 		usuarioNuevo.setApellido1(usuario.getApellido1());
 		usuarioNuevo.setApellido2(usuario.getApellido2());
+		usuarioNuevo.setUrlImagen(usuario.getUrlImagen());
 		usuarioNuevo.setFechaFinSuscripcion(Instant.now());
 		RolNombre rolNombre = usuario.getRoles().iterator().next().getRolNombre();
 		logger.info("RolNombre : " + rolNombre);

@@ -647,7 +647,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><b>Error al crear publicación. Revise lo siguiente:</b></p>
                 <p *ngIf="publicacion.titulo ==''">El título no puede estar vacío.</p>
                 <p *ngIf="publicacion.autor.id==''">Debe seleccionar un autor.</p>
                 <p *ngIf="publicacion.imagenPreviewUrl==''">Debe seleccionar una imagen para la preview.</p>
