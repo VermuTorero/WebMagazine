@@ -2,3 +2,9 @@
     background-color: rgb(255, 109, 0, 255);
     color: white;
 }
+.imagen-usuario-container{
+    text-align: center;
+}
+.imagen-usuario{
+    border-radius: 50%;
+}

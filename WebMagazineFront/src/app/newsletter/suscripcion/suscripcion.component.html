@@ -226,8 +226,10 @@
             </div>
             <div *ngIf="imageUrl">
               <angular-cropper [cropperOptions]='{aspectRatio: 1 / 1}' [imageUrl]="imageUrl"
-                #angularCropper2></angular-cropper>
+                #angularCropper></angular-cropper>
             </div>
+            <button class="btn btn-primary" (click)="getCroppedImage()"
+                   >Recortar</button>
           </div>
          <hr>
           <div class="email-input m-2">

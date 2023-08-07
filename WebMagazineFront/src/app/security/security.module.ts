@@ -9,6 +9,7 @@ import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { PassRecoveryComponent } from './login/pass-recovery/pass-recovery.component';
+import { AngularCropperjsModule } from 'angular-cropperjs';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { PassRecoveryComponent } from './login/pass-recovery/pass-recovery.compo
     SecurityRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularCropperjsModule
   ],
   exports: [
     LoginComponent

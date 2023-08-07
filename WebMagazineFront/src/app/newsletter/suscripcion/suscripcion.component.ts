@@ -78,6 +78,7 @@ export class SuscripcionComponent implements OnInit {
 
   postUsuario(precio: string) {
     const verificationWindow = window.open('/verificacion-pago', '_blank', 'width=600,height=400');
+    this.usuarioNuevo.urlImagen = this.imageUrl;
     this.usuariosService.postUsuario(this.usuarioNuevo).subscribe(usuario => {
       this.usuarioConfirmando.id = this.usuariosService.getId(usuario);
       this.usuarioConfirmando = usuario;
@@ -123,7 +124,10 @@ export class SuscripcionComponent implements OnInit {
         let blobGenerado = blob as Blob;
         let imagenRecortada = new File([blobGenerado], this.nombreImagen, { type: "image/jpeg" })
         this.imagenesService.subirImagen(imagenRecortada, this.nombreImagen, "publicacion").subscribe(url => {
+          console.log("URL FIRE: ", url)
           this.usuarioNuevo.urlImagen = url;
+          this.imageUrl = url;
+          this.nombreImagen = "";
         })
       }
     }, 'image/jpeg', 0.70)

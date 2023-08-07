@@ -1,6 +1,10 @@
 <div class="row">
     <div class="d-none d-md-block col-md-2 col-lg-3"></div>
     <div class="col-12 col-md-8 col-lg-6">
+      <div class="imagen-usuario-container">
+        <img class="imagen-usuario" src="{{usuario.urlImagen}}" alt="" data-bs-toggle="modal" data-bs-target="#imagenUsuarioModal">
+
+      </div>
         <div>
             <h4 class="my-3">DATOS DEL USUARIO</h4>
         </div>
@@ -248,5 +252,33 @@
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal Agregar Imagen de preview-->
+<div class="modal fade" id="imagenUsuarioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <section class="my-2">
+                  <input type="file" accept="images/" (change)="onSelectFile($event)">
+              </section>
+              <section *ngIf="imageUrl">
+                  <angular-cropper [cropperOptions]='{aspectRatio: 1 / 1}' [imageUrl]="imageUrl"
+                      #angularCropper></angular-cropper>
+              </section>
+             
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button class="btn btn-primary" (click)="getCroppedImage()"
+                  data-bs-dismiss="modal">Aceptar</button>
+          </div>
+      </div>
   </div>
 </div>
