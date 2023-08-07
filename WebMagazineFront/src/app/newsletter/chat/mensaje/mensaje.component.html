@@ -1,5 +1,6 @@
 <div class="mensaje-container">
-    <p class="autor-mensaje">{{mensaje.usuario.nombre}} {{mensaje.usuario.apellido1}} {{mensaje.usuario.apellido2}}. {{fechaHoraMensaje}}  
+    <p class="autor-mensaje">
+        <img class="imagen-usuario" src="{{mensaje.usuario.urlImagen}}" alt="">{{mensaje.usuario.nombre}} {{mensaje.usuario.apellido1}} {{mensaje.usuario.apellido2}}. {{fechaHoraMensaje}}  
         <button *ngIf="isLoggedAdmin" class="btn btn-sm btn-danger mx-2 py-0" (click)="eliminarMensaje()"><b>X</b></button>
     </p>
     <p *ngIf="mensaje.texto" class="texto-mensaje py-0">&nbsp;{{mensaje.texto}}</p>
