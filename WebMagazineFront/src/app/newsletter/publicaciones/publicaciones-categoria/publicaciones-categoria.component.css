@@ -86,6 +86,9 @@
     margin-left: 3%;
     margin-right: 3%;
 }
+.titulo-restaurantes-container {
+   display: flex;
+}
 .titulo-restaurantes {
     margin-left: 6%;
     margin-bottom: 3%;
@@ -139,3 +142,15 @@
     background-color: rgb(205, 205, 205);
     box-shadow: 2px 2px 10px #666;
   }
+
+  /* Pagina formato tipo */
+.imagen-categoria-container{
+    width: 45%;
+    text-align: center;
+}
+.imagen-categoria{
+    width: 60%;
+}
+.container-bloques{
+    text-align: center;
+}

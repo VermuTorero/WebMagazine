@@ -1,110 +1,124 @@
-<section class="titulo-chat">
-    <div class="titulo-container text-center my-2">
-        <h3>Bienvenidos al selecto chat de miembros de Vermu Torero</h3>
-    </div>
-</section>
-<section class="chat-section row my-3">
-    <div class="chat-box">
+<section class="fondo">
+  <section class="chat-container">
+    <section class="titulo-chat">
+      <div class="titulo-container text-center my-2">
+        <h3>Chat de miembros de Vermu Torero</h3>
+      </div>
+    </section>
+    <section class="chat-section row my-3">
+      <div class="chat-box">
         <div *ngFor="let mensaje of mensajes">
-            <app-mensaje [mensaje]="mensaje" (eliminarMensajeEvent)="deleteMensaje($event)"></app-mensaje>
+          <app-mensaje [mensaje]="mensaje" (eliminarMensajeEvent)="deleteMensaje($event)"></app-mensaje>
         </div>
-    </div>
-</section>
-
-
-<section class="nuevo-mensaje-section row my-3">
-    <form action="" class="nuevo-mensaje-form">
+      </div>
+    </section>
+    <section class="nuevo-mensaje-section row my-3">
+      <form action="" class="nuevo-mensaje-form">
         <label for="mensaje" class="etiqueta-mensaje"><b>Mensaje:</b></label>
         <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje">
         <div class="botones">
-            <button class="btn btm-sm btn-success mx-2 py-0" (click)="postMensaje()">Enviar</button>
-            <button class="btn btm-sm btn-primary mx-2 py-0" data-bs-toggle="modal" data-bs-target="#imagenChatModal">Subir
-                imagen</button>
+          <button class="btn btm-sm btn-success mx-2 py-0" (click)="postMensaje()">Enviar</button>
+          <button class="btn btm-sm btn-primary mx-2 py-0" data-bs-toggle="modal" data-bs-target="#imagenChatModal">Subir
+            imagen</button>
         </div>
-        
-    </form>
+  
+      </form>
+    </section>
+
+  </section>
+
+
+
+ 
 </section>
+
 
 <!-- Modal Agregar Imagen al contenido de la publicacion-->
 <div class="modal fade" id="imagenChatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <section>
-                    <label for="mensaje"><b>Mensaje:</b></label>
-                    <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje">
-                </section>
-                <section class="my-2">
-                    <input type="file" accept="images/" (change)="onSelectFile($event)">
-                </section>
-                <section *ngIf="imagenNueva">
-                    <angular-cropper [imageUrl]="imagenNueva" #angularCropper></angular-cropper>
-                </section>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <section>
+          <label for="mensaje"><b>Mensaje:</b></label>
+          <input [(ngModel)]="mensajeNuevo" name="mensajeNuevo" class="mensaje">
+        </section>
+        <section class="my-2">
+          <input type="file" accept="images/" (change)="onSelectFile($event)">
+        </section>
+        <section *ngIf="imagenNueva">
+          <angular-cropper [imageUrl]="imagenNueva" #angularCropper></angular-cropper>
+        </section>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
-            </div>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Modal confirmar delete mensaje -->
-<div class="modal fade" id="confirmarDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar mensaje</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <p>¿Estas seguro de que quieres eliminar este mensaje?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" (click)="deleteMensajeConfirmado()" data-bs-dismiss="modal">Eliminar</button>
-        </div>
+<div class="modal fade" id="confirmarDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar mensaje</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>¿Estas seguro de que quieres eliminar este mensaje?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="deleteMensajeConfirmado()"
+          data-bs-dismiss="modal">Eliminar</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal confirmado delete mensaje -->
-<div class="modal fade" id="confirmadoDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje eliminado</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <p>El usuario mensaje ha sido eliminado.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  (click)="recargarPagina()" data-bs-dismiss="modal">Aceptar</button>
-        </div>
+<!-- Modal confirmado delete mensaje -->
+<div class="modal fade" id="confirmadoDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Mensaje eliminado</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>El usuario mensaje ha sido eliminado.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="recargarPagina()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
-  
-  <!-- Error delete mensaje -->
-  <div class="modal fade" id="errorDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Error al eliminar</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <p>El mensaje NO ha sido eliminado debido a un error.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"  (click)="recargarPagina()" data-bs-dismiss="modal">Aceptar</button>
-        </div>
+</div>
+
+<!-- Error delete mensaje -->
+<div class="modal fade" id="errorDeleteMensajeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Error al eliminar</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>El mensaje NO ha sido eliminado debido a un error.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="recargarPagina()"
+          data-bs-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
+</div>

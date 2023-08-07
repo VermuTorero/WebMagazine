@@ -84,6 +84,8 @@ public class Publicacion {
 	
 	private String entrevistado;
 	
+	private Instant fechaFuturaPublicacion;
+	
 	public Publicacion() {
 		super();
 	}
@@ -271,6 +273,14 @@ public class Publicacion {
 
 	public void setEntrevistado(String entrevistado) {
 		this.entrevistado = entrevistado;
+	}
+
+	public Instant getFechaFuturaPublicacion() {
+		return fechaFuturaPublicacion;
+	}
+
+	public void setFechaFuturaPublicacion(Instant fechaFuturaPublicacion) {
+		this.fechaFuturaPublicacion = fechaFuturaPublicacion;
 	}
 
 

@@ -146,6 +146,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.publicacion = publicacion;
       this.publicacion.id = this.id;
       this.imagePreviewUrl = this.publicacion.imagenPreviewUrl;
+      this.imageCarouselUrl = this.publicacion.imagenCarouselUrl;
       this.getAutorPublicacion();
       this.getLugarPublicacion();
       this.getCategoriaPublicacion();

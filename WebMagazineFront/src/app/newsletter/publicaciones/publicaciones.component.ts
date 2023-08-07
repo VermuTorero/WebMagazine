@@ -145,7 +145,9 @@ export class PublicacionesComponent implements OnInit {
     /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.publicacionesService.getPublicacionesRecientesPagina(this.pagina).subscribe(publicaciones => {
-        this.publicaciones = publicaciones;
+        console.log("PUBLIC: ", publicaciones)
+        if (publicaciones[0]) {
+          this.publicaciones = publicaciones;
         this.publicaciones.forEach(publicacion => {
           publicacion.id = this.publicacionesService.getId(publicacion);
           this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
@@ -155,6 +157,10 @@ export class PublicacionesComponent implements OnInit {
             })
           })
         });
+        }else{
+          this.pagina--;
+        }
+        
       }, err => {
         /* Si no existe siguiente página volver a la que estaba */
         this.pagina--;

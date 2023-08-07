@@ -1,7 +1,8 @@
 <!-- Publicaciones de Restaurantes -->
-<div *ngIf="categoria.categoriaNombre=='Restaurantes'" class="restaurantes">
+<div *ngIf="categoria.categoriaNombre=='Restaurantes' || categoria.categoriaNombre=='Beber bien' " class="restaurantes">
   <div class="titulo-restaurantes-container">
-    <h1 class="titulo-restaurantes">Gastrosofía / <i>Restaurantes</i></h1>
+    <h1 *ngIf="categoria.categoriaNombre=='Restaurantes'" class="titulo-restaurantes">Gastrosofía /<i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
+    <h1 *ngIf="categoria.categoriaNombre=='Beber bien'" class="titulo-restaurantes"><i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
   </div>
 
   <div class="cards-container-restaurante mt-4">
@@ -25,7 +26,7 @@
 
 
 <!-- Publicaciones de Entrevidas -->
-<div *ngIf="categoria.categoriaNombre=='Entrevidas'" class="row restaurantes">
+<div *ngIf="categoria.categoriaNombre=='Entrevidas' || categoria.categoriaNombre=='Relaciones'" class="row restaurantes">
   <div class="cards-container-entrevidas col-2">
     <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12"
       [ngClass]="{'clicked': i === activeCard}" (click)="onClickCard(i)">
@@ -89,16 +90,19 @@
   *ngIf="categoria.categoriaNombre!='Restaurantes' && categoria.categoriaNombre!='Entrevidas' 
 && categoria.categoriaNombre!='Patata Santa' && categoria.categoriaNombre!='Bares'&& categoria.categoriaNombre!='Mercados'">
   <div class="row my-1 py-1 mx-2">
-    <div *ngIf="edicion" class="col-12 col-lg-6">
+
+    <div *ngIf="edicion" class="col-12 col-lg-6 imagen-categoria-container">
       <img *ngIf="this.categoria.urlImagen" class="imagen-edicion img-fluid mt-4 pt-4 w-100"
         src="{{this.categoria.urlImagen}}" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
       <img *ngIf="!this.categoria.urlImagen || this.categoria.urlImagen == '' " class="img-fluid mt-4 pt-4"
         src="../../../../assets/no-imagen.png" alt="" data-bs-toggle="modal" data-bs-target="#imagenModal">
     </div>
-    <div *ngIf="!edicion" class="col-12 col-lg-6 p-0">
-      <img *ngIf="this.categoria.urlImagen" class="img-fluid mt-1 mt-lg-4 w-100" src="{{this.categoria.urlImagen}}"
+
+    <div *ngIf="!edicion" class="col-12 col-lg-6 p-0 imagen-categoria-container">
+      <img *ngIf="this.categoria.urlImagen" class="imagen-categoria img-fluid " src="{{this.categoria.urlImagen}}"
         alt="">
     </div>
+
     <div *ngIf="!edicion" class="col-12 col-lg-6 p-1 p-md-3 container-texto">
       <div class="container-bloques">
         <h3 class="row mx-2 mt-2 nombre-categoria"><b>{{categoria.categoriaNombre}}</b></h3>
@@ -110,8 +114,8 @@
         </div>
       </div>
     </div>
+
     <div *ngIf="edicion" class="col-12 col-lg-6 p-3 container-texto">
-      <!-- <input class="row mx-2 my-4 text-center w-100" [(ngModel)]="categoria.categoriaNombre"> -->
       <h2 class="row nombre-categoria mx-2 my-4 text-center"><b>{{categoria.categoriaNombre}}</b></h2>
       <textarea rows="8" maxlength="1000" class="descripcion row mx-2 my-4 text-center w-100"
         [(ngModel)]="categoria.categoriaDescripcion"></textarea>
@@ -120,6 +124,7 @@
         <button class="btn btn-secondary mb-2 mx-2" (click)="cancelarEdicion()">CANCELAR</button>
       </div>
     </div>
+
     <hr class="mt-4">
     <div class="cards-container">
       <div *ngFor="let publicacion of publicaciones" class="card row col-12 col-md-3 col-xxl-2">
@@ -132,5 +137,31 @@
       <p class="numero-pagina">Pagina {{pagina +1}}</p>
       <button class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal Agregar Imagen al contenido de la publicacion-->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+              <section class="my-2">
+                  <input type="file" accept="images/" (change)="onSelectFile($event)">
+              </section>
+              <section *ngIf="imageUrl">
+                  <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+              </section>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+          </div>
+      </div>
   </div>
 </div>

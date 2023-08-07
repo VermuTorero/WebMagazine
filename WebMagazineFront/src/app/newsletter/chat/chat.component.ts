@@ -12,7 +12,7 @@ declare var $: any;
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit{
+export class ChatComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
   croppedresult = "";
   mensajeNuevo: string = "";
@@ -21,19 +21,19 @@ export class ChatComponent implements OnInit{
 
   constructor(private mensajeService: MensajesService,
     private usuarioService: UsuariosService,
-    private imagenesService: ImagenesService){
+    private imagenesService: ImagenesService) {
 
   }
 
   mensajes: Mensaje[] = [];
 
   ngOnInit(): void {
-   this.getMensajes();
-   this.bajarScroll();
+    this.getMensajes();
+    this.bajarScroll();
   }
 
-  getMensajes(){
-    this.mensajeService.getMensajes().subscribe(mensajes=>{
+  getMensajes() {
+    this.mensajeService.getMensajes().subscribe(mensajes => {
       this.mensajes = mensajes;
       this.mensajes.forEach(mensaje => {
         mensaje.id = this.mensajeService.getId(mensaje);
@@ -42,30 +42,28 @@ export class ChatComponent implements OnInit{
     })
   }
 
-  postMensaje(){
-    if (this.mensajeNuevo!="") {
-      let mensaje = new Mensaje();
-      this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+  postMensaje() {
+    let mensaje = new Mensaje();
+    if (this.mensajeNuevo!="" || this.imagenNueva !="") {
+      this.usuarioService.getUsuarioFromToken().subscribe(usuario => {
         usuario.id = this.usuarioService.getId(usuario);
         mensaje.usuario = usuario;
         mensaje.texto = this.mensajeNuevo;
         mensaje.imagen = this.imagenNueva;
-        this.mensajeService.postMensaje(mensaje).subscribe(mensaje=>{
+        this.mensajeService.postMensaje(mensaje).subscribe(mensaje => {
           this.getMensajes();
           this.mensajeNuevo = "";
-       
-        },err=>{
+          this.imagenNueva = "";
   
-        }, ()=>{
-          
+        }, err => {
+  
+        }, () => {
+  
         })
       });
-    }else{
-      
     }
-   
   }
-  
+
   onSelectFile(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -88,9 +86,9 @@ export class ChatComponent implements OnInit{
       reader.onload = () => {
         this.croppedresult = reader.result as string;
         let blobGenerado = blob as Blob;
-        let numero = Math.floor(10000000*Math.random());
+        let numero = Math.floor(10000000 * Math.random());
         let imagenRecortada = new File([blobGenerado], numero.toString(), { type: "image/jpeg" })
-        
+
         this.imagenesService.subirImagen(imagenRecortada, numero.toString(), "imagenChat").subscribe(url => {
           this.imagenNueva = url;
           console.log(url)
@@ -101,14 +99,14 @@ export class ChatComponent implements OnInit{
   }
 
   bajarScroll() {
-    setTimeout(function() {
+    setTimeout(function () {
       var chatBox = document.querySelector(".chat-box");
       if (chatBox) {
         chatBox.scrollTop = chatBox.scrollHeight;
       }
     }, 0);
   }
-  
+
 
   deleteMensaje(mensaje: any) {
     this.mensajeBorrar = mensaje;
@@ -116,13 +114,13 @@ export class ChatComponent implements OnInit{
   }
 
   deleteMensajeConfirmado() {
-      this.mensajeService.deleteMensaje(this.mensajeBorrar).subscribe(response => {
-        $('#confirmadoDeleteMensajeModal').modal('show');
-      }, err => { 
-        $('#errorDeleteMensajeModal').modal('show');
-       })
+    this.mensajeService.deleteMensaje(this.mensajeBorrar).subscribe(response => {
+      $('#confirmadoDeleteMensajeModal').modal('show');
+    }, err => {
+      $('#errorDeleteMensajeModal').modal('show');
+    })
   }
-  recargarPagina(){
+  recargarPagina() {
     document.location.reload();
   }
 }
