@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Click;
+import com.peterfonkel.webMagazine.entities.Tag;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.ClickService;
+import com.peterfonkel.webMagazine.services.TagService;
 
 @RepositoryRestController
 @RequestMapping(path = "/api/clicks/search")
@@ -37,19 +39,33 @@ public class ClickController {
 	@Autowired
 	ClickService clickService;
 	
+	@Autowired
+	TagService tagService;
+	
+	@Autowired
+	CategoriaService categoriaService;
+	
 	public ClickController(){
 	}
 	
 	public ClickService getClickService() {
 		return clickService;
 	}
+	
+	public TagService getTagService() {
+		return tagService;
+	}
+	
+	public CategoriaService getCategoriaService() {
+		return categoriaService;
+	}
 
 	@PostMapping(path = "postClick") 
 	@ResponseBody
 	public PersistentEntityResource postClick(PersistentEntityResourceAssembler assembler, @RequestBody Click click) {
-		click.setFechaClick(Instant.now());
-		Click clickGuardado = getClickService().save(click);
-		return assembler.toModel(clickGuardado);
+		Click nuevoClick = click;
+		nuevoClick.setFechaClick(Instant.now());
+		return assembler.toModel(getClickService().save(nuevoClick));
 	}
 	
 	

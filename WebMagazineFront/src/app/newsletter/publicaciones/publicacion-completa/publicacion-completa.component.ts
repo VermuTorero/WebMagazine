@@ -63,7 +63,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     if (this.url) {
       if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUBSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
         this.getPublicacion();
-        this.postClick();
+        
       } else {
         this.getPublicacionFree();
       }
@@ -105,6 +105,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.showPublicacion();
       this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
       this.metaService.setMetaTagsFromLocalStorage();
+      
     })
   }
 
@@ -149,6 +150,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.publicacion.tags.forEach(tag => {
         tag.id = this.tagService.getId(tag);
       });
+      this.postClick();
     })
   }
 
@@ -342,7 +344,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       usuario.id = this.usuarioService.getId(usuario);
       click.usuario = usuario;
       this.clicksService.postClick(click).subscribe(response=>{
-        
+
       })
     })
   }
