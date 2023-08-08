@@ -15,6 +15,6 @@ public interface ClickDAO extends JpaRepository<Click, Long> {
 	@Override
 	List<Click> findAll();
 	List<Click> findByUsuario_id(Long id);
-	List<Click> findByUsuario_idAndFechaGreaterThan(Long id, Instant fecha);
+	List<Click> findByUsuario_idAndFechaClickGreaterThan(Long id, Instant fechaClick);
 	
 }

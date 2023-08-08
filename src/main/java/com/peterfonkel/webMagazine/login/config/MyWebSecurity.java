@@ -69,7 +69,7 @@ public class MyWebSecurity extends WebSecurityConfigurerAdapter {
 						"/api/paginaEditables/search/**", "/api/imagenInicios/**", "/api/lugares/**",
 						"/api/categorias/search/**", "/api/tags/**", "/api/laterales/**", "/api/tipoSuscripcions/**",
 						"/api/landindpages/**", "/api/likes/search/**", "api/direcciones/search/**",
-						"/api/productos/search/**", "/api/secciones/search/**")
+						"/api/productos/search/**", "/api/secciones/search/**", "/api/clicks/search/**")
 				.permitAll().anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(jwtEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

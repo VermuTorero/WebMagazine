@@ -70,7 +70,7 @@ public class ClickController {
 	@GetMapping(path = "clicksByUserSince/{id}/{fecha}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getClicksByUser(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id, @PathVariable("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant fecha){
-		List<Click> clicksUsuario = getClickService().findByUsuario_idAndFechaGreaterThan(id, fecha);
+		List<Click> clicksUsuario = getClickService().findByUsuario_idAndFechaClickGreaterThan(id, fecha);
 		return assembler.toCollectionModel(clicksUsuario);
 	}
 }
