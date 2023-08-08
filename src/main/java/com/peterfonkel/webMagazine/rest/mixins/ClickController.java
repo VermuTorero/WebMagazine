@@ -44,7 +44,7 @@ public class ClickController {
 		return clickService;
 	}
 
-	@PostMapping(path = "postCLick") 
+	@PostMapping(path = "postClick") 
 	@ResponseBody
 	public PersistentEntityResource postClick(PersistentEntityResourceAssembler assembler, @RequestBody Click click) {
 		click.setFechaClick(Instant.now());
