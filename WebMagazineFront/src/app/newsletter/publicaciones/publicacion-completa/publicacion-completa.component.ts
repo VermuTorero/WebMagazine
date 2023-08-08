@@ -15,6 +15,8 @@ import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { paypalConfig } from 'src/environments/paypalConfig';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 import { MetaService } from '../../service/meta.service';
+import { ClicksService } from '../../service/clicks.service';
+import { Click } from '../../models/click';
 declare const twttr: any;
 declare var $: any;
 
@@ -51,7 +53,9 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     private usuarioService: UsuariosService,
     private likeService: LikesService,
     private modalService: NgbModal,
-    private metaService: MetaService) { }
+    private metaService: MetaService,
+    private clicksService: ClicksService
+    ) { }
 
   ngOnInit(): void {
     this.rol = sessionStorage.getItem("rol");
@@ -63,6 +67,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
         this.getPublicacionFree();
       }
     }
+    this.postClick();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -326,5 +331,14 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     if(this.publicacion.categoria.categoriaNombre=="Atata Santa"){
       document.querySelector('.')
     }
+  }
+  postClick(){
+    let click = new Click();
+    click.categoriaClick = this.publicacion.categoria;
+    click.tagsClick = this.publicacion.tags;
+    this.usuarioService.getUsuarioFromToken().subscribe(usuario=>{
+      usuario.id = this.usuarioService.getId(usuario);
+      click.usuario = usuario;
+    })
   }
 }
