@@ -79,6 +79,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       })
     }
   }
+  
 
   /* Obtener la url del articulo */
   getUrl(): void {
