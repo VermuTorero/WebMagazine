@@ -21,7 +21,6 @@ public class Click {
 	private Long id;
 	
 	@ManyToOne
-	@Column(unique = false)
 	private Categoria categoriaClick;
 	@ManyToMany
 	private List<Tag> tagsClick;
