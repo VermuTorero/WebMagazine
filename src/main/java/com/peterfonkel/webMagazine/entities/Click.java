@@ -3,6 +3,7 @@ package com.peterfonkel.webMagazine.entities;
 import java.time.Instant;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,8 @@ public class Click {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToMany
+	@ManyToOne
+	@Column(unique = false)
 	private Categoria categoriaClick;
 	@ManyToMany
 	private List<Tag> tagsClick;
