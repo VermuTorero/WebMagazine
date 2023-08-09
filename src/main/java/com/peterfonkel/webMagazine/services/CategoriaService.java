@@ -43,7 +43,7 @@ public class CategoriaService {
 	}
 
 	public Categoria save(Categoria categoria) {
-		getCategoriaDAO().save(categoria);
+		return getCategoriaDAO().save(categoria);
 	}
 
 	public List<Categoria> findAll() {
