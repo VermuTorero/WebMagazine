@@ -42,7 +42,7 @@ public class CategoriaService {
 		return getCategoriaDAO().findById(id).get();
 	}
 
-	public void save(Categoria categoria) {
+	public Categoria save(Categoria categoria) {
 		getCategoriaDAO().save(categoria);
 	}
 

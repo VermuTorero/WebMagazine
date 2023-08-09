@@ -63,11 +63,18 @@ public class ClickController {
 	@PostMapping(path = "postClick") 
 	@ResponseBody
 	public PersistentEntityResource postClick(PersistentEntityResourceAssembler assembler, @RequestBody Click click) {
-		Click nuevoClick = click;
-		nuevoClick.setFechaClick(Instant.now());
-		return assembler.toModel(getClickService().save(nuevoClick));
+	    Categoria categoria = click.getCategoriaClick();
+	    if (categoria != null && categoria.getId() == null) {
+	        // Guardar la categoria si aún no está en la base de datos
+	        Categoria savedCategoria = categoriaService.save(categoria);
+	        click.setCategoriaClick(savedCategoria);
+	    }
+	    
+	    Click nuevoClick = click;
+	    nuevoClick.setFechaClick(Instant.now());
+	    return assembler.toModel(getClickService().save(nuevoClick));
 	}
-	
+
 	
 	@GetMapping(path = "clicks")
 	@ResponseBody

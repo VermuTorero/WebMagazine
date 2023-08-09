@@ -35,6 +35,7 @@ import { PublicacionRestauranteComponent } from './publicaciones/publicacion-res
 import { PublicacionEntrevidasComponent } from './publicaciones/publicacion-entrevidas/publicacion-entrevidas.component';
 import { LateralComponent } from './lateral/lateral.component';
 import { PublicacionGastroComponent } from './publicaciones/publicacion-gastro/publicacion-gastro.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 
@@ -68,7 +69,8 @@ import { PublicacionGastroComponent } from './publicaciones/publicacion-gastro/p
     PublicacionRestauranteComponent,
     PublicacionEntrevidasComponent,
     LateralComponent,
-    PublicacionGastroComponent
+    PublicacionGastroComponent,
+    EstadisticasComponent
   ],
   
   imports: [

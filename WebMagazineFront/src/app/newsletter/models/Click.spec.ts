@@ -1,4 +1,4 @@
-import { Click } from './click';
+import { Click } from './Click';
 
 describe('Click', () => {
   it('should create an instance', () => {

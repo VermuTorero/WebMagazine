@@ -10,6 +10,9 @@ import { LoginService } from 'src/app/security/service/login.service';
 import { TagsServiceService } from '../../service/tags.service';
 import { LugaresServiceService } from '../../service/lugares.service';
 import { LikesService } from '../../service/likes.service';
+import { Click } from '../../models/Click';
+import { UsuariosService } from 'src/app/security/service/usuarios.service';
+import { ClicksService } from '../../service/clicks.service';
 
 @Component({
   selector: 'app-publicaciones-categoria',
@@ -44,11 +47,13 @@ export class PublicacionesCategoriaComponent implements OnInit {
     private categoriaService: CategoriasServiceService,
     private activatedRoute: ActivatedRoute,
     private imagenesService: ImagenesService,
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private tagsService: TagsServiceService,
     private lugarService: LugaresServiceService,
     private likesService: LikesService,
-    private router: Router) { }
+    private router: Router,
+    private usuarioService: UsuariosService,
+    private clicksService: ClicksService) { }
 
   ngOnInit(): void {
     this.loginService.getIsLoggedFlagObs().subscribe((flag) => {
@@ -75,7 +80,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
     });
   }
 
- 
+
   getPublicacionesByCategoria() {
     /* Si es un usuario ADMIN, WRITER o con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
@@ -87,15 +92,15 @@ export class PublicacionesCategoriaComponent implements OnInit {
             publicacion.categoria = categoria;
             this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
               publicacion.autor = autor;
-              this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
+              this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
                 tags.forEach(tag => {
                   tag.id = this.tagsService.getId(tag);
                 });
                 publicacion.tags = tags;
-                this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+                this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
                   lugar.id = this.lugarService.getId(lugar);
                   publicacion.lugar = lugar;
-                  this.likesService.getLikes(publicacion.id).subscribe(likes=>{
+                  this.likesService.getLikes(publicacion.id).subscribe(likes => {
                     publicacion.likesRecibidos = likes;
                     publicacion = this.formatoContenidoMultimedia(publicacion);
                   })
@@ -104,11 +109,11 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           })
         });
-        if (this.categoria.categoriaNombre=="Restaurantes") {
+        if (this.categoria.categoriaNombre == "Restaurantes") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
-        if (this.categoria.categoriaNombre=="Entrevidas" || this.categoria.categoriaNombre=="Patata Santa"
-         || this.categoria.categoriaNombre=="Bares" || this.categoria.categoriaNombre=="Mercados") {
+        if (this.categoria.categoriaNombre == "Entrevidas" || this.categoria.categoriaNombre == "Patata Santa"
+          || this.categoria.categoriaNombre == "Bares" || this.categoria.categoriaNombre == "Mercados") {
           this.publicacionSeleccionada = this.publicaciones[0];
           this.activeCard = 0;
         }
@@ -123,29 +128,29 @@ export class PublicacionesCategoriaComponent implements OnInit {
             publicacion.categoria = categoria;
             this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
               publicacion.autor = autor;
-              this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags=>{
+              this.publicacionesService.getTagsFromPublicacion(publicacion).subscribe(tags => {
                 tags.forEach(tag => {
                   tag.id = this.tagsService.getId(tag);
                 });
                 publicacion.tags = tags;
-                this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar=>{
+                this.publicacionesService.getLugarFromPublicacion(publicacion).subscribe(lugar => {
                   lugar.id = this.lugarService.getId(lugar);
                   publicacion.lugar = lugar;
-                  this.likesService.getLikes(publicacion.id).subscribe(likes=>{
+                  this.likesService.getLikes(publicacion.id).subscribe(likes => {
                     publicacion.likesRecibidos = likes;
                     publicacion = this.formatoContenidoMultimedia(publicacion);
                   })
-                  
+
                 })
               })
             })
           })
         });
-        if (this.categoria.categoriaNombre=="Restaurantes") {
+        if (this.categoria.categoriaNombre == "Restaurantes") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
-        if (this.categoria.categoriaNombre=="Entrevidas" || this.categoria.categoriaNombre=="Patata Santa"
-         || this.categoria.categoriaNombre=="Bares" || this.categoria.categoriaNombre=="Mercados") {
+        if (this.categoria.categoriaNombre == "Entrevidas" || this.categoria.categoriaNombre == "Patata Santa"
+          || this.categoria.categoriaNombre == "Bares" || this.categoria.categoriaNombre == "Mercados") {
           this.publicacionSeleccionada = this.publicaciones[0];
           this.activeCard = 0;
         }
@@ -263,7 +268,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           });
         }
-      
+
       }, err => {
         this.pagina--;
       })
@@ -322,17 +327,30 @@ export class PublicacionesCategoriaComponent implements OnInit {
 
     }
   }
-  abrirPublicacionEntrevidas(publicacion: any){
+  abrirPublicacionEntrevidas(publicacion: any) {
     this.publicacionSeleccionada = this.formatoContenidoMultimedia(publicacion);
+    this.postClick(publicacion);
   }
 
   onClickCard(index: number) {
     this.activeCard = index;
   }
-    /* Buscador */
-    buscarPublicacionesPorPalabras() {
-      let palabrasClaveArray = this.palabrasClave.split(" ");
-      const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
-      this.router.navigateByUrl(url);
-    }
+  /* Buscador */
+  buscarPublicacionesPorPalabras() {
+    let palabrasClaveArray = this.palabrasClave.split(" ");
+    const url = `/publicaciones-buscador/?palabrasClave=${encodeURIComponent(JSON.stringify(palabrasClaveArray))}`;
+    this.router.navigateByUrl(url);
+  }
+  postClick(publicacion: Publicacion) {
+    let click = new Click();
+    click.categoriaClick = this.categoria;
+    click.tagsClick = publicacion.tags;
+    this.usuarioService.getUsuarioFromToken().subscribe(usuario => {
+      usuario.id = this.usuarioService.getId(usuario);
+      click.usuario = usuario;
+      this.clicksService.postClick(click).subscribe(response => {
+
+      })
+    })
+  }
 }

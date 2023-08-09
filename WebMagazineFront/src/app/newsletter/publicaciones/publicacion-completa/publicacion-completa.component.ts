@@ -16,7 +16,7 @@ import { paypalConfig } from 'src/environments/paypalConfig';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 import { MetaService } from '../../service/meta.service';
 import { ClicksService } from '../../service/clicks.service';
-import { Click } from '../../models/click';
+import { Click } from '../../models/Click';
 declare const twttr: any;
 declare var $: any;
 
@@ -165,8 +165,9 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
   /* Categoría de una publicación */
   getCategoriaFromPublicacion(publicacion: Publicacion){
     this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
+      categoria.id = this.categoriaService.getId(categoria);
       this.publicacion.categoria = categoria;
-      this.publicacion.categoria.id = this.categoriaService.getId(categoria);
+      
     })
   }
 

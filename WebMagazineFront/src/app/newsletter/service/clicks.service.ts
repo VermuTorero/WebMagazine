@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Tag } from '../models/Tag';
 import { Categoria } from '../models/Categoria';
-import { Click } from '../models/click';
+import { Click } from '../models/Click';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,14 @@ export class ClicksService {
 
   constructor(private http: HttpClient) { }
 
-  getClicks(): Observable<Categoria[]>{
+  getClicks(): Observable<Click[]>{
     return this.http.get<any>(this.endpoint + "/clicks/search/clicks").pipe(map(response=>response._embedded.clicks))
   }
-  getClicksByUser(id: string): Observable<Categoria[]>{
+  getClicksByUser(id: string): Observable<Click[]>{
     return this.http.get<any>(this.endpoint + "/clicks/search/clicksByUser/" + id).pipe(map(response=>response._embedded.clicks))
   }
 
-  getClicksByUserSince(id: string, fecha: string): Observable<Categoria[]>{
+  getClicksByUserSince(id: string, fecha: string): Observable<Click[]>{
     return this.http.get<any>(this.endpoint + "/clicks/search/clicksByUser/" + id + "/" + fecha).pipe(map(response=>response._embedded.clicks))
   }
   getId(p: any): string {
