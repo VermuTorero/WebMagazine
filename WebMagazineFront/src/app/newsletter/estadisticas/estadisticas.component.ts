@@ -17,27 +17,83 @@ export class EstadisticasComponent implements OnInit {
   chartLabels: string[] = [];
   chartData: number[] = [];
 
+  tagChartLabels: string[] = [];
+  tagChartData: number[] = [];
+
   constructor(private clicksService: ClicksService,
     private categoriaService: CategoriasServiceService) {}
 
   ngOnInit(): void {
-    this.getClicks();
+    this.getClicksTags();
   }
 
+
+  getClicksTags() {
+    this.clicksService.getClicks().subscribe(clicks => {
+      clicks.forEach(click => {
+        click.id = this.clicksService.getId(click);
+        this.clicksService.getTagsFromClick()
+      });
+      this.clicks = clicks;
+      console.log("CLICKS: ", this.clicks);
+      this.prepareChartDataTags();
+    });
+  }
+
+  private prepareChartDataTags() {
+    // Generar un objeto de frecuencia para los tags
+    const tagFrequency: any = {};
+
+    for (const click of this.clicks) {
+      if (click.tagsClick && click.tagsClick.length > 0) {
+        for (const tag of click.tagsClick) {
+          const tagName = tag.tagNombre;
+          if (tagFrequency[tagName]) {
+            tagFrequency[tagName]++;
+          } else {
+            tagFrequency[tagName] = 1;
+          }
+        }
+      }
+    }
+
+    console.log("FRECUENCIA TAGS: ", tagFrequency);
+
+    // Ordenar los tags por frecuencia descendente y limitar a los top 5
+    const sortedTags = Object.keys(tagFrequency).sort(
+      (a, b) => tagFrequency[b] - tagFrequency[a]
+    );
+
+    const topTags = sortedTags.slice(0, 5);
+
+    // Preparar los datos para el gráfico de tags
+    this.tagChartLabels = topTags;
+    this.tagChartData = topTags.map(tag => tagFrequency[tag]);
+
+    console.log("LABELS TAGS: ", this.tagChartLabels);
+    console.log("DATOS TAGS: ", this.tagChartData);
+
+    // Llamar a la función para dibujar el gráfico de tags
+    this.drawChart();
+  }
+
+
+
+
   // ...
-  getClicks(){
+  getClicksCategorias(){
     this.clicksService.getClicks().subscribe(clicks=>{
       clicks.forEach(click => {
         click.id = this.clicksService.getId(click);
       });
       this.clicks = clicks;
       console.log("CLICKS: ", this.clicks);
-      this.prepareChartData();
+      this.prepareChartDataCategorias();
     })
   }
 
   // Método para preparar los datos para el gráfico
-  private prepareChartData() {
+  private prepareChartDataCategorias() {
     // Generar un objeto de frecuencia para las categorías
     const categoryFrequency: any = {};
 
@@ -69,6 +125,8 @@ export class EstadisticasComponent implements OnInit {
     // Llamar a la función para dibujar el gráfico
     this.drawChart();
   }
+
+
 
   // Método para dibujar el gráfico
   private drawChart() {

@@ -10,13 +10,13 @@ import { LateralServiceService } from '../../service/lateral.service';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { LikesService } from '../../service/likes.service';
 import { Like } from '../../models/like';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { paypalConfig } from 'src/environments/paypalConfig';
 import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receipt/modal-receipt.component';
 import { MetaService } from '../../service/meta.service';
 import { ClicksService } from '../../service/clicks.service';
 import { Click } from '../../models/Click';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 declare const twttr: any;
 declare var $: any;
 
@@ -150,7 +150,6 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.publicacion.tags.forEach(tag => {
         tag.id = this.tagService.getId(tag);
       });
-      this.postClick();
     })
   }
 
@@ -167,7 +166,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
       categoria.id = this.categoriaService.getId(categoria);
       this.publicacion.categoria = categoria;
-      
+      this.postClick();
     })
   }
 

@@ -102,4 +102,12 @@ public class ClickController {
 		List<Click> clicksUsuario = getClickService().findByUsuario_idAndFechaClickGreaterThan(id, fecha);
 		return assembler.toCollectionModel(clicksUsuario);
 	}
+	
+	@GetMapping(path = "tagsFromClick/{id}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getTagsFromCLick(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id) {
+		Click click = getClickService().findById(id);
+		List<Tag> tags = click.getTagsClick();
+		return assembler.toCollectionModel(tags);
+	}
 }
