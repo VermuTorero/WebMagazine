@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Click;
 import com.peterfonkel.webMagazine.entities.Tag;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.ClickService;
@@ -63,18 +64,23 @@ public class ClickController {
 	@PostMapping(path = "postClick") 
 	@ResponseBody
 	public PersistentEntityResource postClick(PersistentEntityResourceAssembler assembler, @RequestBody Click click) {
-	    Categoria categoria = click.getCategoriaClick();
-	    if (categoria != null && categoria.getId() == null) {
-	        // Guardar la categoria si aún no está en la base de datos
-	        Categoria savedCategoria = categoriaService.save(categoria);
-	        click.setCategoriaClick(savedCategoria);
-	    }
-	    
-	    Click nuevoClick = click;
-	    nuevoClick.setFechaClick(Instant.now());
-	    return assembler.toModel(getClickService().save(nuevoClick));
+		Categoria categoria = getCategoriaService().getById(click.getCategoriaClick().getId());
+		Click nuevoClick = new Click();
+		List<Tag> tagsClickNuevo = new ArrayList<>();
+		if (click.getTagsClick().size()>0) {
+			Tag tagNueva = new Tag();
+			for (Tag tag : click.getTagsClick()) {
+				tagNueva =  getTagService().getById(tag.getId());
+				tagsClickNuevo.add(tagNueva);
+			}
+		}
+		nuevoClick.setTagsClick(tagsClickNuevo);
+		nuevoClick.setUsuario(click.getUsuario());
+		nuevoClick.setCategoriaClick(categoria);
+		nuevoClick.setFechaClick(Instant.now());
+		return assembler.toModel(getClickService().save(nuevoClick));
 	}
-
+	
 	
 	@GetMapping(path = "clicks")
 	@ResponseBody
