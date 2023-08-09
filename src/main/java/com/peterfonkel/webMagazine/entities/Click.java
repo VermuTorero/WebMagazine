@@ -19,7 +19,7 @@ public class Click {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToMany
 	private Categoria categoriaClick;
 	@ManyToMany
 	private List<Tag> tagsClick;
