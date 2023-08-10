@@ -44,7 +44,7 @@ export class EstadisticasComponent implements OnInit {
   }
 
   getClicksTags() {
-    this.clicksService.getClicks().subscribe(clicks => {
+    this.clicksService.getClicksSince(this.tiempo).subscribe(clicks => {
       clicks.forEach(click => {
         click.id = this.clicksService.getId(click);
         this.clicksService.getTagsFromClick(click).subscribe(tags => {
@@ -102,7 +102,7 @@ export class EstadisticasComponent implements OnInit {
 
   // ...
   getClicksCategorias() {
-    this.clicksService.getClicks().subscribe(clicks => {
+    this.clicksService.getClicksSince(this.tiempo).subscribe(clicks => {
       clicks.forEach(click => {
         click.id = this.clicksService.getId(click);
       });

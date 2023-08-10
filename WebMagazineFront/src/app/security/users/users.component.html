@@ -31,7 +31,8 @@
   <h5 class="explicacion text-center my-4" *ngIf="rolSeleccionado=='ROLE_EXPIRED'"><b>Usuarios con rol cualquier rol expirado. {{users.length}} Usuarios</b> </h5>
   <h5 class="explicacion text-center my-4" *ngIf="rolSeleccionado=='ROLE_DELETED'"><b>Usuarios eliminados. {{users.length}} Usuarios</b> </h5>
   <div class="boton-copiar-emails text-center">
-    <button class="btn btn-sm btn-warning text-center" (click)="seleccionarEmails()">Copiar emails</button>
+    <button class="btn btn-sm btn-warning text-center mx-2" (click)="seleccionarEmails()">Copiar emails</button>
+    <button class="btn btn-sm btn-warning text-center" (click)="downloadCSV()">Descargar CSV</button>
   </div>
 
 </div>

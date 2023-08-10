@@ -3,6 +3,7 @@ import { UsuariosService } from '../service/usuarios.service';
 import { Usuario } from '../models/usuario';
 import { RolesService } from '../service/roles.service';
 import { Rol } from 'src/app/newsletter/models/Rol';
+import * as saveAs from 'file-saver';
 declare var $: any;
 
 @Component({
@@ -249,4 +250,17 @@ export class UsersComponent implements OnInit {
     document.body.removeChild(elementoTemporal);
   }
 
+  downloadCSV(): void {
+    const csvContent = "data:text/csv;charset=utf-8," +
+      "email,nombre,apellido1,apellido2\n" +
+      this.users.map(user => `${user.email},${user.nombre},${user.apellido1},${user.apellido2}`).join("\n");
+  
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "users.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }
