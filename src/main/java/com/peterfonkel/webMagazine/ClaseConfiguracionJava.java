@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
@@ -60,7 +59,6 @@ import com.peterfonkel.webMagazine.repositories.LateralDAO;
 import com.peterfonkel.webMagazine.repositories.LugarDAO;
 import com.peterfonkel.webMagazine.repositories.TipoSuscripcionDAO;
 import com.peterfonkel.webMagazine.rest.mixins.Mixins;
-import com.peterfonkel.webMagazine.security.IpRateLimitFilter;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.LugarService;
 import com.peterfonkel.webMagazine.services.PublicacionesService;
@@ -299,13 +297,6 @@ public class ClaseConfiguracionJava {
         executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
     }
 	
-//	  @Bean
-//	    public FilterRegistrationBean<IpRateLimitFilter> ipRateLimitFilter() {
-//	        FilterRegistrationBean<IpRateLimitFilter> registrationBean = new FilterRegistrationBean<>();
-//	        registrationBean.setFilter(new IpRateLimitFilter());
-//	        registrationBean.addUrlPatterns("/api/*"); // Aplica el filtro a rutas específicas
-//	        return registrationBean;
-//	    }
 	
 	
 }
