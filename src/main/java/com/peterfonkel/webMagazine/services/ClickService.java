@@ -49,5 +49,9 @@ public class ClickService {
 		return getClickDAO().findByUsuario_idAndFechaClickGreaterThan(id, fecha);
 	}
 
+	public List<Click> findByFechaClickAfter(Instant fechaLimite) {
+		return getClickDAO().findByFechaClickAfter(fechaLimite);
+	}
+
 	
 }

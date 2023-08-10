@@ -2,6 +2,7 @@ package com.peterfonkel.webMagazine.rest.mixins;
 
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -109,5 +110,14 @@ public class ClickController {
 		Click click = getClickService().findById(id);
 		List<Tag> tags = click.getTagsClick();
 		return assembler.toCollectionModel(tags);
+	}
+	
+	@GetMapping(path = "clicksSince/{dias}")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> getClicksSince(PersistentEntityResourceAssembler assembler, @PathVariable int dias) {
+	    Instant fechaLimite = Instant.now().minus(dias, ChronoUnit.DAYS);
+	    List<Click> clicks = getClickService().findByFechaClickAfter(fechaLimite); // Cambiar esto según tu servicio
+
+	    return assembler.toCollectionModel(clicks);
 	}
 }

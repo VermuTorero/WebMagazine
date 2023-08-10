@@ -1,3 +1,16 @@
+
+<select name="criterio" id="">
+  <option value="" (click)="setType('categorias')">Categorias</option>
+  <option value="" (click)="setType('tags')" selected>Tags</option>
+</select>
+
+<select name="tiempo" id="">
+  <option value="" (click)="setTime('365')" selected>Ultimo año</option>
+  <option value="" (click)="setTime('90')">Ultimo trimestre</option>
+  <option value="" (click)="setTime('30')">Ultimo mes</option>
+  <option value="" (click)="setTime('7')">Ultima semana</option>
+  <option value=""(click)="setTime('1')">Hoy</option>
+</select>
 <div class="chart-container">
     <canvas id="categoryChart"></canvas>
   </div>

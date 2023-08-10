@@ -24,6 +24,11 @@ export class ClicksService {
   getClicksByUserSince(id: string, fecha: string): Observable<Click[]>{
     return this.http.get<any>(this.endpoint + "/clicks/search/clicksByUser/" + id + "/" + fecha).pipe(map(response=>response._embedded.clicks))
   }
+
+  getClicksSince(fecha: string): Observable<Click[]>{
+    return this.http.get<any>(this.endpoint + "/clicks/search/clicksSince/" + fecha).pipe(map(response=>response._embedded.clicks))
+  }
+
   getId(p: any): string {
     let url = p._links.self.href;
     let trozos = url.split("/");
@@ -33,8 +38,8 @@ export class ClicksService {
     return this.http.post<any>(this.endpoint + "/clicks/search/postClick", click);
   }
 
-  getTagsFromCLick(click: Click){
-    return this.http.get<any>(this.endpoint + "/clicks/search/tagsFromClick/" + click.id).pipe(map(response=>response._embedded.tags))
+  getTagsFromClick(click: Click): Observable<Tag[]>{
+    return this.http.get<any>(this.endpoint + "/clicks/search/tagsFromClick/" + click.id).pipe(map(response=>response?._embedded?.tags || []))
   }
 
 }

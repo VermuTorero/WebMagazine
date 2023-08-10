@@ -19,43 +19,65 @@ export class EstadisticasComponent implements OnInit {
 
   tagChartLabels: string[] = [];
   tagChartData: number[] = [];
+  myChart: any;
+  tiempo: string ="";
+  tipo: string = "";
+
 
   constructor(private clicksService: ClicksService,
-    private categoriaService: CategoriasServiceService) {}
+    private categoriaService: CategoriasServiceService) { }
 
   ngOnInit(): void {
-    this.getClicksTags();
+    this.tiempo = '365';
+    this.tipo = 'tags';
+    this.getClicks();
+
   }
 
+  getClicks(){
+    if (this.tipo=='tags') {
+      this.getClicksTags();
+    }
+    if(this.tipo=='categorias'){
+      this.getClicksCategorias();
+    }
+  }
 
   getClicksTags() {
     this.clicksService.getClicks().subscribe(clicks => {
       clicks.forEach(click => {
         click.id = this.clicksService.getId(click);
-        this.clicksService.getTagsFromClick()
+        this.clicksService.getTagsFromClick(click).subscribe(tags => {
+          tags.forEach(tag => {
+            tag.id = this.clicksService.getId(tag);
+          });
+          click.tagsClick = tags;  
+          if (click === clicks[clicks.length - 1]) {
+            this.prepareChartDataTags(clicks);
+          }  
+        })  
       });
+ 
       this.clicks = clicks;
       console.log("CLICKS: ", this.clicks);
-      this.prepareChartDataTags();
     });
   }
 
-  private prepareChartDataTags() {
+  private prepareChartDataTags(clicks: Click[]) {
+    console.log(clicks)
     // Generar un objeto de frecuencia para los tags
     const tagFrequency: any = {};
-
-    for (const click of this.clicks) {
-      if (click.tagsClick && click.tagsClick.length > 0) {
-        for (const tag of click.tagsClick) {
-          const tagName = tag.tagNombre;
-          if (tagFrequency[tagName]) {
-            tagFrequency[tagName]++;
+    clicks.forEach(click => {
+      if (click.tagsClick) {
+        click.tagsClick.forEach(tag => {
+          if (tagFrequency[tag.tagNombre]) {
+            tagFrequency[tag.tagNombre]++;
           } else {
-            tagFrequency[tagName] = 1;
+            tagFrequency[tag.tagNombre] = 1;
           }
-        }
-      }
-    }
+        });
+      } 
+    });
 
     console.log("FRECUENCIA TAGS: ", tagFrequency);
 
@@ -67,22 +89,20 @@ export class EstadisticasComponent implements OnInit {
     const topTags = sortedTags.slice(0, 5);
 
     // Preparar los datos para el gráfico de tags
-    this.tagChartLabels = topTags;
-    this.tagChartData = topTags.map(tag => tagFrequency[tag]);
+    let tagChartLabels = topTags;
+     let tagChartData = topTags.map(tag => tagFrequency[tag]);
 
-    console.log("LABELS TAGS: ", this.tagChartLabels);
-    console.log("DATOS TAGS: ", this.tagChartData);
-
+   
     // Llamar a la función para dibujar el gráfico de tags
-    this.drawChart();
+    this.drawChart(tagChartLabels, tagChartData);
   }
 
 
 
 
   // ...
-  getClicksCategorias(){
-    this.clicksService.getClicks().subscribe(clicks=>{
+  getClicksCategorias() {
+    this.clicksService.getClicks().subscribe(clicks => {
       clicks.forEach(click => {
         click.id = this.clicksService.getId(click);
       });
@@ -106,7 +126,7 @@ export class EstadisticasComponent implements OnInit {
           categoryFrequency[categoryName] = 1;
         }
       }
-    
+
     }
     console.log("FRECUENCIA CATEGORIA: ", categoryFrequency)
     // Ordenar las categorías por frecuencia descendente y limitar a las top 5
@@ -117,32 +137,42 @@ export class EstadisticasComponent implements OnInit {
     const topCategories = sortedCategories.slice(0, 5);
 
     // Preparar los datos para el gráfico
-    this.chartLabels = topCategories;
-    this.chartData = topCategories.map(category => categoryFrequency[category]);
+    let chartLabels = topCategories;
+    let chartData = topCategories.map(category => categoryFrequency[category]);
 
     console.log("LABELS: ", this.chartLabels);
     console.log("DATOS: ", this.chartData)
     // Llamar a la función para dibujar el gráfico
-    this.drawChart();
+    this.drawChart(chartLabels, chartData);
   }
 
 
-
   // Método para dibujar el gráfico
-  private drawChart() {
+  private drawChart(labels: string[], data: string[]) {
     const ctx = document.getElementById('categoryChart') as HTMLCanvasElement;
-    const myChart = new Chart(ctx, {
+    if (this.myChart) {
+      this.myChart.destroy();
+    }
+    this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: this.chartLabels,
+        labels: labels,
         datasets: [
           {
-            data: this.chartData,
+            data: data,
             backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange'], // Puedes personalizar los colores
             borderWidth: 1
           }
         ]
       }
     });
+  }
+  setTime(tiempo: string){
+    this.tiempo = tiempo;
+    this.getClicks();
+  }
+  setType(tipo: string){
+    this.tipo = tipo;
+    this.getClicks();
   }
 }
