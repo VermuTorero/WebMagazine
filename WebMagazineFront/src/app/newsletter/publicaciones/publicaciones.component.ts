@@ -18,6 +18,7 @@ export class PublicacionesComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacionesDestacadas: Publicacion[] = [];
   publicacionesCarousel: Publicacion[] = [];
+  publicacionesPersonalizadas: Publicacion[] = [];
   urlImagenLateralDerecha: string = "";
   imagenInicioDerecha: ImagenInicio = new ImagenInicio();
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
@@ -116,7 +117,12 @@ export class PublicacionesComponent implements OnInit {
   }
 
   getPublicacionesPersonalizadas(){
-    
+    this.publicacionesService.getPublicacionesPersonalizadas().subscribe(publicaciones=>{
+      publicaciones.forEach(publicacion => {
+        publicacion.id = this.publicacionesService.getId(publicacion);
+      });
+      this.publicacionesPersonalizadas = publicaciones;
+    })
   }
 
 

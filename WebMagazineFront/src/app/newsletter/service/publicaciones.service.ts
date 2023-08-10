@@ -113,4 +113,7 @@ export class PublicacionesServiceService {
   getPublicacionesRecientesFreePagina(pagina: number): Observable<Publicacion[]>{
     return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesRecientesFree?page=" + pagina ).pipe(map(response => response?._embedded?.publicaciones || []))
   }
+  getPublicacionesPersonalizadas(): Observable<Publicacion[]>{
+    return this.http.get<any>(this.endpoint + "/publicaciones/search/publicacionesPersonalizadas").pipe(map(response=>response._embedded.publicaciones))
+  }
 }
