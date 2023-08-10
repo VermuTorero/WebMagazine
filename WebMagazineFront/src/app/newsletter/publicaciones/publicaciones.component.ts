@@ -61,10 +61,11 @@ export class PublicacionesComponent implements OnInit {
           publicacion.categoria = categoria;
           this.publicacionesService.getAutorFromPublicacion(publicacion).subscribe(autor => {
             publicacion.autor = autor;
-
+            
           })
         })
       });
+      this.getPublicacionesPersonalizadas();
     })
   }
 

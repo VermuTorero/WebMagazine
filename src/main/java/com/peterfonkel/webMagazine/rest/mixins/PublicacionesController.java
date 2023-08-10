@@ -643,22 +643,19 @@ public class PublicacionesController {
 	        recommendedPublications.addAll(publicationsWithTag);
 	    }
 
-	    if (recommendedPublications.size() < 4) {
+	    if (recommendedPublications.size() < 5) {
 	        List<Publicacion> publicationsWithSingleTag = getPublicacionesService().findByTags_TagNombre(topTags.get(0));
 	        recommendedPublications.addAll(publicationsWithSingleTag);
 	    }
 
-//	    if (recommendedPublications.size() < 4) {
-//	    	int remainingPublicationsCount = 4 - recommendedPublications.size();
-//	    	List<Publicacion> recentPublications = getPublicacionesService().findRecentPublications(remainingPublicationsCount);
-//
-//	        recommendedPublications.addAll(recentPublications);
-//	    }
-
 	    Collections.shuffle(recommendedPublications);
 
-	    return assembler.toCollectionModel(recommendedPublications);
+	    int maxPublicationsToShow = Math.min(recommendedPublications.size(), 5);
+	    List<Publicacion> limitedPublications = recommendedPublications.subList(0, maxPublicationsToShow);
+
+	    return assembler.toCollectionModel(limitedPublications);
 	}
+
 
 
 }
