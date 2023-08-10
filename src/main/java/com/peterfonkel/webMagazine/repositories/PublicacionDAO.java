@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -36,7 +37,7 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByTituloContainingIgnoreCaseAndPublicadoTrue(String palabraNormalizada);
 	List<Publicacion> findByAutorIdAndPublicadoFalse(Long id);
 	List<Publicacion> findByPublicadoTrueAndDestacadoTrue();
-	List<Publicacion> findRandomPublications(int i);
-
-
+	
+	@Query(value = "SELECT * FROM publicacion ORDER BY RANDOM() LIMIT ?1")
+    List<Publicacion> findRandomPublications(int limit);
 }
