@@ -299,13 +299,13 @@ public class ClaseConfiguracionJava {
         executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
     }
 	
-	  @Bean
-	    public FilterRegistrationBean<IpRateLimitFilter> ipRateLimitFilter() {
-	        FilterRegistrationBean<IpRateLimitFilter> registrationBean = new FilterRegistrationBean<>();
-	        registrationBean.setFilter(new IpRateLimitFilter());
-	        registrationBean.addUrlPatterns("/api/*"); // Aplica el filtro a rutas específicas
-	        return registrationBean;
-	    }
+//	  @Bean
+//	    public FilterRegistrationBean<IpRateLimitFilter> ipRateLimitFilter() {
+//	        FilterRegistrationBean<IpRateLimitFilter> registrationBean = new FilterRegistrationBean<>();
+//	        registrationBean.setFilter(new IpRateLimitFilter());
+//	        registrationBean.addUrlPatterns("/api/*"); // Aplica el filtro a rutas específicas
+//	        return registrationBean;
+//	    }
 	
 	
 }
