@@ -6,10 +6,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.j2objc.annotations.AutoreleasePool;
 import com.peterfonkel.webMagazine.entities.Categoria;
+import com.peterfonkel.webMagazine.entities.Click;
 import com.peterfonkel.webMagazine.entities.Like;
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.entities.Tag;
@@ -45,6 +48,7 @@ import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
 import com.peterfonkel.webMagazine.repositories.TagDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
+import com.peterfonkel.webMagazine.services.ClickService;
 import com.peterfonkel.webMagazine.services.LikesService;
 import com.peterfonkel.webMagazine.services.PublicacionesService;
 
@@ -70,6 +74,9 @@ public class PublicacionesController {
 
 	@Autowired
 	LikesService likesService;
+	
+	@Autowired
+	ClickService clickService;
 
 	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 
@@ -95,6 +102,10 @@ public class PublicacionesController {
 
 	public LikesService getLikesService() {
 		return likesService;
+	}
+	
+	public ClickService getClickService() {
+		return clickService;
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED')")
@@ -603,5 +614,49 @@ public class PublicacionesController {
 		autorPublico.setClaveRecuperacion("12345678");
 		return assembler.toModel(autorPublico);
 	}
+	
+	@GetMapping(path = "publicacionesPersonalizadas")
+	@ResponseBody
+	public CollectionModel<PersistentEntityResource> publicacionesPersonalizadas(
+	        PersistentEntityResourceAssembler assembler, HttpServletRequest request) {
+
+	    Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+	    List<Click> clicksUsuario = getClickService().findByUsuario_id(usuario.getId());
+
+	    Map<String, Integer> tagFrequency = new HashMap<>();
+	    for (Click click : clicksUsuario) {
+	        for (Tag tag : click.getTagsClick()) {
+	            tagFrequency.put(tag.getTagNombre(), tagFrequency.getOrDefault(tag.getTagNombre(), 0) + 1);
+	        }
+	    }
+
+	    List<String> topTags = tagFrequency.entrySet().stream()
+	            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+	            .map(Map.Entry::getKey)
+	            .limit(2)
+	            .collect(Collectors.toList());
+
+	    List<Publicacion> recommendedPublications = new ArrayList<>();
+
+	    for (String tag : topTags) {
+	        List<Publicacion> publicationsWithTag = getPublicacionesService().findByTags_TagNombre(tag);
+	        recommendedPublications.addAll(publicationsWithTag);
+	    }
+
+	    if (recommendedPublications.size() < 4) {
+	        List<Publicacion> publicationsWithSingleTag = getPublicacionesService().findByTags_TagNombre(topTags.get(0));
+	        recommendedPublications.addAll(publicationsWithSingleTag);
+	    }
+
+	    if (recommendedPublications.size() < 4) {
+	        List<Publicacion> randomPublications = getPublicacionesService().findRandomPublications(4 - recommendedPublications.size());
+	        recommendedPublications.addAll(randomPublications);
+	    }
+
+	    Collections.shuffle(recommendedPublications);
+
+	    return assembler.toCollectionModel(recommendedPublications);
+	}
+
 
 }

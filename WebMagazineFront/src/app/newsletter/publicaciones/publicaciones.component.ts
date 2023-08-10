@@ -115,6 +115,11 @@ export class PublicacionesComponent implements OnInit {
     })
   }
 
+  getPublicacionesPersonalizadas(){
+    
+  }
+
+
   /* Imagenes de inicio promo izda, central y dcha */
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
@@ -136,8 +141,6 @@ export class PublicacionesComponent implements OnInit {
   irAPublicacion(publicacion: Publicacion) {
     this.router.navigate(["/publicaciones/" + publicacion.url]);
   }
-
-
 
   /* Navegar entre páginas */
   getPaginaSiguiente() {

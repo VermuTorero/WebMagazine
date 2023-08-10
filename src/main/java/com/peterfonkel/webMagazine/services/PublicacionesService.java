@@ -127,6 +127,10 @@ public class PublicacionesService {
 		return publicacionDAO.findByPublicadoTrueAndDestacadoTrue();
 	}
 
+	public List<Publicacion> findRandomPublications(int i) {
+		return publicacionDAO.findRandomPublications(i);
+	}
+
 
 
 }
