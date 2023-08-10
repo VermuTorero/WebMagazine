@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.repositories.PublicacionDAO;
+import com.peterfonkel.webMagazine.repositories.PublicacionDAOCustom;
 
 @Service
 @Transactional
@@ -19,6 +20,9 @@ public class PublicacionesService {
 	
 	@Autowired
 	PublicacionDAO publicacionDAO;
+	
+	@Autowired
+	PublicacionDAOCustom publicacionDAOCustom;
 	
 	public List<Publicacion> findAll(){
 		return publicacionDAO.findAll();
@@ -128,7 +132,7 @@ public class PublicacionesService {
 	}
 
 	public List<Publicacion> findRandomPublications(int i) {
-		return publicacionDAO.findRandomPublications(i);
+		return publicacionDAOCustom.findRandomPublications(i);
 	}
 
 
