@@ -649,8 +649,10 @@ public class PublicacionesController {
 	    }
 
 	    if (recommendedPublications.size() < 4) {
-	        List<Publicacion> randomPublications = getPublicacionesService().findRandomPublications(4 - recommendedPublications.size());
-	        recommendedPublications.addAll(randomPublications);
+	    	int remainingPublicationsCount = 4 - recommendedPublications.size();
+	    	List<Publicacion> recentPublications = getPublicacionesService().findRecentPublications(remainingPublicationsCount);
+
+	        recommendedPublications.addAll(recentPublications);
 	    }
 
 	    Collections.shuffle(recommendedPublications);

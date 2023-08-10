@@ -37,7 +37,5 @@ public interface PublicacionDAO extends JpaRepository<Publicacion, Long>{
 	List<Publicacion> findByTituloContainingIgnoreCaseAndPublicadoTrue(String palabraNormalizada);
 	List<Publicacion> findByAutorIdAndPublicadoFalse(Long id);
 	List<Publicacion> findByPublicadoTrueAndDestacadoTrue();
-	
-	@Query(value = "SELECT * FROM publicacion ORDER BY RANDOM() LIMIT ?1")
-    List<Publicacion> findRandomPublications(int limit);
+	List<Publicacion> findTopNByOrderByFechaPublicacionDesc(int count);
 }
