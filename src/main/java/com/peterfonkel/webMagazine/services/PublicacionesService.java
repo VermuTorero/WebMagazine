@@ -127,9 +127,7 @@ public class PublicacionesService {
 		return publicacionDAO.findByPublicadoTrueAndDestacadoTrue();
 	}
 
-	public List<Publicacion> findRecentPublications(int count) {
-	    return publicacionDAO.findTopNByOrderByFechaPublicacionDesc(count);
-	}
+
 
 
 

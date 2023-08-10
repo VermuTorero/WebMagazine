@@ -648,12 +648,12 @@ public class PublicacionesController {
 	        recommendedPublications.addAll(publicationsWithSingleTag);
 	    }
 
-	    if (recommendedPublications.size() < 4) {
-	    	int remainingPublicationsCount = 4 - recommendedPublications.size();
-	    	List<Publicacion> recentPublications = getPublicacionesService().findRecentPublications(remainingPublicationsCount);
-
-	        recommendedPublications.addAll(recentPublications);
-	    }
+//	    if (recommendedPublications.size() < 4) {
+//	    	int remainingPublicationsCount = 4 - recommendedPublications.size();
+//	    	List<Publicacion> recentPublications = getPublicacionesService().findRecentPublications(remainingPublicationsCount);
+//
+//	        recommendedPublications.addAll(recentPublications);
+//	    }
 
 	    Collections.shuffle(recommendedPublications);
 
