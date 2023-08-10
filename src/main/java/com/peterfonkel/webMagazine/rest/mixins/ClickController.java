@@ -17,7 +17,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Click;
 import com.peterfonkel.webMagazine.entities.Tag;
-import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
-import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.ClickService;
 import com.peterfonkel.webMagazine.services.TagService;
@@ -62,6 +59,7 @@ public class ClickController {
 		return categoriaService;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_SUBSCRIBED') OR hasRole('ROLE_USER_REGISTERED')")
 	@PostMapping(path = "postClick") 
 	@ResponseBody
 	public PersistentEntityResource postClick(PersistentEntityResourceAssembler assembler, @RequestBody Click click) {
@@ -82,7 +80,7 @@ public class ClickController {
 		return assembler.toModel(getClickService().save(nuevoClick));
 	}
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "clicks")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getClicks(PersistentEntityResourceAssembler assembler) {
@@ -90,6 +88,7 @@ public class ClickController {
 		return assembler.toCollectionModel(clicks);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "clicksByUser/{id}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getClicksByUser(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id){
@@ -97,6 +96,7 @@ public class ClickController {
 		return assembler.toCollectionModel(clicksUsuario);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "clicksByUserSince/{id}/{fecha}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getClicksByUser(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id, @PathVariable("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant fecha){
@@ -104,6 +104,7 @@ public class ClickController {
 		return assembler.toCollectionModel(clicksUsuario);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "tagsFromClick/{id}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getTagsFromCLick(PersistentEntityResourceAssembler assembler, @PathVariable("id") Long id) {
@@ -112,6 +113,7 @@ public class ClickController {
 		return assembler.toCollectionModel(tags);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "clicksSince/{dias}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getClicksSince(PersistentEntityResourceAssembler assembler, @PathVariable int dias) {
