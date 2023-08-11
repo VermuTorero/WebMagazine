@@ -17,8 +17,9 @@ export class FormularioProductoComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent =
     new CropperComponent();
 
-  nuevoProducto: Product = new Product('', '', '', '', 0, '', '');
+  nuevoProducto: Product = new Product('', '', '', '', 0, '', new Seccion());
   secciones: Seccion[] = [];
+  seccionSeleccionada: Seccion = new Seccion();
 
   /* Recortador de imagenes */
   imageUrl: string = '';
@@ -47,7 +48,7 @@ export class FormularioProductoComponent implements OnInit {
       descripcionCorta: ['', [Validators.required, Validators.maxLength(50)]],
       descripcionLarga: ['', [Validators.required, Validators.maxLength(100)]],
       precio: ['', [Validators.required, Validators.min(0)]],
-      seccion: ['', Validators.required],
+      seccion: [new Seccion(), Validators.required],
       url: ['']
     });
     /*-----------------------------------*/
@@ -71,6 +72,7 @@ export class FormularioProductoComponent implements OnInit {
       this.secciones = response;
       this.secciones.forEach((seccion) => {
         seccion.url = this.seccionesService.extraerUrlSeccion(seccion);
+        seccion.idSeccion = this.seccionesService.getIdSeccion(seccion);
       });
     });
   }
@@ -82,6 +84,7 @@ export class FormularioProductoComponent implements OnInit {
     }
     if(this.esNuevoProducto){
     this.nuevoProducto = this.formularioProducto.value;
+    this.nuevoProducto.seccion = this.seccionSeleccionada;
     this.productoService.postProducto(this.nuevoProducto).subscribe((res) => {
       this.router.navigate(["ecommerce/gestion"]);
     });

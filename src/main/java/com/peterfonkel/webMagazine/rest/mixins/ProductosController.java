@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Producto;
+import com.peterfonkel.webMagazine.entities.Seccion;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.ProductoService;
+import com.peterfonkel.webMagazine.services.SeccionService;
 
 @RepositoryRestController
 @RequestMapping(path = "/api/productos/search")
@@ -36,11 +38,19 @@ public class ProductosController {
 	@Autowired
 	ProductoService productoService;
 	
+	@Autowired
+	SeccionService seccionService;
+	
 	public ProductosController(){
 	}
 	
 	public ProductoService getProductoService() {
 		return productoService;
+	}
+	
+
+	public SeccionService getSeccionService() {
+		return seccionService;
 	}
 
 	@GetMapping(path = "productoById/{id}")
@@ -61,6 +71,8 @@ public class ProductosController {
 	@PostMapping(path = "postProducto")
 	@ResponseBody
 	public PersistentEntityResource postProductoById(PersistentEntityResourceAssembler assembler, @RequestBody Producto productoNuevo) {
+		Seccion seccion = getSeccionService().getById(productoNuevo.getSeccion().getId());
+		productoNuevo.setSeccion(seccion);
 		Producto producto = getProductoService().save(productoNuevo);
 		return assembler.toModel(producto);
 	}

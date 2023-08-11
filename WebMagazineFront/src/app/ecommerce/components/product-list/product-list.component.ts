@@ -30,7 +30,7 @@ export class ProductListComponent {
       this.products.forEach(producto => {
         producto.id = this.productService.getIdProducto(producto);
         this.seccionesService.getSeccionById(producto.id).subscribe((res) =>{
-          producto.seccion = res.nombreSeccion;
+          producto.seccion = res;
         });
       });
       this.applyFilter();
@@ -55,7 +55,7 @@ export class ProductListComponent {
   applyFilter(): void {
     this.filteredProducts = this.products.filter((product) => {
       if (this.filtroSeccion) {
-        return product.seccion === this.filtroSeccion;
+        return product.seccion.nombreSeccion === this.filtroSeccion;
       } else {
         return true; // Si no hay filtro de sección, muestra todos los productos
       }
