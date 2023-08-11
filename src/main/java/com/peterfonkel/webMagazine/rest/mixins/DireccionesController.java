@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,6 +77,18 @@ public class DireccionesController {
 	public CollectionModel<PersistentEntityResource> getCategorias(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
 		Usuario usuario = getUsuarioService().getUsuarioFromId(id);
 		return assembler.toCollectionModel(usuario.getDirecciones());
+	}
+	
+	@PostMapping(path = "crearDireccion")
+	@ResponseBody
+	public PersistentEntityResource postDireccion(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @RequestBody Direccion direccionNueva) {
+		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+		Direccion direccion = getDireccionService().save(direccionNueva);
+		List<Direccion> direcciones = usuario.getDirecciones();
+		direcciones.add(direccion);
+		usuario.setDirecciones(direcciones);
+		getUsuarioService().save(usuario);
+		return assembler.toModel(direccion);
 	}
 	
 	
