@@ -115,7 +115,7 @@ public class DireccionesController {
 		return assembler.toModel(getDireccionService().save(direccionGuardada));
 	}
 	
-	@DeleteMapping(path = "direccion/{id}")
+	@DeleteMapping(path = "deleteDireccion/{id}")
 	@ResponseBody
 	public void deleteDireccion(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @PathVariable("id") Long id) {
 		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
