@@ -72,7 +72,7 @@ export class FormularioProductoComponent implements OnInit {
       this.secciones = response;
       this.secciones.forEach((seccion) => {
         seccion.url = this.seccionesService.extraerUrlSeccion(seccion);
-        seccion.idSeccion = this.seccionesService.getIdSeccion(seccion);
+        seccion.id = this.seccionesService.getIdSeccion(seccion);
       });
     });
   }
@@ -92,6 +92,7 @@ export class FormularioProductoComponent implements OnInit {
     let id = this.nuevoProducto.id
     this.nuevoProducto = this.formularioProducto.value;
     this.nuevoProducto.id = id;
+    this.nuevoProducto.seccion = this.seccionSeleccionada;
     this.productoService.patchProducto(this.nuevoProducto).subscribe((res) => {
       this.router.navigate(["ecommerce/gestion"]);
     });

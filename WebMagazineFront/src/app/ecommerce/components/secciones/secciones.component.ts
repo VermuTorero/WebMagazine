@@ -22,7 +22,7 @@ export class SeccionesComponent {
     this.seccionService.getSecciones().subscribe((secciones) => {
       this.secciones = secciones;
       this.secciones.forEach((seccion) => {
-        seccion.idSeccion = this.seccionService.getIdSeccion(seccion);
+        seccion.id = this.seccionService.getIdSeccion(seccion);
         console.log(this.secciones);
       });
     });

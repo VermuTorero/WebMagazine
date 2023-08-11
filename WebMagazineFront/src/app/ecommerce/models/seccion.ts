@@ -1,5 +1,5 @@
 export class Seccion {
-    idSeccion: String = "";
+    id: String = "";
     nombreSeccion: string = "";
     url: string ="";
 }

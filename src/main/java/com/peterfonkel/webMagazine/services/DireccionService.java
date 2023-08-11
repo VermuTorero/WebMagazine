@@ -40,8 +40,8 @@ public class DireccionService {
 		return getDireccionDAO().findById(id).get();
 	}
 
-	public void save(Direccion direccion) {
-		getDireccionDAO().save(direccion);
+	public Direccion save(Direccion direccion) {
+		return getDireccionDAO().save(direccion);
 	}
 
 	public List<Direccion> findAll() {

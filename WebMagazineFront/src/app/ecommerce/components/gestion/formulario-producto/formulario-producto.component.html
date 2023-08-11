@@ -62,9 +62,9 @@
     </div>
     <div class="form-group col-md-4 m-1">
       <label for="seccion">Sección</label>
-        <select name="inputSeccion" id="inputSeccion" class="form-control" formControlName="seccion" [(ngModel)]="seccionSeleccionada.idSeccion">
+        <select name="inputSeccion" id="inputSeccion" class="form-control" formControlName="seccion" [(ngModel)]="seccionSeleccionada.id">
           <option value="" disabled selected>Selecciona una sección...</option>
-        <option *ngFor="let seccion of secciones" [value]="seccion.idSeccion">{{seccion.nombreSeccion}}</option>
+        <option *ngFor="let seccion of secciones" [value]="seccion.id">{{seccion.nombreSeccion}}</option>
       </select>
       <div *ngIf="formularioProducto.invalid && submit">
         <small *ngIf="formularioProducto.controls['seccion'].errors?.['required']" class="text-danger">
