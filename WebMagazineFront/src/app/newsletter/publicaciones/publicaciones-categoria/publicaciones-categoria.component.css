@@ -75,6 +75,10 @@
     .descripcion-categoria {
         font-size: medium;
     }
+    /*En tu hoja de estilos */
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
 }
 
 .restaurantes{

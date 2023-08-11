@@ -11,6 +11,7 @@
 .publicacion-preview {
     border-radius: 0;
     height: fit-content;
+    padding-top: 3%;
 }
 
 /* rgb(255,109,0,255); */

@@ -27,17 +27,29 @@
 
 <!-- Publicaciones de Entrevidas -->
 <div *ngIf="categoria.categoriaNombre=='Entrevidas' || categoria.categoriaNombre=='Relaciones'" class="row restaurantes">
-  <div class="cards-container-entrevidas col-2">
+ <!-- Pantalla grande -->
+  <div class="cards-container-entrevidas d-none d-md-block col-md-2">
     <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12"
       [ngClass]="{'clicked': i === activeCard}" (click)="onClickCard(i)">
       <app-publicacion-entrevidas [publicacion]="publicacion"
         (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-entrevidas>
     </div>
   </div>
-  <div class="publicacion-seleccionada-container col-9">
+  <div class="publicacion-seleccionada-container d-none d-md-block col-md-9">
     <app-publicacion-completa [publicacion]="publicacionSeleccionada"
       class="publicacion-completa"></app-publicacion-completa>
   </div>
+
+  <!-- Pantalla movil -->
+  <div class="cards-container-entrevidas-sm col-12 d-md-none">
+    <div *ngFor="let publicacion of publicaciones" class="card-entrevidas-sm col-12">
+      <a href="publicaciones/{{publicacion.url}}">
+        <app-publicacion-entrevidas [publicacion]="publicacion"></app-publicacion-entrevidas>
+      </a>
+     
+    </div>
+  </div>
+
 </div>
 
 <!-- Publicaciones de Patata Santa, Bares o Mercados-->
@@ -47,7 +59,8 @@
   <section class="zona-articulos row">
     <div class="columna-articulos col-12">
       <!-- Seccion articulos gastro recientes-->
-      <section class="seccion-recientes">
+      <!-- Pantalla grande -->
+      <section class="seccion-recientes d-none d-md-block">
         <div class="publicaciones-gastro-container row mt-2">
           <div *ngFor="let publicacion of publicaciones; let i = index"
             class="card-gastro col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4" [ngClass]="{'clicked': i === activeCard}"
@@ -65,7 +78,24 @@
           <div id="editor" hidden></div>
         </div>
       </section>
-      <section class="publicacion-gastro-seleccionada-container">
+      <!-- Formato movil -->
+      <section class="d-md-none">
+        <div class="publicaciones-gastro-container row mt-2">
+          <div *ngFor="let publicacion of publicaciones"
+            class="card col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4">
+            <app-publicacion [publicacion]="publicacion"></app-publicacion>
+          </div>
+          <div class="paginas text-center">
+            <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2"
+              (click)="getPaginaAnterior()">Anterior</button>
+            <p class="numero-pagina">Pagina {{pagina +1}}</p>
+            <button *ngIf="publicaciones.length>3" class="btn btn-sm btn-secondary mx-2"
+              (click)="getPaginaSiguiente()">Siguiente</button>
+          </div>
+          <div id="editor" hidden></div>
+        </div>
+      </section>
+      <section class="publicacion-gastro-seleccionada-container d-none d-md-block">
         <app-publicacion-completa [publicacion]="publicacionSeleccionada"
           class="publicacion-completa"></app-publicacion-completa>
       </section>

@@ -1,13 +1,12 @@
-
-
-.seccion-recientes{
+.seccion-recientes {
   background-color: #ebeaea;
   padding: 1%;
   box-shadow: 2px 2px 10px #666;
   border-radius: 5px;
   margin-top: 4%;
 }
-.seccion-destacados{
+
+.seccion-destacados {
   background-color: #ebeaea;
   padding: 1%;
   box-shadow: 2px 2px 10px #666;
@@ -98,7 +97,7 @@ app-publicacion {
 
 
 
-.recomendaciones{
+.recomendaciones {
   margin-top: 5%;
   margin-right: 10%;
   padding: 5%;
@@ -108,20 +107,24 @@ app-publicacion {
   box-shadow: 2px 2px 10px #666;
   height: 40%;
 }
-.boton-login{
+
+.boton-login {
   justify-self: right;
 }
-.titulo-podcast{
-  color: rgb(255, 109, 0, 255);
-}
-.titulo-twitter{
-  color: rgb(255, 109, 0, 255);
-}
-.titulo-publicaciones-lateral{
+
+.titulo-podcast {
   color: rgb(255, 109, 0, 255);
 }
 
-.input-buscador{
+.titulo-twitter {
+  color: rgb(255, 109, 0, 255);
+}
+
+.titulo-publicaciones-lateral {
+  color: rgb(255, 109, 0, 255);
+}
+
+.input-buscador {
   width: 80%;
 }
 
@@ -140,7 +143,8 @@ app-publicacion {
 .carousel-item .carousel-caption {
   animation: slide-down 0s forwards;
 }
-.numero-pagina{
+
+.numero-pagina {
   display: inline;
 }
 
@@ -206,35 +210,44 @@ app-publicacion {
   .icono-rrss {
     width: 80%;
   }
-  .titulo-buscador{
+
+  .titulo-buscador {
     font-size: 2vw;
   }
-  .boton-buscador{
+
+  .boton-buscador {
     width: 20%;
   }
+
   .inicio-container {
     margin-top: 0%;
     /* background-color: rgb(255, 109, 0, 255); */
   }
-  .seccion-recientes{
+
+  .seccion-recientes {
     margin-top: 0 !important;
     text-align: center;
   }
-  .seccion-destacados{
+
+  .seccion-destacados {
     text-align: center;
   }
-  ::ng-deep .podcastSM-container{
+
+  ::ng-deep .podcastSM-container {
     height: 80px;
     margin-bottom: 5%;
   }
-  .podcastSM{
+
+  .podcastSM {
     text-align: center;
     height: 50%
   }
-  .tienda{
+
+  .tienda {
     text-align: center;
   }
-  .boton-tienda{
+
+  .boton-tienda {
     width: 100%;
     padding: 0;
     margin-bottom: 4%;
@@ -243,21 +256,24 @@ app-publicacion {
     border-width: 2px;
   }
 
-  ::ng-deep iframe{
+  ::ng-deep iframe {
     height: 100%;
     margin: 0;
     padding: 0;
     box-shadow: 1px 1px 5px #666 !important;
   }
-  .zona-articulos{
+
+  .zona-articulos {
     width: 100%;
     text-align: center;
     margin-left: 0%;
     padding: 0;
   }
-  .carousel{
+
+  .carousel {
     width: 100% !important;
   }
+
   .inicio {
     background-color: black;
     margin: 0% !important;
@@ -266,37 +282,45 @@ app-publicacion {
   }
 }
 
-@media (min-width: 40em) and (max-width:80em){
+@media (min-width: 40em) and (max-width:80em) {
   .inicio {
     background-color: black;
     margin: 0% !important;
     padding: 0% !important;
     width: 96% !important;
   }
-  .carousel{
+
+  .carousel {
     width: 100% !important;
   }
+
   .texto-carousel {
     font-size: small;
   }
-  .texto-titulo{
+
+  .texto-titulo {
     font-size: medium;
-    
+
   }
-  .letra-blanca{
+
+  .letra-blanca {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  .letra-negra{
+
+  .letra-negra {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  .boton-buscador{
+
+  .boton-buscador {
     width: 20%;
   }
+
   .inicio-container {
     display: flex;
     justify-content: center;
   }
-  .zona-articulos{
+
+  .zona-articulos {
     margin-top: 1% !important;
     margin-left: 0% !important;
     text-align: center;
@@ -304,25 +328,28 @@ app-publicacion {
     padding: 0;
     width: 100% !important;
   }
-  .columna-articulos{
+
+  .columna-articulos {
     margin: 0%;
     padding-left: 1%;
     padding-right: 0% !important;
   }
 
-  .seccion-recientes{
+  .seccion-recientes {
     margin-top: 5% !important;
     text-align: center;
     width: 96%;
     margin-left: 2% !important;
   }
-  .seccion-destacados{
+
+  .seccion-destacados {
     margin-top: 0 !important;
     text-align: center;
     width: 96%;
     margin-left: 2% !important;
   }
-  .podcast{
+
+  .podcast {
     margin-top: 13%;
     margin-right: 2%;
     background-color: white;
@@ -334,8 +361,8 @@ app-publicacion {
     height: fit-content;
     border-radius: 5px;
   }
-  
-  .buscador{
+
+  .buscador {
     margin-top: 5%;
     margin-right: 2%;
     background-color: rgb(255, 109, 0, 255);
@@ -346,7 +373,8 @@ app-publicacion {
     box-shadow: 2px 2px 10px #666;
     border-radius: 5px;
   }
-  .twitter{
+
+  .twitter {
     margin-top: 5%;
     margin-right: 2%;
     padding: 3%;
@@ -357,7 +385,8 @@ app-publicacion {
     height: fit-content;
     border-radius: 5px;
   }
-  .lateral-container{
+
+  .lateral-container {
     margin-top: 3%;
     width: 18%;
   }
@@ -371,29 +400,35 @@ app-publicacion {
     padding: 0% !important;
     width: 85% !important;
   }
+
   .texto-carousel {
     font-size: small;
   }
-  .texto-titulo{
+
+  .texto-titulo {
     font-size: medium;
-    
+
   }
-  .letra-blanca{
+
+  .letra-blanca {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  .letra-negra{
+
+  .letra-negra {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
-  .boton-buscador{
+
+  .boton-buscador {
     width: 20%;
   }
+
   .inicio-container {
     display: flex;
     justify-content: center;
   }
- 
 
-  .zona-articulos{
+
+  .zona-articulos {
     margin-top: 1% !important;
     margin-left: 5% !important;
     text-align: center;
@@ -401,9 +436,58 @@ app-publicacion {
     padding: 0;
     width: 95% !important;
   }
-  .lateral-container{
+
+  .lateral-container {
     margin-top: 2.5%;
     width: 18%;
   }
 
+  .personalizadas {
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-left: -4%;
+    padding-left: 0%;
+    width: 100%;
+  }
+
+  .titulo-personalizadas {
+    color: rgb(255, 109, 0, 255);
+    padding-left: 10%;
+    padding-top: 3%;
+  }
+
+  .membresia-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+  }
+
+  .compras-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+  }
+
+  .suscribete-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+  }
+
+  a:link,
+  a:visited,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
 }

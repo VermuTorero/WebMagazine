@@ -1,44 +1,50 @@
 <section class="titulo row p-0 m-0 text-center">
   <h3>EDICIÓN DE LA PÁGINA DE INICIO</h3>
 </section>
-<!-- Seccion de inicio - Imagenes de promo y Carrusel -->
-<section class="inicio row p-0 m-0">
+
+<section class="inicio row">
+  <h4>Imagen tienda</h4>
   <!-- Imagen de promo Izquierda -->
   <section class="promo col-12 col-sm-3 p-0 m-0">
-    <h5 class="col-12 d-sm-none text-center">Imagen tienda</h5>
     <button class="boton btn btn-warning btn-sm m-3" data-bs-toggle="modal"
       data-bs-target="#imagenLateralIzquierdaModal">CAMBIAR</button>
     <img src="{{imagenInicioIzquierda.url}}" alt="" class="imagen-promo img-fluid p-0 m-0" data-bs-toggle="modal"
       data-bs-target="#imagenLateralIzquierdaModal">
   </section>
+</section>
+
+<hr>
+<!-- Seccion de inicio - Imagenes de promo y Carrusel -->
+<section class="inicio row p-0 m-0">
+  <h4>Imagenes carousell</h4>
   <!-- Carrusel tamaño grande -->
   <section class="carrusel d-none d-sm-block col-sm-9 p-0 m-0">
     <div id="carouselCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-wrap="true">
       <!-- Botones del Carrusel -->
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button *ngIf="publicacionesCarousel[0]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button *ngIf="publicacionesCarousel[1]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="2" aria-label="Slide 3"></button>
-        <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="3" aria-label="Slide 4"></button>
-        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="4" aria-label="Slide 5"></button>
-        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="5" aria-label="Slide 6"></button>
-        <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="6" aria-label="Slide 7"></button>
-        <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="7" aria-label="Slide 8"></button>
-        <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselCaptions"
-          data-bs-slide-to="8" aria-label="Slide 9"></button>
+        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button *ngIf="publicacionesCarousel[0]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button *ngIf="publicacionesCarousel[1]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+        <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="3"
+          aria-label="Slide 4"></button>
+        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="4"
+          aria-label="Slide 5"></button>
+        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="5"
+          aria-label="Slide 6"></button>
+        <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="6"
+          aria-label="Slide 7"></button>
+        <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="7"
+          aria-label="Slide 8"></button>
+        <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="8"
+          aria-label="Slide 9"></button>
       </div>
       <!-- Diapositivas del Carrusel, la primera es ImagenInicioCentral y las siguientes las imagenes
       de preview de las publicaciones seleccionadas -->
       <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="4000">
+        <div class="carousel-item active" data-bs-interval="10000">
           <button class="boton-central btn btn-warning btn-sm m-3" data-bs-toggle="modal"
             data-bs-target="#imagenCentralModal">CAMBIAR IMAGEN DE INICIO</button>
           <img src="{{imagenInicioCentral.url}}" class="d-block w-100" alt="..." style="margin: 0;padding: 0;">
@@ -63,13 +69,11 @@
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions"
-        data-bs-slide="prev">
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions"
-        data-bs-slide="next">
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -77,139 +81,138 @@
   </section>
 
 
-<!-- Carrusel tamaño pequeño-->
-<section class="carrusel-pequeno col-12 d-sm-none p-0 m-0">
-  <h5 class="col-12 d-sm-none text-center">Imagenes del carrusel</h5>
-  <div id="carouselPequeno" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-wrap="true">
-    <!-- Botones del Carrusel -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="0" class="active" aria-current="true"
-        aria-label="Slide 1"></button>
-      <button *ngIf="publicacionesCarousel[0]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="1"
-        aria-label="Slide 2"></button>
-      <button *ngIf="publicacionesCarousel[1]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="2"
-        aria-label="Slide 3"></button>
-      <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="3"
-        aria-label="Slide 4"></button>
-      <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="4"
-        aria-label="Slide 5"></button>
-      <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="5"
-        aria-label="Slide 6"></button>
-      <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="6"
-        aria-label="Slide 7"></button>
-      <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="7"
-        aria-label="Slide 8"></button>
-      <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="8"
-        aria-label="Slide 9"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active" data-bs-interval="4000">
-        <button class="boton-central btn btn-warning btn-sm m-3" data-bs-toggle="modal"
-          data-bs-target="#imagenCentralModal">CAMBIAR IMAGEN DE INICIO</button>
-        <img src="{{imagenInicioCentral.url}}" class="d-block w-100" alt="..." style="margin: 0;padding: 0;">
-
+  <!-- Carrusel tamaño pequeño-->
+  <section class="carrusel-pequeno col-12 d-sm-none p-0 m-0">
+    <div id="carouselPequeno" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-wrap="true">
+      <!-- Botones del Carrusel -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="0" class="active" aria-current="true"
+          aria-label="Slide 1"></button>
+        <button *ngIf="publicacionesCarousel[0]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button *ngIf="publicacionesCarousel[1]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+        <button *ngIf="publicacionesCarousel[2]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="3"
+          aria-label="Slide 4"></button>
+        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="4"
+          aria-label="Slide 5"></button>
+        <button *ngIf="publicacionesCarousel[3]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="5"
+          aria-label="Slide 6"></button>
+        <button *ngIf="publicacionesCarousel[5]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="6"
+          aria-label="Slide 7"></button>
+        <button *ngIf="publicacionesCarousel[6]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="7"
+          aria-label="Slide 8"></button>
+        <button *ngIf="publicacionesCarousel[7]" type="button" data-bs-target="#carouselPequeno" data-bs-slide-to="8"
+          aria-label="Slide 9"></button>
       </div>
-      <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
-        <button class="boton-central btn btn-danger btn-sm m-3" (click)="quitarDelCarousel(publicacionCarousel.id)"
-          data-bs-target="#carouselPequeno" data-bs-slide-to="0">QUITAR DEL CARRUSEL</button>
-        <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="...">
-        <div class="carousel-caption">
-          <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b></h5>
-          <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
-            <b>{{publicacionCarousel.subtitulo}}</b>
-          </p>
-          <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra"><b>{{publicacionCarousel.titulo}}</b></h5>
-          <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra d-none d-md-block">
-            <b>{{publicacionCarousel.subtitulo}}</b>
-          </p>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="4000">
+          <button class="boton-central btn btn-warning btn-sm m-3" data-bs-toggle="modal"
+            data-bs-target="#imagenCentralModal">CAMBIAR IMAGEN DE INICIO</button>
+          <img src="{{imagenInicioCentral.url}}" class="d-block w-100" alt="..." style="margin: 0;padding: 0;">
+
+        </div>
+        <div *ngFor="let publicacionCarousel of publicacionesCarousel" class="carousel-item" data-bs-interval="3500">
+          <button class="boton-central btn btn-danger btn-sm m-3" (click)="quitarDelCarousel(publicacionCarousel.id)"
+            data-bs-target="#carouselPequeno" data-bs-slide-to="0">QUITAR DEL CARRUSEL</button>
+          <img src="{{publicacionCarousel.imagenPreviewUrl}}" class="d-block w-100" alt="...">
+          <div class="carousel-caption">
+            <h5 *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca"><b>{{publicacionCarousel.titulo}}</b></h5>
+            <p *ngIf="!publicacionCarousel.letraOscura" class="letra-blanca d-none d-md-block">
+              <b>{{publicacionCarousel.subtitulo}}</b>
+            </p>
+            <h5 *ngIf="publicacionCarousel.letraOscura" class="letra-negra"><b>{{publicacionCarousel.titulo}}</b></h5>
+            <p *ngIf="publicacionCarousel.letraOscura" class="letra-negra d-none d-md-block">
+              <b>{{publicacionCarousel.subtitulo}}</b>
+            </p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselPequeno" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselPequeno" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- Listado de publicaciones que NO estan en el Carrusel y pueden añadirse -->
+  <div class="row seccion-agregar-carrousel">
+    <h3 class="publicaciones-agregar mt-4"><b>Publicaciones que puedes añadir al Carrulsel</b></h3>
+    <div class="row">
+      <div class="col-8 col-sm-6">
+        <h5 class="titulo"><b>Titulo de la publicación</b></h5>
+      </div>
+    </div>
+    <div *ngFor="let publicacion of publicacionesNoCarousel" style="display:block;" class="row">
+      <div class="row my-2">
+        <div class="col-8 col-sm-9">
+          <h4 class="titulo-publicacion">{{publicacion.titulo}}</h4>
+        </div>
+        <button class="boton-agregar btn btn-success btn-sm col-4 col-sm-2"
+          (click)="agregarAlCarousel(publicacion.id)">AGREGAR AL
+          CAROUSEL</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- MODALES -->
+
+
+
+  <!-- Modal Agregar Imagen lateral izquierda-->
+  <div class="modal fade" id="imagenLateralIzquierdaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <section>
+            <input type="file" accept="images/" (change)="onSelectFileIzquierda($event)">
+          </section>
+          <section *ngIf="imagePreviewUrl">
+            <angular-cropper [cropperOptions]='{aspectRatio: 1 / 1}' [imageUrl]="imagenInicioIzquierda.url"
+              #angularCropper2></angular-cropper>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn btn-primary" (click)="getCroppedImageIzquierda()" data-bs-dismiss="modal">Aceptar</button>
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselPequeno" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselPequeno" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
-</section>
 
-
-<!-- Listado de publicaciones que NO estan en el Carrusel y pueden añadirse -->
-<div class="row seccion-agregar-carrousel">
-  <h3 class="publicaciones-agregar mt-4"><b>Publicaciones que puedes añadir al Carrulsel</b></h3>
-  <div class="row">
-    <div class="col-8 col-sm-6">
-      <h5 class="titulo"><b>Titulo de la publicación</b></h5>
-    </div>
-  </div>
-  <div *ngFor="let publicacion of publicacionesNoCarousel" style="display:block;" class="row">
-    <div class="row my-2">
-      <div class="col-8 col-sm-9">
-        <h4 class="titulo-publicacion">{{publicacion.titulo}}</h4>
-      </div>
-      <button class="boton-agregar btn btn-success btn-sm col-4 col-sm-2"
-        (click)="agregarAlCarousel(publicacion.id)">AGREGAR AL
-        CAROUSEL</button>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- MODALES -->
-
-
-
-<!-- Modal Agregar Imagen lateral izquierda-->
-<div class="modal fade" id="imagenLateralIzquierdaModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <section>
-          <input type="file" accept="images/" (change)="onSelectFileIzquierda($event)">
-        </section>
-        <section *ngIf="imagePreviewUrl">
-          <angular-cropper [cropperOptions]='{aspectRatio: 1 / 1}' [imageUrl]="imagenInicioIzquierda.url"
-            #angularCropper2></angular-cropper>
-        </section>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="getCroppedImageIzquierda()" data-bs-dismiss="modal">Aceptar</button>
+  <!-- Modal Agregar Imagen Central-->
+  <div class="modal fade" id="imagenCentralModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <section>
+            <input type="file" accept="images/" (change)="onSelectFileCentral($event)">
+          </section>
+          <section *ngIf="imageCarouselUrl">
+            <angular-cropper [cropperOptions]='{aspectRatio: 3 / 1}' [imageUrl]="imagenInicioCentral.url"
+              #angularCropper3></angular-cropper>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn btn-primary" (click)="getCroppedImageCentral()" data-bs-dismiss="modal">Aceptar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Modal Agregar Imagen Central-->
-<div class="modal fade" id="imagenCentralModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <section>
-          <input type="file" accept="images/" (change)="onSelectFileCentral($event)">
-        </section>
-        <section *ngIf="imageCarouselUrl">
-          <angular-cropper [cropperOptions]='{aspectRatio: 3 / 1}' [imageUrl]="imagenInicioCentral.url"
-            #angularCropper3></angular-cropper>
-        </section>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button class="btn btn-primary" (click)="getCroppedImageCentral()" data-bs-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>

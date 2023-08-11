@@ -95,7 +95,8 @@
         <div class="paginas text-center">
           <button *ngIf="pagina>0" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaAnterior()">Anterior</button>
           <p class="numero-pagina">Pagina {{pagina +1}}</p>
-          <button *ngIf="publicaciones.length>3" class="btn btn-sm btn-secondary mx-2" (click)="getPaginaSiguiente()">Siguiente</button>
+          <button *ngIf="publicaciones.length>3" class="btn btn-sm btn-secondary mx-2"
+            (click)="getPaginaSiguiente()">Siguiente</button>
         </div>
         <div id="editor" hidden></div>
       </div>
@@ -117,6 +118,27 @@
 
   <div class="d-none d-md-block col-md-4 col-lg-3 mb-3 lateral-container">
     <app-lateral></app-lateral>
+    <div *ngIf="rol=='ROLE_USER_MEMBER' || rol=='ROLE_WRITER'|| rol=='ROLE_ADMIN'" class="personalizadas">
+      <div class="row row-personalizadas" id="podcast">
+        <h5 class="row titulo-personalizadas">En especial para ti</h5>
+      </div>
+      <div *ngFor="let publicacion of publicacionesPersonalizadas" class="card m-1">
+        <app-publicacion [publicacion]="publicacion"></app-publicacion>
+      </div>
+    </div>
+    <div *ngIf="rol!='ROLE_USER_MEMBER' && rol!='ROLE_WRITER'&& rol!='ROLE_ADMIN'"class="promo-lateral">
+      <a class="row membresia-container" href="suscripcion">
+        <h5 class="row titulo-personalizadas">Membresía</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel dui eget felis consectetur consectetur nec et risus. Duis ultrices augue eu odio imperdiet consequat. Mauris quis dictum purus, at efficitur ligula. Aenean ut vehicula nibh, in tempor ligula. Nam aliquam urna quis tincidunt vestibulum. Duis aliquam massa turpis. Aenean eu egestas purus.</p>
+      </a>
+      <a class="row compras-container"  href="ecommerce">
+        <h5 class="row titulo-personalizadas">Club de compras</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel dui eget felis consectetur consectetur nec et risus. Duis ultrices augue eu odio imperdiet consequat. Mauris quis dictum purus, at efficitur ligula. Aenean ut vehicula nibh, in tempor ligula. Nam aliquam urna quis tincidunt vestibulum. Duis aliquam massa turpis. Aenean eu egestas purus.</p>
+      </a>
+      <a class="row suscribete-container"  href="suscripcion">
+        <h5 class="row titulo-personalizadas">Suscríbete</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel dui eget felis consectetur consectetur nec et risus. Duis ultrices augue eu odio imperdiet consequat. Mauris quis dictum purus, at efficitur ligula. Aenean ut vehicula nibh, in tempor ligula. Nam aliquam urna quis tincidunt vestibulum. Duis aliquam massa turpis. Aenean eu egestas purus.</p>
+      </a>
+    </div>
   </div>
 </section>
-

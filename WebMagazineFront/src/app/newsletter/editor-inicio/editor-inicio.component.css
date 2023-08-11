@@ -11,7 +11,7 @@
 
 .boton-central{
     position: absolute;
-    margin-left: 13% !important;
+    margin-left: 25% !important;
 }
 
 .letra-blanca{
@@ -50,6 +50,16 @@
   }
   .seccion-agregar-carrousel{
     padding: 3%;
+  }
+  .inicio{
+    text-align: center;
+    justify-content: center;
+    
+  }
+  .imagen-promo {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%; 
   }
   
   /* Animación para hacer aparecer el texto */
