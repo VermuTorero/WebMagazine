@@ -67,8 +67,11 @@ export class EditUserComponent implements OnInit {
     }else{
       this.getUsuarioFromClaveRecuperacion();
     }
-    this.usuariosService.getDirecciones().subscribe((res2) =>{
-      this.direccionesUsuario = res2;
+    this.usuariosService.getDirecciones().subscribe((direcciones) =>{
+      direcciones.forEach(direccion=> {
+        direccion.idDireccion = this.usuariosService.getId(direccion);
+      });
+      this.direccionesUsuario = direcciones;
     }
     );
     
@@ -113,9 +116,9 @@ export class EditUserComponent implements OnInit {
     })
   }
 
-  eliminarDireccion(): void{
-    this.usuariosService.deleteDireccion(this.usuariosService.extraerUrlDireccion(this.direccionSeleccionada)).subscribe(() =>{
-      this.router.navigate(['']);
+  eliminarDireccion(id: string): void{
+    this.usuariosService.deleteDireccion(id).subscribe(() =>{
+      window.location.reload();
     });
   }
 

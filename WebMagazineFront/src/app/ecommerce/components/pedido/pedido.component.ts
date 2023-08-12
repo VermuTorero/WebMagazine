@@ -74,6 +74,12 @@ export class PedidoComponent implements OnInit {
       usuario.id = this.UsuariosService.getId(usuario);
       this.usuario = usuario;
       console.log(this.usuario);
+    this.UsuariosService.getDirecciones().subscribe(direcciones=>{
+      direcciones.forEach(direccion => {
+        direccion.idDireccion = this.UsuariosService.getId(direccion); 
+      });
+      this.direccionesUsuario = direcciones;
+    })
       //2º sacamos la direccion de envio del usuario
       const url = this.UsuariosService.extraerUrlDireccionUsuario(this.usuario);
       this.UsuariosService.getDirecciones().subscribe((res2) =>{

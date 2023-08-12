@@ -24,7 +24,7 @@ export class PedidosService {
   }
 
   postPedidoProducto(pedidoProducto: PedidoProducto): Observable <PedidoProducto>{
-    return this.http.post<any>(this.endpoint + "/pedidoProductos", pedidoProducto);
+    return this.http.post<any>(this.endpoint + "/pedidosProductos/search/nuevoPedidoProducto", pedidoProducto);
   }
 
   deletePedido(urlPedido: string): Observable<any>{

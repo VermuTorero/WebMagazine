@@ -55,14 +55,15 @@ public class DireccionesController {
 		return usuarioService;
 	}
 
-
-	@GetMapping(path = "direccion/{id}")
-	@ResponseBody
-	public PersistentEntityResource getCategoriaByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
-		Direccion direccion = getDireccionService().findById(id);
-		return assembler.toModel(direccion);
-	}
+//	@PreAuthorize("isAuthenticated()")
+//	@GetMapping(path = "direccion/{id}")
+//	@ResponseBody
+//	public PersistentEntityResource getCategoriaByTitulo(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
+//		Direccion direccion = getDireccionService().findById(id);
+//		return assembler.toModel(direccion);
+//	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(path = "direcciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getDireccionesByUser(PersistentEntityResourceAssembler assembler, HttpServletRequest request) {
@@ -79,6 +80,7 @@ public class DireccionesController {
 		return assembler.toCollectionModel(usuario.getDirecciones());
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(path = "crearDireccion")
 	@ResponseBody
 	public PersistentEntityResource postDireccion(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @RequestBody Direccion direccionNueva) {
@@ -91,7 +93,7 @@ public class DireccionesController {
 		return assembler.toModel(direccion);
 	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@PatchMapping(path = "patchDireccion")
 	@ResponseBody
 	public PersistentEntityResource patchCategoriaById(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @RequestBody Direccion direccionModificada) {
@@ -115,6 +117,7 @@ public class DireccionesController {
 		return assembler.toModel(getDireccionService().save(direccionGuardada));
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(path = "deleteDireccion/{id}")
 	@ResponseBody
 	public void deleteDireccion(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @PathVariable("id") Long id) {
