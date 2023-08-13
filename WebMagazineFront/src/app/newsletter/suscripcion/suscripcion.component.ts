@@ -34,6 +34,7 @@ export class SuscripcionComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
   suscripcion: any[] = [];
   clientId: string = "";
+  precioVino: string = "";
  
 
 
@@ -222,6 +223,7 @@ export class SuscripcionComponent implements OnInit {
   getPayPal(){
     this.payPalService.getPayPal().subscribe(paypal=>{
       this.clientId = paypal.clientId;
+      this.precioVino = paypal.precioVino;
     })
   }
 }

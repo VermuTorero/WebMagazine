@@ -246,4 +246,6 @@ export class PublicacionesComponent implements OnInit {
   setMetaTagsFromLocalStorage() {
     this.metaService.setMetaTagsFromLocalStorage();
   }
+
+
 }

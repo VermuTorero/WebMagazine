@@ -17,6 +17,7 @@ import { MetaService } from '../../service/meta.service';
 import { ClicksService } from '../../service/clicks.service';
 import { Click } from '../../models/Click';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PayPalService } from '../../service/paypal.service';
 declare const twttr: any;
 declare var $: any;
 
@@ -40,7 +41,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
 
   @ViewChild('modalVinoPaypal') modalPaypal: any;
   public payPalConfig?: IPayPalConfig;
-  clientId: string = paypalConfig.clientId;
+  clientId: string = "";
 
 
   constructor(
@@ -54,7 +55,8 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
     private likeService: LikesService,
     private modalService: NgbModal,
     private metaService: MetaService,
-    private clicksService: ClicksService
+    private clicksService: ClicksService,
+    private payPalService: PayPalService
     ) { }
 
   ngOnInit(): void {
@@ -243,7 +245,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
   }
 
   invitarVino() {
-    this.pagar("3");
+    this.getPayPal();
   }
 
   pagar(precio: string): void {
@@ -346,6 +348,13 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.clicksService.postClick(click).subscribe(response=>{
 
       })
+    })
+  }
+      
+  getPayPal(){
+    this.payPalService.getPayPal().subscribe(paypal=>{
+      this.clientId = paypal.clientId;
+      this.pagar("3");
     })
   }
 }

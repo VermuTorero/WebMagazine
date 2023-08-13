@@ -78,6 +78,7 @@ export class SuscripcionFichaComponent implements OnInit {
   getPayPal(){
     this.payPalService.getPayPal().subscribe(paypal=>{
       this.clientIdPayPal = paypal.clientId;
+      this.precioVino = paypal.precioVino;
       sessionStorage.setItem("ClientId", this.clientIdPayPal);
   })
 }
@@ -85,6 +86,7 @@ export class SuscripcionFichaComponent implements OnInit {
   cambiarPayPal(){
     let payPal = new PayPal();
     payPal.clientId = this.clientIdPayPal;
+    payPal.precioVino = this.precioVino;
     this.payPalService.getPayPal().subscribe(paypalAntiguo=>{
       if (paypalAntiguo) {
         this.payPalService.patchPayPal(payPal).subscribe(payPalNuevo=>{

@@ -13,6 +13,8 @@ public class PayPal {
 	private Long id;
 	
 	private String clientId;
+	
+	private String precioVino;
 
 	public PayPal() {
 		super();
@@ -33,6 +35,15 @@ public class PayPal {
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
+
+	public String getPrecioVino() {
+		return precioVino;
+	}
+
+	public void setPrecioVino(String precioVino) {
+		this.precioVino = precioVino;
+	}
+	
 	
 	
 }
