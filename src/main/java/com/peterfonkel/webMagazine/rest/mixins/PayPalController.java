@@ -38,8 +38,6 @@ public class PayPalController {
 	public PayPalController(){
 	}
 	
-	
-
 	public PaypalService getPaypalService() {
 		return paypalService;
 	}
@@ -57,6 +55,7 @@ public class PayPalController {
 	public PersistentEntityResource patchPayPal(PersistentEntityResourceAssembler assembler, @RequestBody PayPal paypalModificado) {
 		PayPal paypal = getPaypalService().getById(1L);
 		paypal.setClientId(paypalModificado.getClientId());
+		paypal.setPrecioVino(paypalModificado.getPrecioVino());
 		return assembler.toModel(getPaypalService().save(paypal));
 	}
 	
