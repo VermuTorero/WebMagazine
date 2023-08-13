@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TipoSuscripcionService } from '../../service/tiposSuscripcion.service';
 import { TipoSuscripcion } from '../../models/TipoSuscripcion';
+import { PayPalScriptService } from 'ngx-paypal';
+import { PayPalService } from '../../service/paypal.service';
+import { PayPal } from '../../models/PayPal';
 declare var $: any;
 
 @Component({
@@ -14,11 +17,13 @@ export class SuscripcionFichaComponent implements OnInit {
   precioVino: string = "";
   clientIdPayPal: string = "";
 
-  constructor(private tiposSuscripcionService: TipoSuscripcionService) {
+  constructor(private tiposSuscripcionService: TipoSuscripcionService,
+    private payPalService: PayPalService) {
 
   }
 
   ngOnInit(): void {
+    this.getPayPal();
     this.getSuscripciones();
 
   }
@@ -68,6 +73,36 @@ export class SuscripcionFichaComponent implements OnInit {
     if (mensajeError) {
       mensajeError.style.display = "none";
     }
+  }
+
+  getPayPal(){
+    this.payPalService.getPayPal().subscribe(paypal=>{
+      this.clientIdPayPal = paypal.clientId;
+      sessionStorage.setItem("ClientId", this.clientIdPayPal);
+  })
+}
+
+  cambiarPayPal(){
+    let payPal = new PayPal();
+    payPal.clientId = this.clientIdPayPal;
+    this.payPalService.getPayPal().subscribe(paypalAntiguo=>{
+      if (paypalAntiguo) {
+        this.payPalService.patchPayPal(payPal).subscribe(payPalNuevo=>{
+
+        })
+      }else{
+        this.payPalService.postPayPal(payPal).subscribe(payPalNuevo=>{
+
+        })
+      }
+    },err=>{
+      this.payPalService.postPayPal(payPal).subscribe(payPalNuevo=>{
+
+      },
+      ()=>{
+        sessionStorage.setItem("CLIENTID", this.clientIdPayPal);
+      })
+    })
   }
   
   

@@ -11,6 +11,7 @@ import { ModalReceiptComponent } from 'src/app/ecommerce/components/modal-receip
 import { paypalConfig } from 'src/environments/paypalConfig';
 import { CropperComponent } from 'angular-cropperjs';
 import { ImagenesService } from '../service/imagenes.service';
+import { PayPalService } from '../service/paypal.service';
 declare var $: any;
 
 @Component({
@@ -32,7 +33,7 @@ export class SuscripcionComponent implements OnInit {
   //variable paypal
   public payPalConfig?: IPayPalConfig;
   suscripcion: any[] = [];
-  clientId: string = paypalConfig.clientId;
+  clientId: string = "";
  
 
 
@@ -41,7 +42,8 @@ export class SuscripcionComponent implements OnInit {
     private usuariosService: UsuariosService,
     private modalService:  NgbModal,
     private spinner: NgxSpinnerService,
-    private imagenesService: ImagenesService) {
+    private imagenesService: ImagenesService,
+    private payPalService: PayPalService) {
 
   }
 
@@ -50,6 +52,7 @@ export class SuscripcionComponent implements OnInit {
     let rol = new Rol();
     rol.rolNombre = "";
     this.usuarioNuevo.roles = [rol];
+    this.getPayPal();
   }
 
   getSuscripciones() {
@@ -216,4 +219,9 @@ export class SuscripcionComponent implements OnInit {
     modalRef.componentInstance.amount = amount
   }
   
+  getPayPal(){
+    this.payPalService.getPayPal().subscribe(paypal=>{
+      this.clientId = paypal.clientId;
+    })
+  }
 }
