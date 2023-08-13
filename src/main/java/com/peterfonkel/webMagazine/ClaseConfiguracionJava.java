@@ -274,28 +274,31 @@ public class ClaseConfiguracionJava {
 		return mapper;
 	}
 	
-	
 	@Bean
 	public void iniciarTareaProgramada() {
-		
-		List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
-		
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+	    List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
+	    
+	    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+	    
+	    Runnable tarea = () -> {
+	        try {
+	            Instant ahora = Instant.now();
+	            for (Publicacion publicacion : listaPublicaciones) {
+	                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
+	                    publicacion.setPublicado(true);
+	                    publicacionesService.save(publicacion);
+	                }
+	            }
+	        } catch (Exception e) {
+	            // Manejar la excepción adecuadamente
+	            e.printStackTrace(); // Opcional: registrar la excepción
+	        }
+	    };
+	    
+	    // Programar la tarea para que se ejecute cada hora
+	    executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
+	}
 
-        
-        Runnable tarea = () -> {
-            Instant ahora = Instant.now();
-            for (Publicacion publicacion : listaPublicaciones) {
-                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
-                    publicacion.setPublicado(true);
-                    publicacionesService.save(publicacion);
-                }
-            }
-        };
-
-        // Programar la tarea para que se ejecute cada hora
-        executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
-    }
 	
 	
 	
