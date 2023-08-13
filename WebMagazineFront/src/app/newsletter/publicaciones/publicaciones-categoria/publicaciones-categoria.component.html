@@ -28,20 +28,20 @@
 <!-- Publicaciones de Entrevidas -->
 <div *ngIf="categoria.categoriaNombre=='Entrevidas' || categoria.categoriaNombre=='Relaciones'" class="row restaurantes">
  <!-- Pantalla grande -->
-  <div class="cards-container-entrevidas d-none d-md-block col-md-2">
+  <div class="cards-container-entrevidas d-none d-lg-block col-lg-2">
     <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12"
       [ngClass]="{'clicked': i === activeCard}" (click)="onClickCard(i)">
       <app-publicacion-entrevidas [publicacion]="publicacion"
         (abrirPublicacionEvent)="abrirPublicacionEntrevidas($event)"></app-publicacion-entrevidas>
     </div>
   </div>
-  <div class="publicacion-seleccionada-container d-none d-md-block col-md-9">
+  <div class="publicacion-seleccionada-container d-none d-lg-block col-lg-9">
     <app-publicacion-completa [publicacion]="publicacionSeleccionada"
       class="publicacion-completa"></app-publicacion-completa>
   </div>
 
   <!-- Pantalla movil -->
-  <div class="cards-container-entrevidas-sm col-12 d-md-none">
+  <div class="cards-container-entrevidas-sm col-12 d-lg-none">
     <div *ngFor="let publicacion of publicaciones" class="card-entrevidas-sm col-12">
       <a href="publicaciones/{{publicacion.url}}">
         <app-publicacion-entrevidas [publicacion]="publicacion"></app-publicacion-entrevidas>
@@ -60,7 +60,7 @@
     <div class="columna-articulos col-12">
       <!-- Seccion articulos gastro recientes-->
       <!-- Pantalla grande -->
-      <section class="seccion-recientes d-none d-md-block">
+      <section class="seccion-recientes d-none d-lg-block">
         <div class="publicaciones-gastro-container row mt-2">
           <div *ngFor="let publicacion of publicaciones; let i = index"
             class="card-gastro col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4" [ngClass]="{'clicked': i === activeCard}"
@@ -79,7 +79,7 @@
         </div>
       </section>
       <!-- Formato movil -->
-      <section class="d-md-none">
+      <section class="d-lg-none">
         <div class="publicaciones-gastro-container row mt-2">
           <div *ngFor="let publicacion of publicaciones"
             class="card col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4">
@@ -95,7 +95,7 @@
           <div id="editor" hidden></div>
         </div>
       </section>
-      <section class="publicacion-gastro-seleccionada-container d-none d-md-block">
+      <section class="publicacion-gastro-seleccionada-container d-none d-lg-block">
         <app-publicacion-completa [publicacion]="publicacionSeleccionada"
           class="publicacion-completa"></app-publicacion-completa>
       </section>
