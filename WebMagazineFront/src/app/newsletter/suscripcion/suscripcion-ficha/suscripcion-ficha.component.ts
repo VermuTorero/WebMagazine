@@ -90,23 +90,18 @@ export class SuscripcionFichaComponent implements OnInit {
     this.payPalService.getPayPal().subscribe(paypalAntiguo=>{
       if (paypalAntiguo) {
         this.payPalService.patchPayPal(payPal).subscribe(payPalNuevo=>{
-
+          $('#modificadoPayPalModal').modal('show');
         })
       }else{
         this.payPalService.postPayPal(payPal).subscribe(payPalNuevo=>{
-
+          $('#modificadoPayPalModal').modal('show');
         })
       }
     },err=>{
       this.payPalService.postPayPal(payPal).subscribe(payPalNuevo=>{
-
-      },
-      ()=>{
-        sessionStorage.setItem("CLIENTID", this.clientIdPayPal);
+        $('#modificadoPayPalModal').modal('show');
       })
     })
   }
   
-  
-
 }

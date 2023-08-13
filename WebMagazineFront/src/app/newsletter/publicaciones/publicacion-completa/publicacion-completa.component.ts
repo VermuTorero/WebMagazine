@@ -42,6 +42,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
   @ViewChild('modalVinoPaypal') modalPaypal: any;
   public payPalConfig?: IPayPalConfig;
   clientId: string = "";
+  precioVino: string = "";
 
 
   constructor(
@@ -354,7 +355,8 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
   getPayPal(){
     this.payPalService.getPayPal().subscribe(paypal=>{
       this.clientId = paypal.clientId;
-      this.pagar("3");
+      this.precioVino = paypal.precioVino;
+      this.pagar(this.precioVino);
     })
   }
 }

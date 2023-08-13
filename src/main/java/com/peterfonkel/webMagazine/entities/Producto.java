@@ -14,7 +14,7 @@ public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProducto;
+    private Long id;
     private String nombreProducto;
     private String descripcionCorta;
     private String descripcionLarga;
@@ -30,14 +30,14 @@ public class Producto {
     }
 
     public Long getId() {
-        return idProducto;
-    }
+		return id;
+	}
+    
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setId(Long id) {
-        this.idProducto = id;
-    }
-
-    public String getNombreProducto() {
+	public String getNombreProducto() {
         return nombreProducto;
     }
 
@@ -77,13 +77,6 @@ public class Producto {
         this.seccion = seccion;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
-    }
 
     public String getUrl() {
         return url;

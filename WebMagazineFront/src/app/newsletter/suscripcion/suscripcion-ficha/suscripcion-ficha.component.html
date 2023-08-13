@@ -11,6 +11,7 @@
     <div class="vinos-container">
       <label class="vinos-label" for="vinos">Precio de la invitación a un vino</label>
       <input class="vinos-input" type="text" [(ngModel)]="precioVino" (keypress)="soloNumeros($event, 1)">
+      <button class="btn btn-sn btn-warning" (click)="cambiarPayPal()">Cambiar</button>
     </div>
   </div>
   <div class="row mb-4 suscripciones justify-content-center mt-4">
@@ -134,3 +135,21 @@
       </div>
     </div>
   </div>
+
+    <!-- Modal confirmar cambio -->
+    <div class="modal fade" id="modificadoPayPalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiado</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>Se han realizado los cambios correctamente</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
