@@ -1,8 +1,10 @@
 <!-- Publicaciones de Restaurantes -->
 <div *ngIf="categoria.categoriaNombre=='Restaurantes' || categoria.categoriaNombre=='Beber bien' " class="restaurantes">
   <div class="titulo-restaurantes-container">
-    <h1 *ngIf="categoria.categoriaNombre=='Restaurantes'" class="titulo-restaurantes">Gastrosofía /<i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
-    <h1 *ngIf="categoria.categoriaNombre=='Beber bien'" class="titulo-restaurantes"><i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
+    <h1 *ngIf="categoria.categoriaNombre=='Restaurantes'" class="titulo-restaurantes">Gastrosofía
+      /<i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
+    <h1 *ngIf="categoria.categoriaNombre=='Beber bien'" class="titulo-restaurantes">
+      <i>&nbsp;{{categoria.categoriaNombre}}</i></h1>
   </div>
 
   <div class="cards-container-restaurante mt-4">
@@ -26,8 +28,9 @@
 
 
 <!-- Publicaciones de Entrevidas -->
-<div *ngIf="categoria.categoriaNombre=='Entrevidas' || categoria.categoriaNombre=='Relaciones'" class="row restaurantes">
- <!-- Pantalla grande -->
+<div *ngIf="categoria.categoriaNombre=='Entrevidas' || categoria.categoriaNombre=='Relaciones'"
+  class="row restaurantes">
+  <!-- Pantalla grande -->
   <div class="cards-container-entrevidas d-none d-lg-block col-lg-2">
     <div *ngFor="let publicacion of publicaciones; let i = index" class="card-entrevidas col-12"
       [ngClass]="{'clicked': i === activeCard}" (click)="onClickCard(i)">
@@ -40,14 +43,14 @@
       class="publicacion-completa"></app-publicacion-completa>
   </div>
 
-  
+
   <!-- Pantalla movil -->
   <div class="cards-container-entrevidas-sm col-12 d-lg-none">
     <div *ngFor="let publicacion of publicaciones" class="card-entrevidas-sm col-12">
       <a href="publicaciones/{{publicacion.url}}">
         <app-publicacion-entrevidas [publicacion]="publicacion"></app-publicacion-entrevidas>
       </a>
-     
+
     </div>
   </div>
 
@@ -82,8 +85,7 @@
       <!-- Formato movil -->
       <section class="d-lg-none">
         <div class="publicaciones-gastro-container row mt-2">
-          <div *ngFor="let publicacion of publicaciones"
-            class="card col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4">
+          <div *ngFor="let publicacion of publicaciones" class="card col-12 col-sm-6 col-lg-4 col-xxl-3 mb-4">
             <app-publicacion [publicacion]="publicacion"></app-publicacion>
           </div>
           <div class="paginas text-center">
@@ -175,24 +177,24 @@
 <!-- Modal Agregar Imagen al contenido de la publicacion-->
 <div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-              <section class="my-2">
-                  <input type="file" accept="images/" (change)="onSelectFile($event)">
-              </section>
-              <section *ngIf="imageUrl">
-                  <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
-              </section>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Insertar Imagen</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+
+        <section class="my-2">
+          <input type="file" accept="images/" (change)="onSelectFile($event)">
+        </section>
+        <section *ngIf="imageUrl">
+          <angular-cropper [imageUrl]="imageUrl" #angularCropper></angular-cropper>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" (click)="getCroppedImage()" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
   </div>
 </div>
