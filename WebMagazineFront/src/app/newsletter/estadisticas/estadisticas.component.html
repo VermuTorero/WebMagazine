@@ -1,16 +1,20 @@
 <section class="botones-container">
-  <select class="selector-tipo" name="criterio" id="">
-    <option class="opcion" value="" (click)="setType('categorias')">Categorias</option>
-    <option class="opcion" value="" (click)="setType('tags')" selected>Tags</option>
+  <select class="selector-tipo" name="criterio" id="" [(ngModel)]="tipo" (change)="getClicks()">
+    <option class="opcion" value="categorias">Categorias</option>
+    <option class="opcion" value="tags" selected>Tags</option>
   </select>
   
-  <select class="selector-tiempo" name="tiempo" id="">
-    <option class="opcion" value="" (click)="setTime('365')" selected>Ultimo año</option>
-    <option class="opcion" value="" (click)="setTime('90')">Ultimo trimestre</option>
-    <option class="opcion" value="" (click)="setTime('30')">Ultimo mes</option>
-    <option class="opcion" value="" (click)="setTime('7')">Ultima semana</option>
-    <option class="opcion" value=""(click)="setTime('1')">Ultimo día</option>
+  
+  
+  <select class="selector-tiempo" name="tiempo" id="" [(ngModel)]="tiempo"  (change)="getClicks()">
+    <option class="opcion" value="365" selected>Ultimo año</option>
+    <option class="opcion" value="90">Ultimo trimestre</option>
+    <option class="opcion" value="30">Ultimo mes</option>
+    <option class="opcion" value="7">Ultima semana</option>
+    <option class="opcion" value="1">Ultimo día</option>
   </select>
+  
+  
 </section>
 
 <div class="chart-container">
