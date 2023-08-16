@@ -302,35 +302,6 @@ public class ClaseConfiguracionJava {
 //	    // Programar la tarea para que se ejecute cada hora
 //	    executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
 //	}
-
-	@Component
-	@EnableScheduling
-	public class TareaProgramada {
-
-	    private final PublicacionesService publicacionesService;
-
-	    public TareaProgramada(PublicacionesService publicacionesService) {
-	        this.publicacionesService = publicacionesService;
-	    }
-
-	    @Scheduled(fixedRate = 3600000) // Ejecutar cada 1 hora (3600000 ms)
-	    public void ejecutarTareaProgramada() {
-	        try {
-	            List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
-
-	            Instant ahora = Instant.now();
-	            for (Publicacion publicacion : listaPublicaciones) {
-	                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
-	                    publicacion.setPublicado(true);
-	                    publicacionesService.save(publicacion);
-	                }
-	            }
-	        } catch (Exception e) {
-	            // Manejar la excepción adecuadamente
-	            e.printStackTrace(); // Opcional: registrar la excepción
-	        }
-	    }
-	}
 	
 	
 }
