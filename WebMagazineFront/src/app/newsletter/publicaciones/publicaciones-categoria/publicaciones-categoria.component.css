@@ -83,6 +83,9 @@ a:link, a:visited, a:active {
     width: 100% !important;
     text-align: center;
 }
+.imagen-categoria{
+    width: 100% !important;
+}
 }
 
 .restaurantes{

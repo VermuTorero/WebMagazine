@@ -30,11 +30,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.relational.core.sql.IdentifierProcessing.LetterCasing;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -300,7 +303,34 @@ public class ClaseConfiguracionJava {
 //	    executorService.scheduleAtFixedRate(tarea, 0, 1, TimeUnit.HOURS);
 //	}
 
-	
+	@Component
+	@EnableScheduling
+	public class TareaProgramada {
+
+	    private final PublicacionesService publicacionesService;
+
+	    public TareaProgramada(PublicacionesService publicacionesService) {
+	        this.publicacionesService = publicacionesService;
+	    }
+
+	    @Scheduled(fixedRate = 3600000) // Ejecutar cada 1 hora (3600000 ms)
+	    public void ejecutarTareaProgramada() {
+	        try {
+	            List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
+
+	            Instant ahora = Instant.now();
+	            for (Publicacion publicacion : listaPublicaciones) {
+	                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
+	                    publicacion.setPublicado(true);
+	                    publicacionesService.save(publicacion);
+	                }
+	            }
+	        } catch (Exception e) {
+	            // Manejar la excepción adecuadamente
+	            e.printStackTrace(); // Opcional: registrar la excepción
+	        }
+	    }
+	}
 	
 	
 }
