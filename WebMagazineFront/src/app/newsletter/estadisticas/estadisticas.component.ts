@@ -167,10 +167,25 @@ export class EstadisticasComponent implements OnInit {
       }
     });
   }
+
+
+  onTimeChange(event: any) {
+    const selectedTime = event.target.value;
+    this.setTime(selectedTime);
+  }
+
   setTime(tiempo: string){
     this.tiempo = tiempo;
     this.getClicks();
   }
+
+
+  
+  onTypeChange(event: any) {
+    const selectedType = event.target.value;
+    this.setType(selectedType);
+  }
+
   setType(tipo: string){
     this.tipo = tipo;
     this.getClicks();
