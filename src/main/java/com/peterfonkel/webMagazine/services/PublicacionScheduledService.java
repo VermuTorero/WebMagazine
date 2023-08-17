@@ -30,9 +30,12 @@ public class PublicacionScheduledService {
             Instant ahora = Instant.now();
             
             for (Publicacion publicacion : listaPublicaciones) {
-                if (!publicacion.isPublicado() && publicacion.getFechaPublicacionFutura().isBefore(ahora)) {
-                    publicacion.setPublicado(true);
-                    publicacionesService.save(publicacion);
+                if (!publicacion.isPublicado()) {
+                    Instant fechaFutura = publicacion.getFechaPublicacionFutura();
+                    if (fechaFutura != null && fechaFutura.isBefore(ahora)) {
+                        publicacion.setPublicado(true);
+                        getPublicacionesService().save(publicacion);
+                    }
                 }
             }
         } catch (Exception e) {
