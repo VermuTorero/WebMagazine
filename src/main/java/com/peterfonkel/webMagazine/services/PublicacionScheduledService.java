@@ -14,11 +14,19 @@ public class PublicacionScheduledService {
 
     @Autowired
     private PublicacionesService publicacionesService;
+    
+    
 
-    @Scheduled(fixedRate = 120000) // 1 hora en milisegundos 3600000
+    public PublicacionesService getPublicacionesService() {
+		return publicacionesService;
+	}
+
+
+
+	@Scheduled(fixedRate = 120000) // 1 hora en milisegundos 3600000
     public void procesarPublicacionesPendientes() {
         try {
-            List<Publicacion> listaPublicaciones = publicacionesService.findByIsPublicadoFalse();
+            List<Publicacion> listaPublicaciones = getPublicacionesService().findByIsPublicadoFalse();
             Instant ahora = Instant.now();
             
             for (Publicacion publicacion : listaPublicaciones) {
