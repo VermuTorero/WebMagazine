@@ -9,12 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.peterfonkel.webMagazine.login.UsuariosController;
 
 
 @SpringBootApplication
 @EnableCaching
+@EnableScheduling
 @ImportResource({ "classpath:config/jpa-config.xml" })
 @Import({ ClaseConfiguracionJava.class})
 public class WebMagazineApplication {
