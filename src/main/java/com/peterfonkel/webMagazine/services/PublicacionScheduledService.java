@@ -23,7 +23,7 @@ public class PublicacionScheduledService {
 
 
 
-	@Scheduled(fixedRate = 120000) // 1 hora en milisegundos 3600000
+	@Scheduled(fixedRate = 3600000) // 1 hora en milisegundos 3600000
     public void procesarPublicacionesPendientes() {
         try {
             List<Publicacion> listaPublicaciones = getPublicacionesService().findByIsPublicadoFalse();
