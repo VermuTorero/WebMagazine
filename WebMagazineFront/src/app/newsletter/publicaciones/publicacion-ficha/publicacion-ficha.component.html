@@ -319,11 +319,11 @@
                 </button>
 
 
-                
+
             </div>
             <div class="col-3 text-center">
-                <button *ngIf=" !publicacion.publicado" type="button" class="btn btn-primary"
-                 data-bs-toggle="modal" data-bs-target="#publicarFuturaModal">
+                <button *ngIf=" !publicacion.publicado" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#publicarFuturaModal">
                     Publicar con fecha futura
                 </button>
             </div>
@@ -566,6 +566,7 @@
                 <p *ngIf="publicacion.lugar.id==''">Debe seleccionar un lugar.</p>
                 <p *ngIf="!urlValida">El título no puede contener los caracteres -, !, $, &, \, (, ), *, +, ',', ;,
                     =, :, /, ?, #, [, ], %</p>
+                <p *ngIf="!publicacion.url">No se esta generando la URL adecuadamente.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -691,7 +692,7 @@
                 <button *ngIf="publicacion.id==''" type="button" class="btn btn-warning"
                     (click)="guardarBorradorNuevo()" data-bs-dismiss="modal">
                     Publicar en la fecha seleccionada (guardado en borradores)
-                </button>   
+                </button>
             </div>
         </div>
     </div>

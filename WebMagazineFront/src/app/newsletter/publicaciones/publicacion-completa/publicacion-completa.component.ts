@@ -76,6 +76,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['publicacion'] && !changes['publicacion'].firstChange) {
+      this.formatoContenidoMultimedia();
       this.showPublicacion();
       this.publicacionesService.getLugarFromPublicacion(this.publicacion).subscribe(lugar=>{
         lugar.id=this.lugarService.getId(lugar);
@@ -104,7 +105,7 @@ export class PublicacionCompletaComponent implements OnInit, OnChanges {
       this.getCategoriaFromPublicacion(publicacion);
       this.getLikes(publicacion);
       this.publicacion = publicacion;
-      this.formatoContenidoMultimedia()
+      this.formatoContenidoMultimedia();
       this.showPublicacion();
       this.metaService.guardarLocalStorageMetaPublicacion(this.publicacion);
       this.metaService.setMetaTagsFromLocalStorage();

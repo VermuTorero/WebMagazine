@@ -62,7 +62,7 @@ public class Publicacion {
 	@ManyToOne
 	private Categoria categoria;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String url;
 	
 	private boolean publicado;
