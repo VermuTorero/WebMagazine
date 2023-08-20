@@ -193,7 +193,6 @@ export class PublicacionFichaComponent implements OnInit {
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
-      this.descargarTxt();
       this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
 
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
@@ -201,6 +200,8 @@ export class PublicacionFichaComponent implements OnInit {
         this.descargarTxt();
         $('#enviadoModal').modal('show');
         this.router.navigate(["/../../publicaciones/" + this.publicacion.url])
+      },err=>{
+        $('#noEnviadoModal').modal('show');
       });
     } else {
       $('#errorModal').modal('show');
