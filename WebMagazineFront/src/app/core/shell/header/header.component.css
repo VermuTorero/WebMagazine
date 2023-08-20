@@ -1,5 +1,5 @@
 
-@media (max-width: 40em) {
+@media (max-width: 62em) {
 
     .navbar{
         /* background-color: rgb(255,109,0,255); */
@@ -74,13 +74,13 @@
     
 }
 
-@media (min-width: 40em) and (max-width:80em){
+@media (min-width: 62em) and (max-width:90em){
 
     .navbar{
         /* background-color: rgb(255,109,0,255); */
         background-color: white;
         margin-top: 1%;
-        margin-left: 0%;
+        margin-left: 6%;
         margin-right: 10% !important;
         padding-right: 0%;
     }
@@ -90,7 +90,7 @@
 
     .navbar-brand {
         font-size: 2vw;
-        width: 85%;
+        width: 30%;
         margin: 0%;
         padding-right: 0%;
     }
@@ -104,9 +104,11 @@
     
     .navbar-nav{
         background-color: black;
-        padding: 0%;
-        margin-right: 0%;
-        padding-right: 0%;
+        padding: 1%;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+        margin-right: 10%;
+        padding-right: 5%;
        
     }
     /* Estilos personalizados para el botón negro */
@@ -127,8 +129,8 @@
         background-color: black;
     }
     .nav-link{
-        font-size: medium;
-        font-family:sans-serif
+        font-size: small;
+        font-family:sans-serif;
     }
     .nav-link:hover{
         opacity: 0.5;
@@ -137,8 +139,8 @@
         width: 5%;
         margin: 0;
         padding-left: 0%;
-        margin-right: 0% !important;
-        padding-bottom: 2% !important;
+        margin-right: 13% !important;
+        padding-bottom: 0% !important;
         font-size: x-small !important;
     }
     
@@ -146,7 +148,7 @@
 
 
 
-@media (min-width: 81em) {
+@media (min-width: 90em) {
     .navbar{
         /* background-color: rgb(255,109,0,255); */
         background-color: white;
