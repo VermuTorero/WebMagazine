@@ -5,8 +5,10 @@
     data-bs-toggle="modal" data-bs-target="#logInModal">Acceder</button>
   <a *ngIf="!isLoggedUser" class="btn btn-outline-light btn-sm boton-login" type="submit"
     href="/suscripcion">Suscríbete</a>
-  <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}}</a>
-</div>
+    <div class="nombre-container">
+      <a class="usuarioLoggeado" href="security/usuario-editar">{{usuario.nombre}} {{usuario.apellido1}} {{usuario.apellido2}}</a>
+    </div>
+  </div>
 <div class="col-12 olvidado-container">
   <a *ngIf="!usuario.nombre" href="security/login/pass-recovery" class="olvidado">¿Has olvidado tu contraseña?</a>
 </div>

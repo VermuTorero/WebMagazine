@@ -191,7 +191,7 @@ app-publicacion {
 }
 
 /* Estilos tamaño movil */
-@media (max-width: 40em) {
+@media (max-width: 525px) {
   .letra-blanca {
     font-size: 1em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -282,7 +282,7 @@ app-publicacion {
   }
 }
 
-@media (min-width: 40em) and (max-width:80em) {
+@media (min-width: 576px) and (max-width:991px) {
   .inicio {
     background-color: black;
     margin: 0% !important;
@@ -387,8 +387,8 @@ app-publicacion {
   }
 
   .lateral-container {
-    margin-top: 3%;
-    width: 25%;
+    margin-top: 2.5%;
+    width: 33%;
   }
   .membresia-container {
     text-align: start;
@@ -423,10 +423,24 @@ app-publicacion {
     text-decoration: none;
     color: black;
   }
+  .personalizadas {
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-left: -4%;
+    padding-left: 0%;
+    width: 100%;
+  }
+
+  .titulo-personalizadas {
+    color: rgb(255, 109, 0, 255);
+    padding-left: 13%;
+    padding-top: 3%;
+  }
 }
 
 /* Estilos tamaño grande */
-@media (min-width: 81em) {
+@media (min-width: 992px) {
   .inicio {
     background-color: black;
     margin: 0% !important;
@@ -472,7 +486,7 @@ app-publicacion {
 
   .lateral-container {
     margin-top: 2.5%;
-    width: 18%;
+    width: 18.5%;
   }
 
   .personalizadas {
@@ -486,7 +500,7 @@ app-publicacion {
 
   .titulo-personalizadas {
     color: rgb(255, 109, 0, 255);
-    padding-left: 10%;
+    padding-left: 13%;
     padding-top: 3%;
   }
 
