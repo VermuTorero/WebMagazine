@@ -280,6 +280,16 @@ app-publicacion {
     padding: 0% !important;
     width: 100% !important;
   }
+  .suscripcion-mini{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
+  .club-compras{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
 }
 
 @media (min-width: 576px) and (max-width:991px) {
@@ -416,6 +426,20 @@ app-publicacion {
     padding-left: 0%;
     border-radius: 5px;
   }
+  .personalizadas {
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-left: -4%;
+    padding-left: 0%;
+    width: 100%;
+  }
+
+  .titulo-personalizadas {
+    color: rgb(255, 109, 0, 255);
+    padding-left: 10%;
+    padding-top: 3%;
+  }
 
   a:link,
   a:visited,
@@ -423,6 +447,7 @@ app-publicacion {
     text-decoration: none;
     color: black;
   }
+<<<<<<< HEAD
   .personalizadas {
     box-shadow: 2px 2px 10px #666;
     border-radius: 5px;
@@ -436,6 +461,17 @@ app-publicacion {
     color: rgb(255, 109, 0, 255);
     padding-left: 13%;
     padding-top: 3%;
+=======
+  .suscripcion-mini{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
+  .club-compras{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+>>>>>>> f7134acb80510d0866014f943e6df84194feac20
   }
 }
 
@@ -511,6 +547,7 @@ app-publicacion {
     box-shadow: 2px 2px 10px #666;
     padding-left: 0%;
     border-radius: 5px;
+    padding-bottom: 5%;
   }
 
   .compras-container {
@@ -536,5 +573,15 @@ app-publicacion {
   a:active {
     text-decoration: none;
     color: black;
+  }
+  .suscripcion-mini{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
+  .club-compras{
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
   }
 }

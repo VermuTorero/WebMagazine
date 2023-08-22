@@ -185,6 +185,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   postPublicacion() {
+    this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
     if (this.verificarCamposObligatorios()) {
       this.setFecha();
       this.setFechaFutura();
@@ -193,14 +194,13 @@ export class PublicacionFichaComponent implements OnInit {
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
-      this.descargarTxt();
-      this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
-
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
         this.getPublicacion();
         this.descargarTxt();
         $('#enviadoModal').modal('show');
         this.router.navigate(["/../../publicaciones/" + this.publicacion.url])
+      },err=>{
+        $('#noEnviadoModal').modal('show');
       });
     } else {
       $('#errorModal').modal('show');
@@ -208,6 +208,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   postPublicacionAutoguardado() {
+    this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
     if (this.verificarCamposObligatorios()) {
       this.setFecha();
       this.setFechaFutura();
@@ -216,7 +217,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
-      this.publicacion.url = this.seoService.generarUrl(this.publicacion.titulo);
+
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
       });
     }
@@ -242,7 +243,7 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   verificarCamposObligatorios(): boolean {
-    if (this.publicacion.titulo != "" && this.publicacion.autor.id != ""
+    if (this.publicacion.url != "" && this.publicacion.titulo != "" && this.publicacion.autor.id != ""
       && this.publicacion.lugar.id != "" && this.publicacion.categoria.id != ""
       && this.publicacion.imagenPreviewUrl != "" && this.publicacion.subtitulo != ""
       && this.texto != "" && this.seoService.validarURL(this.publicacion.titulo)) {
