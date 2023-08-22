@@ -135,8 +135,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientes(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "4") int size // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "4") int size // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 	) {
 		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 
@@ -144,10 +144,10 @@ public class PublicacionesController {
 		List<Publicacion> publicacionesPublicadas = publicaciones.stream().filter(Publicacion::isPublicado)
 				.collect(Collectors.toList());
 
-		// Ordenar las publicaciones por fecha de publicación de manera descendente
+		// Ordenar las publicaciones por fecha de publicaciï¿½n de manera descendente
 		publicacionesPublicadas.sort(Comparator.comparing(Publicacion::getFechaPublicacion, Comparator.reverseOrder()));
 
-		// Obtener las publicaciones correspondientes a la página solicitada
+		// Obtener las publicaciones correspondientes a la pï¿½gina solicitada
 		int startIndex = page * size;
 		int endIndex = Math.min(startIndex + size, publicacionesPublicadas.size());
 		List<Publicacion> publicacionesPagina = publicacionesPublicadas.subList(startIndex, endIndex);
@@ -159,8 +159,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesRecientesFree(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "4") int size // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "4") int size // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 	) {
 		List<Publicacion> publicaciones = getPublicacionesService().findAll();
 
@@ -171,7 +171,7 @@ public class PublicacionesController {
 				.peek(publicacion -> {
 					if (publicacion.isPremium()) {
 						// Si es premium, truncamos el htmlPublicacion para que solo tenga el primer
-						// párrafo
+						// pï¿½rrafo
 						String htmlPublicacion = publicacion.getHtmlPublicacion();
 						int indexOfParagraphEnd = htmlPublicacion.indexOf("</p>");
 						if (indexOfParagraphEnd != -1) {
@@ -273,8 +273,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoria(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@PathVariable("categoriaNombre") String categoriaNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
@@ -290,9 +290,9 @@ public class PublicacionesController {
 		}
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
-																							// las páginas anteriores
+																							// las pï¿½ginas anteriores
 
-				.limit(size) // Tomar solo los resultados de la página actual
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.collect(Collectors.toList());
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
@@ -303,8 +303,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoriaFree(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@PathVariable("categoriaNombre") String categoriaNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
@@ -312,12 +312,12 @@ public class PublicacionesController {
 
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
-																							// las páginas anteriores
-				.limit(size) // Tomar solo los resultados de la página actual
+																							// las pï¿½ginas anteriores
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.peek(publicacion -> {
 					if (publicacion.isPremium()) {
 						// Si es premium, truncamos el htmlPublicacion para que solo tenga el primer
-						// párrafo
+						// pï¿½rrafo
 						String htmlPublicacion = publicacion.getHtmlPublicacion();
 						int indexOfParagraphEnd = htmlPublicacion.indexOf("</p>");
 						if (indexOfParagraphEnd != -1) {
@@ -405,16 +405,16 @@ public class PublicacionesController {
 	@GetMapping(path = "publicacionesByTag/{tagNombre}")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByTag(PersistentEntityResourceAssembler assembler,
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@PathVariable("tagNombre") String tagNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService().findByTags_TagNombreAndIsPublicadoTrue(tagNombre);
 
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
-																							// las páginas anteriores
-				.limit(size) // Tomar solo los resultados de la página actual
+																							// las pï¿½ginas anteriores
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.collect(Collectors.toList());
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
@@ -425,8 +425,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugar(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@PathVariable("lugarNombre") String lugarNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
@@ -434,8 +434,8 @@ public class PublicacionesController {
 
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
-																							// las páginas anteriores
-				.limit(size) // Tomar solo los resultados de la página actual
+																							// las pï¿½ginas anteriores
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.collect(Collectors.toList());
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
@@ -445,8 +445,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesByLugarFree(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@PathVariable("lugarNombre") String lugarNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
@@ -454,12 +454,12 @@ public class PublicacionesController {
 
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
-																							// las páginas anteriores
-				.limit(size) // Tomar solo los resultados de la página actual
+																							// las pï¿½ginas anteriores
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.peek(publicacion -> {
 					if (publicacion.isPremium()) {
 						// Si es premium, truncamos el htmlPublicacion para que solo tenga el primer
-						// párrafo
+						// pï¿½rrafo
 						String htmlPublicacion = publicacion.getHtmlPublicacion();
 						int indexOfParagraphEnd = htmlPublicacion.indexOf("</p>");
 						if (indexOfParagraphEnd != -1) {
@@ -513,8 +513,8 @@ public class PublicacionesController {
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getPublicacionesPorPalabras(
 			PersistentEntityResourceAssembler assembler, 
-			@RequestParam(defaultValue = "0") int page, // Página por defecto es 0 (primera página)
-			@RequestParam(defaultValue = "12") int size, // Tamaño por defecto es 12 (12 resultados por página)
+			@RequestParam(defaultValue = "0") int page, // Pï¿½gina por defecto es 0 (primera pï¿½gina)
+			@RequestParam(defaultValue = "12") int size, // Tamaï¿½o por defecto es 12 (12 resultados por pï¿½gina)
 			@RequestParam("palabrasClave") String[] palabrasClave) {
 
 		Set<String> palabrasClaveFiltradas = new HashSet<>();
@@ -530,7 +530,7 @@ public class PublicacionesController {
 		for (String palabra : palabrasClaveFiltradas) {
 			String palabraNormalizada = Normalizer.normalize(palabra, Normalizer.Form.NFD)
 					.replaceAll("[^\\p{ASCII}]", "") // Eliminamos los acentos
-					.toLowerCase(); // Convertimos a minúsculas
+					.toLowerCase(); // Convertimos a minï¿½sculas
 
 			List<Publicacion> publicacionesPorPalabra = getPublicacionesService()
 					.findByTituloContainingIgnoreCaseAndIsPublicadoTrue(palabraNormalizada);
@@ -539,8 +539,8 @@ public class PublicacionesController {
 
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicacionesEncontradas.stream()
-				.skip(page * size) // Omitir los resultados de las páginas anteriores
-				.limit(size) // Tomar solo los resultados de la página actual
+				.skip(page * size) // Omitir los resultados de las pï¿½ginas anteriores
+				.limit(size) // Tomar solo los resultados de la pï¿½gina actual
 				.collect(Collectors.toList());
 
 		return assembler.toCollectionModel(publicacionesPaginadas);
@@ -636,7 +636,7 @@ public class PublicacionesController {
 	            .limit(2)
 	            .collect(Collectors.toList());
 
-	    List<Publicacion> recommendedPublications = new ArrayList<>();
+	    Set<Publicacion> recommendedPublications = new HashSet<>(); // Usar un conjunto para evitar duplicados
 
 	    for (String tag : topTags) {
 	        List<Publicacion> publicationsWithTag = getPublicacionesService().findByTags_TagNombre(tag);
@@ -648,10 +648,12 @@ public class PublicacionesController {
 	        recommendedPublications.addAll(publicationsWithSingleTag);
 	    }
 
-	    Collections.shuffle(recommendedPublications);
+	    List<Publicacion> limitedPublications = new ArrayList<>(recommendedPublications); // Convertir el conjunto a lista
 
-	    int maxPublicationsToShow = Math.min(recommendedPublications.size(), 5);
-	    List<Publicacion> limitedPublications = recommendedPublications.subList(0, maxPublicationsToShow);
+	    Collections.shuffle(limitedPublications);
+
+	    int maxPublicationsToShow = Math.min(limitedPublications.size(), 5);
+	    limitedPublications = limitedPublications.subList(0, maxPublicationsToShow);
 
 	    return assembler.toCollectionModel(limitedPublications);
 	}
