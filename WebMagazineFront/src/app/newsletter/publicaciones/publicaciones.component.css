@@ -461,134 +461,135 @@ app-publicacion {
     width: 100%;
   }
 
+
   .titulo-personalizadas {
     color: rgb(255, 109, 0, 255);
     padding-left: 13%;
     padding-top: 3%;
-
-    .suscripcion-mini {
-      width: 100%;
-      margin-bottom: 5%;
-      box-shadow: 1px 1px 2px #666;
-    }
-
-    .club-compras {
-      width: 100%;
-      margin-bottom: 5%;
-      box-shadow: 1px 1px 2px #666;
-    }
   }
 
-  /* Estilos tamaño grande */
-  @media (min-width: 992px) {
-    .inicio {
-      background-color: black;
-      margin: 0% !important;
-      padding: 0% !important;
-      width: 85% !important;
-    }
+  .suscripcion-mini {
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
 
-    .texto-carousel {
-      font-size: small;
-    }
+  .club-compras {
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
+}
 
-    .texto-titulo {
-      font-size: medium;
+/* Estilos tamaño grande */
+@media (min-width: 992px) {
+  .inicio {
+    background-color: black;
+    margin: 0% !important;
+    padding: 0% !important;
+    width: 85% !important;
+  }
 
-    }
+  .texto-carousel {
+    font-size: small;
+  }
 
-    .letra-blanca {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
+  .texto-titulo {
+    font-size: medium;
 
-    .letra-negra {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
+  }
 
-    .boton-buscador {
-      width: 20%;
-    }
+  .letra-blanca {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
 
-    .inicio-container {
-      display: flex;
-      justify-content: center;
-    }
+  .letra-negra {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .boton-buscador {
+    width: 20%;
+  }
+
+  .inicio-container {
+    display: flex;
+    justify-content: center;
+  }
 
 
-    .zona-articulos {
-      margin-top: 1% !important;
-      margin-left: 5% !important;
-      text-align: center;
-      margin-left: 0%;
-      padding: 0;
-      width: 95% !important;
-    }
+  .zona-articulos {
+    margin-top: 1% !important;
+    margin-left: 5% !important;
+    text-align: center;
+    margin-left: 0%;
+    padding: 0;
+    width: 95% !important;
+  }
 
-    .lateral-container {
-      margin-top: 2.5%;
-      width: 18.5%;
-    }
+  .lateral-container {
+    margin-top: 2.5%;
+    width: 18.5%;
+  }
 
-    .personalizadas {
-      box-shadow: 2px 2px 10px #666;
-      border-radius: 5px;
-      margin-top: 4%;
-      margin-left: -4%;
-      padding-left: 0%;
-      width: 100%;
-    }
+  .personalizadas {
+    box-shadow: 2px 2px 10px #666;
+    border-radius: 5px;
+    margin-top: 4%;
+    margin-left: -4%;
+    padding-left: 0%;
+    width: 100%;
+  }
 
-    .titulo-personalizadas {
-      color: rgb(255, 109, 0, 255);
-      padding-left: 13%;
-      padding-top: 3%;
-    }
+  .titulo-personalizadas {
+    color: rgb(255, 109, 0, 255);
+    padding-left: 13%;
+    padding-top: 3%;
+  }
 
-    .membresia-container {
-      text-align: start;
-      margin-top: 2.5%;
-      width: 100%;
-      box-shadow: 2px 2px 10px #666;
-      padding-left: 0%;
-      border-radius: 5px;
-      padding-bottom: 5%;
-    }
+  .membresia-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+    padding-bottom: 5%;
+  }
 
-    .compras-container {
-      text-align: start;
-      margin-top: 2.5%;
-      width: 100%;
-      box-shadow: 2px 2px 10px #666;
-      padding-left: 0%;
-      border-radius: 5px;
-    }
+  .compras-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+  }
 
-    .suscribete-container {
-      text-align: start;
-      margin-top: 2.5%;
-      width: 100%;
-      box-shadow: 2px 2px 10px #666;
-      padding-left: 0%;
-      border-radius: 5px;
-    }
+  .suscribete-container {
+    text-align: start;
+    margin-top: 2.5%;
+    width: 100%;
+    box-shadow: 2px 2px 10px #666;
+    padding-left: 0%;
+    border-radius: 5px;
+  }
 
-    a:link,
-    a:visited,
-    a:active {
-      text-decoration: none;
-      color: black;
-    }
+  a:link,
+  a:visited,
+  a:active {
+    text-decoration: none;
+    color: black;
+  }
 
-    .suscripcion-mini {
-      width: 100%;
-      margin-bottom: 5%;
-      box-shadow: 1px 1px 2px #666;
-    }
+  .suscripcion-mini {
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
+  }
 
-    .club-compras {
-      width: 100%;
-      margin-bottom: 5%;
-      box-shadow: 1px 1px 2px #666;
-    }
+  .club-compras {
+    width: 100%;
+    margin-bottom: 5%;
+    box-shadow: 1px 1px 2px #666;
   }
 }
