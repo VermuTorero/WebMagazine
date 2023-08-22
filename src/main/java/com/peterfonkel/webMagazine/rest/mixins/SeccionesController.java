@@ -42,7 +42,8 @@ public class SeccionesController {
 	public SeccionService getSeccionesService() {
 		return seccionService;
 	}
-
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(path = "secciones")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> getSecciones(PersistentEntityResourceAssembler assembler) {
