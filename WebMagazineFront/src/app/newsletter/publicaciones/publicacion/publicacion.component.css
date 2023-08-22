@@ -134,7 +134,6 @@
 /* Estilos tamaño grande */
 @media (min-width: 992px) {
 
-<<<<<<< HEAD
     .card-image {
         box-shadow: 2px 2px 10px #666;
         background-color: rgb(255, 109, 0, 255);
@@ -198,7 +197,6 @@
       }
     
 }
-=======
 .categoria {
     transform: rotate(-3deg);
     position: absolute;
@@ -218,4 +216,3 @@
     font-size: small;
     font-style: italic;
   }
->>>>>>> f7134acb80510d0866014f943e6df84194feac20

@@ -280,12 +280,14 @@ app-publicacion {
     padding: 0% !important;
     width: 100% !important;
   }
-  .suscripcion-mini{
+
+  .suscripcion-mini {
     width: 100%;
     margin-bottom: 5%;
     box-shadow: 1px 1px 2px #666;
   }
-  .club-compras{
+
+  .club-compras {
     width: 100%;
     margin-bottom: 5%;
     box-shadow: 1px 1px 2px #666;
@@ -400,6 +402,7 @@ app-publicacion {
     margin-top: 2.5%;
     width: 33%;
   }
+
   .membresia-container {
     text-align: start;
     margin-top: 2.5%;
@@ -426,6 +429,7 @@ app-publicacion {
     padding-left: 0%;
     border-radius: 5px;
   }
+
   .personalizadas {
     box-shadow: 2px 2px 10px #666;
     border-radius: 5px;
@@ -447,83 +451,6 @@ app-publicacion {
     text-decoration: none;
     color: black;
   }
-<<<<<<< HEAD
-  .personalizadas {
-    box-shadow: 2px 2px 10px #666;
-    border-radius: 5px;
-    margin-top: 4%;
-    margin-left: -4%;
-    padding-left: 0%;
-    width: 100%;
-  }
-
-  .titulo-personalizadas {
-    color: rgb(255, 109, 0, 255);
-    padding-left: 13%;
-    padding-top: 3%;
-=======
-  .suscripcion-mini{
-    width: 100%;
-    margin-bottom: 5%;
-    box-shadow: 1px 1px 2px #666;
-  }
-  .club-compras{
-    width: 100%;
-    margin-bottom: 5%;
-    box-shadow: 1px 1px 2px #666;
->>>>>>> f7134acb80510d0866014f943e6df84194feac20
-  }
-}
-
-/* Estilos tamaño grande */
-@media (min-width: 992px) {
-  .inicio {
-    background-color: black;
-    margin: 0% !important;
-    padding: 0% !important;
-    width: 85% !important;
-  }
-
-  .texto-carousel {
-    font-size: small;
-  }
-
-  .texto-titulo {
-    font-size: medium;
-
-  }
-
-  .letra-blanca {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .letra-negra {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  }
-
-  .boton-buscador {
-    width: 20%;
-  }
-
-  .inicio-container {
-    display: flex;
-    justify-content: center;
-  }
-
-
-  .zona-articulos {
-    margin-top: 1% !important;
-    margin-left: 5% !important;
-    text-align: center;
-    margin-left: 0%;
-    padding: 0;
-    width: 95% !important;
-  }
-
-  .lateral-container {
-    margin-top: 2.5%;
-    width: 18.5%;
-  }
 
   .personalizadas {
     box-shadow: 2px 2px 10px #666;
@@ -538,50 +465,130 @@ app-publicacion {
     color: rgb(255, 109, 0, 255);
     padding-left: 13%;
     padding-top: 3%;
+
+    .suscripcion-mini {
+      width: 100%;
+      margin-bottom: 5%;
+      box-shadow: 1px 1px 2px #666;
+    }
+
+    .club-compras {
+      width: 100%;
+      margin-bottom: 5%;
+      box-shadow: 1px 1px 2px #666;
+    }
   }
 
-  .membresia-container {
-    text-align: start;
-    margin-top: 2.5%;
-    width: 100%;
-    box-shadow: 2px 2px 10px #666;
-    padding-left: 0%;
-    border-radius: 5px;
-    padding-bottom: 5%;
-  }
+  /* Estilos tamaño grande */
+  @media (min-width: 992px) {
+    .inicio {
+      background-color: black;
+      margin: 0% !important;
+      padding: 0% !important;
+      width: 85% !important;
+    }
 
-  .compras-container {
-    text-align: start;
-    margin-top: 2.5%;
-    width: 100%;
-    box-shadow: 2px 2px 10px #666;
-    padding-left: 0%;
-    border-radius: 5px;
-  }
+    .texto-carousel {
+      font-size: small;
+    }
 
-  .suscribete-container {
-    text-align: start;
-    margin-top: 2.5%;
-    width: 100%;
-    box-shadow: 2px 2px 10px #666;
-    padding-left: 0%;
-    border-radius: 5px;
-  }
+    .texto-titulo {
+      font-size: medium;
 
-  a:link,
-  a:visited,
-  a:active {
-    text-decoration: none;
-    color: black;
-  }
-  .suscripcion-mini{
-    width: 100%;
-    margin-bottom: 5%;
-    box-shadow: 1px 1px 2px #666;
-  }
-  .club-compras{
-    width: 100%;
-    margin-bottom: 5%;
-    box-shadow: 1px 1px 2px #666;
+    }
+
+    .letra-blanca {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .letra-negra {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .boton-buscador {
+      width: 20%;
+    }
+
+    .inicio-container {
+      display: flex;
+      justify-content: center;
+    }
+
+
+    .zona-articulos {
+      margin-top: 1% !important;
+      margin-left: 5% !important;
+      text-align: center;
+      margin-left: 0%;
+      padding: 0;
+      width: 95% !important;
+    }
+
+    .lateral-container {
+      margin-top: 2.5%;
+      width: 18.5%;
+    }
+
+    .personalizadas {
+      box-shadow: 2px 2px 10px #666;
+      border-radius: 5px;
+      margin-top: 4%;
+      margin-left: -4%;
+      padding-left: 0%;
+      width: 100%;
+    }
+
+    .titulo-personalizadas {
+      color: rgb(255, 109, 0, 255);
+      padding-left: 13%;
+      padding-top: 3%;
+    }
+
+    .membresia-container {
+      text-align: start;
+      margin-top: 2.5%;
+      width: 100%;
+      box-shadow: 2px 2px 10px #666;
+      padding-left: 0%;
+      border-radius: 5px;
+      padding-bottom: 5%;
+    }
+
+    .compras-container {
+      text-align: start;
+      margin-top: 2.5%;
+      width: 100%;
+      box-shadow: 2px 2px 10px #666;
+      padding-left: 0%;
+      border-radius: 5px;
+    }
+
+    .suscribete-container {
+      text-align: start;
+      margin-top: 2.5%;
+      width: 100%;
+      box-shadow: 2px 2px 10px #666;
+      padding-left: 0%;
+      border-radius: 5px;
+    }
+
+    a:link,
+    a:visited,
+    a:active {
+      text-decoration: none;
+      color: black;
+    }
+
+    .suscripcion-mini {
+      width: 100%;
+      margin-bottom: 5%;
+      box-shadow: 1px 1px 2px #666;
+    }
+
+    .club-compras {
+      width: 100%;
+      margin-bottom: 5%;
+      box-shadow: 1px 1px 2px #666;
+    }
   }
 }
