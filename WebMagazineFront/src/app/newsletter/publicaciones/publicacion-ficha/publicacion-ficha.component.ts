@@ -217,8 +217,9 @@ export class PublicacionFichaComponent implements OnInit {
       this.tagsSeleccionadas.forEach(tag => {
         this.publicacion.tags.push(tag)
       });
-
       this.publicacionesService.postPublicacion(this.publicacion).subscribe(publicacion => {
+        this.id = this.publicacionesService.getId(publicacion);
+        this.getPublicacion();
       });
     }
   }
