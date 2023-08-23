@@ -20,6 +20,7 @@ public class Producto {
     private String descripcionLarga;
     private Float precio;
     private String url;
+    private String emailVendedor;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -85,6 +86,14 @@ public class Producto {
     public void setUrl(String url) {
         this.url = url;
     }
+
+	public String getEmailVendedor() {
+		return emailVendedor;
+	}
+
+	public void setEmailVendedor(String emailVendedor) {
+		this.emailVendedor = emailVendedor;
+	}
 
     
 }

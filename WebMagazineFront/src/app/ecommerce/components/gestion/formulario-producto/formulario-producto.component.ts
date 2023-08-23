@@ -17,7 +17,7 @@ export class FormularioProductoComponent implements OnInit {
   @ViewChild('angularCropper') angularCropper: CropperComponent =
     new CropperComponent();
 
-  nuevoProducto: Product = new Product('', '', '', '', 0, '', new Seccion());
+  nuevoProducto: Product = new Product('', '', '', '', 0, '', new Seccion(), '');
   secciones: Seccion[] = [];
   seccionSeleccionada: Seccion = new Seccion();
 
@@ -49,7 +49,8 @@ export class FormularioProductoComponent implements OnInit {
       descripcionLarga: ['', [Validators.required, Validators.maxLength(100)]],
       precio: ['', [Validators.required, Validators.min(0)]],
       seccion: [new Seccion(), Validators.required],
-      url: ['']
+      url: [''],
+      vendedorExterno: ['', [Validators.email, Validators.maxLength(50)]],
     });
     /*-----------------------------------*/
   }

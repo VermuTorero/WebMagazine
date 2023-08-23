@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let producto of productos$ | async">
+      <tr *ngFor="let producto of productos">
         <td><ngb-highlight [result]="producto.id | number" [term]="filter.value"></ngb-highlight></td>
         <td> <ngb-highlight [result]="producto.nombreProducto" [term]="filter.value"></ngb-highlight></td>
         <td> <ngb-highlight [result]="producto.precio | number" [term]="filter.value"></ngb-highlight></td>

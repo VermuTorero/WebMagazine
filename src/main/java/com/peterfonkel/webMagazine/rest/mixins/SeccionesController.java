@@ -1,9 +1,5 @@
 package com.peterfonkel.webMagazine.rest.mixins;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Seccion;
-import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
-import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.SeccionService;
 
 @RepositoryRestController

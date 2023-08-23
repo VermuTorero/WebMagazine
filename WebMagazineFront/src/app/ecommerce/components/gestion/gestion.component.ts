@@ -31,6 +31,11 @@ filter: FormControl;
 ngOnInit(): void {
 this.productoService.getProducts().subscribe((res) =>{
   this.productos = res;
+  this.productos.forEach(producto => {
+    producto.id = this.productoService.getIdProducto(producto);
+  });
+  
+  console.log(this.productos)
 });
  
 }
@@ -48,6 +53,7 @@ search(text: string, pipe: PipeTransform, productos: Product[]): Product[] {
 }
 
 eliminarProducto(id: string){
+  console.log("ID ELIMINAR: ", id)
   this.productoService.eliminarProducto(id).subscribe(() =>{
     console.log("eliminado");
     window.location.reload();

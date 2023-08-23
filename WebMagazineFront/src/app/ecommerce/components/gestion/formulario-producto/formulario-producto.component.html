@@ -72,6 +72,15 @@
         </small>
       </div>
     </div>
+    <div class="form-group col-md-4 m-1">
+      <label for="vendedorExterno">Email vendedor externo</label>
+      <input type="email"  class="form-control" id="vendedorExterno" formControlName="vendedorExterno">
+    </div>
+    <div *ngIf="formularioProducto.invalid && submit">
+      <small *ngIf="formularioProducto.controls['vendedorExterno'].errors?.['email']" class="text-danger">
+        No es una direccion de email válida.
+      </small>
+    </div>
   </div>
   <!-- Imagen -->
   <div class="col-md-4">
