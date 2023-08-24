@@ -95,9 +95,9 @@ public class PedidosController {
   	@ResponseBody
   	public CollectionModel<PersistentEntityResource> getProductosPedido(PersistentEntityResourceAssembler assembler, @PathVariable ("idPedido") Long idPedido) {
     	Pedido pedido = getPedidoDAO().findByIdPedido(idPedido);
-    	logger.info("PEDIDO: ", pedido);
+    	logger.info("PEDIDO: " + pedido);
     	List<PedidoProducto> productosPedido = pedido.getProductos();
-    	logger.info("Productos: ", productosPedido);
+    	logger.info("Productos: " + productosPedido);
   		return assembler.toCollectionModel(productosPedido);
   	}
 
