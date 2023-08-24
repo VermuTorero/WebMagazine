@@ -5,11 +5,15 @@ import com.peterfonkel.webMagazine.entities.Direccion;
 
 import com.peterfonkel.webMagazine.entities.Pedido;
 import com.peterfonkel.webMagazine.entities.PedidoProducto;
+import com.peterfonkel.webMagazine.entities.Publicacion;
 import com.peterfonkel.webMagazine.login.usuarios.UsuarioDAO;
 import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.DireccionDAO;
 import com.peterfonkel.webMagazine.repositories.PedidoDAO;
 import com.peterfonkel.webMagazine.repositories.PedidoProductoDAO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
@@ -24,6 +28,8 @@ import java.util.List;
 @RequestMapping(path = "/pedidos/search")
 @CrossOrigin
 public class PedidosController {
+	
+	private final static Logger logger = LoggerFactory.getLogger(Publicacion.class);
 
     @Autowired
     PedidoDAO pedidoDAO;
@@ -88,8 +94,10 @@ public class PedidosController {
     @GetMapping(path = "productosPedido/{idPedido}")
   	@ResponseBody
   	public CollectionModel<PersistentEntityResource> getProductosPedido(PersistentEntityResourceAssembler assembler, @PathVariable ("idPedido") Long idPedido) {
-  		Pedido pedido = getPedidoDAO().findByIdPedido(idPedido);
+    	Pedido pedido = getPedidoDAO().findByIdPedido(idPedido);
+    	logger.info("PEDIDO: ", pedido);
     	List<PedidoProducto> productosPedido = pedido.getProductos();
+    	logger.info("Productos: ", productosPedido);
   		return assembler.toCollectionModel(productosPedido);
   	}
 
