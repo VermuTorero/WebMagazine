@@ -109,7 +109,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           })
         });
-        if (this.categoria.categoriaNombre == "Restaurantes") {
+        if (this.categoria.categoriaNombre == "Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
         if (this.categoria.categoriaNombre == "Entrevidas" || this.categoria.categoriaNombre == "Patata Santa"
@@ -146,7 +146,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           })
         });
-        if (this.categoria.categoriaNombre == "Restaurantes") {
+        if (this.categoria.categoriaNombre == "Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
           this.agruparElementosPorFilas(this.publicaciones);
         }
         if (this.categoria.categoriaNombre == "Entrevidas" || this.categoria.categoriaNombre == "Patata Santa"
@@ -241,7 +241,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
     /* Para usuarios con suscripcion */
     if (this.rol == "ROLE_ADMIN" || this.rol == "ROLE_WRITER" || this.rol == "ROLE_USER_SUSCRIBED" || this.rol == "ROLE_USER_MEMBER") {
       this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
-        this.publicaciones.forEach(publicacion => {
+        
+        publicaciones.forEach(publicacion => {
           publicacion.id = this.publicacionesService.getId(publicacion);
           this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
             publicacion.categoria = categoria;
@@ -250,6 +251,10 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           })
         });
+        this.publicaciones = publicaciones;
+        if (this.categoria.categoriaNombre=="Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
+          this.agruparElementosPorFilas(this.publicaciones);
+        }
       }, err => {
         this.pagina--;
       })
@@ -257,8 +262,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
       /* Para usuarios sin suscripcion */
       this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
         if (publicaciones) {
-          this.publicaciones = publicaciones;
-          this.publicaciones.forEach(publicacion => {
+          publicaciones.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
             this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
               publicacion.categoria = categoria;
@@ -268,7 +272,10 @@ export class PublicacionesCategoriaComponent implements OnInit {
             })
           });
         }
-
+        this.publicaciones = publicaciones;
+        if (this.categoria.categoriaNombre=="Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
+          this.agruparElementosPorFilas(this.publicaciones);
+        }
       }, err => {
         this.pagina--;
       })
@@ -281,8 +288,7 @@ export class PublicacionesCategoriaComponent implements OnInit {
       if (this.pagina > 0) {
         this.pagina--;
         this.publicacionesService.getPublicacionesByCategoriaPagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
-          this.publicaciones = publicaciones;
-          this.publicaciones.forEach(publicacion => {
+          publicaciones.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
             this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
               publicacion.categoria = categoria;
@@ -291,6 +297,10 @@ export class PublicacionesCategoriaComponent implements OnInit {
               })
             })
           });
+          this.publicaciones = publicaciones;
+          if (this.categoria.categoriaNombre=="Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
+            this.agruparElementosPorFilas(this.publicaciones);
+          }
         })
       }
     } else {
@@ -298,8 +308,8 @@ export class PublicacionesCategoriaComponent implements OnInit {
       if (this.pagina > 0) {
         this.pagina--;
         this.publicacionesService.getPublicacionesByCategoriaFreePagina(this.categoria.categoriaNombre, this.pagina).subscribe(publicaciones => {
-          this.publicaciones = publicaciones;
-          this.publicaciones.forEach(publicacion => {
+          
+          publicaciones.forEach(publicacion => {
             publicacion.id = this.publicacionesService.getId(publicacion);
             this.publicacionesService.getCategoriaFromPublicacion(publicacion).subscribe(categoria => {
               publicacion.categoria = categoria;
@@ -308,12 +318,22 @@ export class PublicacionesCategoriaComponent implements OnInit {
               })
             })
           });
+          this.publicaciones = publicaciones;
+          if (this.categoria.categoriaNombre=="Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
+            this.agruparElementosPorFilas(this.publicaciones);
+          }
         })
       }
+    }
+    if (this.categoria.categoriaNombre=="Restaurantes" || this.categoria.categoriaNombre == "Beber bien") {
+      this.agruparElementosPorFilas(this.publicaciones);
     }
   }
   // En el componente correspondiente (por ejemplo, app.component.ts)
   agruparElementosPorFilas(elementos: any[]) {
+    this.publicacionesRestauranteFila1 =[];
+    this.publicacionesRestauranteFila2 =[];
+    this.publicacionesRestauranteFila3 =[];
     for (let index = 0; index < this.publicaciones.length; index++) {
       if (index < 3) {
         this.publicacionesRestauranteFila1.push(this.publicaciones[index])
@@ -324,7 +344,6 @@ export class PublicacionesCategoriaComponent implements OnInit {
       if (index > 4) {
         this.publicacionesRestauranteFila3.push(this.publicaciones[index])
       }
-
     }
   }
   abrirPublicacionEntrevidas(publicacion: any) {

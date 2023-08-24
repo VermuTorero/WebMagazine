@@ -170,6 +170,9 @@ export class PublicacionFichaComponent implements OnInit {
   }
 
   publicarModificada() {
+    if (this.publicacion.fechaPublicacion=="") {
+      this.publicacion.fechaPublicacion = Date.now().toString() + "T00:00:00.000Z";
+    }
     this.publicacion.publicado = true;
     this.patchPublicacion();
   }
@@ -544,7 +547,7 @@ export class PublicacionFichaComponent implements OnInit {
   autoGuardado() {
     setInterval(() => {
       if (!this.publicacion.publicado) {
-        if (this.publicacion.fechaPublicacion = "") {
+        if (this.publicacion.fechaPublicacion == "") {
           this.postPublicacionAutoguardado();
         } else {
           this.patchPublicacionAutoguardado();

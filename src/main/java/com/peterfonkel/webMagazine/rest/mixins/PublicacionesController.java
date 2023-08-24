@@ -310,6 +310,16 @@ public class PublicacionesController {
 		List<Publicacion> publicaciones = getPublicacionesService()
 				.findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
 
+		if(categoriaNombre.equals("Restaurantes") || categoriaNombre.equals("Beber bien")) {
+			size = 8;
+		}
+		if(categoriaNombre.equals("Entrevidas")) {
+			size = 5;
+		}
+		if(categoriaNombre.equals("Patata Santa") || categoriaNombre.equals("Bares") || categoriaNombre.equals("Mercados")) {
+			size = 4;
+		}
+		
 		// Aplicar paginado
 		List<Publicacion> publicacionesPaginadas = publicaciones.stream().skip(page * size) // Omitir los resultados de
 																							// las p�ginas anteriores
