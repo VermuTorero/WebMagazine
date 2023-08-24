@@ -12,4 +12,6 @@ public interface PedidoProductoDAO extends JpaRepository<PedidoProducto, Long> {
     @Override
 	List<PedidoProducto> findAll();
 
+    List<PedidoProducto> findByPedido_IdPedido(Long idPedido);
+
 }
