@@ -84,5 +84,13 @@ public class PedidosController {
 		List<Pedido> pedidosCerrados = getPedidoDAO().findByIsCerradoIsTrue();
 		return assembler.toCollectionModel(pedidosCerrados);
 	}
+    
+    @GetMapping(path = "productosPedido/{idPedido}")
+  	@ResponseBody
+  	public CollectionModel<PersistentEntityResource> getProductosPedido(PersistentEntityResourceAssembler assembler, @PathVariable ("idPedido") Long idPedido) {
+  		Pedido pedido = getPedidoDAO().findByIdPedido(idPedido);
+    	List<PedidoProducto> productosPedido = pedido.getProductos();
+  		return assembler.toCollectionModel(productosPedido);
+  	}
 
 }

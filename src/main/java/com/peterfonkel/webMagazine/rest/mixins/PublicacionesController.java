@@ -274,14 +274,12 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoria(
 			PersistentEntityResourceAssembler assembler, 
 			@RequestParam(defaultValue = "0") int page, // P�gina por defecto es 0 (primera p�gina)
-			@RequestParam(defaultValue = "12") int size, // Tama�o por defecto es 12 (12 resultados por p�gina)
+			@RequestParam(defaultValue = "8") int size, // Tama�o por defecto es 12 (12 resultados por p�gina)
 			@PathVariable("categoriaNombre") String categoriaNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
 				.findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
-		if(categoriaNombre.equals("Restaurantes")) {
-			size = 8;
-		}
+
 		if(categoriaNombre.equals("Entrevidas")) {
 			size = 5;
 		}
@@ -304,15 +302,12 @@ public class PublicacionesController {
 	public CollectionModel<PersistentEntityResource> getPublicacionesCategoriaFree(
 			PersistentEntityResourceAssembler assembler, 
 			@RequestParam(defaultValue = "0") int page, // P�gina por defecto es 0 (primera p�gina)
-			@RequestParam(defaultValue = "12") int size, // Tama�o por defecto es 12 (12 resultados por p�gina)
+			@RequestParam(defaultValue = "8") int size, // Tama�o por defecto es 12 (12 resultados por p�gina)
 			@PathVariable("categoriaNombre") String categoriaNombre) {
 
 		List<Publicacion> publicaciones = getPublicacionesService()
 				.findByCategoria_categoriaNombreAndIsPublicadoTrue(categoriaNombre);
 
-		if(categoriaNombre.equals("Restaurantes") || categoriaNombre.equals("Beber bien")) {
-			size = 8;
-		}
 		if(categoriaNombre.equals("Entrevidas")) {
 			size = 5;
 		}

@@ -29,32 +29,16 @@ export class PedidoDetalleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const pedidoId = this.route.snapshot.params['id'];
-  
-    this.pedidoService.getPedido(pedidoId).pipe(
-      switchMap((pedidoRes) => {
-        this.pedido = pedidoRes;
 
-        const usuarioInfo = this.usuariosService.getUsuario(this.pedidoService.extraerUsuarioPedido(this.pedido));
-        const direccionEntrega = this.pedidoService.getDireccionEntrega(this.pedidoService.extraerDireccionPedido(this.pedido));
-        const productosPedido = this.pedidoService.getProductosPedido(this.pedidoService.extraerProductosPedido(this.pedido));
-  
-        return forkJoin([usuarioInfo, direccionEntrega, productosPedido]);
-      })
-    ).subscribe(([usuario, direccion, arrayPedidoProductos]) => {
-     
-      this.pedido.usuario = usuario;
-      this.pedido.direccionEntrega = direccion;
-      this.pedido.productos = arrayPedidoProductos;
-  
-      const productoObservables = arrayPedidoProductos.map(productoPedido =>
-        this.productoService.getProductoPorUrl(this.pedidoService.extraerProductoPedidoProducto(productoPedido))
-      );
-  
-      forkJoin(productoObservables).subscribe((productos) => {
-        this.productos = productos;
-      });
-    });
+    const pedidoId = this.route.snapshot.params['id'];
+    this.getPedido(pedidoId);
+  }
+  getPedido(id: string){
+    this.pedidoService.getPedido(id).subscribe(pedido=>{
+      pedido.idPedido = this.pedidoService.getIdPedido(pedido);
+      this.pedido = pedido;
+      this.pedidoService.getProductosPedido(pedido)
+    })
   }
 
   fechaMinimaEnvio():NgbDateStruct {

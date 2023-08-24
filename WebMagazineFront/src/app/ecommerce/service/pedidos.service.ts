@@ -65,8 +65,8 @@ export class PedidosService {
     return this.http.get<any>(this.endpoint + "/pedidos/search/pedidos-cerrados").pipe(map(response=>response._embedded.pedidos));
   }
 
-  getProductosPedido(url:string): Observable<PedidoProducto[]>{
-    return this.http.get<any>(url).pipe(map(response=>response._embedded.pedidosProductos));
+  getProductosPedido(pedido: Pedido): Observable<PedidoProducto[]>{
+    return this.http.get<any>(this.endpoint + "/pedidos/search/productosPedido/ + pedido.idPedido").pipe(map(response=>response._embedded.pedidosProductos));
   }
 
   getIdPedido(p: any): string {
