@@ -66,7 +66,7 @@ export class PedidosService {
   }
 
   getProductosPedido(pedido: Pedido): Observable<PedidoProducto[]>{
-    return this.http.get<any>(this.endpoint + "/pedidos/search/productosPedido/ + pedido.idPedido").pipe(map(response=>response._embedded.pedidosProductos));
+    return this.http.get<any>(this.endpoint + "/pedidos/search/productosPedido/" + pedido.idPedido).pipe(map(response=>response._embedded.pedidoProductos));
   }
 
   getIdPedido(p: any): string {

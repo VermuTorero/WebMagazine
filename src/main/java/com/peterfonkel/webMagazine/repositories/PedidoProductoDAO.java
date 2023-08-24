@@ -7,7 +7,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.peterfonkel.webMagazine.entities.PedidoProducto;
 
-@RepositoryRestResource(path = "pedidoProductos", itemResourceRel = "pedidoProducto", collectionResourceRel = "pedidosProductos")
+@RepositoryRestResource(path = "pedidoProductos", itemResourceRel = "pedidoProducto", collectionResourceRel = "pedidoProductos")
 public interface PedidoProductoDAO extends JpaRepository<PedidoProducto, Long> {
     @Override
 	List<PedidoProducto> findAll();

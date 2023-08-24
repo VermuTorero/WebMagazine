@@ -37,7 +37,12 @@ export class PedidoDetalleComponent implements OnInit {
     this.pedidoService.getPedido(id).subscribe(pedido=>{
       pedido.idPedido = this.pedidoService.getIdPedido(pedido);
       this.pedido = pedido;
-      this.pedidoService.getProductosPedido(pedido)
+      this.pedidoService.getProductosPedido(pedido).subscribe(productoPedidos=>{
+        productoPedidos.forEach(productoPedido => {
+          productoPedido.id = this.pedidoService.getIdPedido(productoPedido);
+        });
+        this.pedido.productos = productoPedidos;
+      })
     })
   }
 
