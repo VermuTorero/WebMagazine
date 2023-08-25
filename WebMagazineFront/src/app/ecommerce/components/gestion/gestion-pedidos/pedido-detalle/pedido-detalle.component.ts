@@ -40,8 +40,10 @@ export class PedidoDetalleComponent implements OnInit {
       this.pedidoService.getProductosPedido(pedido).subscribe(productoPedidos=>{
         productoPedidos.forEach(productoPedido => {
           productoPedido.id = this.pedidoService.getIdPedido(productoPedido);
+          this.productos.push(productoPedido.producto)
         });
         this.pedido.productos = productoPedidos;
+      
       })
     })
   }

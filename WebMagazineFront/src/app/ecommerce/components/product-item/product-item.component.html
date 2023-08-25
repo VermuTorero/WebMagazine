@@ -6,7 +6,7 @@
       <h5 class="card-title"> {{product.nombreProducto}}</h5>
       <p class="card-text">{{product.descripcionCorta}}</p>
       <p class="card-text">{{product.precio}} €</p>
-      <button href="#" class="btn btn-outline-success" (click)="addToCart()">
+      <button *ngIf="!product.vendedorExterno" href="#" class="btn btn-outline-success" (click)="addToCart()">
        <i class="fas fa-cart-plus"></i> Añadir a la cesta</button>
     </div>
   </div>
