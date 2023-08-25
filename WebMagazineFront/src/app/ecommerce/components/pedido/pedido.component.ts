@@ -11,7 +11,7 @@ import { PedidosService } from '../../service/pedidos.service';
 import { ModalReceiptComponent } from '../modal-receipt/modal-receipt.component';
 import { environment } from 'src/environments/environment';
 import { PedidoProducto } from '../../models/pedido-producto';
-import { Observable, forkJoin, map } from 'rxjs';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
@@ -209,28 +209,25 @@ export class PedidoComponent implements OnInit {
 
 
 
-        this.productosCarrito.forEach((cartItem) => {
-          this.productService.getProductoById(cartItem.productId).subscribe(producto => {
-            producto.id = this.productService.getIdProducto(producto);
-            let pedidoProducto = new PedidoProducto(producto, cartItem.qty);
-            console.log("PEDIDO PRODUCTO CREADO: ", pedidoProducto)
-            /*  pedidosProductos.push(this.pedidoService.postPedidoProducto(pedidoProducto).pipe(map((res) =>{
-               console.log(res, "res API PEDIDO-PRODUCTO")
-               let producto = res;
-               producto.id = this.UsuariosService.getId(producto);
-              nuevoPedido.productos.push(producto);
-              console.log(nuevoPedido.productos, "nuevoProducto URL")
-             }))); // Guardamos cada pedido en la API
-      */
-            this.pedidoService.postPedidoProducto(pedidoProducto).subscribe(pedidoProducto => {
-              pedidosProductos.push(pedidoProducto);
-              nuevoPedido.productos.push(pedidoProducto);
+        // Crear un array para almacenar los observables de las llamadas postPedidoProducto
+        const postPedidoProductoObservables = this.productosCarrito.map(cartItem => {
+          return this.productService.getProductoById(cartItem.productId).pipe(
+            switchMap(producto => {
+              producto.id = this.productService.getIdProducto(producto);
+              const pedidoProducto = new PedidoProducto(producto, cartItem.qty);
+              return this.pedidoService.postPedidoProducto(pedidoProducto);
             })
-          })
+          );
         });
 
-        // Utilizamos forkJoin para esperar a que se completen todas las llamadas a postPedidoProducto antes de continuar.
-        
+        // Utilizar forkJoin para combinar los observables y esperar a que todos se completen
+        forkJoin(postPedidoProductoObservables).subscribe(pedidoProductos => {
+          pedidoProductos.forEach(pedidoProducto => {
+            pedidoProducto.id = this.productService.getIdProducto(pedidoProducto);
+          });
+          // Todos los postPedidoProducto han terminado
+          nuevoPedido.productos = pedidoProductos;
+
           // Llamamos al endPoint para enviar el pedido completo a la API
           this.pedidoService.postPedido(nuevoPedido).subscribe((res) => {
             console.log(nuevoPedido, "envio API PEDIDO");
@@ -249,7 +246,8 @@ export class PedidoComponent implements OnInit {
               data.purchase_units[0].amount.value
             );
           });
-      
+        });
+
 
       },
       onCancel: (data, actions) => {

@@ -102,9 +102,10 @@ export class LateralComponent implements OnInit, OnChanges {
   getLateral() {
     this.lateralService.getLateral().subscribe(lateral => {
       this.lateral = lateral;
+      this.showHtmlPodcast();
       this.getPublicacionesRelacionadas(this.publicacion);
       this.getPublicacionesCerca(this.publicacion);
-      this.showHtmlPodcast();
+    
       this.showHtmlPodcastSM();
   /*     this.showHtmlTwitter(); */
     })
