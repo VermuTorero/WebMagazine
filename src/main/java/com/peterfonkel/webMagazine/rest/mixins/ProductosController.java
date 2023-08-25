@@ -130,7 +130,7 @@ public class ProductosController {
 	@ResponseBody
 	public PersistentEntityResource postMensajeVendedor(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @RequestBody Producto producto) {
 		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
-		getEmailSender().sendEmail(correoAdmin, producto.getVendedorExterno(), "El usuario " + usuario.getNombre() + " esta interesado en " + producto.getNombreProducto());
+		getEmailSender().sendEmail(producto.getVendedorExterno(), "Usuario de Vermutorero interesado en tus productos.", "El usuario " + usuario.getNombre() + " esta interesado en " + producto.getNombreProducto());
 		return assembler.toModel(producto);
 	}
 	

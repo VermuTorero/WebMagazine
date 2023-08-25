@@ -46,5 +46,8 @@ export class ProductService {
   extraerUrlSeccion(producto: any): string{
     return producto._links.seccion.href;
   }
+  enviarEmailVendedor(producto: Product){
+    return this.http.post<Product>(this.endpoint + "/productos/search/postMensajeVendedor", producto);
+  }
 
 }

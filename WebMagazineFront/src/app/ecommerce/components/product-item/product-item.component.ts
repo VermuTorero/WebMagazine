@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../../models/product';
 import { MessageService } from '../../service/message.service';
+import { ProductService } from '../../service/product.service';
 
 @Component({
   selector: 'app-product-item',
@@ -11,12 +12,14 @@ export class ProductItemComponent {
   @Input()
   product!: Product;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private productService: ProductService) {}
 
   addToCart(): void {
     this.messageService.sendMessage(this.product);
   }
-  venderExterno(){
-    
+  enviarEmailVendedor(){
+    this.productService.enviarEmailVendedor(this.product).subscribe(producto=>{
+      
+    })
   }
 }
