@@ -6,27 +6,7 @@
     <p class="card-text">{{product.precio}} €</p>
     <button *ngIf="!product.vendedorExterno" href="#" class="btn btn-outline-success" (click)="addToCart()">
       <i class="fas fa-cart-plus"></i> Añadir a la cesta</button>
-    <button *ngIf="product.vendedorExterno" href="#" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#externoModal">
+    <button *ngIf="product.vendedorExterno" href="#" class="btn btn-outline-success" (click)="enviarEmailVendedor()">
       <i class="fas fa-cart-plus"></i> Añadir a la cesta</button>
   </div>
-</div>
-
-<!-- Modal Vendedor Externo-->
-<div class="modal fade" id="externoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto de suministrador externo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>La compra de este producto se realiza a través de un vendedor externo. Le proporcionaremos tu email para que se ponga en contacto contigo.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="enviarEmailVendedor()">Enviar email al vendedor</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
 </div>

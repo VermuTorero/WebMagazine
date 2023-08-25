@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../../models/product';
 import { MessageService } from '../../service/message.service';
 import { ProductService } from '../../service/product.service';
@@ -9,18 +9,16 @@ import { ProductService } from '../../service/product.service';
   styleUrls: ['./product-item.component.css'],
 })
 export class ProductItemComponent {
-  @Input()
-  product!: Product;
-
+  @Input() product!: Product;
+  @Output() enviarEmailVendedorEvent = new EventEmitter<Product>();
   constructor(private messageService: MessageService, private productService: ProductService) {}
 
   addToCart(): void {
     this.messageService.sendMessage(this.product);
   }
+
   enviarEmailVendedor(){
-    console.log("PRODUCTO A ENVIAR: ", this.product)
-    this.productService.enviarEmailVendedor(this.product).subscribe(producto=>{
-      console.log("PRODUCTO A ENVIADO: ", producto)
-    })
+    this.enviarEmailVendedorEvent.emit(this.product);
+   
   }
 }

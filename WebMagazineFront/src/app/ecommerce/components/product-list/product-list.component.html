@@ -1,27 +1,49 @@
 <div class="container">
-<div class="row">
-    <div class="row mt-2">
-        <hr class="mb-1">
-     <div class="h-10 col">
-     <strong>ORDENAR POR</strong>
-     <select class="ms-2" [(ngModel)]="ordenActual" (ngModelChange)="onChangeOrden()">
-        <option value="precio">Precio</option>
-        <option value="nombreProducto">Nombre</option>
-     </select>
-     <i *ngIf="ordenAscendente" class="fa-solid fa-arrow-up ms-1" (click)="cambiarOrden()"></i>
-     <i *ngIf="!ordenAscendente" class="fa-solid fa-arrow-down ms-1" (click)="cambiarOrden()"></i>
-     </div>
-     <div class="h-10 col">
-        <strong>FILTRAR POR</strong>
-        <select class="ms-2" [(ngModel)]="filtroSeccion" (ngModelChange)="onChangeFiltro()">
-            <option value="">Todas las secciones</option>
-            <option *ngFor="let seccion of secciones" [value]="seccion.nombreSeccion">{{ seccion.nombreSeccion }}</option>
-          </select>
-     </div>
-        <hr class="mt-1">
-    </div>
-    <div class="col-md-4 d-flex mb-3" *ngFor="let product of filteredProducts">
-        <app-product-item [product]="product"></app-product-item>
+    <div class="row">
+        <div class="row mt-2">
+            <hr class="mb-1">
+            <div class="h-10 col">
+                <strong>ORDENAR POR</strong>
+                <select class="ms-2" [(ngModel)]="ordenActual" (ngModelChange)="onChangeOrden()">
+                    <option value="precio">Precio</option>
+                    <option value="nombreProducto">Nombre</option>
+                </select>
+                <i *ngIf="ordenAscendente" class="fa-solid fa-arrow-up ms-1" (click)="cambiarOrden()"></i>
+                <i *ngIf="!ordenAscendente" class="fa-solid fa-arrow-down ms-1" (click)="cambiarOrden()"></i>
+            </div>
+            <div class="h-10 col">
+                <strong>FILTRAR POR</strong>
+                <select class="ms-2" [(ngModel)]="filtroSeccion" (ngModelChange)="onChangeFiltro()">
+                    <option value="">Todas las secciones</option>
+                    <option *ngFor="let seccion of secciones" [value]="seccion.nombreSeccion">{{ seccion.nombreSeccion
+                        }}</option>
+                </select>
+            </div>
+            <hr class="mt-1">
+        </div>
+        <div class="col-md-4 d-flex mb-3" *ngFor="let product of filteredProducts">
+            <app-product-item [product]="product"
+                (enviarEmailVendedorEvent)="enviarEmailVendedor($event)"></app-product-item>
+        </div>
     </div>
 </div>
+
+<!-- Modal Vendedor Externo-->
+<div class="modal fade" id="externoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Producto de suministrador externo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>La compra de este producto se realiza a través de un vendedor externo. Le proporcionaremos tu email para que se ponga en contacto contigo.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="enviarEmailVendedorConfirmado()">Enviar email al vendedor</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>

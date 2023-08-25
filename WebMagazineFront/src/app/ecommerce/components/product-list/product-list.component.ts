@@ -3,6 +3,7 @@ import {  Component } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../service/product.service';
 import { Seccion } from '../../models/seccion';
+declare var $ : any;
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +17,7 @@ export class ProductListComponent {
   secciones: Seccion[] = []; // Lista de secciones de productos
   filteredProducts: Product[] = [];
   filtroSeccion: string = '';
+  product: Product = new Product("","","","",0, "",new Seccion(),"")
 
   constructor(private productService: ProductService, private seccionesService: SeccionService) {}
 
@@ -98,5 +100,17 @@ export class ProductListComponent {
   cambiarOrden(): void {
     this.ordenAscendente = !this.ordenAscendente;
     this.sortProducts();
+  }
+
+  enviarEmailVendedor(product: Product){
+    $('#externoModal').modal('show');
+    this.product = product;
+  }
+
+  enviarEmailVendedorConfirmado(){
+    console.log("PRODUCTO A ENVIAR: ", this.product)
+    this.productService.enviarEmailVendedor(this.product).subscribe(producto=>{
+      console.log("PRODUCTO A ENVIADO: ", producto)
+    })
   }
 }
