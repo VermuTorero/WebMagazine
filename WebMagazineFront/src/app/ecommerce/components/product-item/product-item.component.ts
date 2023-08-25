@@ -18,8 +18,9 @@ export class ProductItemComponent {
     this.messageService.sendMessage(this.product);
   }
   enviarEmailVendedor(){
+    console.log("PRODUCTO A ENVIAR: ", this.product)
     this.productService.enviarEmailVendedor(this.product).subscribe(producto=>{
-      
+      console.log("PRODUCTO A ENVIADO: ", producto)
     })
   }
 }
