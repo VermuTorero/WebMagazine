@@ -29,9 +29,7 @@ export class GestionPedidosComponent {
       this.pedidos = res;
       this.pedidos.forEach((pedido) => {
         pedido.idPedido = this.pedidoService.getIdPedido(pedido);
-        this.usuarioService.getUsuario(this.pedidoService.extraerUsuarioPedido(pedido)).subscribe((resApi) => {
-          pedido.usuario = resApi;
-        });
+       
       });
     });
     }else{

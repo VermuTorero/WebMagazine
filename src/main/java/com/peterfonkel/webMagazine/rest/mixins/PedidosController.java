@@ -94,10 +94,16 @@ public class PedidosController {
     @GetMapping(path = "productosPedido/{idPedido}")
   	@ResponseBody
   	public CollectionModel<PersistentEntityResource> getProductosPedido(PersistentEntityResourceAssembler assembler, @PathVariable ("idPedido") Long idPedido) {
-    	
-    	List<PedidoProducto> pedidoProductos = getPedidoProductoDAO().findByPedido_IdPedido(idPedido);
-    	logger.info("PRODUCTOS: " + pedidoProductos);
-  		return assembler.toCollectionModel(pedidoProductos);
+    	Pedido pedido = getPedidoDAO().findByIdPedido(idPedido);
+    	logger.info("PEDIDO: " + pedido);
+    	List<PedidoProducto> pedidoProductos = pedido.getProductos();
+    	List<PedidoProducto> pedidoProductosEncontrados = new ArrayList<>();
+    	for (PedidoProducto pedidoProducto : pedidoProductos) {
+		 PedidoProducto pedidoProductoEncontrado = getPedidoProductoDAO().findById(pedidoProducto.getId()).get();
+		 pedidoProductosEncontrados.add(pedidoProductoEncontrado);
+		}
+    	logger.info("PRODUCTOS: " + pedidoProductosEncontrados);
+  		return assembler.toCollectionModel(pedidoProductosEncontrados);
   	}
 
 }
