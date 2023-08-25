@@ -60,6 +60,7 @@ export class FormularioProductoComponent implements OnInit {
       const id = +params['id']
       if(id){
         this.productoService.getProductoPorId(id).subscribe((res) =>{
+          res.id = this.productoService.getIdProducto(res);
           this.esNuevoProducto = false;
           this.nuevoProducto = res;
           this.formularioProducto.patchValue(this.nuevoProducto);

@@ -16,4 +16,7 @@ export class ProductItemComponent {
   addToCart(): void {
     this.messageService.sendMessage(this.product);
   }
+  venderExterno(){
+    
+  }
 }

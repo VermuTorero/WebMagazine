@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.webmvc.PersistentEntityResource;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -25,6 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.peterfonkel.webMagazine.entities.Categoria;
 import com.peterfonkel.webMagazine.entities.Producto;
 import com.peterfonkel.webMagazine.entities.Seccion;
+import com.peterfonkel.webMagazine.login.email.EmailSender;
+import com.peterfonkel.webMagazine.login.usuarios.UsuarioService;
+import com.peterfonkel.webMagazine.login.usuarios.entidades.Usuario;
 import com.peterfonkel.webMagazine.repositories.CategoriaDAO;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.ProductoService;
@@ -35,11 +41,26 @@ import com.peterfonkel.webMagazine.services.SeccionService;
 @CrossOrigin
 public class ProductosController {
 	
+	@Value("${correoAdmin}")
+	private String correoAdmin;
+
+	@Value("${secretPsw}")
+	private String secretPsw;
+
+	@Value("${jwt.secret}")
+	private String secretKey;
+	
 	@Autowired
 	ProductoService productoService;
 	
 	@Autowired
 	SeccionService seccionService;
+	
+	@Autowired
+	private EmailSender emailSender;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	public ProductosController(){
 	}
@@ -51,6 +72,16 @@ public class ProductosController {
 
 	public SeccionService getSeccionService() {
 		return seccionService;
+	}
+	
+
+	public EmailSender getEmailSender() {
+		return emailSender;
+	}
+
+	
+	public UsuarioService getUsuarioService() {
+		return usuarioService;
 	}
 
 	@GetMapping(path = "productoById/{id}")
@@ -92,6 +123,15 @@ public class ProductosController {
 	@ResponseBody
 	public void deleteProductoById(PersistentEntityResourceAssembler assembler,@PathVariable("id") Long id) {
 		getProductoService().deleteById(id);
+	}
+	
+	
+	@PostMapping(path = "postMensajeVendedor")
+	@ResponseBody
+	public PersistentEntityResource postMensajeVendedor(PersistentEntityResourceAssembler assembler, HttpServletRequest request, @RequestBody Producto producto) {
+		Usuario usuario = getUsuarioService().getUsuarioFromToken(request);
+		getEmailSender().sendEmail(correoAdmin, producto.getVendedorExterno(), "El usuario " + usuario.getNombre() + " esta interesado en " + producto.getNombreProducto());
+		return assembler.toModel(producto);
 	}
 	
 }
