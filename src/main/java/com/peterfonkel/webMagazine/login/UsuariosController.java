@@ -189,7 +189,7 @@ public class UsuariosController {
 			getUsuarioService().save(usuario);
 
 			getEmailSender().sendEmail(usuario.getEmail(), "confirma la suscripcion",
-					"Haz click en el siguiente enlace para verificar tu email: http://vermutoreroapp.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion) 
+					"Haz click en el siguiente enlace para verificar tu email: http://vermutorero-c484281d5ea5.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion) 
 							+ "\r\n"
 							+ "\r\n"
 							+ "\"Al registrarte en nuestra aplicación, debes aceptar los siguientes términos y condiciones:\r\n"

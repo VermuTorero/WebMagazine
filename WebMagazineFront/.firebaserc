@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "webmagazine-3758a"
-  }
+    "default": "vermutorero-15738",
+    "staging": "vermutorero-15738"
+  },
+  "targets": {}
 }

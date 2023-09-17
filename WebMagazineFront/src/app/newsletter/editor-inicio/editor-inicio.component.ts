@@ -12,7 +12,7 @@ import { LikesService } from '../service/likes.service';
   styleUrls: ['./editor-inicio.component.css']
 })
 export class EditorInicioComponent implements OnInit {
-  @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent;
+/*   @ViewChild('angularCropper') angularCropper: CropperComponent = new CropperComponent; */
   @ViewChild('angularCropper2') angularCropper2: CropperComponent = new CropperComponent;
   @ViewChild('angularCropper3') angularCropper3: CropperComponent = new CropperComponent;
   publicaciones: Publicacion[] = [];
@@ -26,7 +26,7 @@ export class EditorInicioComponent implements OnInit {
   croppedresult = "";
   anchoImagen: string = "100";
 
-  imagenInicioDerecha : ImagenInicio = new ImagenInicio();
+ /*  imagenInicioDerecha : ImagenInicio = new ImagenInicio(); */
   imagenInicioIzquierda: ImagenInicio = new ImagenInicio();
   imagenInicioCentral: ImagenInicio = new ImagenInicio();
 
@@ -38,8 +38,8 @@ export class EditorInicioComponent implements OnInit {
   ngOnInit(): void {
     this.getPublicaciones();
     this.getImagenesInicio();
-    this.imagenInicioDerecha.id = "1";
-    this.imagenInicioDerecha.posicion = "derecha";
+/*     this.imagenInicioDerecha.id = "1";
+    this.imagenInicioDerecha.posicion = "derecha"; */
     this.imagenInicioIzquierda.id = "2";
     this.imagenInicioIzquierda.posicion = "izquierda";
     this.imagenInicioCentral.id = "3";
@@ -155,7 +155,7 @@ export class EditorInicioComponent implements OnInit {
   }
   
   /* Metodos para seleccionar un archivo de imagen en el ordenador */
-  onSelectFileDerecha(event: any) {
+/*   onSelectFileDerecha(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
@@ -165,7 +165,7 @@ export class EditorInicioComponent implements OnInit {
       }
       this.imageName = event.target.files[0].name;
     }
-  }
+  } */
 
   onSelectFileIzquierda(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -184,8 +184,8 @@ export class EditorInicioComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
-        this.imagePreviewUrl = reader.result as string;
-        this.imagenInicioCentral.url = this.imagePreviewUrl;
+        this.imageCarouselUrl = reader.result as string;
+        this.imagenInicioCentral.url = this.imageCarouselUrl;
       }
       this.imageName = event.target.files[0].name;
     }
@@ -228,9 +228,9 @@ export class EditorInicioComponent implements OnInit {
   getImagenesInicio() {
     this.imagenesService.getImagenesInicio().subscribe(imagenesInicio => {
       imagenesInicio.forEach(imagenInicio => {
-        if (imagenInicio.posicion == "derecha") {
+     /*    if (imagenInicio.posicion == "derecha") {
           this.imagenInicioDerecha = imagenInicio;
-        }
+        } */
         if(imagenInicio.posicion == "izquierda"){
           this.imagenInicioIzquierda = imagenInicio;
         }
@@ -242,11 +242,11 @@ export class EditorInicioComponent implements OnInit {
   }
 
   /* Metodos para cambiar las imagenes de inicio */
-  setImagenInicioDerecha(){
+/*   setImagenInicioDerecha(){
     this.imagenesService.setImagenInicioDerecha(this.imagenInicioDerecha).subscribe(imagenInicioDerecha=>{
       this.imagenInicioDerecha = imagenInicioDerecha;
     })
-  }
+  } */
 
   setImagenInicioIzquierda(){
     this.imagenesService.setImagenInicioIzquierda(this.imagenInicioIzquierda).subscribe(imagenInicioIzquierda=>{

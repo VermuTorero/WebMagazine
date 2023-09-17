@@ -8,7 +8,9 @@
   <section class="promo col-12 col-sm-3 p-0 m-0">
     <button class="boton btn btn-warning btn-sm m-3" data-bs-toggle="modal"
       data-bs-target="#imagenLateralIzquierdaModal">CAMBIAR</button>
-    <img src="{{imagenInicioIzquierda.url}}" alt="" class="imagen-promo img-fluid p-0 m-0" data-bs-toggle="modal"
+    <img *ngIf="imagenInicioIzquierda.url" src="{{imagenInicioIzquierda.url}}" alt="" class="imagen-promo img-fluid p-0 m-0" data-bs-toggle="modal"
+      data-bs-target="#imagenLateralIzquierdaModal">
+    <img *ngIf="!imagenInicioIzquierda.url" src="../../../assets/no-imagen.png" alt="" class="imagen-promo img-fluid p-0 m-0" data-bs-toggle="modal"
       data-bs-target="#imagenLateralIzquierdaModal">
   </section>
 </section>
