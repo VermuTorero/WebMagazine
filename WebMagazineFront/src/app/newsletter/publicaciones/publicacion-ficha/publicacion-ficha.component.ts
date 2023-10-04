@@ -745,13 +745,16 @@ export class PublicacionFichaComponent implements OnInit {
     // Recorrer cada imagen y procesarla
     for (let img of Array.from(imagenes)) {
       const src = img.getAttribute('src');
-
       if (src) {
         // Descargar la imagen y obtener la nueva URL
-        const blobResponse = await fetch(src);
-        const blob = await blobResponse.blob();
-        const file = new File([blob], blob.name + '.png', { type: blob.type });
-        this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
+        try {
+          const blobResponse = await fetch(src);
+          console.log("BLOB RESPONSE: ", blobResponse)
+          const blob = await blobResponse.blob();
+          console.log("BLOB: ", blob)
+          const file = new File([blob], blob.name + '.png', { type: blob.type });
+          console.log("FILE: ", file)
+          this.imagenesService.subirImagen(file, 'id', 'importadas').subscribe(url => {
           setTimeout(() => {
             // Actualizar el atributo src de la imagen con la nueva URL
             if (img.getAttribute('width')) {
@@ -763,7 +766,6 @@ export class PublicacionFichaComponent implements OnInit {
               } if (ancho > 250 && ancho < 500) {
                 img.setAttribute('width', '50%');
               }
-              /* img.removeAttribute('width'); */
 
             } else {
               img.setAttribute('width', '75%');
@@ -771,8 +773,18 @@ export class PublicacionFichaComponent implements OnInit {
             img.setAttribute('alt', file.name)
             img.removeAttribute('height');
             img.setAttribute('src', url);
-          }, 1500);
+          }, 2000);
         })
+
+        
+          // Resto del código para procesar la imagen
+        } catch (error) {
+          console.error("Error al importar imagen: ", error);
+          // Manejar el error de red aquí (mostrar un mensaje al usuario, intentar nuevamente, etc.).
+        }
+       
+        
+        
       }
     }
     /* Extraer el subtitulo que se encuentra en una etiqueta li al inicio del articulo y cambiarlo a una etiqueta h2 en la misma posicion */
