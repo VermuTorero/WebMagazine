@@ -548,7 +548,8 @@ export class PublicacionFichaComponent implements OnInit {
     setInterval(() => {
       if (!this.publicacion.publicado) {
         if (this.publicacion.fechaPublicacion == "") {
-          this.postPublicacionAutoguardado();
+          // this.postPublicacionAutoguardado();
+          
         } else {
           this.patchPublicacionAutoguardado();
         }
@@ -773,7 +774,7 @@ export class PublicacionFichaComponent implements OnInit {
             img.setAttribute('alt', file.name)
             img.removeAttribute('height');
             img.setAttribute('src', url);
-          }, 2000);
+          }, 3000);
         })
 
         
@@ -805,7 +806,7 @@ export class PublicacionFichaComponent implements OnInit {
       this.texto = this.texto.replaceAll('<figure><img', '<p class="ql-align-center imagen-container text-center"><img')
       this.texto = this.texto.replaceAll('<p><img', '<p class="ql-align-center imagen-container text-center"><img')
     },
-      15000);
+      30000);
   }
 }
 

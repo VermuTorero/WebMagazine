@@ -192,21 +192,21 @@ public class UsuariosController {
 					"Haz click en el siguiente enlace para verificar tu email: http://vermutorero-c484281d5ea5.herokuapp.com/usuarios/search/confirmarEmail/" + String.valueOf(codigoActivacion) 
 							+ "\r\n"
 							+ "\r\n"
-							+ "\"Al registrarte en nuestra aplicación, debes aceptar los siguientes términos y condiciones:\r\n"
+							+ "\"Al registrarte en nuestra aplicaciï¿½n, debes aceptar los siguientes tï¿½rminos y condiciones:\r\n"
 							+ "\r\n"
-							+ "Términos y condiciones de uso: Aceptas cumplir con los términos y condiciones establecidos para el uso de nuestra aplicación. Esto incluye el compromiso de utilizar la aplicación de manera ética y respetar los derechos de propiedad intelectual.\r\n"
+							+ "Tï¿½rminos y condiciones de uso: Aceptas cumplir con los tï¿½rminos y condiciones establecidos para el uso de nuestra aplicaciï¿½n. Esto incluye el compromiso de utilizar la aplicaciï¿½n de manera ï¿½tica y respetar los derechos de propiedad intelectual.\r\n"
 							+ "\r\n"
-							+ "Política de privacidad: Reconoces y aceptas nuestra política de privacidad, que describe cómo recopilamos, utilizamos, almacenamos y protegemos tu información personal. Esta información incluye tu nombre y correo electrónico, que utilizamos para proporcionarte acceso a la aplicación y comunicarnos contigo de manera efectiva.\r\n"
+							+ "Polï¿½tica de privacidad: Reconoces y aceptas nuestra polï¿½tica de privacidad, que describe cï¿½mo recopilamos, utilizamos, almacenamos y protegemos tu informaciï¿½n personal. Esta informaciï¿½n incluye tu nombre y correo electrï¿½nico, que utilizamos para proporcionarte acceso a la aplicaciï¿½n y comunicarnos contigo de manera efectiva.\r\n"
 							+ "\r\n"
-							+ "Consentimiento para el procesamiento de datos: Al registrarte, otorgas tu consentimiento para que procesemos tus datos personales de acuerdo con nuestra política de privacidad. Esto implica que almacenaremos y utilizaremos tu información personal para los fines establecidos en nuestra política de privacidad.\r\n"
+							+ "Consentimiento para el procesamiento de datos: Al registrarte, otorgas tu consentimiento para que procesemos tus datos personales de acuerdo con nuestra polï¿½tica de privacidad. Esto implica que almacenaremos y utilizaremos tu informaciï¿½n personal para los fines establecidos en nuestra polï¿½tica de privacidad.\r\n"
 							+ "\r\n"
-							+ "Comunicaciones adicionales: Si optas por recibir comunicaciones adicionales, como boletines informativos o promociones, nos das permiso para enviártelas a la dirección de correo electrónico proporcionada. Si en algún momento deseas dejar de recibir estas comunicaciones, podrás darte de baja siguiendo las instrucciones proporcionadas en cada mensaje.\r\n"
+							+ "Comunicaciones adicionales: Si optas por recibir comunicaciones adicionales, como boletines informativos o promociones, nos das permiso para enviï¿½rtelas a la direcciï¿½n de correo electrï¿½nico proporcionada. Si en algï¿½n momento deseas dejar de recibir estas comunicaciones, podrï¿½s darte de baja siguiendo las instrucciones proporcionadas en cada mensaje.\r\n"
 							+ "\r\n"
-							+ "Al hacer clic en el botón de registro, confirmas que has leído y aceptado los términos y condiciones, así como nuestra política de privacidad. Asimismo, garantizas que proporcionas información veraz y te comprometes a utilizar la aplicación de manera responsable.\r\n"
+							+ "Al hacer clic en el botï¿½n de registro, confirmas que has leï¿½do y aceptado los tï¿½rminos y condiciones, asï¿½ como nuestra polï¿½tica de privacidad. Asimismo, garantizas que proporcionas informaciï¿½n veraz y te comprometes a utilizar la aplicaciï¿½n de manera responsable.\r\n"
 							+ "\r\n"
-							+ "Si tienes alguna pregunta o inquietud sobre nuestros términos y condiciones o nuestra política de privacidad, no dudes en contactarnos.\"\r\n"
+							+ "Si tienes alguna pregunta o inquietud sobre nuestros tï¿½rminos y condiciones o nuestra polï¿½tica de privacidad, no dudes en contactarnos.\"\r\n"
 							+ "\r\n"
-							+ "Esta aplicación utiliza una pasarela de pago de Paypal, no obtiene ni almacena ningún dato bancario ni de tu usuario o contraseña de Paypal");
+							+ "Esta aplicaciï¿½n utiliza una pasarela de pago de Paypal, no obtiene ni almacena ningï¿½n dato bancario ni de tu usuario o contraseï¿½a de Paypal");
 			logger.info("Enviado un correo a: " + usuario.getEmail());
 			return true;
 		} catch (Exception e) {
@@ -501,7 +501,7 @@ public class UsuariosController {
 			logger.info("USER DETAILS: " + userDetails);
 			String token = getJwtProvider().generateTokenFromUserDetails(userDetails);
 			logger.info("TOKEN DE RECUPERACION GENERADO: " + token);
-			String endpoint = "https://webmagazine-3758a.web.app/security/usuario-editar/";
+			String endpoint = "https://vermutorero.es/security/usuario-editar/";
 
 			getEmailSender().sendEmail(email, "cambio de password",
 					"Haz click en el siguiente enlace para cambiar tu password: " + endpoint + "?"
