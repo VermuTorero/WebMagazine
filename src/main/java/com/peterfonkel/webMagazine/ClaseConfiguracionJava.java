@@ -48,7 +48,7 @@ import com.peterfonkel.webMagazine.entities.ImagenInicio;
 import com.peterfonkel.webMagazine.entities.Lateral;
 import com.peterfonkel.webMagazine.entities.Lugar;
 import com.peterfonkel.webMagazine.entities.Publicacion;
-import com.peterfonkel.webMagazine.entities.Tag;
+
 import com.peterfonkel.webMagazine.entities.TipoSuscripcion;
 import com.peterfonkel.webMagazine.login.jwt.JwtProvider;
 import com.peterfonkel.webMagazine.login.roles.Rol;
@@ -67,7 +67,6 @@ import com.peterfonkel.webMagazine.rest.mixins.Mixins;
 import com.peterfonkel.webMagazine.services.CategoriaService;
 import com.peterfonkel.webMagazine.services.LugarService;
 import com.peterfonkel.webMagazine.services.PublicacionesService;
-import com.peterfonkel.webMagazine.services.TagService;
 
 
 
@@ -82,9 +81,6 @@ public class ClaseConfiguracionJava {
 	
 	@Value("${provincias}") 
 	private String[] provincias;
-	
-	@Value("${tags}") 
-	private String[] tags;
 	
 	@Value("${secretPsw}")
 	String secretPsw;
@@ -120,8 +116,6 @@ public class ClaseConfiguracionJava {
 	@Autowired
 	CategoriaService categoriaService;
 	
-	@Autowired
-	TagService tagService;
 	
 	@Autowired
 	TipoSuscripcionDAO tipoSuscripcionDAO;
@@ -228,15 +222,6 @@ public class ClaseConfiguracionJava {
 			categoriaService.save(categoria10);
 		}
 		
-		if (tagService.getAll().size()<3) {
-			
-			for (String tag : tags) {
-    			Tag tagNuevo = new Tag();
-    			tag = tag.replaceAll("'", "");
-				tagNuevo.setTagNombre(tag);
-				tagService.save(tagNuevo);
-			}
-		}
 		if(tipoSuscripcionDAO.findAll().size()<1) {
 			
 			TipoSuscripcion tipoSuscripcion1 = new TipoSuscripcion();
