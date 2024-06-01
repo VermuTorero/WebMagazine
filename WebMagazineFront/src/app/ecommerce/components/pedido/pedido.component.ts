@@ -17,6 +17,7 @@ import { UsuariosService } from 'src/app/security/service/usuarios.service';
 import { Usuario } from 'src/app/security/models/usuario';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../service/product.service';
+import { PayPalService } from 'src/app/newsletter/service/paypal.service';
 
 
 @Component({
@@ -42,6 +43,8 @@ export class PedidoComponent implements OnInit {
   esNuevaDireccion = true;
   direccionNueva!: Direccion;
   direccionSeleccionada!: Direccion;
+
+  clientId: string = "";
   /*-----------------------*/
 
 
@@ -53,7 +56,8 @@ export class PedidoComponent implements OnInit {
     private pedidoService: PedidosService,
     private router: Router,
     private fb: FormBuilder,
-    private productService: ProductService
+    private productService: ProductService,
+    private paypalService: PayPalService
   ) {
     /* control de errores del formulario */
     this.formularioDireccion = this.fb.group({
@@ -97,6 +101,9 @@ export class PedidoComponent implements OnInit {
     //3º leemos los productos del carrito
     this.productosCarrito = this.storageService.getCart();
     this.precioTotal = this.getTotal();
+    this.paypalService.getPayPal().subscribe(paypal=>{
+      this.clientId = paypal.clientId;
+    })
 
   }
 
@@ -143,8 +150,7 @@ export class PedidoComponent implements OnInit {
     this.payPalConfig = {
       currency: 'EUR',
       //colocar id de la pagina paypal developer, en proyecto meter variable en enviroment
-      clientId:
-        'AQ4kV3ijEVIItPbgLJtApqQdCEfaNV-xFShpVgdS8lmlI-J_L7U1-UPdiuXVbsivQfZyVQ43csdQJXCT',
+      clientId: this.clientId,
       createOrderOnClient: (data) =>
         <ICreateOrderRequest>{
           intent: 'CAPTURE',

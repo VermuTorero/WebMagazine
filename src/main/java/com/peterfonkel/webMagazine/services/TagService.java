@@ -25,8 +25,16 @@ public class TagService {
 	public Tag getById(Long id) {
 		return getTagDAO().getById(id);
 	}
-
 	
+	public List<Tag> getAll() {
+		return getTagDAO().findAll();
+	}
+	
+	
+	public Tag save(Tag tag) {
+		return getTagDAO().save(tag);
+	}
+
 
 	
 }

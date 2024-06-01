@@ -14,7 +14,7 @@ public interface TagDAO extends JpaRepository<Tag, Long> {
 	@Override
 	List<Tag> findAll();
 
-	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
+//	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER')")
 	@Override
 	<S extends Tag> S save(S entity);
 

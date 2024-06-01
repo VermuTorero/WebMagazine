@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "vermutorero-15738",
     "public": "public",
     "ignore": [
       "firebase.json",
