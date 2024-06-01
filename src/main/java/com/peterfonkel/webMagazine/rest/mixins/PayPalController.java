@@ -42,6 +42,7 @@ public class PayPalController {
 		return paypalService;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_WRITER') OR hasRole('ROLE_USER_MEMBER') OR hasRole('ROLE_USER_REGISTERED') OR hasRole('ROLE_USER_SUBSCRIBED')" )
 	@GetMapping(path = "paypal")
 	@ResponseBody
 	public PersistentEntityResource getPaypal(PersistentEntityResourceAssembler assembler) {

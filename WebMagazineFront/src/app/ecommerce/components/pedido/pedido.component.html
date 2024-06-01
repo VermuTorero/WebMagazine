@@ -28,7 +28,7 @@
 
 <h4 class="ms-1">DIRECCION DE ENVIO</h4>
 
-<div *ngIf="direccionesUsuario.length > 0">
+<div *ngIf="direccionesUsuario.length > 0; else elseBlock">
   <div class="row ms-2">
     <div class="col-6">
       <select [(ngModel)]="direccionEnvio" (change)="actualizarDireccionEnvio()" (click)="esNuevaDireccion = false">
@@ -39,6 +39,15 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>
+  <div class="row ms-2">
+    <div class="col-6">
+      <button data-bs-toggle="modal" data-bs-target="#modalAgregarDireccion" class="btn btn-primary">
+        Agregar direccion de envío
+      </button>
+    </div>
+  </div>
+</ng-template>
 
 
 
